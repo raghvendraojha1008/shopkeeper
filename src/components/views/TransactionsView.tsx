@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useRef, memo } from 'react';
+import React, { useState, useMemo, useCallback, useRef, memo, useEffect, useLayoutEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useNavState } from '../../services/useNavState';
 import { User } from 'firebase/auth';
@@ -139,6 +139,31 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
       setScrollParent(node);
     }
   }, []);
+
+  // Save scroll position on unmount (tab switch away)
+  useEffect(() => {
+    return () => {
+      try {
+        if (scrollParentNodeRef.current) {
+          sessionStorage.setItem('scroll_txn_v2', String(scrollParentNodeRef.current.scrollTop));
+        }
+      } catch {}
+    };
+  }, []);
+
+  // Restore scroll position before first paint once the scroll container attaches
+  useLayoutEffect(() => {
+    if (!scrollParent) return;
+    try {
+      const saved = parseInt(sessionStorage.getItem('scroll_txn_v2') ?? '0', 10);
+      if (saved > 0) {
+        scrollParent.scrollTop = saved;
+        requestAnimationFrame(() => {
+          if (scrollParent.scrollTop !== saved) scrollParent.scrollTop = saved;
+        });
+      }
+    } catch {}
+  }, [scrollParent]);
 
   const { data: transactions, isLoading: loading, refetch, setData } = useTransactions(user.uid);
   const { data: parties } = useParties(user.uid);

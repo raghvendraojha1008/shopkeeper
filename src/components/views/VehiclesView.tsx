@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useScrollMemory } from '../../hooks/useScrollMemory';
 import { User } from 'firebase/auth';
 import { Search, Truck, Phone, Edit2, Trash2, User as UserIcon, ChevronRight, ArrowLeft } from 'lucide-react';
 import { ApiService } from '../../services/api';
@@ -18,6 +19,7 @@ interface VehiclesViewProps {
 
 const VehiclesView: React.FC<VehiclesViewProps> = ({ user, onAdd, onEdit, onBack, appSettings }) => {
   const { confirm, showToast } = useUI();
+  const scrollRef = useScrollMemory('vehicles');
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,7 +55,7 @@ const VehiclesView: React.FC<VehiclesViewProps> = ({ user, onAdd, onEdit, onBack
   }
 
   return (
-    <div className="h-full overflow-y-auto" style={{background: 'var(--app-bg)'}}>
+    <div ref={scrollRef} className="h-full overflow-y-auto" style={{background: 'var(--app-bg)'}}>
        {/* HEADER WITH BACK ARROW */}
        <div className="backdrop-blur-md px-4 py-3 border-b border-white/10 flex justify-between items-center sticky top-0 z-30" style={{background:"rgba(var(--app-bg-rgb),0.92)"}}>
            <div className="flex items-center gap-3">

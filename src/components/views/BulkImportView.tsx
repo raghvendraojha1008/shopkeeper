@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useMemo, useEffect, useLayoutEffect } from 'react';
+import { useScrollMemory } from '../../hooks/useScrollMemory';
 import { BackStack } from '../../services/backStack';
 import {
   ArrowLeft, Upload, Download, CheckCircle2, AlertTriangle, XCircle,
@@ -736,8 +737,10 @@ const BulkImportView: React.FC<Props> = ({ user, settings, onBack }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [si, step]);
 
+  const scrollRef = useScrollMemory('bulk-import');
+
   return (
-    <div className="h-full overflow-y-auto pb-28" style={{ background: 'var(--app-bg)' }}>
+    <div ref={scrollRef} className="h-full overflow-y-auto pb-28" style={{ background: 'var(--app-bg)' }}>
       {/* Header */}
       <div className="sticky top-0 z-30 px-4 pb-3" style={{paddingTop: '16px',  background: 'rgba(var(--app-bg-rgb),0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="flex items-center gap-3 mb-3">
