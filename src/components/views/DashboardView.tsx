@@ -151,6 +151,35 @@ const PeriodFilterPanel: React.FC<{
 
       {local.mode === 'custom' && (
         <div className="space-y-2">
+          {/* Quick-pick shortcuts */}
+          {(() => {
+            const toISO = (d: Date) => d.toISOString().slice(0, 10);
+            const today = new Date();
+            const shortcuts = [
+              { label: 'Today',    start: toISO(today), end: toISO(today) },
+              { label: '7 Days',   start: toISO(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6)), end: toISO(today) },
+              { label: '30 Days',  start: toISO(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 29)), end: toISO(today) },
+              { label: 'This Mo.', start: toISO(new Date(today.getFullYear(), today.getMonth(), 1)), end: toISO(today) },
+              { label: 'Last Mo.', start: toISO(new Date(today.getFullYear(), today.getMonth() - 1, 1)), end: toISO(new Date(today.getFullYear(), today.getMonth(), 0)) },
+            ];
+            return (
+              <div className="flex gap-1.5 flex-wrap">
+                {shortcuts.map(({ label, start, end }) => {
+                  const active = local.customStart === start && local.customEnd === end;
+                  return (
+                    <button key={label} type="button"
+                      onClick={() => setLocal(p => ({ ...p, customStart: start, customEnd: end }))}
+                      className="px-2.5 py-1 rounded-xl text-[9px] font-black uppercase tracking-wide transition-all active:scale-95"
+                      style={active
+                        ? { background: 'rgba(139,92,246,0.35)', color: '#a78bfa', border: '1px solid rgba(139,92,246,0.4)' }
+                        : { background: 'rgba(255,255,255,0.07)', color: 'rgba(148,163,184,0.6)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
           {(['customStart', 'customEnd'] as const).map((field, i) => (
             <div key={field}>
               <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: 'rgba(148,163,184,0.4)' }}>{i === 0 ? 'From' : 'To'}</p>
