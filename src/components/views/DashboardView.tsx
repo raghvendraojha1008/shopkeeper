@@ -249,7 +249,12 @@ const GETTING_STARTED_ALL: GettingStartedStep[] = [
 ];
 
 const DashboardView: React.FC<DashboardViewProps> = ({ user, appSettings, onNavigate, onQuickAction, onToggleTheme }) => {
-  const isDark = appSettings?.preferences?.dark_mode ?? false;
+  // FIX: use useIsDarkHook() which reads data-theme-mode on <html> — this
+  // correctly reflects the FORCE_DARK_MODE override in App.tsx.
+  // Previously used appSettings?.preferences?.dark_mode directly, which
+  // ignored the force-dark flag and rendered a light hero when the user had
+  // dark_mode=false in their settings, while the rest of the app stayed dark.
+  const isDark = useIsDarkHook();
   const { useLowStockItems, useLedger, useTransactions, useInventory, useExpenses } = useData();
   const { data: lowStockItems } = useLowStockItems(user.uid);
   const { data: ledgerRaw,      isLoading: ledgerLoading }    = useLedger(user.uid);

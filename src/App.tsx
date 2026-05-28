@@ -1064,13 +1064,11 @@ const AppContent = () => {
         <div className="mx-3 mb-2 pointer-events-auto">
           <div className="rounded-[28px] px-2 py-2 flex justify-between items-center relative"
             style={{
-              background: isAndroid
-                ? 'rgba(0, 0, 0, 0.85)'
-                : 'rgba(var(--app-bg-rgb),0.88)',
+              background: 'linear-gradient(135deg, rgba(26,5,51,0.97) 0%, rgba(15,31,92,0.97) 55%, rgba(10,46,74,0.97) 100%)',
               backdropFilter: isAndroid ? 'none' : 'blur(32px)',
               WebkitBackdropFilter: isAndroid ? 'none' : 'blur(32px)',
-              border: '1px solid var(--nav-border)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 2px 0 rgba(255,255,255,0.05) inset',
+              border: '1px solid rgba(99,130,210,0.18)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 2px 0 rgba(99,130,210,0.12) inset',
             }}>
             <div className="absolute top-0 left-8 right-8 h-px rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }} />
 
