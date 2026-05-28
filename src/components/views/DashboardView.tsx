@@ -542,7 +542,8 @@ const DashboardView: React.FC<DashboardViewProps> = ({ user, appSettings, onNavi
                   <Lock size={15} />
                 </button>
               )}
-              {onToggleTheme && (
+              {/* THEME_TOGGLE_HIDDEN: set FORCE_DARK_MODE=false in App.tsx to re-enable */}
+              {false && onToggleTheme && (
                 <button onClick={onToggleTheme}
                   className="p-2 rounded-full transition-all active:scale-90"
                   title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}

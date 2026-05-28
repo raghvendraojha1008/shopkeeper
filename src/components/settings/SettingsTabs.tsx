@@ -198,6 +198,8 @@ export const GeneralTab = ({ formData, setFormData }: any) => {
     return (
         <div className="space-y-4 animate-in slide-in-from-right duration-300">
             <SettingsSection title="App Preferences" icon={Store}>
+                {/* DISPLAY_MODE_HIDDEN: set FORCE_DARK_MODE=false in App.tsx to re-enable this toggle */}
+                {false && (
                 <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4">
                     <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg" style={{ background: formData.preferences?.dark_mode ? 'rgba(139,92,246,0.15)' : 'rgba(251,191,36,0.15)' }}>
@@ -238,6 +240,7 @@ export const GeneralTab = ({ formData, setFormData }: any) => {
                         </button>
                     </div>
                 </div>
+                )}
 
                 <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4 pt-4">
                     <div className="flex items-center gap-3">

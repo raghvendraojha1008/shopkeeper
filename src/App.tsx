@@ -178,6 +178,7 @@ const AppContent = () => {
   const [manualEntryData, setManualEntryData] = useState<any>(null);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [selectedPartyStatement, setSelectedPartyStatement] = useState<any>(null);
+  const [settingsIsOnSubPage, setSettingsIsOnSubPage] = useState(false);
 
   // ── FIX: BulkImport and StockValuation use their OWN full-screen tab slot ──
   // Previously these were boolean overlays that rendered on top of the active tab,
@@ -325,15 +326,17 @@ const AppContent = () => {
   }, [appSettings, setEditPasswordSettings]);
 
   // 2. Dark Mode + Theme + StatusBar (unified reactive effect)
+  // FORCE_DARK_MODE: set to false to re-enable the light/dark user toggle
+  const FORCE_DARK_MODE = true;
   useEffect(() => {
-    const isDark = appSettings.preferences?.dark_mode ?? false;
+    const isDark = FORCE_DARK_MODE || (appSettings.preferences?.dark_mode ?? false);
     if (isDark) document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
-    applyThemeToDocument(appSettings);
+    applyThemeToDocument({ ...appSettings, preferences: { ...(appSettings.preferences || {}), dark_mode: isDark } });
     if (Capacitor.isNativePlatform()) {
       import('@capacitor/status-bar').then(({ StatusBar, Style }) => {
-        StatusBar.setStyle({ style: isDark ? Style.Dark : Style.Light }).catch(() => {});
-        StatusBar.setBackgroundColor({ color: isDark ? '#0b0e1a' : '#f4f6fc' }).catch(() => {});
+        StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
+        StatusBar.setBackgroundColor({ color: '#0b0e1a' }).catch(() => {});
       }).catch(() => {});
     }
   }, [appSettings]);
@@ -627,10 +630,12 @@ const AppContent = () => {
   // Hide on sub-pages inside inventory (item detail) and parties (party statement).
   const isOnSubPage =
     (activeTab === 'inventory' && !!selectedItem) ||
-    (activeTab === 'parties'   && !!selectedPartyStatement);
+    (activeTab === 'parties'   && !!selectedPartyStatement) ||
+    (activeTab === 'settings'  && settingsIsOnSubPage);
   // Also hide bottom nav when the keyboard is open — the nav would otherwise
   // float above the keyboard, wasting precious screen space on short devices.
-  const showBottomNav = (!dynamicNavEnabled || (NAV_TABS.includes(activeTab) && !isOnSubPage)) && !isKeyboardOpen;
+  // isOnSubPage is always respected regardless of dynamicNavEnabled.
+  const showBottomNav = (!dynamicNavEnabled || NAV_TABS.includes(activeTab)) && !isOnSubPage && !isKeyboardOpen;
 
   // ── Tap-outside-to-dismiss keyboard ─────────────────────────────────────────
   // When the user taps anywhere that is NOT an input/textarea/select/button,
@@ -896,6 +901,7 @@ const AppContent = () => {
                 }}
                 onBack={goBack}
                 onNavigate={(tab) => setActiveTab(tab)}
+                onSubPageChange={setSettingsIsOnSubPage}
               />
             )}
             {activeTab === 'settings' && isStaff && (
@@ -1037,8 +1043,8 @@ const AppContent = () => {
 
       {/* ═══ BENTO GLASS BOTTOM NAV ═══ */}
       {showBottomNav && <nav className="app-bottom-nav fixed bottom-0 left-0 right-0 z-50 pointer-events-none"
-        style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))' }}>
-        <div className="mx-3 mb-3 pointer-events-auto">
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <div className="mx-3 mb-2 pointer-events-auto">
           <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(var(--app-bg-rgb),0.97), transparent)', zIndex: -1 }} />
           <div className="rounded-[28px] px-2 py-2 flex justify-between items-center relative"
             style={{
@@ -1078,7 +1084,6 @@ const AppContent = () => {
             {/* Center AI FAB */}
             <button onClick={() => setShowCommandModal(true)} className="relative flex-shrink-0 -translate-y-4">
               <div className="absolute -inset-3 rounded-[28px] blur-xl animate-pulse" style={{ background: 'rgba(167,139,250,0.3)' }} />
-              <div className="absolute -inset-1.5 rounded-[26px] blur-md" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.5), rgba(79,70,229,0.5))' }} />
               <div className="relative w-[58px] h-[58px] rounded-[22px] flex items-center justify-center active:scale-90 transition-all duration-200"
                 style={{ background: 'linear-gradient(145deg, #7c3aed, #4f46e5)', boxShadow: '0 12px 36px rgba(124,58,237,0.6), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25)', border: '1px solid rgba(167,139,250,0.4)' }}>
                 <Mic size={22} className="text-white" strokeWidth={2} style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' }} />

@@ -32,6 +32,7 @@ interface SettingsViewProps {
   onUpdateSettings: (s: AppSettings) => Promise<void>;
   onBack: () => void;
   onNavigate: (tab: string) => void;
+  onSubPageChange?: (isOnSubPage: boolean) => void;
 }
 
 type SettingsSection = 'menu' | 'profile' | 'general' | 'invoice' | 'users' | 'lists' | 'security' | 'data' | 'invitations' | 'subscription' | 'developer';
@@ -48,7 +49,7 @@ const SECTIONS: { id: SettingsSection; label: string; sub: string; icon: React.E
   { id: 'subscription', label: 'Subscription',       sub: 'Free plan · Upgrade to Pro',      icon: Crown,          color: '#fbbf24', bg: 'rgba(245,158,11,0.12)' },
 ];
 
-const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdateSettings, onBack, onNavigate }) => {
+const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdateSettings, onBack, onNavigate, onSubPageChange }) => {
   const { logout } = useAuth();
   const { showToast } = useUI();
   const { subscription, globalConfig } = useSubscription();
@@ -122,6 +123,12 @@ const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdate
       setLoading(false);
     }
   };
+
+  // Notify parent when entering/leaving a sub-page (hides bottom nav)
+  useEffect(() => {
+    onSubPageChange?.(activeSection !== 'menu');
+    return () => { onSubPageChange?.(false); };
+  }, [activeSection, onSubPageChange]);
 
   // Reset dirty flag when navigating away (back to menu = discard local edits)
   const handleBackToMenu = () => {

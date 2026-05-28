@@ -300,13 +300,24 @@ const CommandModal: React.FC<CommandModalProps> = ({ isOpen, onClose, user, onSu
         setRecordingSeconds(0);
         timerRef.current = setInterval(() => setRecordingSeconds(s => s + 1), 1000);
       } catch (e: any) {
-        if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
+        const errName = e?.name ?? '';
+        if (errName === 'NotAllowedError' || errName === 'PermissionDeniedError') {
           if (isNative) {
+            // Check the actual OS-level permission state before advising the user
+            try {
+              const perm = await navigator.permissions?.query?.({ name: 'microphone' as PermissionName });
+              if (perm?.state === 'granted') {
+                // OS granted but WebView still blocked — likely a fresh install or
+                // WebView cache issue; retry usually works after first prompt.
+                showToast('Microphone access failed — please try again', 'error');
+                return;
+              }
+            } catch (_) { /* permissions API not supported — fall through */ }
             showToast('Mic blocked — open Android Settings › Apps › Shopkeeper › Permissions › Microphone', 'error');
           } else {
             showToast('Microphone blocked — tap the lock icon in your browser address bar to allow it', 'error');
           }
-        } else if (e.name === 'NotFoundError') {
+        } else if (errName === 'NotFoundError') {
           showToast('No microphone found on this device', 'error');
         } else {
           showToast('Could not access microphone', 'error');
