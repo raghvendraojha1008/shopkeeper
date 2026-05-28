@@ -330,6 +330,22 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
 
   const title = currentFilter === 'all' ? 'Transactions' : (currentFilter === 'received' ? 'Received' : 'Paid');
 
+  // Hoisted BEFORE the early return below — Rules of Hooks requires the same
+  // number of hooks on every render.  The old inline useCallback inside
+  // itemContent JSX was called AFTER the `if (selectedDetail)` early return,
+  // causing React error #300 in the production Android build.
+  const renderTransactionRow = useCallback((_index: number, item: any) => (
+    <div className="pb-2">
+      <TransactionRow
+        item={item}
+        searchTerm={searchTerm}
+        isStaff={isStaff}
+        onDelete={handleDelete}
+        onView={setSelectedDetail}
+      />
+    </div>
+  ), [searchTerm, isStaff, handleDelete, setSelectedDetail]);
+
   if (selectedDetail) {
     return (
       <TransactionDetailView
@@ -445,17 +461,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
             <Virtuoso
               customScrollParent={scrollParent ?? undefined}
               data={filtered}
-              itemContent={useCallback((_index: number, item: any) => (
-                <div className="pb-2">
-                  <TransactionRow
-                    item={item}
-                    searchTerm={searchTerm}
-                    isStaff={isStaff}
-                    onDelete={handleDelete}
-                    onView={setSelectedDetail}
-                  />
-                </div>
-              ), [searchTerm, isStaff, handleDelete, setSelectedDetail])}
+              itemContent={renderTransactionRow}
               components={{
                 Footer: () => <div style={{ height: 80 }} />,
               }}

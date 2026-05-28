@@ -475,6 +475,16 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
     );
   }, [handleEdit, handleDelete, handleSelectDetail, parties, settings, paymentStatusMap, transactions, setPaymentDetailsFor]);
 
+  // Hoisted BEFORE the early return below so this hook is always called in
+  // the same order on every render (Rules of Hooks).
+  // The old inline useCallback inside itemContent JSX was called AFTER the
+  // `if (selectedDetail)` early return, causing React error #300 in production.
+  const renderLedgerRow = useCallback((_index: number, item: any) => (
+    <div className="px-3 md:px-6 pb-1.5">
+      {renderLedgerCard(item)}
+    </div>
+  ), [renderLedgerCard]);
+
   if (selectedDetail) {
     return (
       <LedgerEntryDetailView
@@ -674,11 +684,7 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
                 ),
                 Footer: () => <div className="h-24" />,
               }}
-              itemContent={useCallback((_index: number, item: any) => (
-                <div className="px-3 md:px-6 pb-1.5">
-                  {renderLedgerCard(item)}
-                </div>
-              ), [renderLedgerCard])}
+              itemContent={renderLedgerRow}
             />
           )}
         </div>
