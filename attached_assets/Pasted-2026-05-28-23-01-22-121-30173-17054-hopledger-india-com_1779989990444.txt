@@ -1,0 +1,34 @@
+2026-05-28 23:01:22.121 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:22.126 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:22.134 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:22.141 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:22.142 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:22.142 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:22.142 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:22.143 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.871 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.876 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.885 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.889 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.909 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.912 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.912 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.912 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.913 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.913 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.914 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.914 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.931 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.931 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.931 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.932 30173-17054 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 23:01:24.938 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.971 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.972 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.973 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:24.982 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:25.047 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:25.859 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:25.859 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:25.859 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 23:01:25.859 30173-16890 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
