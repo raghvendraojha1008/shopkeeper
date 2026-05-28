@@ -10,8 +10,14 @@
     <!--  Contacts — required for party name/phone suggestions from device contacts  -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!-- Microphone — required for AI audio functionality -->
+    <!-- Microphone — required for AI audio / getUserMedia in WebView -->
+    <!-- RECORD_AUDIO: runtime permission to capture audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- MODIFY_AUDIO_SETTINGS: normal permission required by Chromium WebView's
+         cr_media layer — without this it refuses to open any audio device even
+         when RECORD_AUDIO is granted, producing "No audio device will be available
+         for recording" in logcat and NotAllowedError in getUserMedia. -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <!--
           WRITE_EXTERNAL_STORAGE: only needed below API 29 (Android 9).
