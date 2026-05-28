@@ -672,11 +672,11 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
                 ),
                 Footer: () => <div className="h-24" />,
               }}
-              itemContent={(_index, item) => (
+              itemContent={useCallback((_index: number, item: any) => (
                 <div className="px-3 md:px-6 pb-1.5">
                   {renderLedgerCard(item)}
                 </div>
-              )}
+              ), [renderLedgerCard])}
             />
           )}
         </div>

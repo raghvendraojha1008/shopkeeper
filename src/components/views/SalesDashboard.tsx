@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { User } from 'firebase/auth';
 import { 
   ArrowLeft, TrendingUp, BarChart3, Package, Search, Filter 
 } from 'lucide-react';
-import { ApiService } from '../../services/api';
+import { useData } from '../../context/DataContext';
 import { formatCurrency } from '../../utils/helpers';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { parseDateSafe, toDateStrSafe } from '../../utils/dateUtils';
@@ -21,8 +21,9 @@ function toDateString(raw: any): string {
 }
 
 const SalesDashboard: React.FC<SalesDashboardProps> = ({ user, onBack }) => {
-  const [loading, setLoading] = useState(true);
-  const [sales, setSales] = useState<any[]>([]);
+  const { useLedger } = useData();
+  const { data: ledgerRaw, isLoading: loading } = useLedger(user.uid);
+  const sales = useMemo(() => (ledgerRaw || []).filter((d: any) => d.type === 'sell'), [ledgerRaw]);
   const [searchTerm, setSearchTerm] = useState('');
   
   // Date Filter (Default: This Month)
@@ -30,22 +31,6 @@ const SalesDashboard: React.FC<SalesDashboardProps> = ({ user, onBack }) => {
       start: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
       end: new Date().toISOString().split('T')[0]
   });
-
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      try {
-        const snap = await ApiService.getAll(user.uid, 'ledger_entries');
-        // Filter only 'sell' entries
-        const data = snap.docs
-            .map(d => ({ id: d.id, ...d.data() }))
-            .filter((d: any) => d.type === 'sell');
-        setSales(data);
-      } catch (e) { console.error(e); } 
-      finally { setLoading(false); }
-    };
-    load();
-  }, [user]);
 
   // --- AGGREGATION ENGINE ---
   const stats = useMemo(() => {

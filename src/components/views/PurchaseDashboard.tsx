@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { User } from 'firebase/auth';
 import { 
   ArrowLeft, TrendingDown, BarChart3, Package, Search 
 } from 'lucide-react';
-import { ApiService } from '../../services/api';
+import { useData } from '../../context/DataContext';
 import { formatCurrency } from '../../utils/helpers';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { parseDateSafe, toDateStrSafe } from '../../utils/dateUtils';
@@ -21,29 +21,15 @@ function toDateString(raw: any): string {
 }
 
 const PurchaseDashboard: React.FC<PurchaseDashboardProps> = ({ user, onBack }) => {
-  const [loading, setLoading] = useState(true);
-  const [purchases, setPurchases] = useState<any[]>([]);
+  const { useLedger } = useData();
+  const { data: ledgerRaw, isLoading: loading } = useLedger(user.uid);
+  const purchases = useMemo(() => (ledgerRaw || []).filter((d: any) => d.type === 'purchase'), [ledgerRaw]);
   const [searchTerm, setSearchTerm] = useState('');
   
   const [dateRange, setDateRange] = useState({
       start: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
       end: new Date().toISOString().split('T')[0]
   });
-
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      try {
-        const snap = await ApiService.getAll(user.uid, 'ledger_entries');
-        const data = snap.docs
-            .map(d => ({ id: d.id, ...d.data() }))
-            .filter((d: any) => d.type === 'purchase');
-        setPurchases(data);
-      } catch (e) { console.error(e); } 
-      finally { setLoading(false); }
-    };
-    load();
-  }, [user]);
 
   const stats = useMemo(() => {
       const filtered = purchases.filter(p => {

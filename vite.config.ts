@@ -57,21 +57,28 @@ export default defineConfig(({ command }: ConfigEnv) => {
       minify: 'esbuild',
       cssMinify: true,
       sourcemap: false,
+      // Increase parallelism during minification
+      target: 'esnext',
 
       rollupOptions: {
         output: {
+          // Keep lazy-loaded views in their own chunks so they're only downloaded when needed
           manualChunks(id: string) {
             if (id.includes('node_modules')) {
-
               if (
-                id.includes('react') ||
+                id.includes('react/') ||
                 id.includes('react-dom') ||
-                id.includes('react-router-dom')
+                id.includes('react-router-dom') ||
+                id.includes('scheduler')
               ) {
                 return 'vendor-react';
               }
 
-              if (id.includes('@tanstack/react-query')) {
+              if (
+                id.includes('@tanstack/react-query') ||
+                id.includes('@tanstack/query') ||
+                id.includes('idb-keyval')
+              ) {
                 return 'vendor-query';
               }
 
@@ -79,7 +86,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
                 return 'vendor-firebase';
               }
 
-              if (id.includes('recharts')) {
+              if (id.includes('recharts') || id.includes('d3-') || id.includes('victory')) {
                 return 'vendor-charts';
               }
 
@@ -95,7 +102,15 @@ export default defineConfig(({ command }: ConfigEnv) => {
                 return 'vendor-icons';
               }
 
-              // fallback
+              if (id.includes('react-virtuoso')) {
+                return 'vendor-virtuoso';
+              }
+
+              if (id.includes('@capacitor')) {
+                return 'vendor-capacitor';
+              }
+
+              // fallback — all other node_modules in one vendor chunk
               return 'vendor';
             }
           },

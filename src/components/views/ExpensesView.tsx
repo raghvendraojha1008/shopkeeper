@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useScrollMemory } from '../../hooks/useScrollMemory';
 import { User } from 'firebase/auth';
 import {
@@ -7,11 +7,11 @@ import {
 } from 'lucide-react';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { getDefaultDateRange } from '../../utils/filterPeriod';
-import { ApiService } from '../../services/api';
 import { TrashService } from '../../services/trash';
 import { exportService } from '../../services/export';
 import { fmtINR } from '../../utils/gstUtils';
 import { useUI } from '../../context/UIContext';
+import { useData } from '../../context/DataContext';
 import { useSoftDelete } from '../common/UndoSnackbar';
 import ExportFormatModal from '../common/ExportFormatModal';
 import ExpenseDetailView from './ExpenseDetailView';
@@ -35,9 +35,11 @@ interface ExpensesViewProps {
 
 const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, onEdit, onBack }) => {
   const { confirm, showToast } = useUI();
+  const { useExpenses } = useData();
   const scrollRef = useScrollMemory('expenses');
-  const [expenses, setExpenses] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  // PERF: use shared TanStack Query cache — eliminates direct Firestore read on every mount
+  const { data: expenses, isLoading: loading, setData } = useExpenses(user.uid);
 
   const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
@@ -48,18 +50,7 @@ const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, o
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      try {
-        const snap = await ApiService.getAll(user.uid, 'expenses');
-        const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        data.sort((a: any, b: any) => parseRecordDate(b.date).getTime() - parseRecordDate(a.date).getTime());
-        setExpenses(data);
-      } catch (e) { console.error(e); } finally { setLoading(false); }
-    };
-    load();
-
+  React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowCategoryDropdown(false);
@@ -67,7 +58,7 @@ const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, o
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [user]);
+  }, []);
 
   const { scheduleDelete } = useSoftDelete();
 
@@ -78,8 +69,8 @@ const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, o
       id,
       collection: 'expenses',
       itemName: item.category || 'Expense',
-      onOptimistic: () => setExpenses(p => p.filter(i => i.id !== id)),
-      onRestore: () => setExpenses(p => [...p, item].sort((a, b) => parseRecordDate(b.date).getTime() - parseRecordDate(a.date).getTime())),
+      onOptimistic: () => setData(p => p.filter(i => i.id !== id)),
+      onRestore: () => setData(p => [...p, item].sort((a, b) => parseRecordDate(b.date).getTime() - parseRecordDate(a.date).getTime())),
       onCommit: async () => { await TrashService.moveToTrash(user.uid, 'expenses', id); },
     });
   };

@@ -403,7 +403,7 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
                  data={enrichedItems}
                  overscan={400}
                  computeItemKey={(_idx, item) => item.id || `inv-${_idx}`}
-                 itemContent={(_idx, item) => (
+                 itemContent={useCallback((_idx: number, item: any) => (
                    <div className="pb-2.5">
                      <InventoryRow
                        item={item}
@@ -413,7 +413,7 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
                        onDelete={handleDelete}
                      />
                    </div>
-                 )}
+                 ), [isAdmin, handleSelectInvItem, onEdit, handleDelete])}
                />
            )}
        </div>

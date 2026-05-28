@@ -152,8 +152,8 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
     return map;
   }, [parties, ledgerByParty, transactionsByParty]);
 
-  // PERF: Stable card renderer reference — prevents Virtuoso from re-creating
-  // every row component when parent state changes (e.g. search input typing).
+  // PERF: Stable card renderer — memoized so Virtuoso skips re-rendering
+  // individual rows when only unrelated parent state changes (e.g. search input).
   const renderPartyCard = useCallback((party: any) => {
     const { totalBilled, totalPaid, balance } = partyAccounting[party.id] || { totalBilled: 0, totalPaid: 0, balance: 0 };
 
@@ -378,11 +378,11 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
             data={filteredParties}
             overscan={300}
             computeItemKey={(_index, party) => party.id || `party-${_index}`}
-            itemContent={(_index, party) => (
+            itemContent={useCallback((_index: number, party: any) => (
               <div className="px-4 pt-2">
                 {renderPartyCard(party)}
               </div>
-            )}
+            ), [renderPartyCard])}
             components={{
               Footer: () => <div className="h-24" />,
             }}

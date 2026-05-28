@@ -18,7 +18,6 @@ import { useRole } from '../../context/RoleContext';
 import { useUI } from '../../context/UIContext';
 import { useSubscription } from '../../context/SubscriptionContext';
 import { hasAccess, FeatureKey } from '../../utils/featureAccess';
-import { ApiService } from '../../services/api';
 import { AppSettings } from '../../types';
 import { QuickActionButton, MetricCard } from './DashboardWidgets';
 import InsightModal from '../modals/InsightModal';
@@ -251,29 +250,25 @@ const GETTING_STARTED_ALL: GettingStartedStep[] = [
 
 const DashboardView: React.FC<DashboardViewProps> = ({ user, appSettings, onNavigate, onQuickAction, onToggleTheme }) => {
   const isDark = appSettings?.preferences?.dark_mode ?? false;
-  const { useLowStockItems } = useData();
+  const { useLowStockItems, useLedger, useTransactions, useInventory, useExpenses } = useData();
   const { data: lowStockItems } = useLowStockItems(user.uid);
+  const { data: ledgerRaw,      isLoading: ledgerLoading }    = useLedger(user.uid);
+  const { data: transactionsRaw, isLoading: txLoading }       = useTransactions(user.uid);
+  const { data: expensesRaw,    isLoading: expensesLoading }  = useExpenses(user.uid);
+  const { data: inventoryRaw,   isLoading: invLoading }       = useInventory(user.uid);
   const { isAdmin, isStaff, role } = useRole();
   const { logout } = useAuth();
   const { showToast } = useUI();
   const { subscription, globalConfig, liveFeatures } = useSubscription();
 
-  // FIX: Dashboard was making 4 additional independent unbounded Firestore reads
-  // every time it opened, bypassing the React Query cache in DataContext entirely.
-  // We now use the cached hooks from DataContext for all data that is already
-  // available there (parties, inventory, waste) and keep the direct reads only
-  // for ledger/expenses/transactions which need ALL historical records (not just
-  // a single page) for the dashboard metrics calculation.
-  //
-  // The four direct reads below remain because the dashboard must aggregate data
-  // across ALL time (for pending receivable/payable and recent activity), while
-  // the paginated DataContext hooks only return 20 docs per page.
-  // A future improvement would be to lift this into a dedicated dashboard query.
-  const [allLedger,       setAllLedger]       = useState<any[]>([]);
-  const [allExpenses,     setAllExpenses]      = useState<any[]>([]);
-  const [allTransactions, setAllTransactions]  = useState<any[]>([]);
-  const [inventoryData,   setInventoryData]    = useState<any[]>([]);
-  const [loading,         setLoading]          = useState(true);
+  // PERF: Use shared TanStack Query cache from DataContext — eliminates 4 redundant
+  // unbounded Firestore reads on every mount. All four collections are fetched once,
+  // persisted to IndexedDB, and reused across all tabs for the lifetime of the cache.
+  const allLedger       = useMemo(() => (ledgerRaw      || []).map((d: any) => ({ ...d, docType: 'ledger'      })), [ledgerRaw]);
+  const allExpenses     = useMemo(() => (expensesRaw    || []).map((d: any) => ({ ...d, docType: 'expense'     })), [expensesRaw]);
+  const allTransactions = useMemo(() => (transactionsRaw|| []).map((d: any) => ({ ...d, docType: 'transaction' })), [transactionsRaw]);
+  const inventoryData   = useMemo(() => inventoryRaw    || [], [inventoryRaw]);
+  const loading         = ledgerLoading || txLoading || expensesLoading || invLoading;
 
   const [periodFilter,     setPeriodFilter]    = useState<PeriodFilter>(getDefaultPeriod);
   const [showFilterPanel,  setShowFilterPanel] = useState(false);
@@ -345,31 +340,6 @@ const DashboardView: React.FC<DashboardViewProps> = ({ user, appSettings, onNavi
     });
   }, [GS_DONE_KEY]);
 
-  useEffect(() => {
-    let mounted = true;
-    const load = async () => {
-      setLoading(true);
-      try {
-        const [lSnap, eSnap, tSnap, iSnap] = await Promise.all([
-          ApiService.getAll(user.uid, 'ledger_entries'),
-          ApiService.getAll(user.uid, 'expenses'),
-          ApiService.getAll(user.uid, 'transactions'),
-          ApiService.getAll(user.uid, 'inventory'),
-        ]);
-        if (!mounted) return;
-        setAllLedger(lSnap.docs.map((d: any) => ({ id: d.id, ...d.data(), docType: 'ledger' })));
-        setAllExpenses(eSnap.docs.map((d: any) => ({ id: d.id, ...d.data(), docType: 'expense' })));
-        setAllTransactions(tSnap.docs.map((d: any) => ({ id: d.id, ...d.data(), docType: 'transaction' })));
-        setInventoryData(iSnap.docs.map((d: any) => ({ id: d.id, ...d.data() })));
-      } catch (err) {
-        console.error(err);
-        if (mounted) showToast('Failed to load dashboard data. Check your connection.', 'error');
-      }
-      finally { if (mounted) setLoading(false); }
-    };
-    load();
-    return () => { mounted = false; };
-  }, [user.uid]);
 
   const { start: periodStart, end: periodEnd, label: periodLabel } = useMemo(
     () => getPeriodDateRange(periodFilter),

@@ -443,7 +443,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
             <Virtuoso
               customScrollParent={scrollParent ?? undefined}
               data={filtered}
-              itemContent={(_index, item) => (
+              itemContent={useCallback((_index: number, item: any) => (
                 <div className="pb-2">
                   <TransactionRow
                     item={item}
@@ -453,7 +453,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
                     onView={setSelectedDetail}
                   />
                 </div>
-              )}
+              ), [searchTerm, isStaff, handleDelete, setSelectedDetail])}
               components={{
                 Footer: () => <div style={{ height: 80 }} />,
               }}

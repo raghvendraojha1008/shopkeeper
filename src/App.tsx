@@ -29,16 +29,15 @@ import { lifecycleManager } from './services/lifecycleManager';
 
 // Auth & Loading
 import LoginView, { EmailVerificationBanner } from './components/auth/LoginView';
-import WhatsNewModal from './components/common/WhatsNewModal';
 import OnboardingView from './components/auth/OnboardingView';
 import LoadingView from './components/views/LoadingView';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Main Views
-import DashboardView from './components/views/DashboardView';
-import InventoryView from './components/views/InventoryView';
-import PartiesView from './components/views/PartiesView';
-import SettingsView from './components/views/SettingsView';
+// Primary tab views — lazy-loaded to reduce initial bundle (these are the heaviest chunks)
+const DashboardView        = lazy(() => import('./components/views/DashboardView'));
+const InventoryView        = lazy(() => import('./components/views/InventoryView'));
+const PartiesView          = lazy(() => import('./components/views/PartiesView'));
+const SettingsView         = lazy(() => import('./components/views/SettingsView'));
 
 // Secondary Views — lazy-loaded so they don't inflate the initial bundle
 const LedgerView           = lazy(() => import('./components/views/LedgerView'));
@@ -59,10 +58,13 @@ const StockValuationView   = lazy(() => import('./components/views/StockValuatio
 const POSBillingView       = lazy(() => import('./components/views/POSBillingView'));
 const DailySnapshotView    = lazy(() => import('./components/views/DailySnapshotView'));
 
-// Common & Modals
-import CommandModal from './components/common/CommandModal';
+// Modals — lazy-loaded (only needed after user interaction)
+const CommandModal    = lazy(() => import('./components/common/CommandModal'));
+const ManualEntryModal = lazy(() => import('./components/modals/ManualEntryModal'));
+const WhatsNewModal   = lazy(() => import('./components/common/WhatsNewModal'));
+
+// LockScreen stays eager — it's a security gate that must render before user sees any content
 import LockScreen from './components/common/LockScreen';
-import ManualEntryModal from './components/modals/ManualEntryModal';
 import { ScreenErrorBoundary } from './components/common/ErrorBoundary';
 
 // Common
@@ -1121,16 +1123,20 @@ const AppContent = () => {
         </div>
       </nav>}
 
-      <CommandModal isOpen={showCommandModal} onClose={() => setShowCommandModal(false)} user={{ ...user!, uid: dataUid }} />
-      <ManualEntryModal
-        isOpen={showManualModal}
-        onClose={() => { setShowManualModal(false); setManualEntryData(null); }}
-        type={manualEntryType}
-        user={{ ...user!, uid: dataUid }}
-        initialData={manualEntryData}
-        appSettings={appSettings}
-        onSuccess={() => { handleRefresh(); setShowManualModal(false); setManualEntryData(null); }}
-      />
+      <Suspense fallback={null}>
+        <CommandModal isOpen={showCommandModal} onClose={() => setShowCommandModal(false)} user={{ ...user!, uid: dataUid }} />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ManualEntryModal
+          isOpen={showManualModal}
+          onClose={() => { setShowManualModal(false); setManualEntryData(null); }}
+          type={manualEntryType}
+          user={{ ...user!, uid: dataUid }}
+          initialData={manualEntryData}
+          appSettings={appSettings}
+          onSuccess={() => { handleRefresh(); setShowManualModal(false); setManualEntryData(null); }}
+        />
+      </Suspense>
     </div>
   );
 };

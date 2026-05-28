@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useBackHandler } from '../../services/useBackHandler';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
@@ -10,7 +10,7 @@ import {
   User as UserIcon, MessageSquare, History, Calendar, Info, Share2,
   CheckSquare, Square, Send, Users, FileText, Clock, BadgePercent, Zap
 } from 'lucide-react';
-import { ApiService } from '../../services/api';
+import { useData } from '../../context/DataContext';
 import { computePaymentDistribution } from '../../utils/paymentDistribution';
 import PartyDetailView from './PartyDetailView';
 import { useUI } from '../../context/UIContext';
@@ -26,15 +26,17 @@ interface PendingViewProps {
 
 const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {}, initialFilter }) => {
   const { showToast } = useUI();
-  const [loading, setLoading] = useState(true);
+  const { useLedger, useTransactions, useParties } = useData();
+
+  // PERF: shared TanStack Query cache — eliminates 3 direct Firestore reads on every mount
+  const { data: ledger, isLoading: ledgerLoading } = useLedger(user.uid);
+  const { data: transactions, isLoading: txLoading } = useTransactions(user.uid);
+  const { data: parties, isLoading: partiesLoading } = useParties(user.uid);
+  const loading = ledgerLoading || txLoading || partiesLoading;
+
   const [activeTab, setActiveTab] = useState<'receivable' | 'payable'>(initialFilter || 'receivable');
   const [search, setSearch] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  
-  // Core Data States
-  const [ledger, setLedger] = useState<any[]>([]);
-  const [transactions, setTransactions] = useState<any[]>([]);
-  const [parties, setParties] = useState<any[]>([]);
 
   // Advanced Waiver UI State
   const [showWaiverBox, setShowWaiverBox] = useState(false);
@@ -54,29 +56,8 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
   const [selectedPartyData, setSelectedPartyData] = useState<any>(null);
   useBackHandler(() => setSelectedPartyData(null), !!selectedPartyData, 5);
 
-
   // --- OPTIMISTIC UI STATE ---
   const [optimisticUpdates, setOptimisticUpdates] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const [lSnap, tSnap, pSnap] = await Promise.all([
-            ApiService.getAll(user.uid, 'ledger_entries'),
-            ApiService.getAll(user.uid, 'transactions'),
-            ApiService.getAll(user.uid, 'parties')
-        ]);
-        setLedger(lSnap.docs.map(d => ({id: d.id, ...d.data()})));
-        setTransactions(tSnap.docs.map(d => ({id: d.id, ...d.data()})));
-        setParties(pSnap.docs.map(d => ({id: d.id, ...d.data()})));
-      } catch (e) {
-        console.error("Data Fetch Error:", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [user]);
 
   // Logic: WhatsApp Automation with Optimistic UI
   const sendWhatsAppReminder = async (order: any) => {

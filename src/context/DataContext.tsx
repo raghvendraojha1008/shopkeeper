@@ -85,6 +85,12 @@ interface DataContextType {
     refetch: () => void;
     setData: (updater: (old: any[]) => any[]) => void;
   };
+  useExpenses: (userId: string) => {
+    data: any[];
+    isLoading: boolean;
+    refetch: () => void;
+    setData: (updater: (old: any[]) => any[]) => void;
+  };
   useWaste: (userId: string) => {
     data: WasteEntry[];
     isLoading: boolean;
@@ -144,6 +150,21 @@ const useLedgerQuery = (userId: string) => {
     queryFn: async () => {
       if (!userId) return [];
       const snap = await ApiService.getAll(userId, 'ledger_entries');
+      const data = snap.docs.map(d => ({ id: d.id, ...d.data() })) as any[];
+      data.sort((a, b) => parseDateSafe(b.date).getTime() - parseDateSafe(a.date).getTime());
+      return data;
+    },
+    enabled: !!userId,
+    staleTime: STALE.SHORT,
+  });
+};
+
+const useExpensesQuery = (userId: string) => {
+  return useQuery({
+    queryKey: ['expenses', userId],
+    queryFn: async () => {
+      if (!userId) return [];
+      const snap = await ApiService.getAll(userId, 'expenses');
       const data = snap.docs.map(d => ({ id: d.id, ...d.data() })) as any[];
       data.sort((a, b) => parseDateSafe(b.date).getTime() - parseDateSafe(a.date).getTime());
       return data;
@@ -235,6 +256,18 @@ export const useLedger = (userId: string) => {
   };
 };
 
+export const useExpenses = (userId: string) => {
+  const { data, isLoading, refetch } = useExpensesQuery(userId);
+  return {
+    data: data || [],
+    isLoading,
+    refetch,
+    setData: (updater: (old: any[]) => any[]) => {
+      queryClient.setQueryData(['expenses', userId], (old: any[] = []) => updater(old));
+    },
+  };
+};
+
 export const useWaste = (userId: string) => {
   const { data, isLoading, refetch } = useWasteQuery(userId);
   return {
@@ -248,11 +281,10 @@ export const useWaste = (userId: string) => {
 };
 
 export const invalidateAll = (userId: string) => {
-  // Batch all five invalidations inside a single React render cycle using
+  // Batch all six invalidations inside a single React render cycle using
   // queryClient.invalidateQueries in sequence. React Query v5 batches these
-  // into one re-render via its internal notification scheduler, avoiding the
-  // previous pattern of five separate state-update cascades.
-  const collections = ['parties', 'inventory', 'ledger', 'transactions', 'waste'] as const;
+  // into one re-render via its internal notification scheduler.
+  const collections = ['parties', 'inventory', 'ledger', 'transactions', 'expenses', 'waste'] as const;
   collections.forEach(col =>
     queryClient.invalidateQueries({ queryKey: [col, userId], exact: true }),
   );
@@ -298,6 +330,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useLowStockItems,
     useTransactions,
     useLedger,
+    useExpenses,
     useWaste,
     invalidateAll,
   }), []);
