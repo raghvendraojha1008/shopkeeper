@@ -468,7 +468,9 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
       }
 
       // Inventory auto-update — uses the cached inventory list (no extra Firestore read).
-      if (!isOffline && (type === 'sales' || type === 'purchases') && appSettings.automation?.auto_update_inventory) {
+      // Works both online (direct write) and offline (queued via SyncQueueService so
+      // stock is updated as soon as connectivity returns, not silently dropped).
+      if ((type === 'sales' || type === 'purchases') && appSettings.automation?.auto_update_inventory) {
         const isSale = type === 'sales';
         const stockUpdates = (payload.items || []).map(async (lineItem: any) => {
           if (!lineItem.item_name) return;
@@ -479,7 +481,11 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
           const current = Number(match.current_stock) || 0;
           const qty     = Number(lineItem.quantity) || 0;
           const newStock = isSale ? Math.max(0, current - qty) : current + qty;
-          await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
+          if (isOffline) {
+            SyncQueueService.addToQueue(user.uid, 'update', 'inventory', { current_stock: newStock }, match.id);
+          } else {
+            await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
+          }
         });
         await Promise.all(stockUpdates);
       }

@@ -420,7 +420,9 @@ const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBa
         (inventory as any[]).map((item: any) => [item.id, Number(item.current_stock) || 0])
       );
 
-      if (!isOffline && appSettings?.automation?.auto_update_inventory !== false) {
+      // Apply optimistic inventory decrement immediately — online and offline alike.
+      // Offline rollback is handled in the catch block using stockSnapshot.
+      if (appSettings?.automation?.auto_update_inventory !== false) {
         setInventoryCache(old => old.map(item => {
           const li = items.find(
             (l: any) => String(l.item_name).toLowerCase() === String(item.name).toLowerCase()
@@ -442,15 +444,20 @@ const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBa
         setLedgerCache(old => old.map(e => e.id === tempId ? { ...payload } : e));
       }
 
-      // 5. Persist the stock decrements to Firestore (online only).
-      if (!isOffline && appSettings?.automation?.auto_update_inventory !== false) {
+      // 5. Persist the stock decrements — queue via SyncQueueService when offline
+      //    so stock is updated the moment connectivity returns (not silently dropped).
+      if (appSettings?.automation?.auto_update_inventory !== false) {
         await Promise.all(items.map(async (li: any) => {
           const match = (inventory as any[]).find(
             (i: any) => String(i.name || '').toLowerCase() === String(li.item_name).toLowerCase()
           );
           if (!match?.id) return;
           const newStock = Math.max(0, (Number(match.current_stock) || 0) - Number(li.quantity));
-          await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
+          if (isOffline) {
+            SyncQueueService.addToQueue(user.uid, 'update', 'inventory', { current_stock: newStock }, match.id);
+          } else {
+            await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
+          }
         }));
       }
 
@@ -463,7 +470,9 @@ const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBa
       // Rollback optimistic inventory decrements using the pre-decrement snapshot
       // so stock is restored to its exact original value (avoids overshoot when
       // the decrement was capped by Math.max(0,...)).
-      if (!isOffline && appSettings?.automation?.auto_update_inventory !== false) {
+      // Runs unconditionally because the optimistic decrement now happens
+      // regardless of online/offline state.
+      if (appSettings?.automation?.auto_update_inventory !== false) {
         setInventoryCache(old => old.map(item => {
           const original = stockSnapshot.get(item.id);
           return original !== undefined ? { ...item, current_stock: original } : item;
