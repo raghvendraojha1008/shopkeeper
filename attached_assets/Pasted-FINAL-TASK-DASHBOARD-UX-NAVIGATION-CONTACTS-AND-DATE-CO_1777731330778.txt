@@ -1,0 +1,211 @@
+FINAL TASK — DASHBOARD UX, NAVIGATION, CONTACTS, AND DATE CONSISTENCY FIX
+
+SYSTEM CONTEXT
+
+The system is production-ready. This task is strictly about fixing UX, layout, navigation correctness, contact suggestions, and date consistency.
+
+DO NOT change core architecture or business logic.
+
+---
+
+PRIMARY OBJECTIVE
+
+Ensure:
+
+* Dashboard behaves correctly
+* Navigation is accurate
+* Contact suggestions work
+* Dates are consistent across all views
+
+---
+
+MODULE 1 — DASHBOARD LAYOUT STRUCTURE FIX
+
+Problems:
+
+* Low stock widget blocks scroll
+* Layout breaks at certain screen heights
+
+Fix:
+
+1. Ensure entire dashboard uses ONE vertical scroll container
+2. Remove nested scroll containers
+3. Ensure:
+
+   * overflow-y: auto on parent
+   * no position: fixed on widgets
+4. Low stock + reorder widgets must NOT block scrolling
+
+---
+
+MODULE 2 — WIDGET REPOSITIONING
+
+Move:
+
+* Low Stock
+* Reorder Suggestions
+
+Place BOTH:
+→ Below “Quick Navigate”
+
+---
+
+MODULE 3 — COLLAPSIBLE LIST BEHAVIOR
+
+For BOTH widgets:
+
+Default:
+
+* Show max 2 items
+
+If more exist:
+
+* Show “▼ Show more”
+
+On click:
+
+* Expand full list
+* Toggle to “▲ Show less”
+
+Use local component state
+
+---
+
+MODULE 4 — DASHBOARD NAVIGATION FIX
+
+Fix routing:
+
+* “To Pay” → Payables page
+* “To Receive” → Receivables page
+* “Received” → Received transactions
+* “Paid Out” → Expenses / payments page
+
+Rules:
+
+* No generic navigation
+* Use explicit route paths
+* Ensure correct params
+
+---
+
+MODULE 5 — CONTACT SUGGESTION FIX
+
+Fix contact integration:
+
+1. Fetch contacts:
+
+   * On input focus OR first mount
+   * Only once
+
+2. On typing:
+
+   * Filter by name (case-insensitive)
+   * startsWith + includes
+
+3. Show dropdown:
+
+   * Max 5–10 suggestions
+   * Click → autofill
+
+4. Ensure:
+
+   * Permission check before fetch
+   * Graceful fallback if denied
+
+5. Add debounce (200–300ms)
+
+---
+
+MODULE 6 — DATE CONSISTENCY FIX (CRITICAL)
+
+Problem:
+Dates in Ledger/Transaction lists show one day earlier than selected date
+
+Root cause:
+Date strings parsed as UTC instead of local time
+
+Fix:
+
+1. Replace ALL date parsing logic:
+
+DO NOT use:
+
+* new Date("YYYY-MM-DD")
+* new Date(dateString)
+
+2. Use SAFE LOCAL parsing:
+
+function parseRecordDate(raw) {
+if (!raw) return new Date(0);
+
+if (raw?.toDate) return raw.toDate();
+
+const s = String(raw);
+
+if (s.includes('T')) return new Date(s);
+
+const [y, m, d] = s.split('-').map(Number);
+return new Date(y, m - 1, d); // LOCAL date
+}
+
+3. Ensure:
+
+* LedgerView uses this
+* TransactionsView uses this
+* Sorting also uses parsed date
+
+4. Verify:
+
+* Selected date == displayed date
+* No timezone shift anywhere
+
+---
+
+MODULE 7 — EDGE CASES
+
+Handle:
+
+* No contacts → no crash
+* Large contacts → fast filtering
+* Empty input → hide suggestions
+* Date parsing → no invalid crash
+
+---
+
+MODULE 8 — PERFORMANCE & CLEANUP
+
+* Memoize filtered contacts
+* Avoid repeated contact fetch
+* Avoid unnecessary re-renders
+
+---
+
+SUCCESS CRITERIA
+
+✔ Dashboard scroll works
+✔ Low stock/reorder correctly placed
+✔ Expand/collapse works
+✔ Navigation is correct
+✔ Contact suggestions work
+✔ Dates are correct everywhere
+
+---
+
+STRICT RULES
+
+* Do NOT modify backend/data schema
+* Do NOT refactor unrelated modules
+* Do NOT introduce new features
+
+Only fix:
+
+* layout
+* navigation
+* contact integration
+* date parsing
+
+---
+
+END GOAL
+
+“App behaves correctly, navigation is reliable, and all data (especially dates) is accurate and trustworthy”

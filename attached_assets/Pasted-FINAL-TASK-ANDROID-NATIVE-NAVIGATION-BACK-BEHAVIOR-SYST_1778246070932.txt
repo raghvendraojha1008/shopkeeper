@@ -1,0 +1,264 @@
+FINAL TASK — ANDROID NATIVE NAVIGATION & BACK-BEHAVIOR SYSTEM
+
+SYSTEM CONTEXT
+
+This app is a Capacitor-based Android application using React.
+
+The goal is NOT merely to “handle back button”.
+
+The goal is to create a native-quality Android navigation experience across:
+
+* pages
+* sub-pages
+* modals
+* overlays
+* sheets
+* dialogs
+* temporary UI states
+
+The app should feel like a polished native Android application.
+
+---
+
+PRIMARY OBJECTIVE
+
+Implement a centralized Android navigation/back-behavior system with proper state restoration and navigation hierarchy.
+
+---
+
+CORE PRINCIPLE
+
+Back navigation must behave in this priority order:
+
+1. Close overlays/modals/dialogs/sheets first
+2. Close temporary fullscreen views
+3. Navigate to previous page
+4. Restore previous page EXACT state
+5. Exit app ONLY from true root screen
+
+---
+
+MODULE 1 — CENTRALIZED BACK HANDLER
+
+Create ONE centralized back-navigation controller.
+
+DO NOT scatter:
+
+* window.history.back()
+* random navigate(-1)
+* duplicate Capacitor listeners
+
+Requirements:
+
+* Single source of truth
+* Deterministic behavior
+* Prevent duplicate listeners
+
+Use:
+
+* Capacitor App.addListener('backButton')
+* Central navigation service/hook
+
+---
+
+MODULE 2 — OVERLAY PRIORITY SYSTEM
+
+When Android back is pressed:
+
+Priority order:
+
+1. Open dialog
+2. Open bottom sheet
+3. Fullscreen modal
+4. Dropdown/select overlay
+5. Toast/action popup (if dismissible)
+6. Nested page
+7. Root page
+
+The system must:
+
+* close ONLY the topmost active layer
+* never skip directly to app exit
+
+---
+
+MODULE 3 — PAGE STATE RESTORATION (CRITICAL)
+
+When navigating back to a previous page:
+
+Restore:
+
+* scroll position
+* active tab
+* search query
+* filters
+* expanded/collapsed state
+* form draft state
+* selected list item
+* pagination/list position
+
+Requirements:
+
+* NO full page reset
+* NO forced remount
+* NO list jumping to top
+
+Implement lightweight state persistence:
+
+* route-based UI state cache
+* restore on remount/navigation return
+
+Avoid:
+
+* global over-engineering
+* excessive localStorage writes
+
+Prefer:
+
+* in-memory cache/context/store
+
+---
+
+MODULE 4 — ROOT EXIT BEHAVIOR
+
+ONLY exit app when:
+
+* user is on true root screen
+* no modal/dialog/open layer exists
+
+Recommended:
+
+* “Press back again to exit”
+
+Requirements:
+
+* first back → toast/snackbar
+* second back within 2s → exit app
+
+Prevent accidental exits.
+
+---
+
+MODULE 5 — SCROLL RESTORATION
+
+Critical for:
+
+* ledger
+* inventory
+* transaction lists
+* analytics screens
+
+Requirements:
+
+* restore exact previous scroll offset
+* preserve virtualization state if used
+* avoid flashing/jumping
+
+---
+
+MODULE 6 — FORM SAFETY
+
+When user has unsaved form changes:
+
+Back action should:
+
+* show discard confirmation dialog
+  OR
+* preserve draft automatically
+
+Must handle:
+
+* manual entry forms
+* billing forms
+* settings forms
+
+---
+
+MODULE 7 — MODAL & SHEET CONSISTENCY
+
+Ensure:
+
+* all modals register with central stack
+* all overlays unregister on close/unmount
+
+Avoid:
+
+* orphan overlay states
+* double-close bugs
+* stale listeners
+
+---
+
+MODULE 8 — PERFORMANCE & MEMORY SAFETY
+
+Requirements:
+
+* no memory leaks
+* remove listeners on cleanup
+* avoid duplicate event bindings
+* no excessive rerenders
+
+Ensure:
+
+* stable references
+* proper cleanup in useEffect
+
+---
+
+MODULE 9 — ROUTING CONSISTENCY
+
+Replace inconsistent:
+
+* navigate(-1)
+* history.back()
+* manual state resets
+
+Use:
+
+* centralized navigation abstraction
+
+Ensure:
+
+* predictable behavior everywhere
+
+---
+
+MODULE 10 — EDGE CASES
+
+Handle correctly:
+
+* back during async loading
+* nested modal inside page
+* keyboard open state
+* rapid back presses
+* offline mode
+* toast visible + modal open
+* route transition race conditions
+
+---
+
+SUCCESS CRITERIA
+
+✔ Android back behaves natively
+✔ Modals/dialogs close first
+✔ Previous pages restore exact state
+✔ No unexpected app exits
+✔ No scroll reset
+✔ No duplicate listeners
+✔ No broken overlay states
+✔ App feels smooth and predictable
+
+---
+
+STRICT RULES
+
+* Do NOT rewrite the entire routing architecture
+* Do NOT introduce heavy navigation libraries unless necessary
+* Do NOT break existing functionality
+* Focus on correctness, consistency, and state continuity
+
+---
+
+END GOAL
+
+“App navigation feels indistinguishable from a polished native Android application.”

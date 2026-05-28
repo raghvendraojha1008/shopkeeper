@@ -1,0 +1,247 @@
+You are working on a production-grade React + Capacitor + Firebase (Firestore + Auth) application. Your task is to design and implement a **complete, scalable Subscription Management System** from scratch, integrated cleanly into the existing architecture.
+
+Do NOT implement a partial or UI-only solution. Build a **full system** including data model, access control, lifecycle handling, and future payment readiness.
+
+---
+
+# 🎯 OBJECTIVE
+
+Create a robust subscription system that:
+
+* Controls feature access across the app
+* Supports plans (free, pro, etc.)
+* Handles lifecycle (active, trial, expired)
+* Is payment-ready (but initially free ₹0 rollout)
+* Is secure, consistent, and scalable
+
+---
+
+# 🧠 SYSTEM DESIGN (MANDATORY)
+
+Before coding, ensure the system includes:
+
+## 1. Single Source of Truth (Firestore)
+
+Create a structured subscription document:
+
+```
+users/{userId}/subscription/current
+```
+
+Schema:
+
+```
+plan: "free" | "pro" | "enterprise"
+status: "active" | "trial" | "expired"
+startDate: timestamp
+endDate: timestamp
+trialUsed: boolean
+autoRenew: boolean
+paymentId: string | null
+createdAt: timestamp
+updatedAt: timestamp
+```
+
+Rules:
+
+* Only ONE active subscription per user
+* Always read from Firestore (no hardcoding)
+
+---
+
+## 2. Subscription Context (Global State)
+
+Create a `SubscriptionContext` similar to AuthContext:
+
+* Fetch subscription on login
+* Cache in state
+* Provide globally:
+
+  * subscription object
+  * loading state
+  * refresh function
+
+Ensure:
+
+* No redundant fetches
+* Handles user switch
+* Handles offline fallback safely
+
+---
+
+## 3. Feature Access Control Layer (CRITICAL)
+
+Create a centralized utility:
+
+```
+hasAccess(subscription, featureKey)
+```
+
+Define feature mapping:
+
+```
+const PLAN_FEATURES = {
+  free: ["basic"],
+  pro: ["basic", "analytics", "reports", "advanced_features"],
+  enterprise: ["all"]
+}
+```
+
+Rules:
+
+* NEVER hardcode access in UI
+* ALL feature gating must use this function
+
+---
+
+## 4. Feature Gating Integration
+
+Apply access control across app:
+
+Examples:
+
+* Analytics dashboard
+* Reports
+* Advanced views
+* Future premium features
+
+Behavior:
+
+* If access denied → show upgrade prompt
+* Do NOT crash or hide silently
+
+---
+
+# 🚀 INITIAL ROLLOUT STRATEGY (₹0 SUBSCRIPTION)
+
+IMPORTANT:
+
+Implement full system BUT:
+
+* Assign all new users:
+
+  ```
+  plan: "pro"
+  status: "active"
+  price: ₹0 (implicit)
+  ```
+* This simulates premium access without payment
+
+DO NOT skip system just because it's free.
+
+---
+
+# 🔄 SUBSCRIPTION LIFECYCLE LOGIC
+
+Implement full lifecycle:
+
+## On Signup:
+
+* Auto-create subscription
+
+## On App Load:
+
+* Validate:
+
+  * If expired → downgrade to free
+  * If active → allow access
+
+## Expiry Handling:
+
+* Compare endDate with current time
+* Update status accordingly
+
+## Optional (recommended):
+
+* Add grace period support
+
+---
+
+# 🧾 SUBSCRIPTION UI (SETTINGS PAGE)
+
+Create a clean section:
+
+Display:
+
+* Current plan
+* Status (Active / Trial / Expired)
+* Expiry date
+* Features included
+
+Add:
+
+* Upgrade button (even if not functional yet)
+
+---
+
+# 💳 PAYMENT-READY ARCHITECTURE (IMPORTANT)
+
+Even if payments are not enabled now:
+
+Design system so that later integration is seamless.
+
+Prepare:
+
+* paymentId field
+* webhook-compatible structure
+* update subscription via backend (future)
+
+DO NOT tightly couple UI with payment logic.
+
+---
+
+# 🔐 SECURITY RULES (CRITICAL)
+
+* Do NOT trust frontend for access control
+* Prepare structure for backend validation (Cloud Functions later)
+* Prevent manual tampering:
+
+  * validate plan/status before critical operations (future-ready)
+
+---
+
+# ⚠️ EDGE CASES TO HANDLE
+
+* User offline → use last known subscription safely
+* Multiple devices → always sync on app open
+* Missing subscription doc → auto-create fallback
+* Corrupted data → reset to safe defaults
+
+---
+
+# 🧠 PERFORMANCE & ARCHITECTURE
+
+* Avoid unnecessary re-renders
+* Keep subscription logic centralized
+* Do NOT duplicate feature checks
+* Keep code modular (context + utils + UI separation)
+
+---
+
+# 🔍 ADDITIONAL TASK (MANDATORY)
+
+While implementing, also:
+
+* Scan codebase for any future premium features
+* Integrate them into access control
+* Identify places where subscription gating will be needed later
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Complete subscription data model implemented
+2. SubscriptionContext integrated globally
+3. Feature gating working across app
+4. Lifecycle (create → validate → expire) working
+5. Clean UI in settings
+6. System ready for payment integration
+7. Summary of:
+
+   * what was implemented
+   * what future-ready hooks were added
+
+---
+
+Focus on long-term scalability, not shortcuts.
+This system must support real monetization later without refactoring.

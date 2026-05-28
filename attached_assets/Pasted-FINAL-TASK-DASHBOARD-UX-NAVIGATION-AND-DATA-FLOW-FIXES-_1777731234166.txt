@@ -1,0 +1,191 @@
+FINAL TASK — DASHBOARD UX, NAVIGATION, AND DATA FLOW FIXES
+
+SYSTEM CONTEXT
+
+The system is production-ready. This task is strictly about fixing UX, layout, navigation correctness, and one data integration issue.
+
+DO NOT change architecture or core data logic.
+
+---
+
+PRIMARY OBJECTIVE
+
+Fix all dashboard interaction issues so that:
+
+* UI behaves correctly
+* Navigation is deterministic
+* Contact suggestions work reliably
+
+---
+
+MODULE 1 — DASHBOARD LAYOUT STRUCTURE FIX
+
+Problems:
+
+* Low stock widget blocks scroll
+* Layout breaks at certain screen heights
+
+Fix:
+
+1. Ensure entire dashboard is wrapped in a scroll container:
+
+   * Use a single vertical scroll parent
+   * Remove nested scroll containers
+
+2. Low stock + reorder widgets must NOT:
+
+   * use fixed height with overflow hidden
+   * block parent scroll
+
+3. Ensure:
+
+   * overflow-y: auto on parent
+   * no position: fixed for these widgets
+
+---
+
+MODULE 2 — WIDGET REPOSITIONING
+
+Move:
+
+* Low Stock
+* Reorder Suggestions
+
+Place BOTH:
+
+→ Below “Quick Navigate” section
+
+---
+
+MODULE 3 — COLLAPSIBLE LIST BEHAVIOR
+
+For BOTH widgets:
+
+Default state:
+
+* Show MAX 2 items only
+
+If more items exist:
+
+* Show a “▼ Show more” button
+
+On click:
+
+* Expand full list
+* Button changes to “▲ Show less”
+
+State must be local (React state per widget)
+
+---
+
+MODULE 4 — DASHBOARD NAVIGATION FIX
+
+Problem:
+Buttons redirect to default page instead of correct route
+
+Fix ALL:
+
+1. “To Pay” → navigate to Payables page
+2. “To Receive” → navigate to Receivables page
+3. “Received” → navigate to Received transactions
+4. “Paid Out” → navigate to Expenses / payments page
+
+STRICT:
+
+* Do NOT use generic navigation
+* Use explicit route paths
+* Ensure route params (if needed) are passed correctly
+
+---
+
+MODULE 5 — CONTACT SUGGESTION FIX
+
+Problem:
+Permission exists but suggestions not appearing
+
+Root cause likely:
+
+* Contacts not fetched OR
+* Not bound to input OR
+* Filter logic broken
+
+Fix:
+
+1. On Party Name input:
+
+   * Fetch contacts once (on focus OR mount)
+   * Store in local state
+
+2. On typing:
+
+   * Filter contacts by:
+
+     * name (case-insensitive)
+     * startsWith OR includes
+
+3. Show dropdown suggestions:
+
+   * Limit 5–10 results
+   * Click → autofill name + phone
+
+4. Ensure:
+
+   * Permission check BEFORE fetch
+   * Graceful fallback if denied
+
+---
+
+MODULE 6 — INPUT UX IMPROVEMENT (IMPORTANT)
+
+For party name field:
+
+* Debounce input (200–300ms)
+* Avoid filtering on every keystroke instantly
+
+---
+
+MODULE 7 — EDGE CASES
+
+Handle:
+
+* No contacts → no crash, just no suggestions
+* Large contact list → fast filtering
+* Empty input → hide suggestions
+
+---
+
+MODULE 8 — PERFORMANCE & CLEANUP
+
+* No unnecessary re-renders
+* Memoize filtered results
+* Avoid repeated contact fetch
+
+---
+
+SUCCESS CRITERIA
+
+✔ Dashboard scroll works smoothly
+✔ Low stock/reorder positioned correctly
+✔ Expand/collapse works properly
+✔ All buttons navigate to correct pages
+✔ Contact suggestions appear instantly and correctly
+
+---
+
+STRICT RULES
+
+* Do NOT change business logic
+* Do NOT refactor unrelated code
+* Do NOT introduce new features
+
+Only fix:
+
+* layout
+* navigation
+* contact integration
+
+---
+
+END GOAL
+
+“Dashboard behaves cleanly, navigation is correct, and user input feels intelligent”

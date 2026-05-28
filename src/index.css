@@ -1,0 +1,2105 @@
+/* ═══════════════════════════════════════════════════════════
+   SHOPKEEPER LEDGER — GLOBAL DESIGN SYSTEM
+   Premium UI — Dark-first with complete Light Mode support
+   ═══════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+/* ─── DESIGN TOKENS: DARK MODE (default) ────────────────── */
+:root {
+  /* Accent / brand */
+  --primary: 245 158 11;
+  --primary-dark: 217 119 6;
+  --accent: 99 102 241;
+  --success: 16 185 129;
+  --danger: 239 68 68;
+
+  /* App background */
+  --app-bg: #0b0e1a;
+  --app-bg-rgb: 11, 14, 26;
+
+  /* Layered surfaces */
+  --surface-1: rgba(255,255,255,0.04);
+  --surface-2: rgba(255,255,255,0.07);
+  --surface-3: rgba(255,255,255,0.10);
+  --surface-modal: rgba(12,15,38,0.97);
+  --card-bg: rgba(255,255,255,0.06);
+
+  /* Glass morphism */
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-hover: rgba(255,255,255,0.09);
+  --nav-border: rgba(255,255,255,0.08);
+
+  /* Typography */
+  --text-primary: rgba(240,244,255,0.95);
+  --text-secondary: rgba(200,210,255,0.62);
+  --text-muted: rgba(150,170,220,0.46);
+
+  /* Form inputs */
+  --input-bg: rgba(255,255,255,0.06);
+  --input-border: rgba(255,255,255,0.12);
+  --input-text: rgba(226,232,240,0.90);
+  --input-placeholder: rgba(148,163,184,0.40);
+  --input-calendar-filter: invert(1) opacity(0.4);
+  --select-option-bg: #0f1524;
+  --select-option-color: rgba(226,232,240,0.90);
+
+  /* Dividers */
+  --separator: rgba(255,255,255,0.08);
+
+  /* Scrollbars */
+  --scrollbar-thumb: rgba(255,255,255,0.12);
+  --scrollbar-thumb-hover: rgba(255,255,255,0.20);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 8px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.50);
+  --shadow-xl: 0 12px 40px rgba(0,0,0,0.60);
+  --shadow-2xl: 0 24px 60px rgba(0,0,0,0.70);
+
+  /* Links */
+  --link-color: #a78bfa;
+  --link-hover: #c4b5fd;
+
+  /* Tables */
+  --table-text: rgba(203,213,225,0.80);
+  --table-header: rgba(148,163,184,0.52);
+  --table-row-alt: rgba(255,255,255,0.02);
+
+  /* Skeleton */
+  --skeleton-from: rgba(255,255,255,0.05);
+  --skeleton-mid: rgba(255,255,255,0.09);
+
+  /* Focus */
+  --focus-ring: rgba(139,92,246,0.50);
+  --focus-shadow: 0 0 0 2px rgba(139,92,246,0.25);
+
+  /* Font */
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Keyboard */
+  --keyboard-height: 0px;
+
+  /* Theme presets */
+  --preset-warm-saffron: 36 100% 50%;
+  --preset-rose-gulab: 351 83% 62%;
+  --preset-marigold: 43 96% 56%;
+  --preset-coral: 16 100% 66%;
+  --preset-terracotta: 14 66% 55%;
+  --preset-mango: 38 100% 54%;
+  --preset-pomegranate: 348 83% 47%;
+  --preset-cinnamon: 28 62% 46%;
+  --preset-sunset: 25 95% 60%;
+  --preset-peach: 18 90% 70%;
+  --preset-chai: 30 40% 55%;
+  --preset-berry: 280 60% 55%;
+  --preset-plum: 300 40% 45%;
+  --preset-mint-tea: 160 50% 45%;
+}
+
+/* ─── DESIGN TOKENS: LIGHT MODE OVERRIDES ───────────────── */
+[data-theme-mode="light"] {
+  --app-bg: #f4f6fc;
+  --app-bg-rgb: 244, 246, 252;
+
+  --surface-1: rgba(0,0,0,0.03);
+  --surface-2: rgba(0,0,0,0.055);
+  --surface-3: rgba(0,0,0,0.08);
+  --surface-modal: rgba(255,255,255,0.99);
+  --card-bg: rgba(255,255,255,0.92);
+
+  --glass-bg: rgba(255,255,255,0.88);
+  --glass-border: rgba(0,0,0,0.09);
+  --glass-hover: rgba(0,0,0,0.045);
+  --nav-border: rgba(0,0,0,0.08);
+
+  --text-primary: #111827;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  --input-bg: #ffffff;
+  --input-border: rgba(0,0,0,0.15);
+  --input-text: #1e293b;
+  --input-placeholder: #94a3b8;
+  --input-calendar-filter: opacity(0.55);
+  --select-option-bg: #ffffff;
+  --select-option-color: #1e293b;
+
+  --separator: rgba(0,0,0,0.08);
+
+  --scrollbar-thumb: rgba(0,0,0,0.18);
+  --scrollbar-thumb-hover: rgba(0,0,0,0.28);
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-xl: 0 12px 36px rgba(0,0,0,0.14);
+  --shadow-2xl: 0 24px 56px rgba(0,0,0,0.16);
+
+  --link-color: #4f46e5;
+  --link-hover: #4338ca;
+
+  --table-text: #334155;
+  --table-header: #64748b;
+  --table-row-alt: rgba(0,0,0,0.025);
+
+  --skeleton-from: rgba(0,0,0,0.055);
+  --skeleton-mid: rgba(0,0,0,0.10);
+
+  --focus-ring: rgba(99,102,241,0.50);
+  --focus-shadow: 0 0 0 2px rgba(99,102,241,0.20);
+}
+
+/* ─── BASE STYLES ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-family: var(--font);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--app-bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  touch-action: manipulation;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  transition: background 0.25s ease, color 0.2s ease;
+}
+
+body, html, #root, .app-root {
+  background: var(--app-bg) !important;
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div, label, li {
+  color: inherit;
+}
+
+a {
+  color: var(--link-color);
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+hr {
+  border-color: var(--separator) !important;
+}
+
+/* ─── SCROLLBARS ─────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+*::-webkit-scrollbar { width: 3px; height: 3px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 99px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* ─── THEME PRESET MAPPING ───────────────────────────────── */
+[data-theme="warm-saffron"]  { --primary: var(--preset-warm-saffron); }
+[data-theme="rose-gulab"]    { --primary: var(--preset-rose-gulab); }
+[data-theme="marigold"]      { --primary: var(--preset-marigold); }
+[data-theme="coral"]         { --primary: var(--preset-coral); }
+[data-theme="terracotta"]    { --primary: var(--preset-terracotta); }
+[data-theme="mango"]         { --primary: var(--preset-mango); }
+[data-theme="pomegranate"]   { --primary: var(--preset-pomegranate); }
+[data-theme="cinnamon"]      { --primary: var(--preset-cinnamon); }
+[data-theme="sunset"]        { --primary: var(--preset-sunset); }
+[data-theme="peach"]         { --primary: var(--preset-peach); }
+[data-theme="chai"]          { --primary: var(--preset-chai); }
+[data-theme="berry"]         { --primary: var(--preset-berry); }
+[data-theme="plum"]          { --primary: var(--preset-plum); }
+[data-theme="mint-tea"]      { --primary: var(--preset-mint-tea); }
+
+/* ─── UTILITY CLASSES ────────────────────────────────────── */
+.text-primary   { color: hsl(var(--primary)); }
+.bg-primary     { background-color: hsl(var(--primary)); }
+.border-primary { border-color: hsl(var(--primary)); }
+.ring-primary   { --tw-ring-color: hsl(var(--primary)); }
+
+/* Safe area spacing */
+.pt-safe        { padding-top: env(safe-area-inset-top, 0px); }
+.pb-safe        { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.safe-area-pb   { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
+.safe-area-top  { padding-top: env(safe-area-inset-top, 0px); }
+
+/* ─── GLASS MORPHISM UTILITIES ───────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.10);
+}
+[data-theme-mode="light"] .glass-card {
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.80);
+}
+
+.glass-card-light {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* Bento card — core card type */
+.bento-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.08);
+  position: relative;
+}
+.bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
+  border-radius: 22px 22px 0 0;
+  pointer-events: none;
+}
+[data-theme-mode="light"] .bento-card::before {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+}
+[data-theme-mode="light"] .bento-card {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Glass bento */
+.glass-bento {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Glass icon button */
+.glass-icon-btn {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-secondary) !important;
+}
+.glass-icon-btn:hover {
+  background: var(--glass-hover) !important;
+}
+
+/* Dark-specific input utility */
+.dark-input {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--input-text) !important;
+}
+.dark-input::placeholder {
+  color: var(--input-placeholder) !important;
+}
+.dark-input:focus {
+  border-color: var(--focus-ring) !important;
+  outline: none;
+}
+
+/* ─── AURORA GLOW ────────────────────────────────────────── */
+.aurora-bg {
+  position: relative;
+  overflow: hidden;
+}
+.aurora-bg::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: -20%;
+  width: 80%; height: 160%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(139,92,246,0.45) 0%, transparent 65%);
+  pointer-events: none;
+}
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  top: -20%; right: -20%;
+  width: 70%; height: 140%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.35) 0%, transparent 65%);
+  pointer-events: none;
+}
+[data-theme-mode="light"] .aurora-bg::before {
+  background: radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 65%);
+}
+[data-theme-mode="light"] .aurora-bg::after {
+  background: radial-gradient(ellipse, rgba(59,130,246,0.10) 0%, transparent 65%);
+}
+
+/* ─── MODAL OVERLAY ──────────────────────────────────────── */
+.modal-overlay {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme-mode="light"] .modal-overlay {
+  background: rgba(0,0,0,0.38);
+}
+
+/* ─── VIEW SCROLL ROOT ───────────────────────────────────── */
+.view-scroll-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--app-bg);
+  overflow: hidden;
+}
+.view-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── FIT-AMOUNT: AUTO-SHRINKING CURRENCY TEXT ───────────── */
+.fit-amount {
+  font-size: clamp(0.65rem, 3.5vw, 0.875rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.fit-amount-lg {
+  font-size: clamp(0.75rem, 4vw, 1.125rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.fit-amount-xl {
+  font-size: clamp(1rem, 6vw, 1.875rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.fit-amount-2xl {
+  font-size: clamp(1.25rem, 8vw, 2.5rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── TEXT SELECTION PREVENTION ──────────────────────────── */
+* {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+input, textarea, [contenteditable] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* ─── INPUTS / FORMS ─────────────────────────────────────── */
+input, select, textarea {
+  font-family: var(--font);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]):not([type="color"]):not([type="file"]),
+select, textarea {
+  background: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border-color: var(--input-border) !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.5 !important;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--input-placeholder) !important;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: var(--input-calendar-filter);
+}
+
+/* Color-scheme for system date/select pickers */
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+select {
+  color-scheme: dark;
+}
+[data-theme-mode="light"] input[type="date"],
+[data-theme-mode="light"] input[type="datetime-local"],
+[data-theme-mode="light"] input[type="month"],
+[data-theme-mode="light"] input[type="time"],
+[data-theme-mode="light"] input[type="week"],
+[data-theme-mode="light"] select {
+  color-scheme: light !important;
+}
+
+select option {
+  background: var(--select-option-bg) !important;
+  color: var(--select-option-color) !important;
+}
+
+/* Focus rings */
+input:focus, textarea:focus, select:focus, button:focus-visible {
+  border-color: var(--focus-ring) !important;
+  box-shadow: var(--focus-shadow) !important;
+  outline: none !important;
+}
+
+/* Touch / tap */
+button, [role="button"], a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Haptic press feedback */
+button:active, [role="button"]:active {
+  transform: scale(0.97);
+}
+
+/* ─── TABLES ─────────────────────────────────────────────── */
+table { color: var(--table-text); }
+th { color: var(--table-header) !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+tr:nth-child(even) { background: var(--table-row-alt); }
+
+/* ─── SHADOWS ────────────────────────────────────────────── */
+.shadow-sm  { box-shadow: var(--shadow-sm) !important; }
+.shadow-md  { box-shadow: var(--shadow-md) !important; }
+.shadow-lg  { box-shadow: var(--shadow-lg) !important; }
+.shadow-xl  { box-shadow: var(--shadow-xl) !important; }
+.shadow-2xl { box-shadow: var(--shadow-2xl) !important; }
+
+/* ─── TAILWIND DARK-OVERRIDE CLASSES ─────────────────────── */
+/* In dark mode these are remapped to glass equivalents */
+.bg-white     { background: var(--glass-bg) !important; }
+.bg-slate-50  { background: var(--surface-1) !important; }
+.bg-slate-100 { background: var(--surface-2) !important; }
+.bg-slate-200 { background: var(--surface-3) !important; }
+.bg-slate-900 { background: rgba(15,20,40,0.95) !important; }
+.bg-slate-950 { background: rgba(8,10,20,0.98) !important; }
+
+.border-slate-100, .border-slate-200 { border-color: var(--glass-border) !important; }
+.border-slate-700, .border-slate-800 { border-color: var(--glass-border) !important; }
+
+.text-slate-900 { color: var(--text-primary) !important; }
+.text-slate-800 { color: rgba(220,228,255,0.90) !important; }
+.text-slate-700 { color: rgba(203,213,255,0.78) !important; }
+.text-slate-600 { color: rgba(148,163,220,0.68) !important; }
+.text-slate-500 { color: rgba(120,140,200,0.58) !important; }
+.text-slate-400 { color: rgba(100,120,180,0.52) !important; }
+.text-slate-300 { color: rgba(80,100,160,0.42) !important; }
+
+/* ─── LIGHT MODE: TAILWIND CLASS REVERTS ─────────────────── */
+[data-theme-mode="light"] .bg-white     { background: #ffffff !important; }
+[data-theme-mode="light"] .bg-slate-50  { background: #f8fafc !important; }
+[data-theme-mode="light"] .bg-slate-100 { background: #f1f5f9 !important; }
+[data-theme-mode="light"] .bg-slate-200 { background: #e2e8f0 !important; }
+[data-theme-mode="light"] .bg-slate-900 { background: #0f172a !important; }
+[data-theme-mode="light"] .bg-slate-950 { background: #020617 !important; }
+
+[data-theme-mode="light"] .border-slate-100 { border-color: #f1f5f9 !important; }
+[data-theme-mode="light"] .border-slate-200 { border-color: #e2e8f0 !important; }
+[data-theme-mode="light"] .border-slate-700 { border-color: #334155 !important; }
+[data-theme-mode="light"] .border-slate-800 { border-color: #1e293b !important; }
+
+[data-theme-mode="light"] .text-slate-900 { color: #0f172a !important; }
+[data-theme-mode="light"] .text-slate-800 { color: #1e293b !important; }
+[data-theme-mode="light"] .text-slate-700 { color: #334155 !important; }
+[data-theme-mode="light"] .text-slate-600 { color: #475569 !important; }
+[data-theme-mode="light"] .text-slate-500 { color: #64748b !important; }
+[data-theme-mode="light"] .text-slate-400 { color: #64748b !important; }
+[data-theme-mode="light"] .text-slate-300 { color: #475569 !important; }
+[data-theme-mode="light"] .text-slate-200 { color: #334155 !important; }
+[data-theme-mode="light"] .text-gray-400 { color: #6b7280 !important; }
+[data-theme-mode="light"] .text-gray-300 { color: #4b5563 !important; }
+[data-theme-mode="light"] .text-gray-200 { color: #374151 !important; }
+
+/* ─── LIGHT MODE: WHITE/OPACITY TEXT CLASSES ─────────────── */
+/* Tailwind text-white/XX opacity classes on dark surfaces → dark text in light mode */
+[data-theme-mode="light"] .text-white\/10,
+[data-theme-mode="light"] .text-white\/20,
+[data-theme-mode="light"] .text-white\/30,
+[data-theme-mode="light"] .text-white\/40 { color: #94a3b8 !important; }
+
+[data-theme-mode="light"] .text-white\/50,
+[data-theme-mode="light"] .text-white\/55,
+[data-theme-mode="light"] .text-white\/60 { color: #64748b !important; }
+
+[data-theme-mode="light"] .text-white\/65,
+[data-theme-mode="light"] .text-white\/70,
+[data-theme-mode="light"] .text-white\/75,
+[data-theme-mode="light"] .text-white\/80 { color: #334155 !important; }
+
+[data-theme-mode="light"] .text-white\/85,
+[data-theme-mode="light"] .text-white\/90,
+[data-theme-mode="light"] .text-white\/95 { color: #1e293b !important; }
+
+/* ─── GLOBAL text-white → dark in light mode ─────────────────────────────
+   text-white generates color:var(--color-white) — no global override existed.
+   All unguarded text-white uses (Dashboard, Settings, etc.) were invisible.
+   ─────────────────────────────────────────────────────────────────────── */
+[data-theme-mode="light"] .text-white { color: #0f172a !important; }
+
+/* ── Preserve white text when element ITSELF carries a Tailwind color bg ── */
+[data-theme-mode="light"] .bg-blue-400.text-white,
+[data-theme-mode="light"] .bg-blue-500.text-white,
+[data-theme-mode="light"] .bg-blue-600.text-white,
+[data-theme-mode="light"] .bg-blue-700.text-white,
+[data-theme-mode="light"] .bg-indigo-400.text-white,
+[data-theme-mode="light"] .bg-indigo-500.text-white,
+[data-theme-mode="light"] .bg-indigo-600.text-white,
+[data-theme-mode="light"] .bg-violet-400.text-white,
+[data-theme-mode="light"] .bg-violet-500.text-white,
+[data-theme-mode="light"] .bg-violet-600.text-white,
+[data-theme-mode="light"] .bg-purple-400.text-white,
+[data-theme-mode="light"] .bg-purple-500.text-white,
+[data-theme-mode="light"] .bg-purple-600.text-white,
+[data-theme-mode="light"] .bg-fuchsia-500.text-white,
+[data-theme-mode="light"] .bg-fuchsia-600.text-white,
+[data-theme-mode="light"] .bg-pink-500.text-white,
+[data-theme-mode="light"] .bg-pink-600.text-white,
+[data-theme-mode="light"] .bg-rose-400.text-white,
+[data-theme-mode="light"] .bg-rose-500.text-white,
+[data-theme-mode="light"] .bg-rose-600.text-white,
+[data-theme-mode="light"] .bg-red-400.text-white,
+[data-theme-mode="light"] .bg-red-500.text-white,
+[data-theme-mode="light"] .bg-red-600.text-white,
+[data-theme-mode="light"] .bg-orange-500.text-white,
+[data-theme-mode="light"] .bg-orange-600.text-white,
+[data-theme-mode="light"] .bg-amber-500.text-white,
+[data-theme-mode="light"] .bg-amber-600.text-white,
+[data-theme-mode="light"] .bg-yellow-500.text-white,
+[data-theme-mode="light"] .bg-lime-500.text-white,
+[data-theme-mode="light"] .bg-green-500.text-white,
+[data-theme-mode="light"] .bg-green-600.text-white,
+[data-theme-mode="light"] .bg-emerald-500.text-white,
+[data-theme-mode="light"] .bg-emerald-600.text-white,
+[data-theme-mode="light"] .bg-teal-500.text-white,
+[data-theme-mode="light"] .bg-teal-600.text-white,
+[data-theme-mode="light"] .bg-cyan-500.text-white,
+[data-theme-mode="light"] .bg-cyan-600.text-white,
+[data-theme-mode="light"] .bg-sky-500.text-white,
+[data-theme-mode="light"] .bg-sky-600.text-white { color: #ffffff !important; }
+
+/* ── Preserve white text on inline gradient/solid saturated backgrounds ──
+   Covers all action buttons that use style={{ background: 'linear-gradient(...)' }}
+   ─────────────────────────────────────────────────────────────────────── */
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #4f46"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#4f46"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #6366"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#6366"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #7c3a"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#7c3a"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #8b5c"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#8b5c"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #3b82"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#3b82"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #2563"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#2563"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #1d4e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#1d4e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #ef44"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#ef44"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #dc26"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#dc26"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #ec48"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#ec48"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #f97"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#f97"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #10b9"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#10b9"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #06b"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#06b"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #0ea5"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#0ea5"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #0891"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#0891"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #14b8"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#14b8"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #f59e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#f59e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg, #d97"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(135deg,#d97"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg, #10b9"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg,#10b9"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg, #6366"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg,#6366"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg, #f59e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(145deg,#f59e"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(160deg"].text-white,
+[data-theme-mode="light"] [style*="linear-gradient(180deg"].text-white { color: #ffffff !important; }
+
+/* bg-white/XX opacity classes → light surface tones */
+[data-theme-mode="light"] .bg-white\/5,
+[data-theme-mode="light"] .bg-white\/\[0\.04\],
+[data-theme-mode="light"] .bg-white\/\[0\.05\] { background: rgba(0,0,0,0.03) !important; }
+
+[data-theme-mode="light"] .bg-white\/\[0\.06\],
+[data-theme-mode="light"] .bg-white\/\[0\.07\],
+[data-theme-mode="light"] .bg-white\/\[0\.08\] { background: rgba(0,0,0,0.045) !important; }
+
+[data-theme-mode="light"] .bg-white\/10,
+[data-theme-mode="light"] .bg-white\/\[0\.09\],
+[data-theme-mode="light"] .bg-white\/\[0\.10\] { background: rgba(0,0,0,0.055) !important; }
+
+/* border-white/XX → subtle dark borders */
+[data-theme-mode="light"] [class*="border-white\/"] { border-color: rgba(0,0,0,0.10) !important; }
+
+/* divide-white/XX → subtle dark dividers */
+[data-theme-mode="light"] [class*="divide-white\/"] > * + * { border-color: rgba(0,0,0,0.08) !important; }
+
+/* ─── LIGHT MODE: INLINE TEXT COLOR PATTERNS ─────────────── */
+[data-theme-mode="light"] [style*="color: rgba(240,244,255,1"],
+[data-theme-mode="light"] [style*="color: rgba(240,244,255,0.9"],
+[data-theme-mode="light"] [style*="color: rgba(240,244,255,0.8"] { color: #111827 !important; }
+
+[data-theme-mode="light"] [style*="color: rgba(226,232,240,0.9"],
+[data-theme-mode="light"] [style*="color: rgba(226,232,240,0.8"] { color: #1e293b !important; }
+
+[data-theme-mode="light"] [style*="color: rgba(203,213,225,0.9"],
+[data-theme-mode="light"] [style*="color: rgba(203,213,225,0.8"],
+[data-theme-mode="light"] [style*="color: rgba(203,213,225,0.7"] { color: #334155 !important; }
+
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.7"],
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.6"],
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.5"] { color: #64748b !important; }
+
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.4"],
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.3"] { color: #94a3b8 !important; }
+
+[data-theme-mode="light"] [style*="color: rgba(150,170,220"],
+[data-theme-mode="light"] [style*="color: rgba(200,210,255"] { color: #64748b !important; }
+
+/* Arbitrary Tailwind text classes using rgba */
+[data-theme-mode="light"] [class*="text-[rgba(240,244,255"] { color: #111827 !important; }
+[data-theme-mode="light"] [class*="text-[rgba(226,232,240"] { color: #1e293b !important; }
+[data-theme-mode="light"] [class*="text-[rgba(203,213,225"] { color: #334155 !important; }
+[data-theme-mode="light"] [class*="text-[rgba(148,163,184"] { color: #64748b !important; }
+
+/* ─── LIGHT MODE: SURFACE / GLASS BACKGROUNDS ────────────── */
+/* Low-opacity white surfaces → light gray surfaces */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.03"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.04"] { background: rgba(0,0,0,0.03) !important; }
+
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.05"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.06"] { background: rgba(0,0,0,0.04) !important; }
+
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.07"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.08"] { background: rgba(0,0,0,0.05) !important; }
+
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.09"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.10"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.11"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.12"] { background: rgba(0,0,0,0.06) !important; }
+
+/* Arbitrary Tailwind bg-[rgba(255,255,255,0.0x)] classes */
+[data-theme-mode="light"] [class*="bg-[rgba(255,255,255,0.0"],
+[data-theme-mode="light"] [class*="bg-[rgba(255,255,255,0.1"] { background: rgba(0,0,0,0.04) !important; }
+
+/* Hover states for white-opacity backgrounds */
+[data-theme-mode="light"] [class*="hover:bg-[rgba(255,255,255"]:hover { background: rgba(0,0,0,0.05) !important; }
+
+/* ─── LIGHT MODE: DARK MODAL/SHEET BACKGROUNDS ───────────── */
+/* All dark-navy panel/modal backgrounds → crisp white */
+[data-theme-mode="light"] [style*="background: rgba(15,20,40"],
+[data-theme-mode="light"] [style*="background: rgba(16,20,40"],
+[data-theme-mode="light"] [style*="background: rgba(12,15,38"],
+[data-theme-mode="light"] [style*="background: rgba(8,13,26"],
+[data-theme-mode="light"] [style*="background: rgba(8,10,22"],
+[data-theme-mode="light"] [style*="background: rgba(10,13,25"],
+[data-theme-mode="light"] [style*="background: rgba(11,14,26,0.9"],
+[data-theme-mode="light"] [style*="background: rgba(11,14,26,0.8"] {
+  background: rgba(255,255,255,0.99) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12) !important;
+  color: #111827 !important;
+}
+
+/* Datalist/dropdowns */
+[data-theme-mode="light"] datalist { background: #ffffff; }
+
+/* ─── LIGHT MODE: BORDER OVERRIDES ───────────────────────── */
+/* White-opacity inline borders → subtle dark borders */
+[data-theme-mode="light"] [style*="border: 1px solid rgba(255,255,255,0.0"],
+[data-theme-mode="light"] [style*="border: 1px solid rgba(255,255,255,0.1"] { border-color: rgba(0,0,0,0.10) !important; }
+[data-theme-mode="light"] [style*="border: 1px solid rgba(255,255,255,0.2"] { border-color: rgba(0,0,0,0.12) !important; }
+[data-theme-mode="light"] [style*="border: 2px solid rgba(255,255,255"] { border-color: rgba(0,0,0,0.15) !important; }
+
+[data-theme-mode="light"] [style*="border-bottom: 1px solid rgba(255,255,255"] { border-bottom-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] [style*="border-top: 1px solid rgba(255,255,255"] { border-top-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] [style*="border-left: 1px solid rgba(255,255,255"] { border-left-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] [style*="border-right: 1px solid rgba(255,255,255"] { border-right-color: rgba(0,0,0,0.08) !important; }
+
+[data-theme-mode="light"] [style*="borderBottom: '1px solid rgba(255,255,255"],
+[data-theme-mode="light"] [style*="borderTop: '1px solid rgba(255,255,255"] { border-color: rgba(0,0,0,0.08) !important; }
+
+[data-theme-mode="light"] [style*="borderColor: rgba(255,255,255"] { border-color: rgba(0,0,0,0.08) !important; }
+
+/* ─── LIGHT MODE: SVG ICON COLORS ────────────────────────── */
+/* Back-arrow and UI icons that use light-on-dark stroke → dark in light mode */
+[data-theme-mode="light"] svg[stroke*="rgba(240,244,255"],
+[data-theme-mode="light"] svg[stroke*="rgba(226,232,240"],
+[data-theme-mode="light"] svg[stroke*="rgba(203,213,225"] { stroke: #334155; }
+
+[data-theme-mode="light"] svg[fill*="rgba(240,244,255"],
+[data-theme-mode="light"] svg[fill*="rgba(226,232,240"] { fill: #334155; }
+
+/* ─── LIGHT MODE: NAVIGATION & HEADER ────────────────────── */
+/* TopNavigation border */
+[data-theme-mode="light"] [style*="borderBottom:"] { border-bottom-color: rgba(0,0,0,0.08) !important; }
+
+/* Sticky/fixed header backdrop blur area */
+[data-theme-mode="light"] [style*="borderBottom: '1px solid rgba(255,255,255,0.06"] {
+  border-bottom-color: rgba(0,0,0,0.06) !important;
+}
+
+/* Bottom nav border-top */
+[data-theme-mode="light"] [style*="borderTop: '1px solid rgba(255,255,255"] {
+  border-top-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.08) !important;
+}
+
+/* ─── LIGHT MODE: CARD BG WITH INLINE STYLE ──────────────── */
+[data-theme-mode="light"] [style*="background: rgba(15,20,40,0.97"] {
+  background: rgba(255,255,255,0.97) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(15,20,40,0.85"] {
+  background: rgba(255,255,255,0.85) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(16,20,40,0.98"] {
+  background: rgba(255,255,255,0.99) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(16,20,40,0.95"] {
+  background: #ffffff !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12) !important;
+}
+
+/* ─── LIGHT MODE: TABLES & REPORTS ───────────────────────── */
+[data-theme-mode="light"] thead tr,
+[data-theme-mode="light"] thead th {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] tbody tr { border-color: rgba(0,0,0,0.05) !important; }
+[data-theme-mode="light"] tbody tr:hover { background: rgba(79,70,229,0.04) !important; }
+[data-theme-mode="light"] table { color: #334155; }
+
+/* ─── LIGHT MODE: RECHARTS ───────────────────────────────── */
+[data-theme-mode="light"] .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  color: #1e293b !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10) !important;
+}
+[data-theme-mode="light"] .recharts-tooltip-label  { color: #374151 !important; }
+[data-theme-mode="light"] .recharts-tooltip-item   { color: #475569 !important; }
+[data-theme-mode="light"] .recharts-cartesian-axis-tick text { fill: #94a3b8 !important; }
+[data-theme-mode="light"] .recharts-cartesian-grid-horizontal line,
+[data-theme-mode="light"] .recharts-cartesian-grid-vertical line { stroke: rgba(0,0,0,0.06) !important; }
+
+/* ─── LIGHT MODE: KEYBOARD-AWARE SHEET ───────────────────── */
+[data-theme-mode="light"] .keyboard-aware-sheet { background: #ffffff !important; }
+
+/* ─── LIGHT MODE: AUTH / LOGIN VIEW ──────────────────────── */
+[data-theme-mode="light"] [style*="background: linear-gradient(135deg, #1a1f3c"],
+[data-theme-mode="light"] [style*="background: linear-gradient(135deg, #0f1535"],
+[data-theme-mode="light"] [style*="background: linear-gradient(135deg, #080d1a"] {
+  background: #f4f6fc !important;
+}
+
+/* ─── LIGHT MODE: TIMELINE / SEPARATOR DOTS ──────────────── */
+[data-theme-mode="light"] [class*="border-[#0b0e1a"]  { border-color: #f4f6fc !important; }
+[data-theme-mode="light"] [class*="border-[var(--app-bg"] { border-color: var(--app-bg) !important; }
+[data-theme-mode="light"] [class*="ring-[#0b0e1a"]  { box-shadow: 0 0 0 2px #f4f6fc !important; }
+
+/* ─── LIGHT MODE: FEATURE GATE / ERROR PAGES ─────────────── */
+[data-theme-mode="light"] .feature-gate { background: #f4f6fc !important; }
+
+/* ─── LIGHT MODE: ANNOUNCEMENT BANNER ───────────────────────*/
+[data-theme-mode="light"] [style*="borderBottom: '1px solid rgba(245,158,11"] {
+  background: rgba(245,158,11,0.08) !important;
+  border-color: rgba(245,158,11,0.30) !important;
+}
+
+/* ─── LIGHT MODE: DARK-NAVY HERO GRADIENT ────────────────── */
+[data-theme-mode="dark"] [style*="background: linear-gradient(135deg, #eef2ff"],
+[data-theme-mode="dark"] [style*="background: linear-gradient(135deg, #f0f4ff"] {
+  background: linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(59,130,246,0.12) 50%, rgba(99,102,241,0.15) 100%) !important;
+}
+
+/* ─── LIGHT MODE: RECYCLE BIN / FACTORY RESET ────────────── */
+[data-theme-mode="light"] [style*="color: rgba(240,244,255,0.9"] { color: #111827 !important; }
+
+/* ─── LIGHT MODE: FORM INPUT ARBITRARY BACKGROUNDS ──────── */
+[data-theme-mode="light"] input[class*="bg-[rgba(255"],
+[data-theme-mode="light"] select[class*="bg-[rgba(255"],
+[data-theme-mode="light"] textarea[class*="bg-[rgba(255"] {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-color: rgba(0,0,0,0.15) !important;
+}
+
+/* ─── LIGHT MODE: PLACEHOLDER TEXT ───────────────────────── */
+[data-theme-mode="light"] input::placeholder,
+[data-theme-mode="light"] textarea::placeholder { color: #94a3b8 !important; }
+
+/* ─── LIGHT MODE: SELECT DROPDOWNS ───────────────────────── */
+[data-theme-mode="light"] select option { background: #ffffff; color: #1e293b; }
+
+/* ─── LIGHT MODE: BACKDROP GLASS CONTAINERS ─────────────── */
+[data-theme-mode="light"] [style*="background: rgba(0,0,0,0.7"],
+[data-theme-mode="light"] [style*="background: rgba(0,0,0,0.6"] {
+  background: rgba(0,0,0,0.35) !important;
+}
+
+/* ─── SKELETON LOADER ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-from) 25%, var(--skeleton-mid) 50%, var(--skeleton-from) 75%);
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 8px;
+}
+
+/* ─── PULL-TO-REFRESH ────────────────────────────────────── */
+.ptr-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  color: hsl(var(--primary));
+}
+
+/* ─── KEYBOARD-AWARE LAYOUT ──────────────────────────────── */
+body.keyboard-open .app-bottom-nav {
+  transform: translateY(calc(100% + env(safe-area-inset-bottom, 0px)));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1), opacity 0.18s ease;
+}
+.app-bottom-nav {
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
+}
+body.scanner-open .app-bottom-nav { display: none !important; }
+
+body.keyboard-open .keyboard-aware-sheet {
+  max-height: calc(100dvh - var(--keyboard-height) - env(safe-area-inset-top, 0px));
+}
+body.keyboard-open .keyboard-aware-sheet-content {
+  padding-bottom: 8px !important;
+}
+body.keyboard-open .keyboard-scroll-inner {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100dvh - var(--keyboard-height) - 120px);
+}
+
+/* ─── MICRO ANIMATIONS ───────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes lockshake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-8px); }
+  40%  { transform: translateX(8px); }
+  60%  { transform: translateX(-6px); }
+  80%  { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+@keyframes recordPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+}
+
+.animate-fadeIn  { animation: fadeIn  0.25s ease both; }
+.animate-slideUp { animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+.animate-scaleIn { animation: scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ─── PRINT STYLES ───────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: #000; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACCESSIBILITY — MINIMUM TEXT SIZE FLOOR
+   ═══════════════════════════════════════════════════════════ */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]):not([type="color"]):not([type="file"]),
+select, textarea {
+  font-size: 0.9375rem !important;
+  line-height: 1.5 !important;
+}
+
+/* ─── LIGHT MODE: COMPLETE BACKDROP FIXES ────────────────── */
+/* Any semi-transparent dark overlay used as backdrop → softer in light */
+[data-theme-mode="light"] [style*="background: rgba(0,0,0,0.55"],
+[data-theme-mode="light"] [style*="background: rgba(0,0,0,0.5"] {
+  background: rgba(0,0,0,0.32) !important;
+}
+
+/* scrollbar */
+[data-theme-mode="light"] ::-webkit-scrollbar-track { background: transparent; }
+[data-theme-mode="light"] ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
+[data-theme-mode="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.28); }
+
+/* ─── LIGHT MODE: MISC PATTERN FIXES ─────────────────────── */
+/* ring-[#0b0e1a] used as separator ring in timeline */
+[data-theme-mode="light"] [class*="ring-[#0b0e1a"] { box-shadow: 0 0 0 2px #f4f6fc !important; }
+
+/* ReauthModal / WhatsNew very-low-opacity surfaces */
+[data-theme-mode="light"] [style*="rgba(255,255,255,0.03)"],
+[data-theme-mode="light"] [style*="rgba(255,255,255,0.04)"] { background: rgba(0,0,0,0.03) !important; }
+
+/* Staff invite / sub views inherited border-color */
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.06"],
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.07"],
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.08"],
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.09"],
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.10"],
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255,0.12"] { border-color: rgba(0,0,0,0.08) !important; }
+
+/* ─── LIGHT MODE: ELEVATED CARD (SettingsTabs picker) ─────── */
+[data-theme-mode="light"] [style*="background: rgba(15,20,40,0.98"] {
+  background: rgba(255,255,255,0.99) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(15,20,40,0.97"] {
+  background: rgba(255,255,255,0.97) !important;
+  border-color: rgba(139,92,246,0.2) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(16,20,40,0.98"] {
+  background: rgba(255,255,255,0.99) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12) !important;
+}
+
+/* ─── LIGHT MODE: LOCK SCREEN ─────────────────────────────── */
+[data-theme-mode="light"] .lock-screen-root .text-white { color: #1e1b4b !important; }
+[data-theme-mode="light"] .lock-screen-root h2.text-white { color: #1e1b4b !important; }
+[data-theme-mode="light"] .lock-screen-root p[style*="rgba(255,255,255,0.32"] { color: rgba(30,27,75,0.5) !important; }
+[data-theme-mode="light"] .lock-screen-root [style*="color: rgba(255,255,255,0.45"] { color: rgba(30,27,75,0.4) !important; }
+[data-theme-mode="light"] .lock-screen-root [style*="color: rgba(148,163,184"] { color: rgba(30,27,75,0.35) !important; }
+[data-theme-mode="light"] .lock-screen-root button[style*="background: rgba(255,255,255,0.08"] {
+  background: rgba(255,255,255,0.7) !important;
+  border-color: rgba(99,102,241,0.18) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  color: #1e1b4b !important;
+}
+[data-theme-mode="light"] .lock-screen-root [style*="background: rgba(255,255,255,0.04"] {
+  background: rgba(255,255,255,0.5) !important;
+}
+[data-theme-mode="light"] .lock-screen-root [style*="background: rgba(255,255,255,0.14"] {
+  background: rgba(99,102,241,0.12) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — COMPREHENSIVE COMPLETION PASS
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── AUTH / LOGIN / ONBOARDING: PAGE BACKGROUND ────────────── */
+/* User wants pure WHITE background in light mode (not blue/indigo) */
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0a0f2e"],
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0a0f28"] {
+  background: #ffffff !important;
+}
+
+/* ─── AUTH: ALL TEXT-WHITE INSIDE AUTH PAGES → DARK ─────────── */
+[data-theme-mode="light"] .login-view-root .text-white { color: #1e1b4b !important; }
+
+/* Restore white text on colored brand CTAs */
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(135deg, #4f46e5"],
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(135deg, #10b981"],
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(135deg, #6366f1"],
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(135deg, #8b5cf6"],
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(145deg, #10b981"],
+[data-theme-mode="light"] .login-view-root button[style*="linear-gradient(145deg, #6366f1"],
+[data-theme-mode="light"] .login-view-root .bg-emerald-600,
+[data-theme-mode="light"] .login-view-root [class*="bg-emerald"] { color: #ffffff !important; }
+
+/* ─── AUTH: INLINE WHITE-OPACITY TEXT → DARK ─────────────────── */
+[data-theme-mode="light"] .login-view-root [style*="color: rgba(255,255,255,0.8"],
+[data-theme-mode="light"] .login-view-root [style*="color: rgba(255,255,255,0.7"],
+[data-theme-mode="light"] .login-view-root [style*="color: rgba(255,255,255,0.6"],
+[data-theme-mode="light"] .login-view-root [style*="color: rgba(255,255,255,0.5"] { color: #4b5563 !important; }
+
+/* ─── AUTH: FORM CARDS → OPAQUE WHITE ────────────────────────── */
+[data-theme-mode="light"] .login-view-root form[style*="rgba(255,255,255,0.06"],
+[data-theme-mode="light"] .login-view-root [style*="rgba(255,255,255,0.06)"][style*="backdropFilter"],
+[data-theme-mode="light"] .login-view-root [style*="rgba(255,255,255,0.05)"][style*="backdropFilter"] {
+  background: rgba(255,255,255,0.97) !important;
+  box-shadow: 0 8px 32px rgba(79,70,229,0.10), inset 0 1px 0 #ffffff !important;
+  border-color: rgba(99,102,241,0.15) !important;
+}
+
+/* ─── AUTH: GHOST BUTTONS (white-surface) → LIGHT SURFACE ────── */
+[data-theme-mode="light"] .login-view-root button[style*="background: rgba(255,255,255,0.08"],
+[data-theme-mode="light"] .login-view-root button[style*="background: rgba(255,255,255,0.07"] {
+  background: rgba(255,255,255,0.95) !important;
+  border-color: rgba(99,102,241,0.18) !important;
+  color: #374151 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+}
+
+/* ─── AUTH: OR DIVIDER LINES ─────────────────────────────────── */
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.08)"],
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.1)"] {
+  background: rgba(99,102,241,0.15) !important;
+}
+
+/* ─── AUTH: AURORA GRID LINES ───────────────────────────────── */
+[data-theme-mode="light"] .login-view-root [style*="backgroundImage"][style*="rgba(255,255,255,0.5) 1px"] {
+  background-image:
+    linear-gradient(rgba(99,102,241,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.07) 1px, transparent 1px) !important;
+}
+
+/* ─── LOGO BADGE BORDER (#07091a) → LIGHT ───────────────────── */
+[data-theme-mode="light"] [style*="border: 2px solid #07091"] { border-color: #f0f4ff !important; }
+
+/* ─── DARK-HEX TAILWIND BACKGROUND CLASSES ──────────────────── */
+/* ManualEntryModal form body + footer */
+[data-theme-mode="light"] .bg-\[\#0b0e1a\]  { background-color: #f4f6fc !important; }
+/* InsightModal empty state */
+[data-theme-mode="light"] .bg-\[\#0b0f1e\]  { background-color: #f4f6fc !important; }
+/* InvoicePreviewModal canvas bg */
+[data-theme-mode="light"] .bg-\[\#080d1a\]  { background-color: #e8ecf8 !important; }
+/* FormUI autocomplete suggestion dropdown */
+[data-theme-mode="light"] .bg-\[\#1a1f35\]  {
+  background-color: #ffffff !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+}
+/* Any leftover dark hex panel */
+[data-theme-mode="light"] .bg-\[\#1a1f2e\]  { background-color: #f8f9ff !important; }
+
+/* ─── SELECT OPTION BACKGROUNDS (with !important) ───────────── */
+[data-theme-mode="light"] select option { background: #ffffff !important; color: #1e293b !important; }
+
+/* ─── GLOBAL HIGH-OPACITY WHITE INLINE TEXT → DARK ──────────── */
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.85"] { color: #374151 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.8"]  { color: #374151 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.7"]  { color: #4b5563 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.6"]  { color: #6b7280 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.5"]  { color: #9ca3af !important; }
+
+/* ─── BORDER ARBITRARY RGBA TAILWIND CLASSES ────────────────── */
+[data-theme-mode="light"] [class*="border-[rgba(255,255,255"] { border-color: rgba(0,0,0,0.12) !important; }
+
+/* ─── AUTOCOMPLETE DROPDOWN TEXT (on white bg) ───────────────── */
+[data-theme-mode="light"] .bg-\[\#1a1f35\] [style*="color: rgba(240,244,255"] { color: #111827 !important; }
+[data-theme-mode="light"] .bg-\[\#1a1f35\] [style*="color: rgba(148,163,184"] { color: #6b7280 !important; }
+[data-theme-mode="light"] .bg-\[\#1a1f35\] [style*="background: rgba(139,92,246,0.15)"] {
+  background: rgba(99,102,241,0.08) !important;
+}
+
+/* ─── DATE RANGE FILTER WIDGET ───────────────────────────────── */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.06)"][style*="minHeight: 36"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.06)"][style*="min-height: 36"] {
+  background: rgba(255,255,255,0.95) !important;
+  border-color: rgba(0,0,0,0.14) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}
+
+/* ─── FORM: ITEM ROW GLASS CARDS ─────────────────────────────── */
+/* TransactionForms item rows, linked order cards */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.04)"][style*="border"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.03)"][style*="border"] {
+  background: rgba(255,255,255,0.8) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── HEAVY DARK BOX-SHADOWS → LIGHTER ──────────────────────── */
+[data-theme-mode="light"] [style*="box-shadow: 0 16px 48px rgba(0,0,0,0.4"] {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.09) !important;
+}
+[data-theme-mode="light"] [style*="box-shadow: 0 -8px 32px rgba(0,0,0,0.4"] {
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06) !important;
+}
+
+/* ─── VERTICAL SEPARATOR (rgba(255,255,255,0.1) dividers) ────── */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.1)"][style*="self-stretch"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.1)"][style*="w-px"] {
+  background: rgba(0,0,0,0.12) !important;
+}
+
+/* ─── REMAINING HARDCODED DARK SURFACES ─────────────────────── */
+/* PendingView, BarcodeScanner, GSTR1ExportModal panels */
+[data-theme-mode="light"] [style*="background: '#0f1221'"],
+[data-theme-mode="light"] [style*="background: '#0f1326'"],
+[data-theme-mode="light"] [style*="background: '#0f1"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  color: #111827 !important;
+}
+/* Inline style (no quotes around value) variants */
+[data-theme-mode="light"] [style*="background: #0f1221"],
+[data-theme-mode="light"] [style*="background: #0f1326"],
+[data-theme-mode="light"] [style*="background: #0f1230"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ReauthModal, WhatsNewModal, FeedbackModal dark gradient backgrounds */
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0f1230"],
+[data-theme-mode="light"] [style*="linear-gradient(180deg, #161a2e"],
+[data-theme-mode="light"] [style*="linear-gradient(180deg, #16"] {
+  background: linear-gradient(160deg, #f0f4ff 0%, #eef2ff 100%) !important;
+}
+
+/* ReauthModal: add login-view-root-style text fix */
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0f1230"] .text-white,
+[data-theme-mode="light"] [style*="linear-gradient(180deg, #161a2e"] .text-white { color: #1e1b4b !important; }
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0f1230"] [style*="color: rgba(255,255,255,0.8"],
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0f1230"] [style*="color: rgba(255,255,255,0.7"],
+[data-theme-mode="light"] [style*="linear-gradient(160deg, #0f1230"] [style*="color: rgba(255,255,255,0.6"] { color: #4b5563 !important; }
+
+/* GameTimelineView axis/header background */
+[data-theme-mode="light"] [style*="background: '#0f1326'"] { background: #f8faff !important; }
+
+/* GSTR1ExportModal select option with inline style */
+[data-theme-mode="light"] option[style*="background: '#0f1221'"],
+[data-theme-mode="light"] option[style*="background: #0f1221"] {
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — COMPREHENSIVE INLINE TEXT COLOR OVERRIDES
+   Fixes: dark-palette inline style colors invisible on white bg
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── Dark-mode slate inline text → readable dark text ──────── */
+[data-theme-mode="light"] [style*="color: rgba(240,244,255"] { color: #111827 !important; }
+[data-theme-mode="light"] [style*="color: rgba(226,232,240"] { color: #1e293b !important; }
+[data-theme-mode="light"] [style*="color: rgba(203,213,225"] { color: #475569 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.65"] { color: #475569 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.6"] { color: #475569 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.55"] { color: #64748b !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.5"] { color: #64748b !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.45"] { color: #64748b !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.4"] { color: #94a3b8 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.35"] { color: #94a3b8 !important; }
+[data-theme-mode="light"] [style*="color: rgba(147,197,253"] { color: #2563eb !important; }
+[data-theme-mode="light"] [style*="color: rgba(96,165,250"] { color: #2563eb !important; }
+
+/* ─── High-opacity white text → dark (used as body/label text) ─ */
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.9"] { color: #111827 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.8"] { color: #1e293b !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.7"] { color: #475569 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.6"] { color: #64748b !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.5"] { color: #94a3b8 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.4"] { color: #94a3b8 !important; }
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0.3"] { color: #cbd5e1 !important; }
+
+/* ─── rgba(13,17,40) dark navy surfaces → light ─────────────── */
+[data-theme-mode="light"] [style*="background: rgba(13,17,40"],
+[data-theme-mode="light"] [style*="background: rgba(13, 17, 40"] {
+  background: #f8faff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── border-white/08 Tailwind class (CommandModal header) ──── */
+[data-theme-mode="light"] [class*="border-white/08"] { border-color: rgba(0,0,0,0.06) !important; }
+[data-theme-mode="light"] [class*="border-white/12"] { border-color: rgba(0,0,0,0.1) !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   SCOPED LIGHT MODE — PER-COMPONENT ROOT CLASS OVERRIDES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── CONFIRM DIALOG ─────────────────────────────────────────── */
+[data-theme-mode="light"] .confirm-dialog-root > div:first-child {
+  background: #ffffff !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] .confirm-dialog-root .text-white { color: #111827 !important; }
+/* Cancel button dark surface → light */
+[data-theme-mode="light"] .confirm-dialog-root [style*="background:'rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .confirm-dialog-root [style*="background: 'rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .confirm-dialog-root [style*="background:rgba(255,255,255,0.06"],
+[data-theme-mode="light"] .confirm-dialog-root [style*="background: rgba(255,255,255,0.06"] {
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Sheen/top gradient line — hide in light */
+[data-theme-mode="light"] .confirm-dialog-root .absolute.top-0.left-0.right-0.h-px { opacity: 0 !important; }
+
+/* ─── AI COMMAND MODAL ───────────────────────────────────────── */
+[data-theme-mode="light"] .command-modal-root {
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] .command-modal-root .text-white { color: #111827 !important; }
+/* AI reply bubbles */
+[data-theme-mode="light"] .command-modal-root [class*="border-white/12"] {
+  background: #f8faff !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  color: #1e293b !important;
+}
+/* Data item rows bg-[rgba(255,255,255,0.08)] */
+[data-theme-mode="light"] .command-modal-root [class*="bg-[rgba(255,255,255,0.08)"],
+[data-theme-mode="light"] .command-modal-root [class*="bg-[rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .command-modal-root [class*="bg-[rgba(255,255,255,0.05)"] {
+  background: #f1f5f9 !important;
+}
+/* Textarea / upload label */
+[data-theme-mode="light"] .command-modal-root textarea,
+[data-theme-mode="light"] .command-modal-root [style*="bg-[rgba(255,255,255,0.05)"] {
+  background: #f8faff !important;
+  color: #1e293b !important;
+  border-color: rgba(0,0,0,0.12) !important;
+}
+[data-theme-mode="light"] .command-modal-root [class*="border-dashed"][class*="border-white/10"] {
+  border-color: rgba(0,0,0,0.15) !important;
+}
+/* hover:bg on image upload label */
+[data-theme-mode="light"] .command-modal-root label[class*="hover:bg-[rgba(255,255,255,0.08)"] {
+  border-color: rgba(0,0,0,0.15) !important;
+}
+
+/* ─── INSIGHT / PROFIT MODAL ─────────────────────────────────── */
+/* Lock screen dark bg → light */
+[data-theme-mode="light"] .insight-modal-root .bg-\[\#0b0e1a\] {
+  background: #ffffff !important;
+}
+/* PIN pad buttons: white text on light bg → dark */
+[data-theme-mode="light"] .insight-modal-root .text-white { color: #111827 !important; }
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.07)"],
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.08)"],
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.04)"] {
+  background: #f1f5f9 !important;
+}
+/* Pin dot empty state */
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.09)"] {
+  background: rgba(0,0,0,0.15) !important;
+}
+/* PIN change inputs */
+[data-theme-mode="light"] .insight-modal-root input.text-white { color: #111827 !important; }
+/* Border whites */
+[data-theme-mode="light"] .insight-modal-root [class*="border-white/10"],
+[data-theme-mode="light"] .insight-modal-root [class*="border-white/12"] {
+  border-color: rgba(0,0,0,0.1) !important;
+}
+/* Tab switcher bg */
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.07)"][class*="border-white/10"],
+[data-theme-mode="light"] .insight-modal-root [class*="bg-[rgba(255,255,255,0.07)"][class*="rounded-lg"] {
+  background: #f1f5f9 !important;
+}
+/* Data card rows */
+[data-theme-mode="light"] .insight-modal-root [class*="border-white/10"][class*="rounded-xl"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Section dividers */
+[data-theme-mode="light"] .insight-modal-root [class*="border-white/10"][class*="border-b"] {
+  border-color: rgba(0,0,0,0.06) !important;
+}
+/* Empty state icon */
+[data-theme-mode="light"] .insight-modal-root .text-\[rgba\(148\,163\,184\,0\.45\)\] { color: #94a3b8 !important; }
+
+/* ─── TIMELINE DETAIL SHEET ──────────────────────────────────── */
+[data-theme-mode="light"] .timeline-detail-root {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] .timeline-detail-root .text-white { color: #111827 !important; }
+/* Handle bar */
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.15)"] {
+  background: rgba(0,0,0,0.15) !important;
+}
+/* Close button */
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.08)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.04)"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Section/row borders */
+[data-theme-mode="light"] .timeline-detail-root [style*="borderBottom: '1px solid"],
+[data-theme-mode="light"] .timeline-detail-root [style*="border-bottom: 1px solid"] {
+  border-color: rgba(0,0,0,0.06) !important;
+}
+/* Detail field bg */
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.07)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(255,255,255,0.05)"] {
+  background: #f8faff !important;
+  border-color: rgba(0,0,0,0.07) !important;
+}
+/* Amount hero background (tinted section) — keep colour tint but lighten */
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(16,185,129,0.08)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(59,130,246,0.08)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(239,68,68,0.08)"],
+[data-theme-mode="light"] .timeline-detail-root [style*="background: rgba(244,63,94,0.08)"] {
+  background: rgba(var(--app-bg-rgb), 0.6) !important;
+}
+
+/* ─── WAIVER BOX (PENDING VIEW) ──────────────────────────────── */
+[data-theme-mode="light"] .waiver-box-root {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.10) !important;
+}
+[data-theme-mode="light"] .waiver-box-root .text-white { color: #111827 !important; }
+/* Input field */
+[data-theme-mode="light"] .waiver-box-root input[style*="rgba(255,255,255,0.05"] {
+  background: #f8faff !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  color: #111827 !important;
+}
+[data-theme-mode="light"] .waiver-box-root input {
+  color: #111827 !important;
+}
+/* Skip / cancel button */
+[data-theme-mode="light"] .waiver-box-root [style*="background: rgba(255,255,255,0.05"],
+[data-theme-mode="light"] .waiver-box-root [style*="background: rgba(255,255,255,0.08"] {
+  background: #f1f5f9 !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  color: #64748b !important;
+}
+
+/* ─── FACTORY RESET BIN ──────────────────────────────────────── */
+/* Notification/info panel rgba(13,17,40,0.98) */
+[data-theme-mode="light"] .flex.flex-col.h-full [style*="background: rgba(13,17,40"],
+[data-theme-mode="light"] [class*="FactoryResetBin"] [style*="background: rgba(13,17,40"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* RecycleBin / FactoryResetBin item card bg */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.03)"][style*="border: 1px solid rgba(255,255,255,0.08)"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.04)"][style*="border: 1px solid rgba(255,255,255,0.07)"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.07) !important;
+}
+/* Back buttons rgba(255,255,255,0.08) */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.08)"][style*="border: '1px solid rgba(255,255,255,0.1)"],
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.08)"][style*="border: 1px solid rgba(255,255,255,0.1"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Progress bar track */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.06)"][class*="rounded-full"] {
+  background: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── DASHBOARD: low-opacity text labels ─────────────────────── */
+/* Metric card header text rgba(255,255,255,0.15) skeleton */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.15)"][class*="animate-pulse"] {
+  background: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── INVOICE PREVIEW: content area ─────────────────────────── */
+/* Inner canvas bg-[#080d1a] — already covered. Borders & text: */
+[data-theme-mode="light"] [class*="overflow-auto"][class*="bg-\[\#080d1a\]"] {
+  background: #f4f6fc !important;
+}
+[data-theme-mode="light"] [class*="bg-\[\#080d1a\]"] * {
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* ─── ONBOARDING SETUP BUSINESS step inputs/cards ────────────── */
+/* Already has login-view-root; fix step indicator dots */
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.07)"][style*="color: rgba(148,163,184,0.4)"] {
+  background: rgba(0,0,0,0.08) !important;
+  color: #94a3b8 !important;
+}
+/* "Back" ghost button */
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.08)"][style*="border: 1px solid rgba(255,255,255,0.12)"],
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.08)"][style*="color: rgba(203,213,225"] {
+  background: rgba(0,0,0,0.05) !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  color: #475569 !important;
+}
+/* Feature tile cards rgba(255,255,255,0.06) */
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.06)"][style*="border: 1px solid rgba(255,255,255,0.1)"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Step connector lines */
+[data-theme-mode="light"] .login-view-root [style*="background: rgba(255,255,255,0.08)"][class*="h-0.5"],
+[data-theme-mode="light"] .login-view-root [style*="background: i < idx"][class*="h-0.5"] {
+  background: rgba(0,0,0,0.12) !important;
+}
+/* aurora-grid behind form */
+[data-theme-mode="light"] .login-view-root [class*="absolute"][class*="inset-0"][style*="opacity"] {
+  opacity: 0.04 !important;
+}
+
+/* ─── SETTINGS TABS — data edit password / app lock ─────────── */
+/* Toggle tracks bg-[rgba(255,255,255,0.1)] — handled globally but reinforce */
+[data-theme-mode="light"] .space-y-4 [class*="bg-\[rgba\(255,255,255,0.1\)\]"] {
+  background: rgba(0,0,0,0.12) !important;
+}
+/* Section container */
+[data-theme-mode="light"] .space-y-4 [style*="background: rgba(255,255,255,0.07)"][style*="border: 1px solid rgba(255,255,255,0.12)"] {
+  background: #f8faff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+/* Language/period selector buttons: active highlight text */
+[data-theme-mode="light"] [style*="color: '#a5b4fc'"],
+[data-theme-mode="light"] [style*="color: '#c4b5fd'"],
+[data-theme-mode="light"] [style*="color: '#a78bfa'"] { color: #4f46e5 !important; }
+
+/* ─── ATTACHED LIST / AUTOCOMPLETE SUGGESTIONS ───────────────── */
+/* Suggestion dropdown — already covers bg-[#1a1f35] but fix text in rows */
+[data-theme-mode="light"] [class*="bg-\[\#1a1f35\]"] .text-white,
+[data-theme-mode="light"] [style*="background: #1a1f35"] .text-white,
+[data-theme-mode="light"] [style*="background: '#1a1f35'"] .text-white { color: #111827 !important; }
+/* Item row separators */
+[data-theme-mode="light"] [class*="bg-\[\#1a1f35\]"] [style*="borderTop: '1px solid rgba(255"],
+[data-theme-mode="light"] [class*="bg-\[\#1a1f35\]"] [style*="border-top: 1px solid rgba(255"] {
+  border-color: rgba(0,0,0,0.06) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — EDIT PASSWORD / DATA PIN MODAL
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Overlay ────────────────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root {
+  background: rgba(0,0,0,0.35) !important;
+}
+
+/* ── Card background (PIN modal + Delete confirm) ───────────── */
+[data-theme-mode="light"] .edit-password-root > div {
+  background: #ffffff !important;
+  border-color: rgba(99,102,241,0.18) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+
+/* ── Card text ──────────────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root .text-white { color: #1e1b4b !important; }
+
+/* ── Subtitle / muted text ──────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root [style*="color: rgba(255,255,255,0.35"],
+[data-theme-mode="light"] .edit-password-root [style*="color: rgba(255,255,255,0.4"],
+[data-theme-mode="light"] .edit-password-root p[style*="color: rgba(255,255,255,0."] { color: #64748b !important; }
+
+/* ── Muted slate text ───────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root [style*="color: rgba(148,163,184,0.4"],
+[data-theme-mode="light"] .edit-password-root [style*="color: rgba(148,163,184,0.5"],
+[data-theme-mode="light"] .edit-password-root [style*="color: rgba(148,163,184,0.55"] { color: #64748b !important; }
+
+/* ── Number pad buttons ─────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root button[style*="background: rgba(255,255,255,0.07"],
+[data-theme-mode="light"] .edit-password-root button[style*="background: rgba(255,255,255,0.08"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.07) !important;
+}
+
+/* ── Close / icon button ────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root button[style*="background: rgba(255,255,255,0.07"] {
+  background: rgba(0,0,0,0.05) !important;
+}
+
+/* ── Unfilled PIN dot ───────────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root div[style*="rgba(255,255,255,0.15)"] {
+  background: rgba(0,0,0,0.12) !important;
+}
+
+/* ── PIN setup inputs (color: '#fff' / color: #fff) ─────────── */
+[data-theme-mode="light"] .edit-password-root input {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  color: #0f172a !important;
+}
+
+/* ── Label text above inputs ────────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root label { color: #64748b !important; }
+
+/* ── Delete confirm card (dark red gradient) ────────────────── */
+[data-theme-mode="light"] .edit-password-root div[style*="linear-gradient(160deg, #1a0a0a"],
+[data-theme-mode="light"] .edit-password-root div[style*="linear-gradient(160deg,#1a0a0a"] {
+  background: #ffffff !important;
+  border-color: rgba(239,68,68,0.2) !important;
+}
+
+/* ── Delete cancel button ghost ─────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root button[style*="color: rgba(148,163,184,0.8"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  color: #475569 !important;
+}
+
+/* ── Delete confirm description ─────────────────────────────── */
+[data-theme-mode="light"] .edit-password-root p[style*="color: rgba(255,255,255,0.4"] { color: #64748b !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — UNDO / SOFT-DELETE SNACKBAR
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Snackbar card bg ───────────────────────────────────────── */
+[data-theme-mode="light"] .undo-snackbar-root > div {
+  background: #ffffff !important;
+  border-color: rgba(239,68,68,0.3) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+/* ── Item name text (text-white class) ──────────────────────── */
+[data-theme-mode="light"] .undo-snackbar-root .text-white { color: #0f172a !important; }
+
+/* ── "Moved to trash · Xs to undo" subtitle ─────────────────── */
+[data-theme-mode="light"] .undo-snackbar-root [style*="color: rgba(148,163,184,0.5"] { color: #64748b !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   AUTH PAGE + CONFIRM DIALOG — CLASS-BASED LIGHT MODE FIX
+   These classes replace hardcoded inline backgrounds so light
+   mode overrides are reliable with no specificity conflicts.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── Auth page full-screen background ─────────────────────── */
+.auth-page-bg {
+  background: linear-gradient(160deg, #0a0f2e 0%, #0f0a28 40%, #070d1a 100%);
+}
+[data-theme-mode="light"] .auth-page-bg {
+  background: linear-gradient(160deg, #f4f6ff 0%, #eef1ff 55%, #e8edfc 100%) !important;
+}
+
+/* ─── Aurora orbs: invisible on light background ────────────── */
+[data-theme-mode="light"] .auth-aurora-orb {
+  opacity: 0.05 !important;
+}
+
+/* ─── ConfirmDialog card ─────────────────────────────────────── */
+[data-theme-mode="light"] .confirm-dialog-card {
+  background: #ffffff !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── ConfirmDialog title: rgba(240,244,255,…) → dark ───────── */
+[data-theme-mode="light"] [style*="color: rgba(240,244,255"] { color: #111827 !important; }
+[data-theme-mode="light"] [style*="color:rgba(240,244,255"]  { color: #111827 !important; }
+
+/* ─── ConfirmDialog message: rgba(148,163,184,0.65) → readable ─ */
+[data-theme-mode="light"] .confirm-dialog-card [style*="color: rgba(148,163,184,0.65"],
+[data-theme-mode="light"] .confirm-dialog-card [style*="color: rgba(148,163,184,0.6"] {
+  color: #6b7280 !important;
+}
+
+/* ─── ConfirmDialog cancel btn ──────────────────────────────── */
+[data-theme-mode="light"] .confirm-dialog-card button[style*="background:'rgba(255,255,255,0.06)"],
+[data-theme-mode="light"] .confirm-dialog-card button[style*="background: rgba(255,255,255,0.06"],
+[data-theme-mode="light"] .confirm-dialog-card button[style*="background:rgba(255,255,255,0.06"] {
+  background: #f1f5f9 !important;
+  color: #374151 !important;
+  border-color: rgba(0,0,0,0.09) !important;
+}
+
+/* ─── ConfirmDialog overlay: slightly lighter dim in light mode ─ */
+[data-theme-mode="light"] .confirm-dialog-root {
+  background: rgba(0,0,0,0.35) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOGOUT CONFIRM DIALOG — LIGHT MODE
+   ══════════════════════════════════════════════════════════════ */
+[data-theme-mode="light"] .logout-confirm-card {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] .logout-confirm-card .text-white { color: #111827 !important; }
+[data-theme-mode="light"] .logout-confirm-card [style*="color: rgba(148,163,184,0.6"] { color: #6b7280 !important; }
+[data-theme-mode="light"] .logout-confirm-card button[style*="rgba(255,255,255,0.07"] {
+  background: #f1f5f9 !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  color: #374151 !important;
+}
+
+/* ─── Loading screen label ───────────────────────────────────── */
+.loading-app-label { color: rgba(255,255,255,0.18); }
+[data-theme-mode="light"] .loading-app-label { color: rgba(0,0,0,0.38); }
+
+/* ══════════════════════════════════════════════════════════════
+   QUICK-BILL SUGGESTION LISTS — LIGHT MODE
+   ══════════════════════════════════════════════════════════════ */
+[data-theme-mode="light"] .pos-suggestion-list {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] .pos-suggestion-list button {
+  border-bottom-color: rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] .pos-suggestion-list .text-white { color: #111827 !important; }
+[data-theme-mode="light"] .pos-suggestion-list [style*="color: rgba(148,163,184"] { color: #6b7280 !important; }
+[data-theme-mode="light"] .pos-suggestion-list [style*="color: #34d399"] { color: #059669 !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   DATE RANGE FILTER — LIGHT MODE
+   ══════════════════════════════════════════════════════════════ */
+[data-theme-mode="light"] .date-range-filter {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.12) !important;
+}
+[data-theme-mode="light"] .date-range-filter [style*="color: rgba(148,163,184"] { color: #6b7280 !important; }
+[data-theme-mode="light"] .date-range-filter [style*="color: rgba(203,213,225"] { color: #374151 !important; }
+[data-theme-mode="light"] .date-range-filter [style*="rgba(255,255,255,0.1)"] { background: rgba(0,0,0,0.1) !important; }
+[data-theme-mode="light"] .date-range-filter [style*="rgba(255,255,255,0.08)"] { background: rgba(0,0,0,0.06) !important; }
+
+/* Native date picker colour-scheme — adapts to app theme */
+[data-theme-mode="light"] input[type="date"],
+[data-theme-mode="light"] input[type="time"],
+[data-theme-mode="light"] input[type="datetime-local"] { color-scheme: light; }
+[data-theme-mode="dark"] input[type="date"],
+[data-theme-mode="dark"] input[type="time"],
+[data-theme-mode="dark"] input[type="datetime-local"] { color-scheme: dark; }
+
+/* ════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE LIGHT MODE VISIBILITY FIX — ROOT LEVEL
+   ════════════════════════════════════════════════════════════════════
+   Root cause: Every component uses hardcoded dark-mode rgba color
+   values in inline styles. These bypass CSS variables entirely and
+   become invisible on light backgrounds.
+   Fix: Global CSS attribute & class selectors override ALL instances
+   across the ENTIRE app in one pass — no per-component changes needed.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── PART 1: INLINE STYLE text colour overrides ─────────────────────
+   Targets: style={{ color: 'rgba(X,X,X,X)' }} patterns              */
+
+/* Near-white / lavender primary text — rgba(240,244,255,X)
+   Used in: SettingsView titles & back-button icons, SmartReminders
+   widget reminder text, DashboardView labels, sub-page headers       */
+[data-theme-mode="light"] [style*="color: rgba(240,244,255"] { color: #111827 !important; }
+
+/* Slate-200 secondary text — rgba(226,232,240,X)
+   Used in: Setting row titles ("Display Mode", "Notifications"),
+   InvoiceTemplate section accordion titles, input text throughout    */
+[data-theme-mode="light"] [style*="color: rgba(226,232,240"] { color: #1f2937 !important; }
+
+/* Slate-300 tertiary text — rgba(203,213,225,X)
+   Used in: Custom list items, ledger row subtitles, breadcrumbs      */
+[data-theme-mode="light"] [style*="color: rgba(203,213,225"] { color: #374151 !important; }
+
+/* Slate-400 muted text — rgba(148,163,184,X) — THE MOST COMMON
+   Used in: Section headers ("APP PREFERENCES", "TEMPLATE STYLE"),
+   subtitles, helper text, chevron icons, placeholders — EVERYWHERE   */
+[data-theme-mode="light"] [style*="color: rgba(148,163,184"] { color: #64748b !important; }
+
+/* Slate-500 — rgba(100,116,139,X) */
+[data-theme-mode="light"] [style*="color: rgba(100,116,139"] { color: #374151 !important; }
+
+/* White-opacity text — rgba(255,255,255,0.X)
+   Used in: some widget labels, notification badge text               */
+[data-theme-mode="light"] [style*="color: rgba(255,255,255,0."] { color: #374151 !important; }
+
+/* ── PART 2: TAILWIND CLASS text colour overrides ───────────────────
+   Targets: className="text-[rgba(X,X,X,X)]" patterns                */
+[data-theme-mode="light"] [class*="text-[rgba(240,244,255"] { color: #111827 !important; }
+[data-theme-mode="light"] [class*="text-[rgba(226,232,240"] { color: #1f2937 !important; }
+[data-theme-mode="light"] [class*="text-[rgba(203,213,225"] { color: #374151 !important; }
+[data-theme-mode="light"] [class*="text-[rgba(148,163,184"] { color: #64748b !important; }
+[data-theme-mode="light"] [class*="text-[rgba(100,116,139"] { color: #374151 !important; }
+
+/* ── PART 3: ACCENT COLOUR fixes on light backgrounds ───────────────
+   Light purple (#a78bfa violet-400, #a5b4fc violet-300) look like
+   faded lavender on light bg — darken to readable indigo/violet      */
+[data-theme-mode="light"] [style*="color: #a78bfa"] { color: #5b21b6 !important; }
+[data-theme-mode="light"] [style*="color: #a5b4fc"] { color: #4338ca !important; }
+/* Tailwind text-violet-300 — active tab text in Custom Lists         */
+[data-theme-mode="light"] .text-violet-300 { color: #5b21b6 !important; }
+/* Tailwind text-slate-400 — inactive tab/button text                 */
+[data-theme-mode="light"] .text-slate-400 { color: #64748b !important; }
+
+/* ── PART 4: BORDER / DIVIDER visibility ────────────────────────────
+   rgba(255,255,255,X) borders & Tailwind border-white/X classes are
+   invisible on light backgrounds                                      */
+
+/* Inline border shorthand */
+[data-theme-mode="light"] [style*="border: 1px solid rgba(255,255,255"] { border-color: rgba(0,0,0,0.1) !important; }
+[data-theme-mode="light"] [style*="border: 1.5px solid rgba(255,255,255"] { border-color: rgba(0,0,0,0.12) !important; }
+[data-theme-mode="light"] [style*="border: 1.5px dashed rgba(255,255,255"] { border-color: rgba(0,0,0,0.15) !important; }
+
+/* Inline borderColor / border-color */
+[data-theme-mode="light"] [style*="border-color: rgba(255,255,255"] { border-color: rgba(0,0,0,0.08) !important; }
+
+/* Inline border-bottom */
+[data-theme-mode="light"] [style*="border-bottom: 1px solid rgba(255,255,255"] { border-bottom-color: rgba(0,0,0,0.08) !important; }
+
+/* Inline border-top */
+[data-theme-mode="light"] [style*="border-top: 1px solid rgba(255,255,255"] { border-top-color: rgba(0,0,0,0.08) !important; }
+
+/* Tailwind border-white/X classes (border-white/10, border-white/12, etc.) */
+[data-theme-mode="light"] [class*="border-white\/"] { border-color: rgba(0,0,0,0.09) !important; }
+
+/* ── PART 5: CARD & CONTAINER BACKGROUNDS ───────────────────────────
+   Dark semi-transparent surfaces are near-invisible on light bg.
+   Convert to light-mode-appropriate card surfaces.                   */
+
+/* Settings list items, widget containers, accordion sections
+   rgba(255,255,255,0.04) → clear white card on #f4f6fc background    */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.04)"] {
+  background: rgba(255,255,255,0.85) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.05)"] {
+  background: rgba(255,255,255,0.9) !important;
+}
+
+/* Slightly elevated surfaces (toolbar, toggle wrapper, back buttons)
+   rgba(255,255,255,0.07/.08) → subtle grey tint = visible elevation  */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.07)"] {
+  background: rgba(0,0,0,0.04) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.08)"] {
+  background: rgba(0,0,0,0.05) !important;
+}
+
+/* InvoiceTemplate preview panel dark overlay → light panel           */
+[data-theme-mode="light"] [style*="background: rgba(0,0,0,0.3)"] {
+  background: rgba(0,0,0,0.04) !important;
+}
+
+/* Dark dropdown & tooltip backgrounds                                 */
+[data-theme-mode="light"] [style*="background: #1a1f35"] {
+  background: #ffffff !important;
+}
+
+/* ── PART 6: INPUT FIELD fixes ──────────────────────────────────────
+   Input boxes in settings use dark bg + light text + invisible borders */
+
+/* SettingInput component (border-white/12 class handled by PART 4)   */
+[data-theme-mode="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  color: #111827;
+}
+
+/* ── PART 7: TAILWIND BG fixes for settings rows ────────────────────
+   border-b border-white/07 separators → visible on light bg          */
+[data-theme-mode="light"] [class*="border-b"][class*="border-white"] {
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Toggle switch track (bg-[rgba(255,255,255,0.1)]) → grey track      */
+[data-theme-mode="light"] [class*="bg-[rgba(255,255,255,0.1)"] {
+  background-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ── PART 8: SPECIFIC COMPONENT OVERRIDES ───────────────────────────*/
+
+/* SettingsCommon SettingsSection card — border-white/10 already
+   handled above, but ensure the section title is also readable       */
+[data-theme-mode="light"] .border-white\/10 { border-color: rgba(0,0,0,0.09) !important; }
+[data-theme-mode="light"] .border-white\/12 { border-color: rgba(0,0,0,0.10) !important; }
+
+/* InvoiceTemplate: non-selected template name (rgba(226,232,240,0.8))
+   already fixed by PART 1; but the selected template name uses a
+   preview_color hex — these dark colours are fine on light bg        */
+
+/* SmartRemindersWidget schedule pill when scheduled (text on
+   rgba(16,185,129,0.2) green bg → keep text as brand color = fine)  */
+
+/* Active option pills in GeneralTab with rgba(99,102,241,0.25) bg:
+   text '#a5b4fc' (already fixed by PART 3) → #4338ca dark indigo    */
+[data-theme-mode="light"] [style*="background: rgba(99,102,241,0.25)"] {
+  background: rgba(99,102,241,0.12) !important;
+}
+[data-theme-mode="light"] [style*="background: rgba(139,92,246,0.25)"] {
+  background: rgba(139,92,246,0.12) !important;
+}
+
+/* Version footer text — rgba(148,163,184,0.2) is near-invisible,
+   override above catches it via PART 1; explicitly ensure min
+   contrast for the version label                                      */
+[data-theme-mode="light"] [class*="text-[rgba(148,163,184,0.2"]  { color: #9ca3af !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.2"] { color: #9ca3af !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.3"] { color: #9ca3af !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.35"] { color: #6b7280 !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — FINAL ROOT-LEVEL FIX PASS
+   Covers every remaining gap after the previous comprehensive pass.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. ACTIVITY LOG modal body background ──────────────────── */
+/* rgba(10,14,34,0.97) is the dark-navy body scroll area —
+   not matched by any previous rule. Convert to white.            */
+[data-theme-mode="light"] [style*="background: rgba(10,14,34"] {
+  background: #f8faff !important;
+  color: #111827 !important;
+}
+[data-theme-mode="light"] .audit-log-modal-root {
+  border-color: rgba(0,0,0,0.10) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.14) !important;
+}
+/* Audit log header dark navy → white card header */
+[data-theme-mode="light"] .audit-log-modal-root [style*="background: rgba(13,17,40"] {
+  background: #ffffff !important;
+}
+/* All text inside audit log modal */
+[data-theme-mode="light"] .audit-log-modal-root .text-white { color: #111827 !important; }
+[data-theme-mode="light"] .audit-log-modal-root h3          { color: #111827 !important; }
+[data-theme-mode="light"] .audit-log-modal-root [style*="color: rgba(148,163,184"] { color: #64748b !important; }
+[data-theme-mode="light"] .audit-log-modal-root [style*="color: rgba(203,213,225"] { color: #374151 !important; }
+[data-theme-mode="light"] .audit-log-modal-root [style*="color: rgba(226,232,240"] { color: #1f2937 !important; }
+[data-theme-mode="light"] .audit-log-modal-root [style*="background: rgba(255,255,255,0.06"] {
+  background: rgba(0,0,0,0.04) !important;
+}
+[data-theme-mode="light"] .audit-log-modal-root [style*="background: rgba(255,255,255,0.04"] {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] .audit-log-modal-root [class*="text-slate-400"] { color: #64748b !important; }
+[data-theme-mode="light"] .audit-log-modal-root [class*="text-[rgba(203,213"] { color: #374151 !important; }
+
+/* ─── 2. FEEDBACK MODAL root-class scoped overrides ─────────── */
+[data-theme-mode="light"] .feedback-modal-root {
+  background: linear-gradient(160deg, #f0f4ff 0%, #eef2ff 100%) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] .feedback-modal-root .text-white  { color: #111827 !important; }
+[data-theme-mode="light"] .feedback-modal-root h2           { color: #1e1b4b !important; }
+[data-theme-mode="light"] .feedback-modal-root [style*="color: rgba(148,163,184"] { color: #64748b !important; }
+[data-theme-mode="light"] .feedback-modal-root [style*="color: rgba(203,213,225"] { color: #374151 !important; }
+[data-theme-mode="light"] .feedback-modal-root [style*="color: rgba(226,232,240"] { color: #1f2937 !important; }
+[data-theme-mode="light"] .feedback-modal-root [style*="borderColor: rgba(255,255,255"] { border-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] .feedback-modal-root [style*="background: rgba(255,255,255,0.04"],
+[data-theme-mode="light"] .feedback-modal-root [style*="background: rgba(255,255,255,0.05"],
+[data-theme-mode="light"] .feedback-modal-root [style*="background: rgba(255,255,255,0.06"],
+[data-theme-mode="light"] .feedback-modal-root [style*="background: rgba(255,255,255,0.07"],
+[data-theme-mode="light"] .feedback-modal-root [style*="background: rgba(255,255,255,0.08"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] .feedback-modal-root textarea {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.10) !important;
+  color: #111827 !important;
+}
+[data-theme-mode="light"] .feedback-modal-root textarea::placeholder { color: #94a3b8 !important; }
+
+/* ─── 3. PERIOD FILTER PANEL (Dashboard FY / Month filter) ───── */
+[data-theme-mode="light"] .period-filter-panel {
+  background: #ffffff !important;
+  border-color: rgba(99,102,241,0.2) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10) !important;
+}
+[data-theme-mode="light"] .period-filter-panel .text-white { color: #111827 !important; }
+[data-theme-mode="light"] .period-filter-panel [style*="background: rgba(255,255,255,0.06"] {
+  background: rgba(0,0,0,0.05) !important;
+}
+[data-theme-mode="light"] .period-filter-panel [style*="background: rgba(255,255,255,0.08"] {
+  background: rgba(0,0,0,0.06) !important;
+}
+[data-theme-mode="light"] .period-filter-panel [style*="color: rgba(148,163,184"] { color: #64748b !important; }
+[data-theme-mode="light"] .period-filter-panel [style*="color: rgba(203,213,225"] { color: #374151 !important; }
+[data-theme-mode="light"] .period-filter-panel label { color: #374151 !important; }
+
+/* ─── 4. TOGGLE SWITCH TRACK: targeted by shape classes ─────── */
+/* Selector matches the toggle track div that has BOTH w-11, h-6,
+   rounded-full AND the white-10 Tailwind bg class                */
+[data-theme-mode="light"] [class*="w-11"][class*="h-6"][class*="rounded-full"][class*="bg-"] {
+  background: rgba(0,0,0,0.14) !important;
+  border-color: rgba(0,0,0,0.15) !important;
+}
+/* Peer-checked keeps the accent colour (amber, green, etc.) — no override */
+/* After-element (thumb) stays bg-white — already correct         */
+
+/* ─── 5. INVOICE TEMPLATE: section section-label headers ────── */
+/* Accordion icon bg rgba(255,255,255,0.07) already covered in PART 5 */
+/* Section container background — reinforce for InvoiceTemplateSettings */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.04)"][style*="border: 1px solid rgba(255,255,255,0.09)"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}
+/* InvoiceTemplate grid dark overlay already in PART 5 above */
+/* Header-style buttons (filled / minimal / bold) unselected state */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.05)"][style*="border: 1px solid rgba(255,255,255,0.08)"][style*="color: rgba(148,163,184"] {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  color: #64748b !important;
+}
+/* Accordion open inner area border */
+[data-theme-mode="light"] [style*="borderColor: rgba(255,255,255,0.06)"] {
+  border-color: rgba(0,0,0,0.07) !important;
+}
+/* InvoiceTitle dropdown bg */
+[data-theme-mode="light"] [style*="background: '#1a1f35'"],
+[data-theme-mode="light"] [style*="background: #1a1f35"] {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+}
+/* Logo upload drop-zone */
+[data-theme-mode="light"] [style*="border: '1.5px dashed rgba(255,255,255,0.15)"],
+[data-theme-mode="light"] [style*="border: 1.5px dashed rgba(255,255,255,0.15)"] {
+  border-color: rgba(0,0,0,0.15) !important;
+  background: rgba(0,0,0,0.02) !important;
+}
+
+/* ─── 6. INLINE borderColor / border-X shorthand not yet caught ─ */
+[data-theme-mode="light"] [style*="borderColor: 'rgba(255,255,255"] { border-color: rgba(0,0,0,0.07) !important; }
+[data-theme-mode="light"] [style*="borderBottom: '1px solid rgba(255,255,255"] { border-bottom-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] [style*="borderTop: '1px solid rgba(255,255,255"]    { border-top-color:    rgba(0,0,0,0.08) !important; }
+
+/* ─── 7. BORDER-WHITE/* Tailwind shorthand variants ────────────── */
+[data-theme-mode="light"] [class*="border-white/06"] { border-color: rgba(0,0,0,0.06) !important; }
+[data-theme-mode="light"] [class*="border-white/08"] { border-color: rgba(0,0,0,0.08) !important; }
+[data-theme-mode="light"] [class*="border-white/15"] { border-color: rgba(0,0,0,0.12) !important; }
+[data-theme-mode="light"] [class*="border-white/20"] { border-color: rgba(0,0,0,0.13) !important; }
+[data-theme-mode="light"] [class*="border-white/25"] { border-color: rgba(0,0,0,0.15) !important; }
+
+/* ─── 8. TEXT-WHITE/* Tailwind opacity variants → dark on light bg ─ */
+[data-theme-mode="light"] [class*="text-white/"]   { color: #334155 !important; }
+/* But preserve white text ON clearly-coloured solid backgrounds  */
+[data-theme-mode="light"] [class*="bg-violet-"]  [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-indigo-"]  [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-blue-"]    [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-emerald-"] [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-green-"]   [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-red-"]     [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-rose-"]    [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-amber-"]   [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-orange-"]  [class*="text-white/"],
+[data-theme-mode="light"] [class*="bg-teal-"]    [class*="text-white/"] { color: #ffffff !important; }
+
+/* ─── 9. REMAINING DARK SURFACE BACKGROUNDS ─────────────────── */
+/* rgba(13,17,40,0.9X) — settings header sticky bars, modal nav  */
+[data-theme-mode="light"] [style*="background: rgba(13,17,40,0.95"],
+[data-theme-mode="light"] [style*="background: rgba(13,17,40,0.96"],
+[data-theme-mode="light"] [style*="background: rgba(13,17,40,0.97"],
+[data-theme-mode="light"] [style*="background: rgba(13,17,40,0.98"],
+[data-theme-mode="light"] [style*="background: rgba(13,17,40,0.99"] {
+  background: rgba(248,250,255,0.97) !important;
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+/* rgba(12,16,38) header variants */
+[data-theme-mode="light"] [style*="background: rgba(12,16,38"] {
+  background: rgba(248,250,255,0.97) !important;
+}
+
+/* ─── 10. DATE PICKER — explicit colorScheme override ─────────── */
+/* Force light color-scheme even when component sets colorScheme:auto */
+[data-theme-mode="light"] input[type="date"],
+[data-theme-mode="light"] input[type="time"],
+[data-theme-mode="light"] input[type="datetime-local"],
+[data-theme-mode="light"] input[type="month"] {
+  color-scheme: light !important;
+}
+[data-theme-mode="dark"] input[type="date"],
+[data-theme-mode="dark"] input[type="time"],
+[data-theme-mode="dark"] input[type="datetime-local"],
+[data-theme-mode="dark"] input[type="month"] {
+  color-scheme: dark !important;
+}
+
+/* ─── 11. GENERAL SETTINGS — display mode toggle area ──────────── */
+/* Toggle segmented control wrapper rgba(255,255,255,0.07) → light */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.07)"][style*="border: 1px solid rgba(255,255,255,0.08)"] {
+  background: rgba(0,0,0,0.06) !important;
+  border-color: rgba(0,0,0,0.10) !important;
+}
+/* Active LIGHT button: rgba(255,255,255,0.92) bg → keep white */
+[data-theme-mode="light"] [style*="background: rgba(255,255,255,0.92)"] {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.18) !important;
+}
+/* Inactive button text in segmented control */
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.5)"] { color: #94a3b8 !important; }
+
+/* ─── 12. INVENTORY ITEM DETAIL — label visibility ──────────── */
+[data-theme-mode="light"] [style*="color: rgba(147,197,253,0.8)"] { color: #2563eb !important; }
+[data-theme-mode="light"] [style*="color: rgba(110,231,183,0.8)"] { color: #059669 !important; }
+[data-theme-mode="light"] [style*="color: rgba(253,186,116,0.8)"] { color: #d97706 !important; }
+[data-theme-mode="light"] [style*="color: rgba(226,232,240,0.7)"] { color: #374151 !important; }
+
+/* ─── 13. PARTY STATEMENT — table headers / separators ─────── */
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.35)"] { color: #6b7280 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.3)"]  { color: #9ca3af !important; }
+[data-theme-mode="light"] [style*="color: rgba(203,213,225,0.8)"]  { color: #1f2937 !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.55)"] { color: #64748b !important; }
+[data-theme-mode="light"] [style*="color: rgba(148,163,184,0.45)"] { color: #6b7280 !important; }
+
+/* ─── 14. SKELETON / LOADING STATES ───────────────────────────── */
+/* Pulse animation shapes that look too dark in light mode         */
+[data-theme-mode="light"] [class*="animate-pulse"][class*="bg-white\/"] {
+  background: rgba(0,0,0,0.08) !important;
+}
+[data-theme-mode="light"] [class*="animate-pulse"][style*="background: rgba(255,255,255,0."] {
+  background: rgba(0,0,0,0.08) !important;
+}
+
+/* ─── 15. GLOBAL .text-white safety net ─────────────────────── */
+/* Convert ALL bare .text-white on light-mode bg to dark text.
+   Exceptions (white text on coloured button bg) are handled
+   by the per-parent overrides above in PART 8.                   */
+[data-theme-mode="light"] .text-white { color: #0f172a !important; }
+/* Preserve white text on clearly saturated bg chips/badges/buttons */
+[data-theme-mode="light"] [class*="bg-violet-"].text-white,
+[data-theme-mode="light"] [class*="bg-indigo-"].text-white,
+[data-theme-mode="light"] [class*="bg-blue-"].text-white,
+[data-theme-mode="light"] [class*="bg-emerald-"].text-white,
+[data-theme-mode="light"] [class*="bg-green-"].text-white,
+[data-theme-mode="light"] [class*="bg-red-"].text-white,
+[data-theme-mode="light"] [class*="bg-rose-"].text-white,
+[data-theme-mode="light"] [class*="bg-amber-"].text-white,
+[data-theme-mode="light"] [class*="bg-orange-"].text-white,
+[data-theme-mode="light"] [class*="bg-teal-"].text-white   { color: #ffffff !important; }
+

@@ -1,0 +1,148 @@
+* no duplicate mutations
+* no orphan optimistic state
+* queue integrity survives restart
+
+Requirements:
+
+* atomic queue persistence
+* mutation state reconciliation on restore
+
+---
+
+MODULE 6 — PROCESS DEATH RECOVERY
+
+Handle true Android process kill.
+
+On cold reopen:
+
+* restore persisted navigation/UI state
+* restore cache safely
+* reconcile optimistic data
+* reattach lifecycle listeners cleanly
+
+Avoid:
+
+* blank state after restore
+* stale loading flags
+* inconsistent mutation state
+
+---
+
+MODULE 7 — SAFE HYDRATION SYSTEM
+
+Hydration must:
+
+* validate persisted state schema
+* reject corrupted state
+* self-heal safely
+
+Requirements:
+
+* versioned persistence
+* schema guards
+* migration-safe restoration
+
+Avoid:
+
+* hydration crash loops
+* incompatible persisted state after update
+
+---
+
+MODULE 8 — NETWORK TRANSITION CONTINUITY
+
+When:
+offline ↔ online
+
+Avoid:
+
+* UI flicker
+* route reset
+* duplicate reload
+* loading thrash
+
+Ensure:
+
+* sync status continuity
+* stable optimistic state
+* smooth background sync
+
+---
+
+MODULE 9 — SCROLL & LIST CONTINUITY
+
+Critical for:
+
+* ledger
+* inventory
+* analytics
+* transaction history
+
+Restore:
+
+* exact scroll offset
+* list virtualization state
+* expanded rows
+* filter context
+
+Avoid:
+
+* jumping to top
+* list flashing
+* refetch-induced resets
+
+---
+
+MODULE 10 — RESUME RECOVERY STRATEGY
+
+When app resumes:
+
+Perform:
+
+1. integrity check
+2. queue validation
+3. stale state cleanup
+4. listener reattachment
+5. safe sync check
+
+Avoid:
+
+* aggressive full reloads
+* duplicate sync attempts
+
+---
+
+MODULE 11 — TEMPORARY UI STATE CONTINUITY
+
+Preserve safely:
+
+* search queries
+* filter chips
+* sort selection
+* active tab
+* pagination
+* local toggles
+
+Avoid:
+
+* over-persisting ephemeral state
+* unnecessary localStorage spam
+
+Prefer:
+
+* lightweight scoped persistence
+
+---
+
+MODULE 12 — INTERRUPTION RESILIENCE
+
+Handle safely:
+
+* incoming calls
+* keyboard interruptions
+* app minimization during save
+* screen rotation
+* permission dialogs
+* low memory reclaim
+
+---

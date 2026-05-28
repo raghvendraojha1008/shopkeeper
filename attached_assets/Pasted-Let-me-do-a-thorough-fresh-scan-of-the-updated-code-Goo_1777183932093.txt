@@ -1,0 +1,144 @@
+Let me do a thorough fresh scan of the updated code.Good, I now have a thorough picture of what changed and what remains. Here are all **new major issues** found in this updated version:
+
+---
+
+## 🔴 Critical Issues
+
+**1. Hardcoded Default PIN `'1234'` Still Present**
+Despite being flagged in the previous review, the fix was not applied:
+```ts
+// App.tsx line 154
+password: ep?.password || '1234',
+```
+This is still the live fallback. Any user who never changes their edit password has all their records protected by `1234`. This is a security regression that survived the update.
+
+---
+
+**2. `openPartyStatement` Sets Party Before Data Loads — No Loading State Shown**
+```ts
+const openPartyStatement = async (party: any) => {
+  setSelectedPartyStatement(party);  // ← party shown immediately
+  try {
+    const [ledgerSnap, transSnap] = await Promise.all([...]);
+    // data arrives seconds later
+```
+The party statement view renders with `selectedPartyStatement` set but empty `partyStatementLedger` and `partyStatementTransactions` arrays. There is no loading guard or spinner — the user sees a blank statement until data arrives, and if two parties are tapped quickly, the first party's name shows with the second party's data (race condition).
+
+---
+
+**3. `usePaginatedQuery` — `hasMore` Logic Always Wrong on Last Page**
+```ts
+setHasMore(snap.docs.length === 20);
+```
+`hasMore` is set to `false` only when fewer than 20 docs are returned. But if the collection has exactly a multiple of 20 records (e.g. 40, 60), the last page returns exactly 20 docs, so `hasMore` stays `true` and an extra empty fetch fires on scroll. More critically, if `pageSize` was changed from 20 elsewhere, this hardcoded `=== 20` comparison silently breaks infinite scroll for all views using this hook.
+
+---
+
+## 🟠 High-Severity Issues
+
+**4. `seedCountersFromFirestore` Strips Leading Non-Digit Characters Incorrectly**
+```ts
+const digits = String(raw || '0').replace(/^[^0-9]*/, '');
+```
+For an ID like `'S-1050'`, this strips `'S-'` and parses `1050` correctly. But for `'REC-202'`, it strips `'REC-'` and gives `202`. However for `'PAY-101'`, `'P-101'` (purchases), and `'S-101'` (sales) — all share numeric suffixes — if a sales ID `'S-205'` is seeded into the `purchases` category by mistake, it silently advances the wrong counter. The function has no validation that the prefix matches the expected category before seeding — any string with a number in it advances the counter.
+
+---
+
+**5. `OnboardingView` Saves Profile to `user.uid` Always — Ignores `dataUid` for Staff Viewing Admin Firm**
+```ts
+await ApiService.settings.save(user.uid, { profile, automation });
+```
+`OnboardingView` is shown when `isStale` is true (once a week). If a staff user who is viewing their admin's firm opens the app after 7 days, completes onboarding, and saves — it saves a new blank profile to their **own** `user.uid`, not to the admin's UID that `dataUid` points to. Their changes are saved to the wrong namespace and are immediately invisible in the app.
+
+---
+
+**6. `DashboardAnalyticsWidget` Computes 7-Day Sales From All Ledger Data — No Date Cap**
+```ts
+ledgerData.forEach((l: any) => {
+  const diff = Math.floor((now - d.getTime()) / 86400000);
+  if (diff >= 0 && diff < 7) cur[6 - diff] += ...
+  if (diff >= 7 && diff < 14) prv[6 - (diff - 7)] += ...
+});
+```
+`ledgerData` passed in from `DashboardView` is the full unfiltered dataset from `useData()`. For businesses with years of data, this loop runs over thousands of records on every render. Since `ledgerData` is a new array reference on every context update, this `useMemo` recalculates on **every data change** regardless of whether the 7-day window changed at all — causing visible UI lag on the dashboard for businesses with large datasets.
+
+---
+
+**7. `useSwipe` Stores Touch Coordinates in React State — Causes Re-renders on Every Touch Move**
+```ts
+const [touchStart, setTouchStart] = useState<number | null>(null);
+const [touchEnd, setTEndEnd] = useState<number | null>(null);
+```
+`onTouchMove` calls `setTouchEnd` on every pixel of movement during a swipe. Each `setState` triggers a full React re-render of the component using `useSwipe`. On Android where touch events fire at 60–120Hz, this means 60–120 re-renders per second during any swipe gesture, directly causing the "janky scroll" feeling on lower-end Android devices.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**8. `OnboardingView` Fires `next()` Without Awaiting `saveFirmProfile` Success**
+```ts
+const next = async () => {
+  if (step === 'gst') {
+    await saveFirmProfile(); // ← result is awaited but not checked
+  }
+  if (idx < STEPS.length - 1) setStep(STEPS[idx + 1]); // ← advances regardless
+};
+```
+If `saveFirmProfile()` throws or returns `false` (e.g. Firestore offline, missing firm name), `next()` still advances to the next step. The user sees a toast error but the flow continues, leaving them with an empty/corrupted settings document and no way to go back to re-enter their firm details.
+
+---
+
+**9. `GSTBreakdownCard` Calls `buildInvoiceSummary` Inside `useMemo` But `isInterstate` Is Computed Outside**
+```ts
+const isInterstate = isInterstateTx(sellerGstin, partyGstin); // outside useMemo
+const summary = useMemo(() => {
+  // ...
+  return buildInvoiceSummary(mapped, isInterstate); // uses isInterstate
+}, [items, isInterstate]);
+```
+`isInterstate` is a derived boolean computed on every render (not memoized). If the parent re-renders for any unrelated reason, `isInterstate` gets a new boolean value (even if semantically identical), which causes the `useMemo` to re-run `buildInvoiceSummary` unnecessarily on every parent render. For invoices with many line items, this is a visible performance hit on the ledger detail screen.
+
+---
+
+**10. `parseID` Regex Fails for Multi-Character Prefixes Like `REC-` and `PAY-`**
+```ts
+const match = id.match(/^([A-Z]+-?)(\d+)$/);
+```
+The regex `[A-Z]+-?` matches one or more uppercase letters optionally followed by one `-`. For `'REC-101'`:
+- `[A-Z]+` matches `REC`
+- `-?` matches `-`
+- Result: prefix `'REC-'`, number `101` ✅
+
+But for `'PAY-101'`:
+- `[A-Z]+` matches `PAY`
+- `-?` matches `-`
+- Result: prefix `'PAY-'`, number `101` ✅
+
+This works, but for any ID that doesn't end in digits (e.g. a corrupted ID like `'S-101A'`), `parseID` returns `null` silently — which causes `seedCountersFromFirestore` to skip that record entirely, potentially under-seeding the counter and issuing a duplicate ID matching the skipped record.
+
+---
+
+## 🔵 Lower-Severity Issues
+
+**11. `initCountersForUser` Called on Every `useEffect` Dependency Change Including `dataUid`**
+```ts
+useEffect(() => {
+  initCountersForUser(user.uid);
+  // ...
+}, [user, authLoading, dataUid]);
+```
+`dataUid` changes whenever the staff member switches viewed firms. Every firm switch re-calls `initCountersForUser(user.uid)` (note: `user.uid`, not `dataUid`) — but since it's guarded by `userId === _currentUserId`, it's a no-op. However the entire `initApp` async chain (including `AutoBackupService`, `DailySnapshotService`, `AutoReminderService`) re-runs on every `dataUid` change, meaning daily backup and snapshot checks fire every time a staff member switches which firm they're viewing — potentially triggering duplicate backups.
+
+**12. `useSwipe` — `touchStartY`/`touchEndY` Tracked in State But Not Used After Calculation**
+```ts
+const [touchStartY, setTouchStartY] = useState<number | null>(null);
+const [touchEndY, setTouchEndY] = useState<number | null>(null);
+```
+These are stored in React state and trigger re-renders, but the vertical distance check is only used to bail out early (`Math.abs(distanceY) > Math.abs(distanceX)`). This could be tracked in a `ref` instead of state to avoid the extra re-renders on every `touchMove`.
+
+**13. `NAV_TABS` Includes `'reports'` But Then Immediately Hides Bottom Nav When `reports` is Active**
+```ts
+const NAV_TABS = ['dashboard', 'inventory', 'parties', 'settings', 'reports'];
+const showBottomNav = !dynamicNavEnabled || (NAV_TABS.includes(activeTab) && activeTab !== 'reports');
+```
+`'reports'` is added to `NAV_TABS` but then explicitly excluded in the `showBottomNav` condition. This means the bottom nav is always hidden when `reports` is the active tab, even though `reports` is listed as a nav tab. This appears to be a leftover inconsistency — either `'reports'` should be removed from `NAV_TABS`, or the `activeTab !== 'reports'` exclusion should be removed.

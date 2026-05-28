@@ -1,0 +1,203 @@
+MODULE — FULL OFFLINE-FIRST PERSISTENT DATA LAYER
+
+SYSTEM CONTEXT
+
+Current system:
+
+* React Query used for caching
+* Firebase (ApiService) as backend
+* Optimistic updates implemented
+* Sync queue exists for offline writes
+
+Problem:
+React Query cache is memory-only → data is lost on app restart
+
+---
+
+PRIMARY OBJECTIVE
+
+Convert system into:
+
+```text
+Persistent offline-first architecture
+```
+
+Where:
+
+```text
+UI → React Query → Local DB (IndexedDB) → Sync → Firebase
+```
+
+---
+
+CRITICAL RULE
+
+Do NOT replace React Query.
+
+Extend it by adding a persistent storage layer underneath.
+
+---
+
+MODULE 1 — LOCAL DATABASE SETUP
+
+Use:
+
+* IndexedDB via Dexie
+
+Create DB with tables:
+
+* inventory
+* ledger
+* parties
+* transactions
+
+Each table must:
+
+* Use id as primary key
+* Store full objects (same shape as API)
+
+---
+
+MODULE 2 — DATA FLOW (READ PATH)
+
+Modify all queries:
+
+Current:
+
+```ts
+useQuery → ApiService.getAll()
+```
+
+New:
+
+```text
+Step 1: Load from IndexedDB → return immediately  
+Step 2: Fetch from API (if online)  
+Step 3: Update IndexedDB  
+Step 4: Update React Query cache  
+```
+
+---
+
+MODULE 3 — DATA FLOW (WRITE PATH)
+
+Current:
+
+* Optimistic update + API call
+
+New:
+
+```text
+User action
+→ Update IndexedDB immediately
+→ Update React Query cache
+→ Add to sync queue
+→ Sync to Firebase in background
+```
+
+---
+
+MODULE 4 — APP STARTUP FLOW
+
+On app load:
+
+```text
+Load all core data from IndexedDB
+→ hydrate React Query cache
+→ UI renders instantly
+→ background sync runs
+```
+
+---
+
+MODULE 5 — SYNC ENGINE INTEGRATION
+
+Ensure:
+
+* Sync queue writes to Firebase
+* After success → update IndexedDB
+* Handle conflicts:
+
+  * Use updatedAt timestamps
+  * Last-write-wins
+
+---
+
+MODULE 6 — CACHE + DB CONSISTENCY
+
+Rules:
+
+* IndexedDB = source of truth
+* React Query = UI cache
+* Firebase = remote source
+
+Never:
+
+* Bypass IndexedDB for reads
+* Directly fetch from API without updating DB
+
+---
+
+MODULE 7 — EDGE CASES
+
+Handle:
+
+1. Offline + app restart
+   → data must still be available
+
+2. Partial sync
+   → retry safely
+
+3. Duplicate prevention
+   → use IDs + timestamps
+
+4. Corrupted data
+   → fallback to API fetch
+
+---
+
+MODULE 8 — PERFORMANCE
+
+* IndexedDB reads must be fast (<50ms)
+* Bulk writes batched
+* Avoid blocking UI
+
+---
+
+MODULE 9 — MIGRATION SAFETY
+
+Important:
+
+* Existing users must not lose data
+* First load:
+  → fetch from API
+  → populate IndexedDB
+
+---
+
+MODULE 10 — SUCCESS CRITERIA
+
+✔ App works fully offline (read + write)
+✔ Data persists after restart
+✔ UI loads instantly without network
+✔ Sync works without duplicates
+✔ No direct dependency on API for UI
+
+---
+
+STRICT RULES
+
+* Do NOT rewrite architecture
+* Do NOT remove React Query
+* Do NOT introduce unnecessary abstractions
+
+Only:
+
+* Add persistent storage layer
+* Integrate cleanly
+
+---
+
+END GOAL
+
+“App works perfectly even with no internet, across restarts, with zero data loss”

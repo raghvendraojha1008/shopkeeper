@@ -1,0 +1,161 @@
+FINAL TASK — SAFE AREA, APP LOCK UI, AND RESPONSIVE FORM FIXES
+
+SYSTEM CONTEXT
+
+The app is production-ready. This task is focused on fixing layout consistency, safe-area handling, and responsive UI issues.
+
+DO NOT modify core logic or navigation.
+
+---
+
+PRIMARY OBJECTIVE
+
+Ensure:
+
+* Correct bottom padding behavior
+* App lock screen looks premium and safe-area compliant
+* Forms render correctly across screen sizes
+
+---
+
+MODULE 1 — CONDITIONAL BOTTOM PADDING (CRITICAL)
+
+Problem:
+Global bottom padding is applied even when bottom navigation is hidden
+
+Fix:
+
+1. Identify layout container responsible for bottom padding
+
+2. Apply conditional logic:
+
+* IF bottom navigation is visible → apply padding-bottom
+* IF bottom navigation is hidden → NO extra bottom padding
+
+3. Implementation guidance:
+
+* Use route-based condition OR layout state
+* Avoid hardcoded padding globally
+
+4. Ensure:
+
+* No extra whitespace on full-screen pages
+* No content hidden behind bottom nav
+
+---
+
+MODULE 2 — APP LOCK SCREEN UI IMPROVEMENT
+
+Problems:
+
+* Logo overlapping status bar
+* UI feels oversized / non-premium
+
+Fix:
+
+1. Safe area handling:
+
+* Add top padding using safe-area-inset OR fixed top spacing
+* Ensure content starts BELOW status bar
+
+2. Layout refinement:
+
+* Reduce element sizes slightly:
+
+  * Logo (10–20% smaller)
+  * Input fields
+  * Buttons
+
+3. Spacing:
+
+* Add proper vertical spacing
+* Center content visually (not mathematically center — slightly higher)
+
+4. Styling:
+
+* Clean minimal look
+* No clutter
+* Consistent spacing scale
+
+---
+
+MODULE 3 — CHANGE PIN RESPONSIVE FIX
+
+Problems:
+
+* Two input fields overflow screen width
+* Button not visible
+
+Fix:
+
+1. Layout:
+
+* Stack inputs vertically (NOT side-by-side)
+* Full width within container
+
+2. Container:
+
+* Add padding (left/right)
+* Use max-width or responsive width
+
+3. Button:
+
+* Ensure always visible
+* Place below inputs with margin
+
+4. Ensure:
+
+* No horizontal scroll
+* Works on small screens
+
+---
+
+MODULE 4 — RESPONSIVE GUARANTEES
+
+Ensure across app:
+
+* No element exceeds screen width
+* No overflow-x
+* Forms adapt to small screens
+* Buttons always accessible
+
+---
+
+MODULE 5 — EDGE CASES
+
+Handle:
+
+* Small screen devices
+* Keyboard open state
+* Safe area (notch devices)
+
+---
+
+SUCCESS CRITERIA
+
+✔ Bottom padding only where needed
+✔ No extra white space on hidden-nav screens
+✔ App lock screen looks clean and premium
+✔ No status bar overlap
+✔ Change PIN layout fully visible and responsive
+✔ No horizontal overflow anywhere
+
+---
+
+STRICT RULES
+
+* Do NOT change business logic
+* Do NOT refactor unrelated UI
+* Do NOT introduce new features
+
+Only fix:
+
+* layout behavior
+* spacing
+* responsiveness
+
+---
+
+END GOAL
+
+“App feels polished, consistent, and correctly aligned across all screens and devices”

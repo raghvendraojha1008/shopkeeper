@@ -1,0 +1,150 @@
+You are updating the Shopkeeper app (React + Capacitor + Firebase) to remove all automatic subscription grants and enforce backend/admin-controlled access.
+
+---
+
+# 🎯 OBJECTIVE
+
+* No user should receive a Pro/paid plan automatically
+* Default state = Free (limited features)
+* Access must be granted only via:
+
+  * backend payment flow
+  * admin panel actions
+
+---
+
+# 🚨 NON-NEGOTIABLE RULES
+
+❌ No auto-creation of Pro subscription
+❌ No ₹0 intro plan auto-applied
+❌ No in-memory fallback to Pro
+❌ No client-side overrides
+
+✅ Only read subscription from Firestore
+✅ Respect status strictly
+
+---
+
+# 🔧 REQUIRED CHANGES
+
+---
+
+## 1. REMOVE AUTO PROVISIONING (CRITICAL)
+
+In SubscriptionContext:
+
+❌ DELETE logic like:
+
+* “if no subscription → create Pro”
+* “default Pro for all users”
+* offline fallback granting Pro
+
+---
+
+## 2. DEFAULT BEHAVIOR
+
+If subscription doc does not exist:
+
+```ts
+planId = 'free'
+status = 'active'
+```
+
+👉 Do NOT write to Firestore automatically
+👉 Use this as read-only fallback
+
+---
+
+## 3. STRICT ACCESS CONTROL
+
+Update access logic:
+
+```ts
+if (!subscription || subscription.status === 'expired') {
+  allow only 'basic' features
+}
+```
+
+---
+
+## 4. FEATURE GATING (MANDATORY)
+
+Ensure:
+
+* All premium features use hasAccess()
+* No bypass anywhere (UI or background services)
+
+---
+
+## 5. REMOVE INTRO OFFER UI
+
+Delete:
+
+* “Pro at ₹0”
+* “Free for 1 year”
+* any marketing tied to auto access
+
+---
+
+## 6. SUBSCRIPTION DISPLAY
+
+If user has no subscription:
+
+Show:
+
+```text
+Free Plan
+Upgrade to unlock features
+```
+
+---
+
+## 7. PAYMENT FLOW (UNCHANGED)
+
+Keep:
+
+* Backend API calls
+* PaymentModal
+* verifyPayment
+
+👉 Backend now becomes ONLY activation path
+
+---
+
+## 8. EDGE CASES
+
+Handle:
+
+* No subscription → Free access only
+* Expired → lock features
+* Grace → limited access (optional)
+
+---
+
+## 9. DO NOT
+
+❌ Do not write subscription from app
+❌ Do not assume Pro anywhere
+❌ Do not cache elevated access
+
+---
+
+# 🧪 TEST CASES
+
+1. New user → only free features
+2. No subscription doc → free only
+3. Payment → unlock features
+4. Admin grant → unlock features
+5. Expired → features locked
+
+---
+
+# ✅ EXPECTED RESULT
+
+* No automatic subscription
+* Clean free → paid transition
+* Backend/admin fully control access
+
+---
+
+Focus on strict control and zero hidden grants.
