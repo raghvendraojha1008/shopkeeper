@@ -5,7 +5,7 @@ import { User } from 'firebase/auth';
 import {
   Search, FileText, Edit2, Trash2, Filter, Download, Plus,
   ArrowUpRight, ArrowDownLeft, Banknote, ArrowLeft,
-  TrendingUp, BarChart3
+  TrendingUp, BarChart3, Hash, Tag
 } from 'lucide-react';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { getDefaultDateRange } from '../../utils/filterPeriod';
@@ -97,6 +97,22 @@ const TransactionRow = memo(function TransactionRow({
           <span>{item.payment_mode}</span>
           {item.notes && <span className="truncate max-w-[150px]">• {item.notes}</span>}
         </div>
+        {(item.payment_purpose || item.transaction_id) && (
+          <div className="flex items-center gap-2 flex-wrap mt-1">
+            {item.payment_purpose && (
+              <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
+                style={{ background: 'rgba(99,102,241,0.1)', color: 'rgba(139,92,246,0.8)', border: '1px solid rgba(99,102,241,0.18)' }}>
+                <Tag size={8} />{item.payment_purpose}
+              </span>
+            )}
+            {item.transaction_id && (
+              <span className="text-[9px] font-mono flex items-center gap-1"
+                style={{ color: 'rgba(148,163,184,0.4)' }}>
+                <Hash size={8} className="shrink-0" />{item.transaction_id}
+              </span>
+            )}
+          </div>
+        )}
       </div>
       <div className="mt-2 pt-2 border-t border-white/08 flex justify-end gap-2">
         {!isStaff && (

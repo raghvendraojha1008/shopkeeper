@@ -6,7 +6,7 @@ import {
   Search, FileText, Edit2, Trash2, Filter, Download, Plus,
   Package, Truck, Calendar, BarChart3,
   ArrowLeft, BadgePercent, CheckCircle2, Clock, AlertCircle,
-  IndianRupee, Zap
+  IndianRupee, Zap, Banknote, MessageSquare
 } from 'lucide-react';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { ApiService } from '../../services/api';
@@ -376,6 +376,31 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
             <Package size={12} className="shrink-0 opacity-50" />
             <span className="truncate min-w-0">{getItemSummary(item.items)}</span>
           </div>
+
+          {/* Extra meta: payment mode · vehicle · notes */}
+          {(item.payment_mode || item.vehicle || item.vehicle_no || item.notes) && (
+            <div className="flex items-center gap-2 flex-wrap mb-1.5">
+              {item.payment_mode && (
+                <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
+                  style={{ background: 'rgba(16,185,129,0.08)', color: 'rgba(52,211,153,0.7)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                  <Banknote size={8} />{item.payment_mode}
+                </span>
+              )}
+              {(item.vehicle || item.vehicle_no) && (
+                <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
+                  style={{ background: 'rgba(251,191,36,0.08)', color: 'rgba(251,191,36,0.65)', border: '1px solid rgba(251,191,36,0.15)' }}>
+                  <Truck size={8} />{item.vehicle || item.vehicle_no}
+                </span>
+              )}
+              {item.notes && (
+                <span className="text-[9px] flex items-center gap-1 min-w-0 max-w-[200px]"
+                  style={{ color: 'rgba(148,163,184,0.45)' }}>
+                  <MessageSquare size={8} className="shrink-0" />
+                  <span className="truncate">{item.notes}</span>
+                </span>
+              )}
+            </div>
+          )}
 
           {/* Payment status row */}
           <div className="flex items-start justify-between mt-1.5 gap-2">
