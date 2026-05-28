@@ -179,6 +179,8 @@ const AppContent = () => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [selectedPartyStatement, setSelectedPartyStatement] = useState<any>(null);
   const [settingsIsOnSubPage, setSettingsIsOnSubPage] = useState(false);
+  const [inventoryIsOnSubPage, setInventoryIsOnSubPage] = useState(false);
+  const [partiesIsOnSubPage, setPartiesIsOnSubPage] = useState(false);
 
   // ── FIX: BulkImport and StockValuation use their OWN full-screen tab slot ──
   // Previously these were boolean overlays that rendered on top of the active tab,
@@ -629,8 +631,8 @@ const AppContent = () => {
   const dynamicNavEnabled = appSettings.preferences?.dynamic_nav !== false;
   // Hide on sub-pages inside inventory (item detail) and parties (party statement).
   const isOnSubPage =
-    (activeTab === 'inventory' && !!selectedItem) ||
-    (activeTab === 'parties'   && !!selectedPartyStatement) ||
+    (activeTab === 'inventory' && (!!selectedItem || inventoryIsOnSubPage)) ||
+    (activeTab === 'parties'   && (!!selectedPartyStatement || partiesIsOnSubPage)) ||
     (activeTab === 'settings'  && settingsIsOnSubPage);
   // Also hide bottom nav when the keyboard is open — the nav would otherwise
   // float above the keyboard, wasting precious screen space on short devices.
@@ -819,6 +821,7 @@ const AppContent = () => {
                 onViewItem={(item) => setSelectedItem(item)}
                 onOpenWaste={() => setActiveTab('waste')}
                 onOpenStockValuation={openStockValuation}
+                onSubPageChange={setInventoryIsOnSubPage}
               />
             )}
             {activeTab === 'inventory' && selectedItem && (
@@ -880,6 +883,7 @@ const AppContent = () => {
                 onBack={goBack}
                 appSettings={appSettings}
                 onViewStatement={openPartyStatement}
+                onSubPageChange={setPartiesIsOnSubPage}
               />
             )}
 
@@ -1045,7 +1049,6 @@ const AppContent = () => {
       {showBottomNav && <nav className="app-bottom-nav fixed bottom-0 left-0 right-0 z-50 pointer-events-none"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <div className="mx-3 mb-2 pointer-events-auto">
-          <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(var(--app-bg-rgb),0.97), transparent)', zIndex: -1 }} />
           <div className="rounded-[28px] px-2 py-2 flex justify-between items-center relative"
             style={{
               background: isAndroid

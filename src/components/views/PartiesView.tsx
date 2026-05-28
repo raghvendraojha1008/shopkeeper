@@ -23,9 +23,10 @@ interface PartiesViewProps {
   onBack?: () => void;
   appSettings?: any;
   onViewStatement?: (party: any) => void;
+  onSubPageChange?: (isOnSubPage: boolean) => void;
 }
 
-const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, appSettings = {}, onViewStatement }) => {
+const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, appSettings = {}, onViewStatement, onSubPageChange }) => {
   const { showToast, confirm } = useUI();
   const { scheduleDelete } = useSoftDelete();
   const { useParties, useLedger, useTransactions } = useData();
@@ -46,6 +47,7 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
 
   const [selectedParty, setSelectedParty] = useState<any>(null);
   useBackHandler(() => setSelectedParty(null), !!selectedParty, 5);
+  useEffect(() => { onSubPageChange?.(!!selectedParty); }, [selectedParty, onSubPageChange]);
 
   const virtuosoRef = useRef<any>(null);
   const virtuosoStateRef = useRef<any>(null);

@@ -31,9 +31,10 @@ interface InventoryViewProps {
     onViewItem?: (item: any) => void;
     onOpenWaste?: () => void;
     onOpenStockValuation?: () => void;
+    onSubPageChange?: (isOnSubPage: boolean) => void;
 }
 
-const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, onEdit, onBack, onViewItem, onOpenWaste, onOpenStockValuation }) => {
+const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, onEdit, onBack, onViewItem, onOpenWaste, onOpenStockValuation, onSubPageChange }) => {
   const { confirm, showToast } = useUI();
   const { useLedger, useWaste, useInventory } = useData();
   const { isAdmin, isStaff } = useRole();
@@ -56,6 +57,7 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
   const [showExportModal, setShowExportModal] = useState(false);
   const [selectedInvItem, setSelectedInvItem] = useState<any | null>(null);
   useBackHandler(() => setSelectedInvItem(null), !!selectedInvItem, 5);
+  useEffect(() => { onSubPageChange?.(!!selectedInvItem); }, [selectedInvItem, onSubPageChange]);
 
   const virtuosoRef = useRef<any>(null);
   const virtuosoStateRef = useRef<any>(null);
