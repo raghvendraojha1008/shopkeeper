@@ -13,6 +13,7 @@ import { applyThemeToDocument, normalizeAppSettings } from './theme/theme';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { UIProvider, useUI } from './context/UIContext';
 import { DataProvider, useData } from './context/DataContext';
+import { useIsRestoring } from '@tanstack/react-query';
 import { RoleProvider, useRole } from './context/RoleContext';
 import { EditPasswordProvider, useEditPassword } from './context/EditPasswordContext';
 import { SubscriptionProvider, useSubscription } from './context/SubscriptionContext';
@@ -158,6 +159,14 @@ const AppContent = () => {
     (window as any).__crashReporterUid__ = user?.uid ?? null;
     return () => { (window as any).__crashReporterUid__ = null; };
   }, [user]);
+
+  // Cache pre-warm gate: true while PersistQueryClientProvider is rehydrating
+  // the IndexedDB cache into the QueryClient memory. Until this completes,
+  // queries have no data and every view renders its loading skeleton.
+  // Gating here means we show LoadingView for the extra ~50-200 ms it takes
+  // to restore the cache, then ALL screens open instantly with data.
+  // For first-time users (empty cache) this resolves in <10 ms — no noticeable delay.
+  const isRestoringCache = useIsRestoring();
 
   const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -601,7 +610,9 @@ const AppContent = () => {
   // Wait for all critical data before rendering the full app shell.
   // This prevents: (a) lock-screen flash, (b) "set up my business" flash,
   // (c) theme/color jump, (d) partially-loaded dashboard cards.
-  if (!settingsLoaded || roleLoading || subscriptionLoading) return <LoadingView />;
+  // isRestoringCache: also hold until IndexedDB cache is fully rehydrated into
+  // the QueryClient — prevents per-view loading skeletons for returning users.
+  if (!settingsLoaded || roleLoading || subscriptionLoading || isRestoringCache) return <LoadingView />;
 
   // If staff role doc exists but has no adminUid, fall through and let them use
   // the app as if they were a fresh user — they can accept an invitation later.
