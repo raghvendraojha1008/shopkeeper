@@ -100,6 +100,34 @@ window.addEventListener('error', (event: ErrorEvent) => {
   );
 });
 
+// ── Service Worker (PWA — web only, not Capacitor native) ────────────────────
+// Registers the app-shell SW so the app loads offline after the first visit.
+// Skipped on native platforms (Android/iOS) where Capacitor handles lifecycle.
+if ('serviceWorker' in navigator && !Capacitor.isNativePlatform()) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })
+      .then((reg) => {
+        // Prompt the SW to skip waiting and take over immediately when a new
+        // version is detected, so users always get the latest build quickly.
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // A new SW is ready — tell it to activate immediately.
+                newWorker.postMessage('SKIP_WAITING');
+              }
+            });
+          }
+        });
+      })
+      .catch(() => {
+        // SW registration failing is non-fatal — app works fine without it.
+      });
+  });
+}
+
 // ── Root mount ────────────────────────────────────────────────────────────────
 
 const rootElement = document.getElementById('root');

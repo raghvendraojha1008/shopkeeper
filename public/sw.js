@@ -1,68 +1,119 @@
-const CACHE_NAME = 'shopkeeper-v1';
+// ── Shopkeeper PWA Service Worker ─────────────────────────────────────────────
+// Strategy:
+//   • Navigation (HTML): network-first → cached shell → offline.html
+//   • App assets (JS/CSS/images): stale-while-revalidate (cache on first fetch)
+//   • External / Firebase: skip (handled by Firebase SDK offline layer)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const CACHE_NAME  = 'shopkeeper-v2';
 const OFFLINE_URL = '/offline.html';
 
-// Assets to cache on install
+// These are the only URLs we know at install time.
+// All hashed JS/CSS chunks get cached progressively via the fetch handler.
 const PRECACHE_URLS = [
   '/',
+  '/offline.html',
   '/manifest.json',
   '/pwa-192x192.png',
-  '/pwa-512x512.png'
+  '/pwa-512x512.png',
 ];
 
+// ── Install: precache shell assets ────────────────────────────────────────────
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS).catch(() => {});
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) =>
+      // addAll fails atomically — if one URL 404s the whole install fails.
+      // Use individual puts so a missing icon never blocks the SW.
+      Promise.allSettled(
+        PRECACHE_URLS.map((url) =>
+          fetch(url, { cache: 'reload' })
+            .then((res) => { if (res.ok) cache.put(url, res); })
+            .catch(() => {})
+        )
+      )
+    ).then(() => self.skipWaiting())
   );
 });
 
+// ── Activate: purge stale caches ──────────────────────────────────────────────
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
+    caches.keys()
+      .then((names) =>
+        Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 
+// ── Fetch: serve from cache / update cache ────────────────────────────────────
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // Skip non-GET, chrome-extension, and Firebase/external API requests
+  // Only intercept GET requests from our own origin.
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // For navigation requests (HTML pages): network-first, fallback to cache
+  // ── Navigation (page loads) ─────────────────────────────────────────────────
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
+        .then((res) => {
+          // Cache a fresh copy of the shell on every successful navigate
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+          }
+          return res;
         })
-        .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/'))
-        )
+        .catch(async () => {
+          // Network failed — try the exact page, then the SPA root, then offline.html
+          const cached =
+            (await caches.match(request)) ||
+            (await caches.match('/')) ||
+            (await caches.match(OFFLINE_URL));
+          return cached || new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
+        })
     );
     return;
   }
 
-  // For JS/CSS/image assets: stale-while-revalidate
+  // ── Static assets (JS/CSS/fonts/images) ────────────────────────────────────
+  // Stale-while-revalidate: serve from cache instantly, refresh in background.
   event.respondWith(
-    caches.open(CACHE_NAME).then((cache) =>
-      cache.match(request).then((cached) => {
-        const networkFetch = fetch(request).then((response) => {
-          if (response.ok) cache.put(request, response.clone());
-          return response;
-        }).catch(() => cached);
-        return cached || networkFetch;
-      })
-    )
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const cached = await cache.match(request);
+
+      const networkFetch = fetch(request)
+        .then((res) => {
+          if (res.ok) cache.put(request, res.clone());
+          return res;
+        })
+        .catch(() => null);
+
+      // Return cached immediately; update cache in background.
+      if (cached) {
+        event.waitUntil(networkFetch);
+        return cached;
+      }
+
+      // Nothing cached yet — wait for network (first visit).
+      const fresh = await networkFetch;
+      if (fresh) return fresh;
+
+      // Total failure — nothing we can do for non-navigation requests.
+      return new Response('', { status: 503, statusText: 'Offline' });
+    })
   );
+});
+
+// ── Message: manual cache clear ───────────────────────────────────────────────
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data === 'CLEAR_CACHE') {
+    caches.delete(CACHE_NAME).then(() => {
+      event.ports?.[0]?.postMessage({ ok: true });
+    });
+  }
 });
