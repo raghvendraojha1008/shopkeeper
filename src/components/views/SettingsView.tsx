@@ -292,6 +292,24 @@ const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdate
     );
   }
 
+  // ── DEVELOPER CONSOLE — full-screen, no SettingsView header wrapper ───────
+  // CrashLogsView has its own header (back button + title + download).
+  // Wrapping it in the sub-page layout produces a double-header ("page inside
+  // page"). Render it directly so it fills the h-full container cleanly.
+  if (activeSection === 'developer') {
+    return (
+      <div className="h-full flex flex-col" style={{ background: 'var(--app-bg)' }}>
+        <Suspense fallback={
+          <div className="flex items-center justify-center h-full">
+            <div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        }>
+          <CrashLogsView onBack={handleBackToMenu} />
+        </Suspense>
+      </div>
+    );
+  }
+
   // ── SUB-PAGE ───────────────────────────────────────────────────────────────
   return (
     <div className="h-full flex flex-col" style={{ background: 'var(--app-bg)' }}>
@@ -342,11 +360,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdate
           />}
         {activeSection === 'data'     && <SettingsDataZone user={user} />}
         {activeSection === 'subscription' && <SubscriptionTab />}
-        {activeSection === 'developer' && (
-          <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>}>
-            <CrashLogsView onBack={handleBackToMenu} />
-          </Suspense>
-        )}
       </div>
     </div>
   );
