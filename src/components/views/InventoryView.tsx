@@ -38,15 +38,20 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
   const { confirm, showToast } = useUI();
   const { useLedger, useWaste, useInventory } = useData();
   const { isAdmin, isStaff } = useRole();
-  const { data: ledgerData } = useLedger(user.uid);
-  const { data: wasteData } = useWaste(user.uid);
+  const { data: ledgerRawInv } = useLedger(user.uid);
+  const { data: wasteRaw }    = useWaste(user.uid);
 
   // MODULE 4 — Inventory now reads from the shared React Query cache (the
   // same one POSBillingView already uses). Cold-starts render instantly from
   // the IndexedDB-persisted cache (Module 2), navigating back from POS shows
   // zero spinner, and offline cold-starts still display the last-known list.
   // `setData` lets us mutate the cache locally for optimistic delete/restore.
-  const { data: items, isLoading: loading, isFetching, setData: setItemsCache, refetch: refetchInventory } = useInventory(user.uid);
+  const { data: itemsRaw, isLoading: loading, isFetching, setData: setItemsCache, refetch: refetchInventory } = useInventory(user.uid);
+
+  // Null-safe derived arrays — hooks return undefined before first resolve
+  const ledgerData = useMemo(() => ledgerRawInv || [], [ledgerRawInv]);
+  const wasteData  = useMemo(() => wasteRaw     || [], [wasteRaw]);
+  const items      = useMemo(() => itemsRaw     || [], [itemsRaw]);
 
   // FINAL MODULE — feature usage telemetry. Service dedups same-day repeats.
   useEffect(() => { TelemetryService.trackScreen(user.uid, 'inventory'); }, [user.uid]);

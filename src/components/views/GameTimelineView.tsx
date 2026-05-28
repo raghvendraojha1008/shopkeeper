@@ -371,8 +371,10 @@ const DetailDrawer: React.FC<{ step: TimelineStep | null; onClose: () => void }>
 // ── Main Component ────────────────────────────────────────────────────────────
 const GameTimelineView: React.FC<GameTimelineViewProps> = ({ user, onBack }) => {
   const { useTransactions, useLedger } = useData();
-  const { data: transactions, isLoading: tLoading } = useTransactions(user.uid);
-  const { data: ledger,       isLoading: lLoading } = useLedger(user.uid);
+  const { data: transactionsRaw, isLoading: tLoading } = useTransactions(user.uid);
+  const { data: ledgerRaw,       isLoading: lLoading } = useLedger(user.uid);
+  const transactions = useMemo(() => transactionsRaw || [], [transactionsRaw]);
+  const ledger       = useMemo(() => ledgerRaw       || [], [ledgerRaw]);
   // useExpenses is not in DataContextType - fetch directly from Firestore
   const [expenses, setExpenses] = useState<any[]>([]);
   const [eLoading, setELoading] = useState(true);

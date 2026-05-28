@@ -82,8 +82,10 @@ const CommandModal: React.FC<CommandModalProps> = ({ isOpen, onClose, user, onSu
 
   useBackHandler(onClose, isOpen, 10);
   
-  const { data: parties } = useParties(user.uid);
-  const { data: inventory } = useInventory(user.uid);
+  const { data: partiesRaw } = useParties(user.uid);
+  const { data: inventoryRaw } = useInventory(user.uid);
+  const parties   = useMemo(() => (partiesRaw   || []) as any[], [partiesRaw]);
+  const inventory = useMemo(() => (inventoryRaw || []) as any[], [inventoryRaw]);
   
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');

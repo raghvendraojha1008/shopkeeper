@@ -35,9 +35,12 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
   // screen renders instantly on cold start (and stays usable offline). No
   // more per-mount triple Firestore round-trip — the cache is shared with
   // the dashboard, statements, and reports.
-  const { data: parties, isLoading: partiesLoading, isFetching: partiesFetching, setData: setPartiesCache } = useParties(user.uid);
-  const { data: ledger, isLoading: ledgerLoading } = useLedger(user.uid);
-  const { data: transactions, isLoading: transactionsLoading } = useTransactions(user.uid);
+  const { data: partiesRaw, isLoading: partiesLoading, isFetching: partiesFetching, setData: setPartiesCache } = useParties(user.uid);
+  const { data: ledgerRaw, isLoading: ledgerLoading } = useLedger(user.uid);
+  const { data: transactionsRaw, isLoading: transactionsLoading } = useTransactions(user.uid);
+  const parties      = useMemo(() => partiesRaw      || [], [partiesRaw]);
+  const ledger       = useMemo(() => ledgerRaw       || [], [ledgerRaw]);
+  const transactions = useMemo(() => transactionsRaw || [], [transactionsRaw]);
   // Show the skeleton only while the FIRST load is in flight for any of the
   // three sources. Subsequent navigations reuse cached data instantly.
   const loading = partiesLoading || ledgerLoading || transactionsLoading;

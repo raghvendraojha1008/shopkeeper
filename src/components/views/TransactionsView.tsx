@@ -165,8 +165,10 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
     } catch {}
   }, [scrollParent]);
 
-  const { data: transactions, isLoading: loading, refetch, setData } = useTransactions(user.uid);
-  const { data: parties } = useParties(user.uid);
+  const { data: transactionsRaw, isLoading: loading, refetch, setData } = useTransactions(user.uid);
+  const { data: partiesRaw } = useParties(user.uid);
+  const transactions = useMemo(() => transactionsRaw || [], [transactionsRaw]);
+  const parties      = useMemo(() => partiesRaw      || [], [partiesRaw]);
 
   const [searchTerm, setSearchTerm] = useNavState<string>('txn_search', '');
   const [currentFilter, setCurrentFilter] = useNavState<'all' | 'received' | 'paid'>('txn_filter', initialTypeFilter ?? 'all');

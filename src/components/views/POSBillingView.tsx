@@ -66,9 +66,11 @@ interface CartLine {
 const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBack }) => {
   const { showToast } = useUI();
   const { useInventory, useParties, useLedger } = useData();
-  const { data: inventory, setData: setInventoryCache } = useInventory(user.uid);
-  const { data: parties }                               = useParties(user.uid);
-  const { setData: setLedgerCache }                     = useLedger(user.uid);
+  const { data: inventoryRaw, setData: setInventoryCache } = useInventory(user.uid);
+  const { data: partiesRaw }                               = useParties(user.uid);
+  const { setData: setLedgerCache }                        = useLedger(user.uid);
+  const inventory = useMemo(() => (inventoryRaw || []) as any[], [inventoryRaw]);
+  const parties   = useMemo(() => (partiesRaw   || []) as any[], [partiesRaw]);
 
   // FINAL MODULE — feature usage telemetry. Service dedups same-day repeats.
   useEffect(() => { TelemetryService.trackScreen(user.uid, 'pos'); }, [user.uid]);

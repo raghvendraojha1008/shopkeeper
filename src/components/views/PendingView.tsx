@@ -213,10 +213,15 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
     setSelectedIds(new Set());
   };
 
+  // Null-safe arrays (hooks return undefined while loading)
+  const safeTransactions = useMemo(() => transactions || [], [transactions]);
+  const safeLedger       = useMemo(() => ledger       || [], [ledger]);
+  const safeParties      = useMemo(() => parties      || [], [parties]);
+
   // --- PRE-INDEXED MAPS (O(1) lookups) ---
   const transactionsByBillNo = useMemo(() => {
     const map = new Map<string, any[]>();
-    for (const t of transactions) {
+    for (const t of safeTransactions) {
       const key = String(t.bill_no);
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(t);
@@ -226,30 +231,30 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
       arr.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }
     return map;
-  }, [transactions]);
+  }, [safeTransactions]);
 
   // Full payment distribution (includes auto-adjusted FIFO payments)
   const paymentStatusMap = useMemo(() => {
     const autoDistribute = appSettings?.automation?.auto_distribute_payments !== false;
-    return computePaymentDistribution(ledger, transactions, autoDistribute);
-  }, [ledger, transactions, appSettings]);
+    return computePaymentDistribution(safeLedger, safeTransactions, autoDistribute);
+  }, [safeLedger, safeTransactions, appSettings]);
 
   const partiesByName = useMemo(() => {
     const map = new Map<string, any>();
-    for (const p of parties) {
+    for (const p of safeParties) {
       map.set(p.name?.trim().toLowerCase(), p);
     }
     return map;
-  }, [parties]);
+  }, [safeParties]);
 
   // Pre-index ledger entries by ID for O(1) access (useful for bulk operations)
   const ledgerById = useMemo(() => {
     const map = new Map<string, any>();
-    for (const entry of ledger) {
+    for (const entry of safeLedger) {
       map.set(entry.id, entry);
     }
     return map;
-  }, [ledger]);
+  }, [safeLedger]);
 
   // --- DATA PROCESSING ENGINE (O(N) with O(1) indexed lookups) ---
   const filteredOrders = useMemo(() => {
@@ -258,7 +263,7 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
     
     const results: any[] = [];
     
-    for (const order of ledger) {
+    for (const order of safeLedger) {
       // First check: type filter (fast boolean check)
       if (order.type !== type) continue;
       
@@ -310,7 +315,7 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
     // Sort once at the end (O(N log N) is acceptable for final sort)
     results.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return results;
-  }, [ledger, paymentStatusMap, transactionsByBillNo, partiesByName, activeTab, search, waiverAmount]);
+  }, [safeLedger, paymentStatusMap, transactionsByBillNo, partiesByName, activeTab, search, waiverAmount]);
 
   // Aging Summary Stats
   const agingSummary = useMemo(() => {

@@ -80,8 +80,8 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
   const [dateRange, setDateRange] = useState({ start: '', end: '' });
 
   const { timeline, stats } = useMemo(() => {
-      const partyLedger = allLedger.filter((l: any) => l.party_name === party.name);
-      const partyTrans = allTransactions.filter((t: any) => t.party_name === party.name);
+      const partyLedger = (allLedger || []).filter((l: any) => l.party_name === party.name);
+      const partyTrans = (allTransactions || []).filter((t: any) => t.party_name === party.name);
       
       const combined = [
           ...partyLedger.map((i: any) => ({...i, docType: 'invoice'})),

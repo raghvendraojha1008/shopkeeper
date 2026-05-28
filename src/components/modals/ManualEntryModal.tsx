@@ -52,12 +52,16 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
   const { data: cachedInventory } = useInventory(uid);
   const { data: cachedLedger }    = useLedger(uid);
 
-  const customers     = useMemo(() => (cachedParties as any[]).filter(p => p.role === 'customer'),   [cachedParties]);
-  const suppliers     = useMemo(() => (cachedParties as any[]).filter(p => p.role === 'supplier'),   [cachedParties]);
-  const inventoryList = useMemo(() => cachedInventory as any[],                                       [cachedInventory]);
-  const itemNames     = useMemo(() => (cachedInventory as any[]).map(i => i.name),                   [cachedInventory]);
-  const availableOrders = useMemo(() => cachedLedger as any[],                                       [cachedLedger]);
-  const ledgerRecords   = useMemo(() => cachedLedger as any[],                                       [cachedLedger]);
+  const safeParties   = useMemo(() => (cachedParties   || []) as any[], [cachedParties]);
+  const safeInventory = useMemo(() => (cachedInventory || []) as any[], [cachedInventory]);
+  const safeLedger    = useMemo(() => (cachedLedger    || []) as any[], [cachedLedger]);
+
+  const customers       = useMemo(() => safeParties.filter(p => p.role === 'customer'),   [safeParties]);
+  const suppliers       = useMemo(() => safeParties.filter(p => p.role === 'supplier'),   [safeParties]);
+  const inventoryList   = useMemo(() => safeInventory,                                    [safeInventory]);
+  const itemNames       = useMemo(() => safeInventory.map((i: any) => i.name),            [safeInventory]);
+  const availableOrders = useMemo(() => safeLedger,                                       [safeLedger]);
+  const ledgerRecords   = useMemo(() => safeLedger,                                       [safeLedger]);
 
   // FIX (Critical #1): Guard ref prevents the form-init block from running more than once
   // per modal open, even if parent causes re-renders while the async load() is in flight.

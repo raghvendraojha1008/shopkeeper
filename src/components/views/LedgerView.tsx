@@ -71,11 +71,13 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
   const { confirm, showToast } = useUI();
   const { useLedger, useParties, useTransactions, useInventory } = useData();
 
-  const { data: entries, isLoading: loading, refetch, setData } = useLedger(user.uid);
+  const { data: entriesRaw, isLoading: loading, refetch, setData } = useLedger(user.uid);
+  const entries = useMemo(() => entriesRaw || [], [entriesRaw]);
   const { data: partiesRaw } = useParties(user.uid);
-  const { data: transactions } = useTransactions(user.uid);
+  const { data: transactionsRaw } = useTransactions(user.uid);
+  const transactions = useMemo(() => (transactionsRaw || []) as any[], [transactionsRaw]);
   const { refetch: refetchInventory } = useInventory(user.uid);
-  const parties = useMemo(() => partiesRaw as any[], [partiesRaw]);
+  const parties = useMemo(() => (partiesRaw || []) as any[], [partiesRaw]);
 
   const [fetchedSettings, setFetchedSettings] = useState<any>({});
   const settings = appSettings && Object.keys(appSettings).length > 0 ? appSettings : fetchedSettings;
