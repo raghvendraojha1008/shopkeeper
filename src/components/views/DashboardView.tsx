@@ -154,17 +154,25 @@ const PeriodFilterPanel: React.FC<{
           {(['customStart', 'customEnd'] as const).map((field, i) => (
             <div key={field}>
               <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: 'rgba(148,163,184,0.4)' }}>{i === 0 ? 'From' : 'To'}</p>
-              <div className="relative">
+              <div className="relative flex items-center rounded-xl px-3 py-2.5"
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', minHeight: 42 }}>
+                {/* Visible placeholder / formatted value — sits behind the transparent input */}
+                <span className="text-sm font-bold pointer-events-none select-none flex-1 truncate"
+                  style={{ color: (local as any)[field] ? 'rgba(226,232,240,0.9)' : 'rgba(148,163,184,0.35)' }}>
+                  {(local as any)[field]
+                    ? (() => { const [y,m,d] = ((local as any)[field] as string).split('-'); return `${d}/${m}/${y}`; })()
+                    : 'DD/MM/YYYY'}
+                </span>
                 <input type="date" value={(local as any)[field]}
                   onChange={e => setLocal(p => ({ ...p, [field]: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl text-sm font-bold outline-none pr-8"
-                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: (local as any)[field] ? 'rgba(226,232,240,0.9)' : 'rgba(148,163,184,0.35)', colorScheme: isDark ? 'dark' : 'light' }}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-xl"
+                  style={{ colorScheme: 'dark' }}
                 />
                 {(local as any)[field] && (
                   <button
                     type="button"
                     onClick={() => setLocal(p => ({ ...p, [field]: '' }))}
-                    className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center"
+                    className="relative z-10 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center"
                     style={{ background: 'rgba(239,68,68,0.18)', border: '1px solid rgba(239,68,68,0.25)' }}
                   >
                     <X size={9} style={{ color: '#f87171' }} />
