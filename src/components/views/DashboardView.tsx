@@ -501,7 +501,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ user, appSettings, onNavi
     : periodLabel;
 
   return (
-    <div ref={scrollRef} className="h-full overflow-y-auto scroll-smooth" style={{ background: 'var(--app-bg)', paddingBottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}>
+    <div ref={scrollRef} className="h-full overflow-y-auto" style={{ background: 'var(--app-bg)', paddingBottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}>
 
       {/* Logout Confirmation Modal */}
       {showLogoutConfirm && (

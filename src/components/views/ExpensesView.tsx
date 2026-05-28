@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useScrollMemory } from '../../hooks/useScrollMemory';
 import { User } from 'firebase/auth';
 import {
   Search, Wallet, Edit2, Trash2, Download, Plus,
@@ -34,6 +35,7 @@ interface ExpensesViewProps {
 
 const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, onEdit, onBack }) => {
   const { confirm, showToast } = useUI();
+  const scrollRef = useScrollMemory('expenses');
   const [expenses, setExpenses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -241,7 +243,7 @@ const ExpensesView: React.FC<ExpensesViewProps> = ({ user, appSettings, onAdd, o
       </div>
 
       {/* SCROLLABLE CONTENT */}
-      <div className="flex-1 overflow-y-auto px-4 md:px-6" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 md:px-6" style={{ WebkitOverflowScrolling: 'touch' }}>
         {/* SUMMARY CARD */}
         <div className="p-4 rounded-3xl shadow-xl mb-4 flex justify-between items-center relative overflow-hidden border border-[rgba(245,158,11,0.25)] bg-[rgba(245,158,11,0.1)]">
           <div className="relative z-10">

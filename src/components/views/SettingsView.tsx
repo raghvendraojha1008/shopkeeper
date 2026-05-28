@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { useScrollMemory } from '../../hooks/useScrollMemory';
 import { User } from 'firebase/auth';
 import { 
   User as UserIcon, Lock, Database, LogOut, ArrowLeft, ChevronRight,
@@ -55,6 +56,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdate
   const { subscription, globalConfig } = useSubscription();
   
   const [activeSection, setActiveSection] = useState<SettingsSection>('menu');
+  const menuScrollRef = useScrollMemory('settings-menu');
   const [loading, setLoading] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [displayVersion, setDisplayVersion] = useState(APP_VERSION);
@@ -203,7 +205,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ user, appSettings, onUpdate
         </div>
 
         {/* Section list */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2.5" style={{ WebkitOverflowScrolling: 'touch', paddingBottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}>
+        <div ref={menuScrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-2.5" style={{ WebkitOverflowScrolling: 'touch', paddingBottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}>
           <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[rgba(148,163,184,0.4)] px-1 mb-3">Configure your app</p>
           {SECTIONS.filter(s => !(s.id === 'subscription' && (globalConfig === null || globalConfig.appMode === 'free'))).map(({ id, label, sub, icon: Icon, color, bg }) => {
             let displaySub = sub;
