@@ -221,6 +221,22 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
   };
   const handleExport = () => setShowExportModal(true);
 
+  // Hoisted BEFORE the early return so this hook is always called in the same
+  // order regardless of whether selectedInvItem is set.  Previously this was
+  // inlined inside the Virtuoso itemContent JSX prop (after the early return),
+  // which violated the Rules of Hooks and caused React error #300 in production.
+  const renderInventoryRow = useCallback((_idx: number, item: any) => (
+    <div className="pb-2.5">
+      <InventoryRow
+        item={item}
+        isAdmin={isAdmin}
+        onSelect={handleSelectInvItem}
+        onEdit={onEdit}
+        onDelete={handleDelete}
+      />
+    </div>
+  ), [isAdmin, handleSelectInvItem, onEdit, handleDelete]);
+
   if (selectedInvItem) {
       return (
           <InventoryItemDetailView
@@ -408,17 +424,7 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
                  data={enrichedItems}
                  overscan={400}
                  computeItemKey={(_idx, item) => item.id || `inv-${_idx}`}
-                 itemContent={useCallback((_idx: number, item: any) => (
-                   <div className="pb-2.5">
-                     <InventoryRow
-                       item={item}
-                       isAdmin={isAdmin}
-                       onSelect={handleSelectInvItem}
-                       onEdit={onEdit}
-                       onDelete={handleDelete}
-                     />
-                   </div>
-                 ), [isAdmin, handleSelectInvItem, onEdit, handleDelete])}
+                 itemContent={renderInventoryRow}
                />
            )}
        </div>

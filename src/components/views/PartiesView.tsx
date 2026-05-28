@@ -252,6 +252,16 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
     );
   }, [partyAccounting, handleEditClick, handleDelete, onViewStatement, handleSelectParty]);
 
+  // Hoisted BEFORE the early returns (loading skeleton, selectedParty detail)
+  // so this hook is always called in the same order on every render.
+  // The previous inline useCallback inside itemContent JSX was a Rules of Hooks
+  // violation that caused React error #300 in the production build.
+  const renderPartyRow = useCallback((_index: number, party: any) => (
+    <div className="px-4 pt-2">
+      {renderPartyCard(party)}
+    </div>
+  ), [renderPartyCard]);
+
   if (loading) return (
     <div className="h-full flex flex-col">
       <div className="p-4 border-b border-white/08">
@@ -381,11 +391,7 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
             data={filteredParties}
             overscan={300}
             computeItemKey={(_index, party) => party.id || `party-${_index}`}
-            itemContent={useCallback((_index: number, party: any) => (
-              <div className="px-4 pt-2">
-                {renderPartyCard(party)}
-              </div>
-            ), [renderPartyCard])}
+            itemContent={renderPartyRow}
             components={{
               Footer: () => <div className="h-24" />,
             }}
