@@ -129,17 +129,17 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
     }
   }, [user.uid, appSettings]);
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     setEntryType(currentFilter === 'purchase' ? 'purchases' : 'sales');
     setEditData(null);
     setShowEntryModal(true);
-  };
+  }, [currentFilter]);
 
-  const handleEdit = (item: any) => {
+  const handleEdit = useCallback((item: any) => {
     setEntryType(item.type === 'sell' ? 'sales' : 'purchases');
     setEditData(item);
     setShowEntryModal(true);
-  };
+  }, []);
 
   const { scheduleDelete } = useSoftDelete();
 

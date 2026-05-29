@@ -8,19 +8,20 @@ interface AppLayoutProps {
   onCommandOpen: () => void;
 }
 
+const NAV_ITEMS = [
+  { id: 'dashboard', Icon: LayoutDashboard, label: 'Home' },
+  { id: 'inventory', Icon: Package, label: 'Stock' },
+  { id: '__mic__', Icon: Mic, label: '' },
+  { id: 'parties', Icon: Users, label: 'Parties' },
+  { id: 'settings', Icon: Settings, label: 'More' },
+] as const;
+
 const AppLayout: React.FC<AppLayoutProps> = ({
   children,
   activeTab,
   onTabChange,
   onCommandOpen,
 }) => {
-  const navItems = [
-    { id: 'dashboard', Icon: LayoutDashboard, label: 'Home' },
-    { id: 'inventory', Icon: Package, label: 'Stock' },
-    { id: '__mic__', Icon: Mic, label: '' },
-    { id: 'parties', Icon: Users, label: 'Parties' },
-    { id: 'settings', Icon: Settings, label: 'More' },
-  ];
 
   return (
     <div className="h-screen w-full text-[rgba(240,244,255,0.93)] text-[rgba(240,244,255,0.9)] font-sans overflow-hidden flex flex-col pt-safe"
@@ -39,7 +40,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           boxShadow: '0 -8px 32px rgba(0,10,40,0.55), 0 -1px 0 rgba(56,189,248,0.1)',
         }}>
         <div className="flex justify-around items-end px-2 pt-2 pb-3">
-          {navItems.map(({ id, Icon, label }) => {
+          {NAV_ITEMS.map(({ id, Icon, label }) => {
             if (id === '__mic__') {
               return (
                 <button key="mic" onClick={onCommandOpen}
@@ -96,11 +97,3 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 };
 
 export default AppLayout;
-
-
-
-
-
-
-
-
