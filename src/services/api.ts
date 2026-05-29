@@ -130,6 +130,34 @@ export const ApiService = {
     return await batch.commit();
   },
 
+  /**
+   * Execute multiple add/update operations as a SINGLE Firestore WriteBatch.
+   * One IndexedDB transaction instead of N separate round-trips — dramatically
+   * faster on Android WebView which serializes IndexedDB transactions.
+   * Returns an array (same order as input) with { type, id } for each op.
+   */
+  batchSave: async (
+    uid: string,
+    operations: Array<{ type: 'add' | 'update'; col: string; data: any; id?: string }>,
+  ): Promise<{ type: string; id: string }[]> => {
+    if (operations.length === 0) return [];
+    const batch = writeBatch(db);
+    const results: { type: string; id: string }[] = [];
+    for (const op of operations) {
+      if (op.type === 'add') {
+        const ref = doc(collection(db, `users/${uid}/${op.col}`));
+        batch.set(ref, sanitizeForFirestore(op.data));
+        results.push({ type: 'add', id: ref.id });
+      } else if (op.type === 'update' && op.id) {
+        const ref = doc(db, `users/${uid}/${op.col}`, op.id);
+        batch.update(ref, sanitizeForFirestore(op.data));
+        results.push({ type: 'update', id: op.id });
+      }
+    }
+    await batch.commit();
+    return results;
+  },
+
   // --- SETTINGS HELPERS ---
   settings: {
     get: async (uid: string) => {

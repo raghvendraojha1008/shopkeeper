@@ -327,96 +327,45 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
     setLoading(true);
     haptic.medium();
+    // Determine connectivity BEFORE entering the try block so the toast
+    // at the end can reference it even after an early-return path.
+    const isOffline = !navigator.onLine;
+
     try {
       const payload: any = JSON.parse(JSON.stringify(formData));
       let collection = '';
 
-      // --- AUTO ADD PARTY LOGIC ---
-      if (autoAddParty && payload.party_name &&
-        (type === 'sales' || type === 'purchases' || type === 'transactions')) {
-
-        let role = 'customer';
-        if (type === 'purchases') role = 'supplier';
-        if (type === 'transactions' && payload.type === 'paid') role = 'supplier';
-
-        // FIX (Medium #2): Case-insensitive duplicate check to prevent "Rahul Traders" / "rahul traders" duplicates
-        const exists = [...customers, ...suppliers].some(
-          p => (p.name || '').toLowerCase() === (payload.party_name || '').toLowerCase()
-        );
-
-        if (!exists) {
-          const newParty = {
-            name: payload.party_name,
-            role: role,
-            party_code: nextPartyCode,
-            address: payload.address || '',
-            contact: '',
-            created_at: new Date().toISOString()
-          };
-          if (navigator.onLine) {
-            await ApiService.add(user.uid, 'parties', newParty);
-          } else {
-            SyncQueueService.addToQueue(user.uid, 'create', 'parties', newParty);
-          }
-        }
-      }
-      // ----------------------------
-
+      // ── Collection & payload normalisation (unchanged) ────────────────────────
       if (type === 'sales' || type === 'purchases') {
         collection = 'ledger_entries';
         payload.items = items;
         payload.total_amount = calculateTotal();
         payload.type = type === 'sales' ? 'sell' : 'purchase';
-
         if (!initialData?.id) {
-          if (type === 'sales' && !payload.invoice_no) {
-            payload.invoice_no = getIDForEntry('sell');
-          } else if (type === 'purchases' && !payload.bill_no) {
-            payload.bill_no = getIDForEntry('purchase');
-          }
+          if (type === 'sales' && !payload.invoice_no) payload.invoice_no = getIDForEntry('sell');
+          else if (type === 'purchases' && !payload.bill_no) payload.bill_no = getIDForEntry('purchase');
         }
       } else if (type === 'transactions') {
         collection = 'transactions';
         payload.amount = Number(payload.amount);
-
-        if (!initialData?.id && !payload.transaction_id) {
+        if (!initialData?.id && !payload.transaction_id)
           payload.transaction_id = getIDForEntry(payload.type as 'received' | 'paid');
-        }
       } else if (type === 'inventory') {
         collection = 'inventory';
-        payload.sale_rate = Number(payload.sale_rate) || 0;
+        payload.sale_rate     = Number(payload.sale_rate)     || 0;
         payload.purchase_rate = Number(payload.purchase_rate) || 0;
-        payload.quantity = Number(payload.quantity) || 0;
-        payload.min_stock = Number(payload.min_stock) || 0;
-
-        // FIX (Issue #3): InventoryForm saves opening stock to `payload.quantity`
-        // but every view that tracks stock reads `item.current_stock`. For new
-        // items, sync current_stock from quantity so stock is never zero on create.
-        // For edits we do NOT overwrite current_stock — it is managed by sale/purchase
-        // auto-deductions and should not be reset to the opening quantity on every edit.
-        if (!initialData?.id) {
-          payload.current_stock = payload.quantity;
-        }
-
-        if (!initialData?.id && !payload.item_id) {
-          payload.item_id = getIDForEntry('inventory');
-        }
-      } else if (type === 'expenses') collection = 'expenses';
-      else if (type === 'vehicles') collection = 'vehicles';
-      else if (type === 'parties') {
+        payload.quantity      = Number(payload.quantity)      || 0;
+        payload.min_stock     = Number(payload.min_stock)     || 0;
+        if (!initialData?.id) payload.current_stock = payload.quantity;
+        if (!initialData?.id && !payload.item_id) payload.item_id = getIDForEntry('inventory');
+      } else if (type === 'expenses') {
+        collection = 'expenses';
+      } else if (type === 'vehicles') {
+        collection = 'vehicles';
+      } else if (type === 'parties') {
         collection = 'parties';
-
-        // FIX (Bug 4): Defensive default — if the role somehow arrives undefined
-        // (e.g. user never opened the dropdown), persist it as 'customer' to
-        // match the visible default in the form. Without this, the parties
-        // list shows the new entry under "Suppliers".
-        if (payload.role !== 'customer' && payload.role !== 'supplier') {
-          payload.role = 'customer';
-        }
-
-        if (!initialData?.id && !payload.party_code) {
-          payload.party_code = nextPartyCode;
-        }
+        if (payload.role !== 'customer' && payload.role !== 'supplier') payload.role = 'customer';
+        if (!initialData?.id && !payload.party_code) payload.party_code = nextPartyCode;
       }
 
       if (onLocalSave) {
@@ -427,77 +376,136 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
         return;
       }
 
-      const isOffline = !navigator.onLine;
-
-      if (initialData?.id) {
-        if (isOffline) {
-          SyncQueueService.addToQueue(user.uid, 'update', collection, payload, initialData.id);
-        } else {
-          await ApiService.update(user.uid, collection, initialData.id, payload);
-        }
-        payload.id = initialData.id;
-      } else {
-        payload.created_at = new Date().toISOString();
-        if (isOffline) {
-          SyncQueueService.addToQueue(user.uid, 'create', collection, payload);
-        } else {
-          const addResult = await ApiService.add(user.uid, collection, payload);
-          payload.id = addResult.id;
+      // ── Resolve auto-add party (shared between online/offline paths) ──────────
+      // FIX: case-insensitive duplicate check prevents "Rahul Traders" / "rahul traders" duplicates
+      let autoAddPartyData: any = null;
+      if (autoAddParty && payload.party_name &&
+          (type === 'sales' || type === 'purchases' || type === 'transactions')) {
+        let role = 'customer';
+        if (type === 'purchases') role = 'supplier';
+        if (type === 'transactions' && payload.type === 'paid') role = 'supplier';
+        const exists = [...customers, ...suppliers].some(
+          p => (p.name || '').toLowerCase() === (payload.party_name || '').toLowerCase()
+        );
+        if (!exists) {
+          autoAddPartyData = {
+            name: payload.party_name, role,
+            party_code: nextPartyCode,
+            address: payload.address || '',
+            contact: '',
+            created_at: new Date().toISOString(),
+          };
         }
       }
 
-      if (linkedPayments.length > 0) {
+      if (isOffline) {
+        // ── OFFLINE PATH ── SyncQueue for every operation (synchronous, instant) ─
+        if (autoAddPartyData) {
+          SyncQueueService.addToQueue(user.uid, 'create', 'parties', autoAddPartyData);
+        }
+
+        if (initialData?.id) {
+          SyncQueueService.addToQueue(user.uid, 'update', collection, payload, initialData.id);
+          payload.id = initialData.id;
+        } else {
+          payload.created_at = new Date().toISOString();
+          SyncQueueService.addToQueue(user.uid, 'create', collection, payload);
+        }
+
+        const newPayments = linkedPayments.filter(p => p._isNew);
+        const txTypeOff = type === 'sales' ? 'received' : 'paid';
+        newPayments.forEach(pay => {
+          SyncQueueService.addToQueue(user.uid, 'create', 'transactions', {
+            date: pay.date, amount: pay.amount, payment_mode: pay.payment_mode,
+            payment_purpose: pay.payment_purpose, party_name: pay.party_name || payload.party_name,
+            bill_no: pay.bill_no || payload.invoice_no || payload.bill_no,
+            notes: pay.notes, created_at: new Date().toISOString(),
+            type: txTypeOff, transaction_id: getIDForEntry(txTypeOff),
+          });
+        });
+
+        if ((type === 'sales' || type === 'purchases') && appSettings.automation?.auto_update_inventory) {
+          const isSale = type === 'sales';
+          (payload.items || []).forEach((lineItem: any) => {
+            if (!lineItem.item_name) return;
+            const match = inventoryList.find((i: any) =>
+              i.name?.toLowerCase() === lineItem.item_name?.toLowerCase()
+            );
+            if (!match?.id) return;
+            const newStock = isSale
+              ? Math.max(0, (Number(match.current_stock) || 0) - (Number(lineItem.quantity) || 0))
+              : (Number(match.current_stock) || 0) + (Number(lineItem.quantity) || 0);
+            SyncQueueService.addToQueue(user.uid, 'update', 'inventory', { current_stock: newStock }, match.id);
+          });
+        }
+
+      } else {
+        // ── ONLINE PATH ── Single WriteBatch commit (1 IndexedDB transaction) ────
+        //
+        // Previously: N separate await ApiService.add/update() calls → N round-trips
+        // to IndexedDB (Firestore's local persistence layer). On Android WebView under
+        // memory pressure, each round-trip serialises, causing 2-minute+ "Saving…".
+        //
+        // Fix: collect ALL write operations into one WriteBatch → one commit()
+        // → one IndexedDB transaction for every write at once. The Firestore SDK
+        // then syncs to the network in the background without blocking the UI.
+        const batchOps: { type: 'add' | 'update'; col: string; data: any; id?: string }[] = [];
+        let mainAddIndex = -1;
+
+        if (autoAddPartyData) {
+          batchOps.push({ type: 'add', col: 'parties', data: autoAddPartyData });
+        }
+
+        if (initialData?.id) {
+          batchOps.push({ type: 'update', col: collection, data: payload, id: initialData.id });
+          payload.id = initialData.id;
+        } else {
+          payload.created_at = new Date().toISOString();
+          mainAddIndex = batchOps.length;
+          batchOps.push({ type: 'add', col: collection, data: payload });
+        }
+
         const newPayments = linkedPayments.filter(p => p._isNew);
         const txType = type === 'sales' ? 'received' : 'paid';
         newPayments.forEach(pay => {
-          const transPayload = {
-            date: pay.date,
-            amount: pay.amount,
-            payment_mode: pay.payment_mode,
-            payment_purpose: pay.payment_purpose,
-            party_name: pay.party_name || payload.party_name,
-            bill_no: pay.bill_no || payload.invoice_no || payload.bill_no,
-            notes: pay.notes,
-            created_at: new Date().toISOString(),
-            type: txType,
-            transaction_id: getIDForEntry(txType)
-          };
-          if (isOffline) {
-            SyncQueueService.addToQueue(user.uid, 'create', 'transactions', transPayload);
-          } else {
-            ApiService.add(user.uid, 'transactions', transPayload);
-          }
+          batchOps.push({
+            type: 'add', col: 'transactions',
+            data: {
+              date: pay.date, amount: pay.amount, payment_mode: pay.payment_mode,
+              payment_purpose: pay.payment_purpose, party_name: pay.party_name || payload.party_name,
+              bill_no: pay.bill_no || payload.invoice_no || payload.bill_no,
+              notes: pay.notes, created_at: new Date().toISOString(),
+              type: txType, transaction_id: getIDForEntry(txType),
+            },
+          });
         });
-        if (!isOffline) await new Promise(r => setTimeout(r, 0)); // flush microtasks
+
+        if ((type === 'sales' || type === 'purchases') && appSettings.automation?.auto_update_inventory) {
+          const isSale = type === 'sales';
+          (payload.items || []).forEach((lineItem: any) => {
+            if (!lineItem.item_name) return;
+            const match = inventoryList.find((i: any) =>
+              i.name?.toLowerCase() === lineItem.item_name?.toLowerCase()
+            );
+            if (!match?.id) return;
+            const newStock = isSale
+              ? Math.max(0, (Number(match.current_stock) || 0) - (Number(lineItem.quantity) || 0))
+              : (Number(match.current_stock) || 0) + (Number(lineItem.quantity) || 0);
+            batchOps.push({ type: 'update', col: 'inventory', data: { current_stock: newStock }, id: match.id });
+          });
+        }
+
+        // THE SINGLE AWAIT — one batch commit replaces every individual write
+        const batchResults = await ApiService.batchSave(user.uid, batchOps);
+        if (mainAddIndex >= 0 && batchResults[mainAddIndex]) {
+          payload.id = batchResults[mainAddIndex].id;
+        }
       }
 
-      // Inventory auto-update — uses the cached inventory list (no extra Firestore read).
-      // Works both online (direct write) and offline (queued via SyncQueueService so
-      // stock is updated as soon as connectivity returns, not silently dropped).
-      if ((type === 'sales' || type === 'purchases') && appSettings.automation?.auto_update_inventory) {
-        const isSale = type === 'sales';
-        const stockUpdates = (payload.items || []).map(async (lineItem: any) => {
-          if (!lineItem.item_name) return;
-          const match = inventoryList.find((i: any) =>
-            i.name?.toLowerCase() === lineItem.item_name?.toLowerCase()
-          );
-          if (!match?.id) return;
-          const current = Number(match.current_stock) || 0;
-          const qty     = Number(lineItem.quantity) || 0;
-          const newStock = isSale ? Math.max(0, current - qty) : current + qty;
-          if (isOffline) {
-            SyncQueueService.addToQueue(user.uid, 'update', 'inventory', { current_stock: newStock }, match.id);
-          } else {
-            await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
-          }
-        });
-        await Promise.all(stockUpdates);
-      }
-
-      // Create recurring template if user toggled Recurring
+      // Recurring template — fire-and-forget; must not block modal close
       if (type === 'transactions' && !initialData?.id && formData.isRecurring && formData.recurringInterval) {
         const today = new Date().toISOString().split('T')[0];
-        await RecurringService.create(user.uid, {
+        RecurringService.create(user.uid, {
           type: payload.type,
           party_name: payload.party_name,
           amount: payload.amount,
