@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api';
 import { AuditService } from '../../services/audit';
 import { exportService } from '../../services/export';
 import { AutoBackupService } from '../../services/autoBackup';
+import { GoogleDriveBackupService } from '../../services/googleDriveBackupService';
 import { FactoryResetBinService } from '../../services/factoryResetBin';
 import { SyncQueueService } from '../../services/syncQueue';
 import { useSyncControl } from '../../hooks/useOnlineStatus';
@@ -34,6 +35,10 @@ export const SettingsDataZone = ({ user }: any) => {
     const [localBackups, setLocalBackups] = useState<any[]>([]);
     const [showLocalBackups, setShowLocalBackups] = useState(false);
     const [restoreLocalLoading, setRestoreLocalLoading] = useState<string | null>(null);
+    const [driveBackupLoading, setDriveBackupLoading] = useState(false);
+    const [driveLastFile, setDriveLastFile] = useState<string | null>(
+        () => localStorage.getItem(`drive_last_backup_file_${user?.uid}`)
+    );
 
     // FINAL MODULE — feedback modal visibility (lives in this zone because
     // "Help & Feedback" naturally pairs with "Data Management").
@@ -81,6 +86,26 @@ export const SettingsDataZone = ({ user }: any) => {
             showToast('Local backup failed: ' + e.message, 'error');
         } finally {
             setLocalBackupLoading(false);
+        }
+    };
+
+    const handleGoogleDriveBackup = async () => {
+        setDriveBackupLoading(true);
+        try {
+            const result = await GoogleDriveBackupService.backupToGoogleDrive(user.uid, user.email);
+            if (result.success) {
+                if (result.fileName) {
+                    localStorage.setItem(`drive_last_backup_file_${user.uid}`, result.fileName);
+                    setDriveLastFile(result.fileName);
+                }
+                showToast(result.message, 'success');
+            } else {
+                showToast(result.message, 'error');
+            }
+        } catch (e: any) {
+            showToast('Google Drive backup failed: ' + e.message, 'error');
+        } finally {
+            setDriveBackupLoading(false);
         }
     };
 
@@ -540,6 +565,51 @@ export const SettingsDataZone = ({ user }: any) => {
                         ))}
                     </div>
                 )}
+            </SettingsSection>
+
+            {/* Google Drive Backup Section */}
+            <SettingsSection title="Google Drive Backup" icon={Cloud}>
+                <div className="rounded-[16px] p-4 mb-4 flex gap-3"
+                    style={{ background: 'rgba(66,133,244,0.08)', border: '1px solid rgba(66,133,244,0.2)' }}>
+                    <div className="shrink-0 mt-0.5">
+                        <svg width="20" height="20" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+                            <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/>
+                            <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/>
+                            <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+                            <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+                            <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-sm" style={{ color: '#93c5fd' }}>Backup to Google Drive</h4>
+                        <p className="text-xs mt-1" style={{ color: 'rgba(147,197,253,0.65)' }}>
+                            Saves a JSON backup file to your Google Drive. Visible and restorable from the Google Drive app on any device.
+                        </p>
+                    </div>
+                </div>
+
+                {driveLastFile && (
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-3"
+                        style={{ background: 'rgba(66,133,244,0.07)', border: '1px solid rgba(66,133,244,0.15)' }}>
+                        <Cloud size={13} style={{ color: 'rgba(66,133,244,0.8)', flexShrink: 0 }} />
+                        <span className="text-[10px] font-bold" style={{ color: 'rgba(147,197,253,0.7)' }}>
+                            Last: {driveLastFile}
+                        </span>
+                    </div>
+                )}
+
+                <LoadingButton
+                    loading={driveBackupLoading}
+                    onClick={handleGoogleDriveBackup}
+                    icon={Cloud}
+                    label={driveBackupLoading ? 'Uploading to Drive…' : 'Backup to Google Drive'}
+                    className="w-full text-white font-bold"
+                    style={{ background: 'linear-gradient(135deg, #4285f4, #34a853)' }}
+                />
+                <p className="text-[10px] mt-2 text-center" style={{ color: 'rgba(148,163,184,0.45)' }}>
+                    You'll be asked to sign in with Google and grant Drive access.
+                </p>
             </SettingsSection>
 
             {/* Audit Log Section */}

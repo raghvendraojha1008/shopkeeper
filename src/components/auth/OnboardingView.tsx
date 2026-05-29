@@ -319,9 +319,13 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({ onComplete }) => {
                   <p className="text-[10px]" style={{ color: 'rgba(148,163,184,0.5)' }}>Auto CGST/SGST/IGST in invoices</p>
                 </div>
                 <div className="w-11 h-6 rounded-full transition-all relative flex-shrink-0"
-                  style={{ background: firm.gst_enabled ? '#10b981' : 'rgba(255,255,255,0.12)' }}>
-                  <div className="absolute top-1 w-4 h-4 rounded-full bg-white shadow-md transition-all"
-                    style={{ left: firm.gst_enabled ? '1.5rem' : '0.25rem' }} />
+                  style={{ background: firm.gst_enabled ? '#10b981' : 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div className="absolute top-[3px] w-[18px] h-[18px] rounded-full transition-all"
+                    style={{
+                      left: firm.gst_enabled ? 'calc(100% - 21px)' : '3px',
+                      background: '#ffffff',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.08)',
+                    }} />
                 </div>
               </button>
 
