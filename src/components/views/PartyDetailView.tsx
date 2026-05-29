@@ -567,7 +567,11 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
                                         </span>
                                     </div>
                                     <div className="text-xs font-medium mt-0.5 text-[rgba(148,163,184,0.45)]">
-                                        {item.date} • {isInv ? `${(item.items || []).length} Items` : item.payment_mode}
+                                        {item.date}
+                                        {isInv
+                                          ? <> &bull; {(item.items || []).length} item{(item.items || []).length !== 1 ? 's' : ''}{item.payment_mode ? ` · ${item.payment_mode}` : ''}</>
+                                          : <>{item.payment_mode ? ` · ${item.payment_mode}` : ''}{item.payment_purpose ? ` · ${item.payment_purpose}` : ''}</>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -604,13 +608,19 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
                                                 <span className="font-bold">₹{it.total}</span>
                                             </div>
                                         ))}
-                                        {item.vehicle && <div className="mt-2 pt-2 border-t border-white/08 text-slate-500 flex gap-2"><span className="font-bold">Transport:</span> {item.vehicle} (₹{item.vehicle_rent})</div>}
+                                        {item.vehicle && <div className="mt-2 pt-2 border-t border-white/08 text-[rgba(148,163,184,0.5)] flex gap-2"><span className="font-bold">Transport:</span> {item.vehicle}{Number(item.vehicle_rent) > 0 ? ` (₹${Number(item.vehicle_rent).toLocaleString('en-IN')})` : ''}</div>}
+                                        {item.source_supplier && <div className="mt-1 flex gap-2 text-[rgba(196,181,253,0.7)]"><span className="font-bold">Supplier:</span> {item.source_supplier}</div>}
+                                        {item.site && <div className="mt-1 flex gap-2 text-[rgba(103,232,249,0.65)]"><span className="font-bold">Site:</span> {item.site}</div>}
+                                        {item.seller_invoice_no && <div className="mt-1 flex gap-2 text-[rgba(251,191,36,0.65)]"><span className="font-bold">Seller Invoice:</span> #{item.seller_invoice_no}</div>}
+                                        {Number(item.discount_amount) > 0 && <div className="mt-1 flex gap-2 text-amber-400"><span className="font-bold">Discount:</span> -₹{Number(item.discount_amount).toLocaleString('en-IN')}</div>}
+                                        {item.notes && <div className="mt-1 flex gap-2 text-[rgba(148,163,184,0.5)]"><span className="font-bold">Notes:</span> {item.notes}</div>}
                                     </div>
                                 ) : (
                                     <div className="space-y-1">
-                                        <div className="flex gap-2"><span className="font-bold text-[rgba(148,163,184,0.45)]">Purpose:</span> <span>{item.payment_purpose || '-'}</span></div>
-                                        <div className="flex gap-2"><span className="font-bold text-[rgba(148,163,184,0.45)]">Note:</span> <span>{item.notes || '-'}</span></div>
+                                        {item.payment_purpose && <div className="flex gap-2"><span className="font-bold text-[rgba(148,163,184,0.45)]">Purpose:</span> <span className="text-[rgba(196,181,253,0.8)]">{item.payment_purpose}</span></div>}
+                                        {item.notes && <div className="flex gap-2"><span className="font-bold text-[rgba(148,163,184,0.45)]">Note:</span> <span>{item.notes}</span></div>}
                                         {item.bill_no && <div className="flex gap-2"><span className="font-bold text-[rgba(148,163,184,0.45)]">Ref Bill:</span> <span className="bg-[rgba(245,158,11,0.18)] text-amber-300 px-1 rounded">{item.bill_no}</span></div>}
+                                        {item.transaction_id && <div className="flex gap-2 items-center"><span className="font-bold text-[rgba(148,163,184,0.45)]">Txn ID:</span> <span className="font-mono text-[rgba(148,163,184,0.5)] text-[9px]">{item.transaction_id}</span></div>}
                                     </div>
                                 )}
                             </div>

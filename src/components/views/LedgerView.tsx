@@ -6,7 +6,7 @@ import {
   Search, FileText, Edit2, Trash2, Filter, Download, Plus,
   Package, Truck, Calendar, BarChart3,
   ArrowLeft, BadgePercent, CheckCircle2, Clock, AlertCircle,
-  IndianRupee, Zap, Banknote, MessageSquare
+  IndianRupee, Zap, Banknote, MessageSquare, MapPin, Building2
 } from 'lucide-react';
 import DateRangeFilter from '../common/DateRangeFilter';
 import { ApiService } from '../../services/api';
@@ -377,8 +377,8 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
             <span className="truncate min-w-0">{getItemSummary(item.items)}</span>
           </div>
 
-          {/* Extra meta: payment mode · vehicle · notes */}
-          {(item.payment_mode || item.vehicle || item.vehicle_no || item.notes) && (
+          {/* Extra meta: payment mode · vehicle · supplier · site · notes */}
+          {(item.payment_mode || item.vehicle || item.vehicle_no || item.notes || item.source_supplier || item.site || item.seller_invoice_no) && (
             <div className="flex items-center gap-2 flex-wrap mb-1.5">
               {item.payment_mode && (
                 <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
@@ -390,6 +390,24 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
                 <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
                   style={{ background: 'rgba(251,191,36,0.08)', color: 'rgba(251,191,36,0.65)', border: '1px solid rgba(251,191,36,0.15)' }}>
                   <Truck size={8} />{item.vehicle || item.vehicle_no}
+                </span>
+              )}
+              {item.source_supplier && (
+                <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
+                  style={{ background: 'rgba(139,92,246,0.1)', color: 'rgba(196,181,253,0.8)', border: '1px solid rgba(139,92,246,0.18)' }}>
+                  <Building2 size={8} />Supplier: {item.source_supplier}
+                </span>
+              )}
+              {item.site && (
+                <span className="text-[9px] font-bold flex items-center gap-1 px-1.5 py-0.5 rounded-full"
+                  style={{ background: 'rgba(6,182,212,0.08)', color: 'rgba(103,232,249,0.75)', border: '1px solid rgba(6,182,212,0.15)' }}>
+                  <MapPin size={8} />{item.site}
+                </span>
+              )}
+              {item.seller_invoice_no && (
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full flex items-center gap-1"
+                  style={{ background: 'rgba(245,158,11,0.08)', color: 'rgba(251,191,36,0.65)', border: '1px solid rgba(245,158,11,0.12)' }}>
+                  Seller #{item.seller_invoice_no}
                 </span>
               )}
               {item.notes && (
