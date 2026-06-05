@@ -1,0 +1,21 @@
+=== TABLE 4: B2B INVOICES (Registered Buyers) ===
+GSTIN of Recipient,Receiver Name,Invoice No,Invoice Date,Invoice Value,Place of Supply,Reverse Charge,Applicable Tax Rate,Invoice Type,Taxable Value,IGST,CGST,SGST,Cess
+
+=== TABLE 7: B2C INVOICES (Unregistered Buyers) ===
+Type,Applicable Tax Rate,Place of Supply,Taxable Value,IGST,CGST,SGST,Cess
+Intra-State,18,00-Unknown,38000,0,3420,3420,0
+Intra-State,0,00-Unknown,2250,0,0,0,0
+
+=== TABLE 12: HSN-WISE SUMMARY ===
+HSN,Description,UQC,Total Quantity,Total Value,Taxable Value,IGST,CGST,SGST,Cess
+2523,Cement Bag,Bag,100,41300,35000,0,3150,3150,0
+MISC,Cement ,Pcs,7,5790,5250,0,270,270,0
+
+GSTR-1 Summary for April 2026
+Total Invoices,3
+Total Taxable Value,40250
+Total IGST,0
+Total CGST,3420
+Total SGST,3420
+Total GST,6840
+Grand Total,47090

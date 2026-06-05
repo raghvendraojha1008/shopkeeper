@@ -1,0 +1,169 @@
+FINAL TASK — LAUNCH PREPARATION, PRODUCT POLISH & STORE READINESS
+
+SYSTEM CONTEXT
+
+The application is complete and validated:
+
+* Offline-first architecture (IndexedDB + sync queue)
+* POS billing, ledger, inventory working reliably
+* No critical bugs or regressions
+* Production-level data consistency achieved
+
+Your task is NOT to add features.
+
+Your task is to:
+
+```text
+Prepare the product for real users and Play Store launch
+```
+
+---
+
+PRIMARY OBJECTIVE
+
+Convert the system into a **clear, usable, and trustworthy product**.
+
+---
+
+MODULE 1 — FIRST-USE EXPERIENCE
+
+Ensure a new user understands the app immediately.
+
+Implement:
+
+1. Simple onboarding (non-intrusive):
+
+   * Step 1: Add Item
+   * Step 2: Create Bill
+   * Step 3: View Ledger
+
+2. Show this only on first use
+
+Goal:
+User understands app in < 2 minutes
+
+---
+
+MODULE 2 — EMPTY STATES (MANDATORY)
+
+Replace ALL blank screens with:
+
+* Clear message
+* One primary action
+
+Examples:
+
+* “No items yet → Add your first product”
+* “No transactions yet → Create your first bill”
+
+---
+
+MODULE 3 — UX TRUST SIGNALS
+
+Add minimal indicators:
+
+1. After save:
+
+   * “Saved locally”
+
+2. Sync status:
+
+   * Synced ✔
+   * Syncing…
+   * Pending changes
+   * Error
+
+3. Offline indicator:
+
+   * “Offline mode — data saved locally”
+
+NO clutter, keep subtle.
+
+---
+
+MODULE 4 — ACTION SAFETY
+
+Ensure:
+
+* Buttons disabled during operations
+* No duplicate submissions
+* Proper loading states everywhere
+
+---
+
+MODULE 5 — SETTINGS CLEANUP
+
+Organize settings into:
+
+* Business Details
+* Data & Backup
+* App Settings
+
+Ensure:
+
+* Clean layout
+* No confusion
+
+---
+
+MODULE 6 — APP IDENTITY
+
+Ensure:
+
+* App name is consistent everywhere
+* App icon is clean and professional
+* Splash screen exists
+* Version number updated
+
+---
+
+MODULE 7 — FINAL UX POLISH
+
+Fix:
+
+* Inconsistent spacing
+* Misaligned elements
+* Flicker or layout jumps
+
+Ensure smooth transitions.
+
+---
+
+MODULE 8 — FINAL SANITY CHECK
+
+Verify:
+
+* No blank screens
+* No broken navigation
+* No console errors
+* No dead buttons
+
+---
+
+STRICT RULES
+
+* Do NOT modify core logic
+* Do NOT add new features
+* Do NOT refactor architecture
+
+Only:
+
+* Improve clarity
+* Improve usability
+* Improve presentation
+
+---
+
+SUCCESS CRITERIA
+
+✔ New user understands app quickly
+✔ No confusion in navigation
+✔ No empty screens
+✔ App feels stable and complete
+✔ Ready for Play Store upload
+
+---
+
+FINAL GOAL
+
+“User installs → understands → uses → trusts → continues using”

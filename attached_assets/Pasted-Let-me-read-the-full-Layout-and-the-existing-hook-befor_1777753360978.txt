@@ -1,0 +1,41 @@
+Let me read the full Layout and the existing hook before touching anything.
+
+
+4 actions
+Good picture. I'll create a single useSidebarBadges hook that fetches all counts in one pass, then update Layout to wire every badge with its own colour. Here's the plan:
+
+Nav Item	Badge	Colour
+Users	subscriptions expiring within 3 days	orange (existing)
+Audit Log	new events in the last 24 h	blue
+Announcements	currently active announcements	green
+Giveaway Log	grants in the last 7 days	violet
+Both files in parallel now.
+
+
+6 actions
+Zero TypeScript errors, clean hot reload. Here's a summary of everything that was built:
+
+New hook — useSidebarBadges.ts
+
+Makes exactly 2 Firestore queries on mount and every 5 minutes (same interval as useExpiringCount):
+
+Fetches the 200 most recent subscription_logs entries and counts:
+Events with timestamp >= 24 h ago → Audit Log badge
+Events with action === 'grant' and timestamp >= 7 days ago → Giveaway Log badge
+Fetches announcements filtered by isActive === true → Announcements badge
+Uses Promise.allSettled so a rules failure on one collection doesn't kill the other, and failures are silent (badges are non-critical UI).
+
+Updated Layout — badge system
+
+Sidebar item	Badge	Colour	Meaning
+Users	subscriptions expiring ≤ 3 days	orange	Urgent — act soon
+Giveaway Log	grants in last 7 days	violet	Recent activity
+Announcements	currently active announcements	green	Status — things are live
+Audit Log	new events in last 24 h	blue	New activity to review
+Each badge has a title tooltip explaining what the number means. Badges only appear when count > 0, capped at 99+. The NavBadge component is typed with a BadgeColor union so new colours can be added easily.
+
+Top bar additions
+
+A blue "N new audit events" pill appears next to the existing orange expiring pill when auditCount > 0 — clicking it navigates directly to the Audit Log page.
+On mobile, the hamburger menu gets a small orange dot when anything is needing attention (expiringCount + auditCount > 0), so the user knows to open the sidebar even before they see the nav items.
+Next, I can add a "Notifications" panel that slides in from the right and lists all recent audit events with links to the affected users — like a proper activity feed. Would you like me to do that?

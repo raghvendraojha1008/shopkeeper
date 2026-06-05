@@ -1,0 +1,125 @@
+Sure! Here's the best solution approach for each issue in your Capacitor Android context:
+
+---
+
+## 🔴 Critical Issues
+
+**1. ID Collision Across Devices**
+Use Firestore's built-in `addDoc()` which auto-generates a globally unique document ID. Store your human-readable prefixed ID (`S-101`) as a **separate field** computed from a Firestore atomic counter using a transaction:
+```
+Firestore Transaction → read counter doc → increment → write back → use as display ID
+```
+Keep the current localStorage seeding only as a UI fallback for display, never as the source of truth for uniqueness.
+
+---
+
+**2. Hardcoded Default PIN `1234`**
+On first app launch after login, if no PIN is set in settings, force the user into a **PIN setup screen** before they can use the app. Never fall back to a hardcoded value. Store a `pin_set: boolean` flag in Firestore settings and check it during `initApp`.
+
+---
+
+**3. Weak Invitation Code (`Math.random`)**
+Replace with the Web Crypto API which is available in Capacitor's WebView:
+```ts
+const array = new Uint8Array(8);
+crypto.getRandomValues(array);
+const code = Array.from(array, b => b.toString(36)).join('').toUpperCase().slice(0, 10);
+```
+This works on Android WebView without any extra plugin.
+
+---
+
+**4. `setActiveTab` Called Even on Fetch Failure**
+Move `setActiveTab('stock-valuation')` inside the `try` block, just before `finally`. Same pattern should be applied to `openPartyStatement` — only navigate after data is confirmed loaded.
+
+---
+
+## 🟠 High-Severity Issues
+
+**5. `AdvancedAnalyticsDashboard` Always Gets Empty Arrays**
+Remove the hardcoded empty array props. Inside `AdvancedAnalyticsDashboard`, use the existing `useData()` context hooks (`useLedger`, `useTransactions`, etc.) to fetch data independently — exactly like `LedgerView` and `TransactionsView` already do. Pass only `user` and `settings` as props.
+
+---
+
+**6. PDF Export Ignores Active Date Filter**
+Pass the current `dateRange` state from the view into the `handlePdfExport` function and use it to filter the fetched data before passing to `exportServiceV2.fullReportToPdf()`. The `dateRange` object is already available in the component scope — it just isn't being forwarded.
+
+---
+
+**7. PartyStatement Shows Stale Data on Re-open**
+Add a loading state specifically for the statement data. Show a skeleton/spinner inside `PartyStatementView` while data is fetching rather than rendering with the previous party's data. Set `selectedPartyStatement` only after data is ready, or pass a `loading` boolean prop and gate the content render on it.
+
+---
+
+**8. ID Counters Not Namespaced by User**
+Change the localStorage key from:
+```ts
+const COUNTER_KEY = 'shopkeeper_id_counters';
+```
+to:
+```ts
+const COUNTER_KEY = `shopkeeper_id_counters_${userId}`;
+```
+Call a `initCountersForUser(userId)` function right after login (in `initApp`) that loads the correct user's counters into `_memCounters`.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**9. BulkImport False Success Count**
+Restructure the loop so `successful` is only incremented after a successful `batch.commit()`. Track how many records were in each batch chunk, and add that count to `successful` only if the commit doesn't throw. Wrap each `batch.commit()` in its own try/catch and accumulate `failed` at the batch level.
+
+---
+
+**10. Duplicate `<style>` Tag from SeoHead**
+Add an early-exit guard:
+```ts
+if (document.getElementById('seo-global-styles')) return;
+```
+as the first line inside the `useEffect`. Also return a cleanup function that removes the element on unmount so React StrictMode's double-invoke doesn't leave orphaned tags.
+
+---
+
+**11. Settings Saved to Wrong UID for Staff**
+In `onUpdateSettings`, change the save call to use `dataUid` (which correctly resolves to `adminUid` for staff) instead of `user.uid`:
+```ts
+await ApiService.settings.save(dataUid, normalized); // not user.uid
+```
+This one-character conceptual fix aligns the save path with the load path already using `effectiveUid`.
+
+---
+
+**12. Floating-Point Rounding in Payment Distribution**
+After every arithmetic operation in `computePaymentDistribution`, round to 2 decimal places:
+```ts
+const round2 = (n: number) => Math.round(n * 100) / 100;
+```
+Apply `round2()` to `applied`, `status.autoPaid`, `status.directPaid`, `status.balance`, and the `totalPaid >= orderTotal` comparison. This prevents ghost balances like `₹0.000000001` showing as "partial".
+
+---
+
+## 🔵 Lower-Severity / Code Quality
+
+**13. Widespread `any` Types**
+Define a shared `FirestoreDoc<T>` generic type and typed interfaces for `LedgerEntry`, `Transaction`, `Party`, `InventoryItem` in a central `src/types/models.ts`. Gradually replace `any` in the card components and modal data props. Don't try to fix everywhere at once — start with the data flow from `ApiService` outward.
+
+**14. `user-scalable=no` Accessibility**
+Remove `user-scalable=no` and `maximum-scale=1.0` from the viewport meta. To prevent the iOS double-tap zoom that you're likely trying to avoid, use the CSS approach instead which is respected and accessible:
+```css
+* { touch-action: manipulation; }
+```
+You already have this in `SeoHead` — so the viewport restriction is redundant and can be safely removed.
+
+**15. Global Scrollbar Hiding**
+Replace the global `*::-webkit-scrollbar { display: none }` rule with a `.scrollbar-hide` utility class and apply it only to the specific scroll containers that need it (the virtualized lists, modal bodies, etc.). This way desktop users on tablets or Chrome DevTools still see scrollbars on elements that should show them.
+
+**16. Back Button Listener Re-registration**
+Replace the state dependencies with refs so the handler always reads the latest values without re-registering:
+```ts
+const showManualRef = useRef(showManualModal);
+const showCommandRef = useRef(showCommandModal);
+const activeTabRef = useRef(activeTab);
+// keep refs in sync via separate useEffects
+// register the listener ONCE with empty dependency array []
+```
+This eliminates the remove/re-add cycle on every tab change and is safer on Android where the OS back button can fire during the brief re-registration gap.

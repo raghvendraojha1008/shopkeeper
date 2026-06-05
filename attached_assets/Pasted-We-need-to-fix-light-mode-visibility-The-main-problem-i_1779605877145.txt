@@ -1,0 +1,110 @@
+We need to fix light mode visibility. The main problem is that most components use hardcoded RGBA values assuming a dark background (e.g., `color: 'rgba(240,244,255,0.95)'`), making text nearly invisible on light backgrounds. Additionally, login, onboarding, and confirmation modals use dark gradients regardless of theme.
+
+## 🔍 Root Cause Analysis
+
+1. **Inline styles override theme** – Almost every component injects `style={{ color: 'rgba(240,244,255,0.9)' }}` etc., which has higher specificity than any CSS class.
+2. **Light mode palette missing** – The app only defines `--primary` and `--app-bg` via `applyThemeToDocument`. No global light‑mode text/border variables.
+3. **Theme‑agnostic pages** – `LoginView`, `OnboardingView`, and `ConfirmDialog` use fixed dark gradients, ignoring `data-theme-mode`.
+4. **No global light mode class** – The body / root doesn’t receive a light‑mode class to drive overrides.
+
+---
+
+## 🛠 Proposed Solution (Systematic, Low‑Risk)
+
+We will **augment the existing theme system** and **add a light‑mode stylesheet** that overrides the problematic inline styles using CSS attribute selectors. This avoids rewriting hundreds of components while guaranteeing correct contrast.
+
+### 1. Extend CSS Variables (in `index.css` or `SeoHead.tsx`)
+
+Define a complete light theme palette:
+
+```css
+:root {
+  /* Dark mode (default) */
+  --app-bg: #0b0e1a;
+  --text-primary: rgba(240, 244, 255, 0.95);
+  --text-secondary: rgba(148, 163, 184, 0.6);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  /* ... other dark vars */
+}
+
+[data-theme-mode="light"] {
+  --app-bg: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --border-subtle: #e2e8f0;
+  /* ... other light vars */
+}
+```
+
+### 2. Add Light‑Mode Overrides in `SeoHead.tsx`
+
+Inject a `<style>` that targets the most common hardcoded patterns:
+
+```css
+[data-theme-mode="light"] [style*="color: rgba(240,244,255"] {
+  color: #0f172a !important;
+}
+[data-theme-mode="light"] [style*="color: rgba(203,213,225"] {
+  color: #1e293b !important;
+}
+[data-theme-mode="light"] [style*="background: linear-gradient(160deg, #0a0f2e"] {
+  background: linear-gradient(160deg, #eef2ff 0%, #f0f4ff 55%, #e8f0fe 100%) !important;
+}
+[data-theme-mode="light"] .glass-icon-btn,
+[data-theme-mode="light"] .command-modal-root,
+[data-theme-mode="light"] .lock-screen-root {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+```
+
+This catches 90% of the problematic inline styles without breaking dark mode.
+
+### 3. Fix Login & Onboarding Views
+
+Replace their hardcoded gradients with dynamic values:
+
+```tsx
+// LoginView.tsx
+const isDark = appSettings?.preferences?.dark_mode ?? true;
+const bgGradient = isDark
+  ? 'linear-gradient(160deg, #0a0f2e 0%, #0f0a28 40%, #070d1a 100%)'
+  : 'linear-gradient(160deg, #eef2ff 0%, #f0f4ff 55%, #e8f0fe 100%)';
+```
+
+Same for `OnboardingView.tsx`. Use the same approach for confirmation dialogs.
+
+### 4. Add Light‑Mode Support to `ConfirmDialog`
+
+Modify its inline styles to read from CSS variables or use the theme context:
+
+```tsx
+const bg = isDark ? 'rgba(15,20,40,0.95)' : 'rgba(255,255,255,0.95)';
+const textColor = isDark ? 'rgba(240,244,255,0.95)' : '#0f172a';
+```
+
+### 5. Update `applyThemeToDocument` (in `theme/theme.ts`)
+
+Ensure that when theme changes, we also set `data-theme-mode="light"` or `"dark"` on the root element. This is already done, but we must also remove any inline `background` overrides added by modals.
+
+---
+
+## 📋 Implementation Steps (In Order)
+
+1. **Enhance CSS variables** – add light theme palette to `index.css`.
+2. **Augment `SeoHead.tsx`** with the light‑mode override styles.
+3. **Modify `LoginView.tsx`** – use theme‑aware gradients.
+4. **Modify `OnboardingView.tsx`** – use theme‑aware backgrounds.
+5. **Modify `ConfirmDialog`** – adapt its styles to theme variables.
+6. **Test** – toggle dark/light mode in Settings → General and verify all screens have readable text.
+
+---
+
+## ✅ Expected Outcome
+
+- Light mode becomes fully readable with dark text on light backgrounds.
+- Dark mode remains unchanged.
+- Login, onboarding, and modals switch correctly with the theme.
+- No performance impact – overrides are pure CSS, no extra JS.
+
+This solution is **low‑risk**, **quick to implement**, and **does not require rewriting hundreds of components**. It leverages the existing theme system and CSS specificity to fix the issue at the root.

@@ -1,0 +1,308 @@
+
+> shopkeeper-v2@1.0.8 dev
+> vite
+
+[1G[0K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m163[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.24.0.2:[1m5000[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/replit/agent/.latest.json[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/QKdYkmtwBiaLDcqnbrl23/start_application.shell.exec.0[22m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-smooth/es6/Animate.js:27:22:
+[37m      27 │ import PropTypes from [32m'prop-types'[37m;
+         ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-smooth/es6/AnimateGroup.js:3:22:
+[37m      3 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "fast-equals"[0m
+
+    node_modules/react-smooth/es6/Animate.js:28:26:
+[37m      28 │ import { deepEqual } from [32m'fast-equals'[37m;
+         ╵                           [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "fast-equals" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/QKdYkmtwBiaLDcqnbrl23/start_application.shell.exec.0[22m [33m(x2)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/Transition.js:3:22:
+[37m      3 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/QKdYkmtwBiaLDcqnbrl23/start_application.shell.exec.0[22m [33m(x3)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-smooth/es6/AnimateGroupChild.js:23:22:
+[37m      23 │ import PropTypes from [32m'prop-types'[37m;
+         ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/SwitchTransition.js:6:22:
+[37m      6 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/ReplaceTransition.js:3:22:
+[37m      3 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/CSSTransition.js:4:22:
+[37m      4 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/QKdYkmtwBiaLDcqnbrl23/start_application.shell.exec.0[22m [33m(x4)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "dom-helpers/addClass"[0m
+
+    node_modules/react-transition-group/esm/CSSTransition.js:5:24:
+[37m      5 │ import addOneClass from [32m'dom-helpers/addClass'[37m;
+        ╵                         [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "dom-helpers/addClass" as external to exclude it from
+  the bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/TransitionGroup.js:5:22:
+[37m      5 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "prop-types"[0m
+
+    node_modules/react-transition-group/esm/utils/PropTypes.js:1:22:
+[37m      1 │ import PropTypes from [32m'prop-types'[37m;
+        ╵                       [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "prop-types" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "dom-helpers/removeClass"[0m
+
+    node_modules/react-transition-group/esm/CSSTransition.js:6:27:
+[37m      6 │ import removeOneClass from [32m'dom-helpers/removeClass'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "dom-helpers/removeClass" as external to exclude it from
+  the bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:10:40 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/QKdYkmtwBiaLDcqnbrl23/start_application.shell.exec.0[22m [33m(x5)[39m
+/home/runner/workspace/node_modules/vite/node_modules/esbuild/lib/main.js:1472
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 12 errors:
+node_modules/react-smooth/es6/Animate.js:27:22: ERROR: Could not resolve "prop-types"
+node_modules/react-smooth/es6/Animate.js:28:26: ERROR: Could not resolve "fast-equals"
+node_modules/react-smooth/es6/AnimateGroup.js:3:22: ERROR: Could not resolve "prop-types"
+node_modules/react-smooth/es6/AnimateGroupChild.js:23:22: ERROR: Could not resolve "prop-types"
+node_modules/react-transition-group/esm/CSSTransition.js:4:22: ERROR: Could not resolve "prop-types"
+...
+    at failureErrorWithLog [90m(/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1472:15[90m)[39m
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:945:25
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1353:9
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  errors: [36m[Getter/Setter][39m,
+  warnings: [36m[Getter/Setter][39m
+}
+
+Node.js v20.20.0
+[1G[0K⠙[1G[0K

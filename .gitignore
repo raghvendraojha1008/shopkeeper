@@ -1,0 +1,31 @@
+# Node / frontend
+node_modules/
+dist/
+build/
+.next/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Python (if any)
+__pycache__/
+*.pyc
+
+# Env files
+.env
+
+# Android / Java
+.gradle/
+local.properties
+
+# Misc
+*.zip
+*.tar

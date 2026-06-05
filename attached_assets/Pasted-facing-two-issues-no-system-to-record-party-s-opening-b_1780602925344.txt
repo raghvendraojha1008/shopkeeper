@@ -1,0 +1,108 @@
+facing two issues-
+
+no system to record party's opening balence and its proper management.(here both type of parties customer/suppiles can have each type of opening balence, it the firm's amount is on customer/supplier or their on firm), do provide use options inside party's detail view.
+
+no system for misslinious charges can applies on any party(like long term loading/unloading or transportation(which can't be attached a single order) or etc), do provide use options inside party's detail view.
+
+understand the idea, refine it, and proper requierment and implement completly and with 100% competibility with the current system.
+
+3 hours ago
+
+Show less
+
+Planning opening balance feature integration (21 seconds)
+Let me read the balance calculation and party detail view carefully before designing the implementation:
+
+
+3 actions
+Let me read the rest of PartyDetailView and the calculateAccounting helper together:
+
+
+6 actions
+Let me read the rest of PartyDetailView (tabs/list section and the modals) before writing any code:
+
+
+3 actions
+Let me check the ApiService method signatures before writing the implementation:
+
+
+3 actions
+Good — ApiService is fully generic. Now let me read the PartyForm in SimpleForms.tsx to know exactly where to insert the opening balance fields:
+
+
+6 actions
+Now I have everything. Let me implement both features in parallel across all files:
+
+Design:
+
+Opening Balance — stored as opening_balance + opening_balance_type ('they_owe'/'we_owe') on the party document. Set via the party form. Factored into every balance calculation.
+Misc Charges — separate Firestore collection misc_charges with fields: date, amount, category, direction (charge_to_party / charge_from_party), notes. Managed inline from PartyDetailView. Factored into balance.
+
+2 actions
+Now adding opening balance to the party form and updating PartiesView — both in parallel:
+
+
+2 actions
+Now updating PartiesView to factor in opening balance, and doing the full PartyDetailView rewrite:
+
+
+2 actions
+Now making the full set of changes to PartyDetailView — adding misc charges state/loading, updating the stats, inserting the misc button, rendering misc items in timeline, and building the inline modal:
+
+
+2 actions
+Now adding misc charges state + loader, and updating the useMemo to include both opening balance and misc charges:
+
+
+2 actions
+Now updating filteredList to exclude misc from orders/payments tabs, and adding the opening balance display + Misc button to the header UI:
+
+
+2 actions
+Now I'll add the opening balance info strip, the "+ Misc" quick-action button, the misc row renderer in the timeline, and the inline misc modal — all in targeted edits:
+
+
+2 actions
+Now adding the "+ Misc Charge" quick action button alongside the existing buttons:
+
+
+2 actions
+Now adding the misc charge row renderer inside the timeline loop, and the full inline modal at the bottom:
+
+
+2 actions
+Now adding the full inline misc charge modal before the closing div:
+
+
+2 actions
+Let me run the TypeScript check now:
+
+
+2 actions
+Zero TypeScript errors. Let me take a quick screenshot to confirm the app is rendering correctly:
+
+
+2 actions
+App is running clean. Here's what was built across 4 files:
+
+Feature 1 — Opening Balance
+
+Set it: When creating or editing a party, there's now an "Opening Balance" section at the bottom of the form — a direction toggle ("They Owe Us" / "We Owe Them") plus an amount field. Works for both customers and suppliers in either direction.
+Stored on: the party document itself (opening_balance, opening_balance_type).
+Factored into balance: Both the Parties list view and the Party Detail view now include opening balance in the balance calculation automatically. If they owe you, it adds to the balance; if you owe them, it reduces it.
+Shown in Party Detail: A purple pill badge appears below the stats row showing the opening balance amount and direction.
+Feature 2 — Miscellaneous Charges
+
+Add one: Orange "Misc" button in the quick-action bar of every party's detail page (alongside New Sale / Payment).
+Bottom-sheet form includes:
+Direction: We Charge Them (they owe us, e.g. loading we arranged) / They Charge Us (we owe them, e.g. transport they arranged)
+Category chips: Loading, Unloading, Transport, Labour, Commission, Adjustment, Other
+Amount + Date + Notes
+Stored in: misc_charges Firestore collection under the user, linked by party_id and party_name.
+Appears in the "All" tab timeline as orange rows with edit ✏️ and delete 🗑️ buttons inline.
+Factored into balance: The net of all misc charges for the party is included in the balance calculation and shown as an orange summary badge.
+
+Checkpoint made
+2 hours ago
+
+Worked for 7 minutes

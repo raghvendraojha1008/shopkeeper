@@ -1,0 +1,67 @@
+--------- beginning of system
+---------------------------- PROCESS STARTED (26677) for package com.shopledger.india ----------------------------
+--------- beginning of main
+2026-05-27 21:30:01.417   946-946   BufferQueueDebug        surfaceflinger                       E  [ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166541](this:0xb40000749aba69f0,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166541'
+2026-05-27 21:30:01.417   946-946   BufferQueueDebug        surfaceflinger                       E  [564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166542](this:0xb40000749aabff60,id:-1,api:0,p:-1,c:-1) id info cannot be read from '564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166542'
+2026-05-27 21:32:21.734   946-946   BufferQueueDebug        surfaceflinger                       E  [ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166668](this:0xb40000749ab8cfe0,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166668'
+2026-05-27 21:32:21.734   946-946   BufferQueueDebug        surfaceflinger                       E  [564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166669](this:0xb40000749ab42f40,id:-1,api:0,p:-1,c:-1) id info cannot be read from '564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166669'
+2026-05-27 21:33:37.033   946-946   BufferQueueDebug        surfaceflinger                       E  [ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166811](this:0xb40000749aba69f0,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166811'
+2026-05-27 21:33:37.034   946-946   BufferQueueDebug        surfaceflinger                       E  [564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166812](this:0xb40000749ab2f050,id:-1,api:0,p:-1,c:-1) id info cannot be read from '564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166812'
+2026-05-27 21:33:37.273   946-946   BufferQueueDebug        surfaceflinger                       E  [ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166941](this:0xb40000749aaaee00,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'ActivityRecord{2c79f2b u0 com.shopledger.india/.MainActivity t1118}#162129 (Mirror)#166941'
+2026-05-27 21:33:37.273   946-946   BufferQueueDebug        surfaceflinger                       E  [564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166942](this:0xb40000749aaf3380,id:-1,api:0,p:-1,c:-1) id info cannot be read from '564316e com.shopledger.india/com.shopledger.india.MainActivity#162144 (Mirror)#166942'
+2026-05-27 21:33:40.957 26677-26677 Capacitor               com.shopledger.india                 D  App restarted
+2026-05-27 21:33:40.983 26677-26677 Capacitor               com.shopledger.india                 D  App started
+2026-05-27 21:33:40.990 26677-26677 WindowOnBackDispatcher  com.shopledger.india                 W  OnBackInvokedCallback is not enabled for the application.
+                                                                                                    Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+2026-05-27 21:33:41.000   946-1016  BufferQueueDebug        surfaceflinger                       E  [f62010f ActivityRecordInputSink com.shopledger.india/.MainActivity#167063](this:0xb40000749ac2f4f0,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'f62010f ActivityRecordInputSink com.shopledger.india/.MainActivity#167063'
+2026-05-27 21:33:41.015 26677-26677 TranActivi...pturboImpl com.shopledger.india                 D  onResumeHork
+2026-05-27 21:33:41.017 26677-26677 Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: true
+2026-05-27 21:33:41.018 26677-26677 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-05-27 21:33:41.030   946-946   BufferQueueDebug        surfaceflinger                       E  [f62010f ActivityRecordInputSink com.shopledger.india/.MainActivity#167063 (Mirror)#167069](this:0xb40000749abb7b50,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'f62010f ActivityRecordInputSink com.shopledger.india/.MainActivity#167063 (Mirror)#167069'
+2026-05-27 21:33:41.035 26677-26677 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event resume
+2026-05-27 21:33:41.035 26677-26677 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event resume
+2026-05-27 21:33:41.076 26677-28846 Capacitor/NetworkPlugin com.shopledger.india                 V  Notifying listeners for event networkStatusChange
+2026-05-27 21:33:41.079 26677-26677 Capacitor               com.shopledger.india                 D  App resumed
+2026-05-27 21:33:41.133   946-1428  BufferQueueDebug        surfaceflinger                       E  [com.shopledger.india/com.shopledger.india.MainActivity#167070](this:0xb40000749ac299d0,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'com.shopledger.india/com.shopledger.india.MainActivity#167070'
+2026-05-27 21:33:41.145   946-946   BufferQueueDebug        surfaceflinger                       E  [com.shopledger.india/com.shopledger.india.MainActivity#167070 (Mirror)#167071](this:0xb40000749abdf930,id:-1,api:0,p:-1,c:-1) id info cannot be read from 'com.shopledger.india/com.shopledger.india.MainActivity#167070 (Mirror)#167071'
+2026-05-27 21:33:41.158 26677-26677 BufferQueueConsumer     com.shopledger.india                 D  [](id:683500000001,api:0,p:-1,c:26677) connect: controlledByApp=false
+2026-05-27 21:33:41.166 26677-28741 OpenGLRenderer          com.shopledger.india                 E  Unable to match the desired swap behavior.
+2026-05-27 21:33:41.299 26677-28741 BLASTBufferQueue        com.shopledger.india                 D  [VRI[MainActivity]#1](f:0,a:1) acquireNextBufferLocked size=1080x2460 mFrameNumber=1 applyTransaction=true mTimestamp=501680944318901(auto) mPendingTransactions.size=0 graphicBufferId=114576842555401 transform=0
+2026-05-27 21:33:41.585 26677-26677 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-05-27 21:33:41.593 26677-26677 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-05-27 21:33:41.596 26677-26677 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-05-27 21:33:41.612 26677-26677 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-05-27 21:33:41.724 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.846 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.901 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.909 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.926 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.937 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.945 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.969 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.988 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.990 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.991 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.991 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:41.992 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.992 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.993 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.993 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:41.993 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.086 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.106 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.118 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.123 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.132 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.138 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.142 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.152 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-27 21:33:42.154 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.156 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28741 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-27 21:33:42.157 26677-28821 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0

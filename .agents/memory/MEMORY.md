@@ -1,0 +1,1 @@
+- [Toast invalid-type crash](toast-invalid-type-crash.md) — `'warning'` passed to showToast crashes Toast render; only `'success'|'error'|'info'` are valid types.

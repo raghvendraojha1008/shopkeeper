@@ -1,0 +1,211 @@
+{
+  "data": {
+    "compCategory": "Yellow",
+    "dty": "Regular",
+    "hsn": [
+      "997331",
+      "998314"
+    ],
+    "lgnm": "MADRECHA SOLUTIONS PRIVATE LIMITED",
+    "pan": "AAJCM9929L",
+    "sts": "Active",
+    "tradeName": "MADRECHA SOLUTIONS PRIVATE LIMITED",
+    "pincode": null,
+    "gstin": "27AAJCM9929L1ZM",
+    "mandatedeInvoice": "No",
+    "einvoiceStatus": "No",
+    "ctb": "Private Limited Company",
+    "aggreTurnOverFY": "Available in Paid Version of API",
+    "aggreTurnOver": "Available in Paid Version of API",
+    "rgdt": "10/08/2020",
+    "nba": [
+      "Supplier of Services"
+    ],
+    "cxdt": "",
+    "ctj": "State - CBIC,Zone - MUMBAI,Commissionerate - THANE,Division - DIVISION VI,Range - RANGE-IV (Jurisdictional Office)",
+    "stj": "State - Maharashtra,Zone - Thane,Division - THANE CITY,Charge - JEKEGRAM_702",
+    "adr": "PLOT NO. A-417, MADRECHA HEIGHTS, L3, ROAD NO 28, Emco Ltd, Wagle Estate MIDC, Thane, Thane, Maharashtra, 400604",
+    "meta": {
+      "latestgtsr1": "April 2026-2027",
+      "latestgtsr3b": "April 2026-2027",
+      "syncMasterDate": "2026-06-03",
+      "syncReturnDate": "2026-06-03"
+    },
+    "rg": "[\"27ANXPM1541L1ZE\",\"27AAGCN0052J1ZK\"]",
+    "fillingFreq": {
+      "2026_Q1": "M",
+      "2026_Q2": "M",
+      "2026_Q3": "M",
+      "2026_Q4": "M",
+      "2025_Q1": "M",
+      "2025_Q2": "M",
+      "2025_Q3": "M",
+      "2025_Q4": "M"
+    },
+    "returns": [
+      {
+        "fy": "2026-2027",
+        "dof": "09/05/2026",
+        "rtntype": "GSTR1",
+        "taxp": "April"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/04/2026",
+        "rtntype": "GSTR1",
+        "taxp": "March"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/03/2026",
+        "rtntype": "GSTR1",
+        "taxp": "February"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/02/2026",
+        "rtntype": "GSTR1",
+        "taxp": "January"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/01/2026",
+        "rtntype": "GSTR1",
+        "taxp": "December"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/12/2025",
+        "rtntype": "GSTR1",
+        "taxp": "November"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/11/2025",
+        "rtntype": "GSTR1",
+        "taxp": "October"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/10/2025",
+        "rtntype": "GSTR1",
+        "taxp": "September"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/09/2025",
+        "rtntype": "GSTR1",
+        "taxp": "August"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/08/2025",
+        "rtntype": "GSTR1",
+        "taxp": "July"
+      },
+      {
+        "fy": "2026-2027",
+        "dof": "20/05/2026",
+        "rtntype": "GSTR3B",
+        "taxp": "April"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/04/2026",
+        "rtntype": "GSTR3B",
+        "taxp": "March"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/03/2026",
+        "rtntype": "GSTR3B",
+        "taxp": "February"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/02/2026",
+        "rtntype": "GSTR3B",
+        "taxp": "January"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/01/2026",
+        "rtntype": "GSTR3B",
+        "taxp": "December"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/12/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "November"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/11/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "October"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "25/10/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "September"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/09/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "August"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "20/08/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "July"
+      },
+      {
+        "fy": "2024-2025",
+        "dof": "25/12/2025",
+        "rtntype": "GSTR9",
+        "taxp": "Annual"
+      },
+      {
+        "fy": "2023-2024",
+        "dof": "31/12/2024",
+        "rtntype": "GSTR9",
+        "taxp": "Annual"
+      },
+      {
+        "fy": "2022-2023",
+        "dof": "26/12/2023",
+        "rtntype": "GSTR9",
+        "taxp": "Annual"
+      },
+      {
+        "fy": "2021-2022",
+        "dof": "06/12/2022",
+        "rtntype": "GSTR9",
+        "taxp": "Annual"
+      },
+      {
+        "fy": "2020-2021",
+        "dof": "08/12/2021",
+        "rtntype": "GSTR9",
+        "taxp": "Annual"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "11/07/2025",
+        "rtntype": "GSTR1",
+        "taxp": "June"
+      },
+      {
+        "fy": "2025-2026",
+        "dof": "19/07/2025",
+        "rtntype": "GSTR3B",
+        "taxp": "June"
+      }
+    ]
+  },
+  "success": true
+}

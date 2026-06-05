@@ -1,0 +1,110 @@
+Here's the best solution approach for each issue in your Capacitor Android context:
+
+---
+
+## 🔴 Critical Issues
+
+**1. Gemini API Key Exposed in Client Bundle**
+Create a Firebase Cloud Function as a proxy. Your app calls the Cloud Function with just the user's text/prompt, and the Cloud Function holds the `GEMINI_API_KEY` in Firebase environment config (never in the APK). The function validates the caller is authenticated via Firebase Auth token, then forwards to Gemini and returns the result. This way the key never touches the client bundle.
+```
+App → Firebase Cloud Function (auth-gated) → Gemini API
+```
+Firebase Functions are free tier for low usage and work seamlessly with your existing Firestore setup.
+
+---
+
+**2. Three Competing Sync Systems Causing Duplicate Writes**
+Pick ONE sync system — `SyncQueueService` is the most mature (has the concurrency lock, priority queue, retry logic). Then:
+- Remove `OfflineQueueService` and `OfflineSyncService` entirely
+- Move any unique features from those two into `SyncQueueService`
+- Register the `online` event listener in exactly ONE place (a `NetworkMonitor` singleton initialized once at app startup in `App.tsx`)
+- All offline writes from every part of the app funnel through `SyncQueueService.addToQueue()` only
+
+---
+
+**3. `TrashService.restoreItem` Silently Overwrites Existing Documents**
+Before calling `batch.set()`, do a `getDoc(origRef)` check first. If the document already exists at that ID, generate a new Firestore document ID for the restored document instead of reusing the original. Show the user a toast: "Restored as a new record (original ID was reused)." This is a one-line existence check before the batch that completely prevents the overwrite.
+
+---
+
+## 🟠 High-Severity Issues
+
+**4. `ItemDetailView` Fetches Entire Ledger Collection Per Item**
+Use a Firestore `where` query instead of fetching everything:
+```
+query(collection, where('items_search', 'array-contains', itemName.toLowerCase()))
+```
+This requires storing a `items_search` field (array of lowercase item names) when saving each ledger entry. Alternatively, use Firestore's `where('party_name', '==', ...)` style approach — store a denormalized `item_names` array on each ledger document at write time. This turns a full-collection scan into a targeted indexed query and is the standard Firestore pattern for this use case.
+
+---
+
+**5. Stock `current_stock` and Ledger-Computed Stock Are Inconsistent**
+Pick a single source of truth and stick to it. The recommended approach for Capacitor/Android with offline support is:
+
+**Use `current_stock` in Firestore as the single source of truth**, and update it atomically using Firestore `increment()` every time a sale or purchase ledger entry is saved or deleted:
+```
+FieldValue.increment(-qty)  // on sale
+FieldValue.increment(+qty)  // on purchase
+```
+Remove the live ledger re-computation from `InventoryView` entirely. The In/Out/Waste summary bar should either come from these Firestore-maintained totals or be a separate summary document updated in the same write batch.
+
+---
+
+**6. `SyncQueueService` Removes Items Before Confirming Commit**
+Change the removal strategy from "remove on operation success" to "mark as completed, remove in batch at the end." Build a `completedIds: string[]` array during the loop, and only after the entire loop finishes call a single `removeCompletedFromQueue(completedIds)` that does one `localStorage.setItem`. This way a mid-loop app kill leaves all unconfirmed items still in the queue for retry on next launch.
+
+---
+
+**7. Notification ID Collision in `scheduleOverdueReminder`**
+Replace the hash with a UUID or a composite ID that guarantees uniqueness per party:
+```ts
+// Use a stable numeric ID derived from party document ID (not name)
+id: (partyDocId.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0) % 89000) + 10000
+```
+Better yet, maintain a `notificationIdMap` in localStorage that assigns a unique incrementing integer to each partyId the first time a notification is scheduled for them, and reuses that integer thereafter. This guarantees no collision and allows proper cancellation per party.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**8. Two Out-of-Sync Bulk Import Implementations**
+Delete `BulkImportModal` completely and replace every usage of it with `BulkImportView` rendered inline (or navigated to as a tab, which you already do for the main flow). `BulkImportView` is more complete and has the better batch-write strategy. Any place that currently opens `BulkImportModal` should instead call `setActiveTab('bulk-import')` with the appropriate `entityType` pre-set via a prop or context value. One implementation, zero divergence.
+
+---
+
+**9. `DailySnapshotService` Falls Back to `'default'` Folder**
+Make `userEmail` a required parameter instead of optional in both `createSnapshot` and `getSnapshotRoot`. Every call site already has access to `user.email` from `useAuth()`. At the one call site in `DailySnapshotView` where email wasn't passed, pass `user?.email ?? userId` as a fallback — the userId is always available and produces a unique prefix. This eliminates the shared `default` folder entirely.
+
+---
+
+**10. File Blobs Stored as Base64 in `localStorage` (QuotaExceededError Risk)**
+For Capacitor Android, use the `@capacitor/filesystem` plugin instead of `localStorage` for any binary or large data. Store the file to a temp path in `Directory.Cache`, then save only the file path string in the offline queue entry. When processing the queue, read the file from the path, upload it, then delete the cached file. This keeps `localStorage` lean (just a string path) and lets the filesystem handle the actual binary data with no size limits.
+
+---
+
+## 🔵 Lower-Severity Issues
+
+**11. `parseCSV` Doesn't Handle Escaped Quotes (`""`)**
+Replace the hand-rolled CSV parser entirely with the `papaparse` library, which you already have available in the project (it's listed in the React artifact dependencies). `Papa.parse(text, { header: true, skipEmptyLines: true })` handles all RFC 4180 edge cases including escaped quotes, multiline fields, and BOM characters. It's one function call replacing ~15 lines of fragile manual parsing.
+
+---
+
+**12. `fullReportToPdf` Shows Unsorted "Recent Ledger"**
+Before slicing, sort the ledger array by date descending:
+```ts
+data.ledger
+  .slice()
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .slice(0, 20)
+```
+Use `.slice()` first to avoid mutating the original array which is used elsewhere in the same function for totals calculation.
+
+---
+
+**13. `loadFirmName` Reads from Wrong Settings Path**
+Change the read from `settings?.firm_name` to `settings?.profile?.firm_name`. This is the correct nested path used everywhere else in the app (`normalizeAppSettings`, `SeoHead`, PDF generators). One character change that fixes firm name always showing as `'Your Firm'` in every invitation sent.
+
+---
+
+**14. `DailySnapshotView` Doesn't Pass `userEmail` to `createSnapshot`**
+In `DailySnapshotView`, the `userId` prop is already available. Add `userEmail` as a second prop (pass `user.email` from the parent `App.tsx` call site, which already has the full `user` object). Then pass it through to `DailySnapshotService.createSnapshot(userId, dateStr, userEmail)`. This is a two-line prop addition that fixes snapshots landing in the wrong folder when regenerated manually.

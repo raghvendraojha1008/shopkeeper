@@ -1,0 +1,47 @@
+4 issues were found when checking AAR metadata:
+
+  1.  Dependency 'androidx.core:core-ktx:1.17.0' requires libraries and applications that
+      depend on it to compile against version 36 or later of the
+      Android APIs.
+
+      :app is currently compiled against android-35.
+
+      Also, the maximum recommended compile SDK version for Android Gradle
+      plugin 8.7.3 is 35.
+
+      Recommended action: Update this project's version of the Android Gradle
+      plugin to one that supports 36, then update this project to use
+      compileSdk of at least 36.
+
+      Note that updating a library or application's compileSdk (which
+      allows newer APIs to be used) can be done separately from updating
+      targetSdk (which opts the app in to new runtime behavior) and
+      minSdk (which determines which devices the app can be installed
+      on).
+
+  2.  Dependency 'androidx.core:core-ktx:1.17.0' requires Android Gradle plugin 8.9.1 or higher.
+
+      This build currently uses Android Gradle plugin 8.7.3.
+
+  3.  Dependency 'androidx.core:core:1.17.0' requires libraries and applications that
+      depend on it to compile against version 36 or later of the
+      Android APIs.
+
+      :app is currently compiled against android-35.
+
+      Also, the maximum recommended compile SDK version for Android Gradle
+      plugin 8.7.3 is 35.
+
+      Recommended action: Update this project's version of the Android Gradle
+      plugin to one that supports 36, then update this project to use
+      compileSdk of at least 36.
+
+      Note that updating a library or application's compileSdk (which
+      allows newer APIs to be used) can be done separately from updating
+      targetSdk (which opts the app in to new runtime behavior) and
+      minSdk (which determines which devices the app can be installed
+      on).
+
+  4.  Dependency 'androidx.core:core:1.17.0' requires Android Gradle plugin 8.9.1 or higher.
+
+      This build currently uses Android Gradle plugin 8.7.3.

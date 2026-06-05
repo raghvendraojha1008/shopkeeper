@@ -1,0 +1,327 @@
+You are working on a production-grade React + Capacitor + Firebase (Firestore + Auth) application that already has a subscription system implemented.
+
+Your task is to **prepare the existing system for a future Super Admin Panel**, without actually building the admin panel now.
+
+This means:
+👉 You must **refactor and expose clean connection points (interfaces, data structures, APIs)** so that another agent can later plug in a Super Admin system **without breaking anything or requiring refactoring**.
+
+---
+
+# 🎯 OBJECTIVE
+
+Make the subscription system:
+
+* Fully controllable from an external admin panel (future)
+* Decoupled from hardcoded logic
+* Data-driven (Firestore-based, not code-based)
+* Safe, consistent, and extensible
+
+---
+
+# 🧠 CORE PRINCIPLE
+
+Separate system into 3 layers:
+
+1. **Execution Layer (already exists)**
+
+   * FeatureGate
+   * hasAccess()
+   * SubscriptionContext
+
+2. **Control Layer (to be added later)**
+
+   * Admin panel (NOT in this task)
+
+3. **Data Layer (YOU MUST PREPARE NOW)**
+
+   * Plans
+   * Global config
+   * Subscription records
+
+👉 You are building the **data + interface contract** for future admin control.
+
+---
+
+# 🚨 MANDATORY TASKS
+
+---
+
+## 1. 🧾 MOVE PLAN CONFIGURATION TO FIRESTORE (CRITICAL)
+
+### Problem:
+
+Plans are currently hardcoded
+
+### Task:
+
+Create Firestore collection:
+
+```id="cql1vv"
+plans/{planId}
+```
+
+### Schema:
+
+```id="h4b1r7"
+name: string
+price: number
+currency: "INR"
+durationDays: number
+features: string[]
+isActive: boolean
+createdAt: timestamp
+updatedAt: timestamp
+```
+
+### Requirements:
+
+* Remove hardcoded plan definitions
+* Fetch plans dynamically
+* Cache plans in context (PlansContext or inside SubscriptionContext)
+
+---
+
+## 2. 🌍 GLOBAL CONFIG COLLECTION
+
+Create:
+
+```id="8q2v9g"
+config/global
+```
+
+### Schema:
+
+```id="vb9krs"
+freeTrialEnabled: boolean
+trialDurationDays: number
+defaultPlan: string   // e.g. "pro"
+gracePeriodDays: number
+appMode: "free" | "paid" | "hybrid"
+```
+
+### Purpose:
+
+* Admin can later control system behavior without code changes
+
+---
+
+## 3. 👤 STANDARDIZE SUBSCRIPTION DOCUMENT
+
+Ensure structure is strict and future-proof:
+
+```id="yk6qrg"
+users/{userId}/subscription/current
+```
+
+### Schema:
+
+```id="k2ml2q"
+planId: string
+status: "active" | "trial" | "expired" | "grace"
+startDate: timestamp
+endDate: timestamp
+graceEndDate: timestamp
+trialUsed: boolean
+autoRenew: boolean
+paymentId: string | null
+source: "system" | "admin" | "payment"
+createdAt: timestamp
+updatedAt: timestamp
+```
+
+### Requirements:
+
+* MUST use planId (not plan name)
+* MUST support admin override (source field)
+* MUST support grace period
+
+---
+
+## 4. 🔌 CREATE SUBSCRIPTION SERVICE LAYER
+
+Create centralized service:
+
+```ts id="qk0q2u"
+SubscriptionService
+```
+
+### Responsibilities:
+
+* getUserSubscription(userId)
+* createSubscription(userId, planId)
+* updateSubscription(userId, updates)
+* validateSubscription(subscription)
+* downgradeToFree(userId)
+
+### IMPORTANT:
+
+👉 ALL subscription updates must go through this service
+👉 NO direct Firestore writes elsewhere
+
+---
+
+## 5. 🔐 CREATE ADMIN-COMPATIBLE UPDATE FUNCTIONS
+
+Prepare functions that future admin panel will call:
+
+```ts id="4q7w8v"
+adminUpdateUserSubscription(userId, payload)
+adminExtendSubscription(userId, days)
+adminChangePlan(userId, planId)
+adminCancelSubscription(userId)
+```
+
+### Requirements:
+
+* Add validation
+* Add logging (who changed what)
+* Add "source: admin"
+
+---
+
+## 6. 📊 ADD AUDIT LOG COLLECTION (CRITICAL FOR ADMIN)
+
+Create:
+
+```id="bzr83q"
+subscription_logs/{logId}
+```
+
+### Schema:
+
+```id="mf9m6o"
+userId: string
+action: string  // upgrade, downgrade, extend
+previousState: object
+newState: object
+performedBy: "system" | "admin"
+timestamp: timestamp
+```
+
+---
+
+## 7. 🧠 CENTRAL FEATURE REGISTRY
+
+Create single source:
+
+```ts id="w6gnk9"
+FEATURES = {
+  analytics: { label, description },
+  reports: { label, description },
+  ...
+}
+```
+
+### Requirements:
+
+* Used by:
+
+  * FeatureGate
+  * Plans
+  * Future admin panel
+
+---
+
+## 8. 🔄 SUBSCRIPTION CONTEXT MUST SUPPORT DYNAMIC PLANS
+
+Update SubscriptionContext:
+
+* Fetch:
+
+  * user subscription
+  * plans
+  * global config
+
+* Expose:
+
+```ts
+subscription
+plans
+globalConfig
+refreshSubscription()
+```
+
+---
+
+## 9. ⚠️ REMOVE HARD DEPENDENCIES
+
+Ensure:
+
+* No hardcoded plan names
+* No hardcoded feature access
+* No static pricing logic
+
+Everything must come from Firestore
+
+---
+
+## 10. 🔗 PREPARE INTEGRATION POINTS
+
+Add clear extension points:
+
+### For Admin Panel:
+
+* Firestore collections (plans, config, subscriptions)
+* SubscriptionService methods
+* Audit logs
+
+### For Payment Gateway:
+
+* paymentId field
+* update via SubscriptionService only
+
+---
+
+## 11. 🧪 FALLBACK SAFETY
+
+If Firestore fails:
+
+* fallback to safe default (free plan)
+* never grant premium access by default
+
+---
+
+## 12. 📦 MIGRATION HANDLING
+
+For existing users:
+
+* migrate old subscription format → new schema
+* ensure no data loss
+
+---
+
+# ⚠️ CONSTRAINTS
+
+* Do NOT break current working system
+* Maintain ₹0 Pro rollout behavior
+* Keep UI unchanged (only backend/data layer changes)
+* Ensure backward compatibility
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Plans moved to Firestore
+2. Global config added
+3. Subscription schema standardized
+4. SubscriptionService implemented
+5. Admin-compatible functions created
+6. Audit logging implemented
+7. Feature registry centralized
+8. SubscriptionContext updated
+9. No hardcoded logic remaining
+10. System ready for external admin panel integration
+
+---
+
+# 🧠 FINAL GOAL
+
+Prepare system so that:
+
+👉 A future agent can build a **Super Admin Panel**
+👉 Without modifying existing logic
+👉 Just by calling your prepared services and updating Firestore
+
+---
+
+Focus on clean interfaces, strict data contracts, and long-term scalability.

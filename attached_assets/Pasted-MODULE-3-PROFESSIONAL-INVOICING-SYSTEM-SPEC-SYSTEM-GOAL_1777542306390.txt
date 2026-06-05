@@ -1,0 +1,271 @@
+MODULE 3 — PROFESSIONAL INVOICING SYSTEM SPEC
+
+SYSTEM GOAL
+Upgrade the current invoice output (PDF + share) into a business-grade, print-ready, GST-compliant invoicing system that works for daily shop usage.
+
+This module must integrate directly with the existing POS flow (Save / Save & Share) and reuse the existing ledger_entry structure — no duplicate data models.
+
+---
+
+SCOPE BOUNDARY
+We are building a **GST-ready invoice system (not full government e-invoicing yet)**.
+
+Out of scope (for now):
+
+* IRN generation
+* e-invoice API integration
+* digital signatures
+* e-way bill
+
+Focus: **practical shop billing**
+
+---
+
+1. INVOICE DATA MODEL (EXTEND EXISTING, DO NOT REPLACE)
+
+Each invoice must include:
+
+Header:
+
+* invoice_number (auto-increment, per firm)
+* invoice_date + time
+* firm details:
+
+  * name
+  * address
+  * phone
+  * GSTIN (optional but supported)
+* customer:
+
+  * name (default: "Cash Sale")
+  * phone (optional)
+  * address (optional)
+  * GSTIN (optional)
+
+Items:
+
+* item_name
+* HSN/SAC (optional but supported)
+* quantity
+* unit_price
+* discount (optional future-ready field)
+* GST % (per item)
+* line_total
+
+Totals:
+
+* subtotal (before tax)
+* CGST total
+* SGST total
+* IGST total (if applicable)
+* grand_total
+* rounding adjustment (if applied)
+
+Metadata:
+
+* payment mode (cash/upi/credit)
+* created_at
+* created_by
+
+---
+
+2. INVOICE NUMBERING SYSTEM
+
+Requirements:
+
+* Auto-increment integer per firm
+* Format:
+  INV-0001, INV-0002, etc.
+* Must persist across sessions
+* Must not duplicate (even offline)
+
+Edge cases:
+
+* Offline creation → sync later → no collision
+* Multi-device → resolve using prefix or timestamp fallback
+
+---
+
+3. GST CALCULATION RULES
+
+Implement:
+
+Case 1: Same state
+→ CGST + SGST split equally
+
+Case 2: Different state
+→ IGST
+
+Display:
+
+* Per item GST %
+* Total tax breakdown:
+  CGST ₹X
+  SGST ₹X
+  OR IGST ₹X
+
+Rounding:
+
+* Final total rounded to nearest ₹1 (optional toggle)
+
+---
+
+4. PDF INVOICE OUTPUT
+
+Must support:
+
+Layout:
+
+* Clean, professional, printable
+* No UI elements — document style
+
+Sections:
+
+[Header]
+
+* Logo (if available)
+* Firm name (bold)
+* Address, phone, GSTIN
+
+[Invoice Info]
+
+* Invoice number
+* Date & time
+* Customer details
+
+[Items Table]
+Columns:
+Item | HSN | Qty | Rate | GST% | Amount
+
+[Totals Section]
+
+* Subtotal
+* CGST / SGST / IGST
+* Grand Total (bold, large)
+
+[Footer]
+
+* “Thank you for your business”
+* Optional notes field
+
+---
+
+5. MULTIPLE PRINT FORMATS
+
+Support at least 2 layouts:
+
+A. A4 / A5 (standard invoice)
+
+* Full detailed format
+* For sharing / printing
+
+B. Thermal receipt (future-ready)
+
+* Narrow layout (58mm / 80mm)
+* Minimal columns
+
+Do NOT implement printer SDK yet — just design layout structure.
+
+---
+
+6. OUTPUT OPTIONS
+
+After billing, support:
+
+1. Save (already exists)
+
+2. Save & Share
+
+   * Generate PDF
+   * Open native share sheet (WhatsApp, Gmail, Drive)
+
+3. Download PDF (optional button)
+
+Future-ready:
+
+* Print button (hook placeholder)
+
+---
+
+7. CUSTOMER VS INTERNAL VIEW
+
+Single layout is fine for now, but design for extension:
+
+Customer-facing:
+
+* Clean, minimal
+
+Internal:
+
+* Can later include margins, profit, etc.
+
+---
+
+8. BRANDING SUPPORT
+
+Allow:
+
+* Logo upload (optional)
+* Firm name styling
+* Footer message (custom text)
+
+---
+
+9. PERFORMANCE REQUIREMENTS
+
+* PDF generation < 1 second
+* Must work offline
+* No blocking UI
+
+---
+
+10. EDGE CASES
+
+Must handle:
+
+* No GST → hide tax columns cleanly
+* Cash sale → no customer details
+* Missing HSN → leave blank
+* Large item list (20+ items)
+* Offline mode → still generate PDF
+
+---
+
+11. INTEGRATION POINTS
+
+Must integrate with:
+
+* POSBillingView (Save & Share flow)
+* Ledger system (same entry)
+* Inventory deduction (already done)
+
+No duplicate writes.
+
+---
+
+12. SUCCESS CRITERIA
+
+Module complete when:
+
+* Invoice is printable and shareable
+* GST breakdown is correct
+* Invoice numbers are unique and persistent
+* Works offline
+* Looks professional enough for real customers
+
+---
+
+IMPORTANT IMPLEMENTATION RULE
+
+Do NOT over-engineer.
+
+Start with:
+
+* Single clean template
+* GST logic
+* Invoice numbering
+
+Then extend if needed.
+
+Goal is:
+“Shopkeeper can send invoice to customer confidently”

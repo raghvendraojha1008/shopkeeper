@@ -1,0 +1,270 @@
+
+> shopkeeper-v2@1.0.8 dev
+> vite
+
+[1G[0K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m159[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.24.0.2:[1m5000[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:07:42 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/replit/agent/.latest.json[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:07:42 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/e9BOmnYIaqkL8ftOY5VQU/start_application.shell.exec.0[22m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/DataUtils.js:1:7:
+[37m      1 │ import [32mget[37m from 'es-toolkit/compat/get';
+        ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/uniqBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/payload/getUniqPayload.js:1:7:
+[37m      1 │ import [32muniqBy[37m from 'es-toolkit/compat/uniqBy';
+        ╵        [32m~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/sortBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/state/selectors/legendSelectors.js:2:7:
+[37m      2 │ import [32msortBy[37m from 'es-toolkit/compat/sortBy';
+        ╵        [32m~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/sortBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:6:7:
+[37m      6 │ import [32msortBy[37m from 'es-toolkit/compat/sortBy';
+        ╵        [32m~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:7:7:
+[37m      7 │ import [32mget[37m from 'es-toolkit/compat/get';
+        ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/throttle.js" for import "default"[0m
+
+    node_modules/recharts/es6/component/ResponsiveContainer.js:10:7:
+[37m      10 │ import [32mthrottle[37m from 'es-toolkit/compat/throttle';
+         ╵        [32m~~~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/sortBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/component/DefaultTooltipContent.js:12:7:
+[37m      12 │ import [32msortBy[37m from 'es-toolkit/compat/sortBy';
+         ╵        [32m~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/range.js" for import "default"[0m
+
+    node_modules/recharts/es6/state/selectors/axisSelectors.js:7:7:
+[37m      7 │ import [32mrange[37m from 'es-toolkit/compat/range';
+        ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/sortBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/state/selectors/selectors.js:2:7:
+[37m      2 │ import [32msortBy[37m from 'es-toolkit/compat/sortBy';
+        ╵        [32m~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/maxBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/polar/PolarRadiusAxis.js:14:7:
+[37m      14 │ import [32mmaxBy[37m from 'es-toolkit/compat/maxBy';
+         ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/minBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/polar/PolarRadiusAxis.js:15:7:
+[37m      15 │ import [32mminBy[37m from 'es-toolkit/compat/minBy';
+         ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:1:7:
+[37m      1 │ import [32mget[37m from 'es-toolkit/compat/get';
+        ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/isPlainObject.js" for import "default"[0m
+
+    node_modules/recharts/es6/util/ActiveShapeUtils.js:11:7:
+[37m      11 │ import [32misPlainObject[37m from 'es-toolkit/compat/isPlainObject';
+         ╵        [32m~~~~~~~~~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:15:7:
+[37m      15 │ import [32mget[37m from 'es-toolkit/compat/get';
+         ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/last.js" for import "default"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:12:7:
+[37m      12 │ import [32mlast[37m from 'es-toolkit/compat/last';
+         ╵        [32m~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/range.js" for import "default"[0m
+
+    node_modules/recharts/es6/cartesian/Brush.js:11:7:
+[37m      11 │ import [32mrange[37m from 'es-toolkit/compat/range';
+         ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/cartesian/CartesianAxis.js:15:7:
+[37m      15 │ import [32mget[37m from 'es-toolkit/compat/get';
+         ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/omit.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:12:7:
+[37m      12 │ import [32momit[37m from 'es-toolkit/compat/omit';
+         ╵        [32m~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:13:7:
+[37m      13 │ import [32mget[37m from 'es-toolkit/compat/get';
+         ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/maxBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:13:7:
+[37m      13 │ import [32mmaxBy[37m from 'es-toolkit/compat/maxBy';
+         ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/sumBy.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:14:7:
+[37m      14 │ import [32msumBy[37m from 'es-toolkit/compat/sumBy';
+         ╵        [32m~~~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:15:7:
+[37m      15 │ import [32mget[37m from 'es-toolkit/compat/get';
+         ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/get.js" for import "default"[0m
+
+    node_modules/recharts/es6/chart/SunburstChart.js:11:7:
+[37m      11 │ import [32mget[37m from 'es-toolkit/compat/get';
+         ╵        [32m~~~[0m
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNo matching export in "node_modules/es-toolkit/compat/omit.js" for import "default"[0m
+
+    node_modules/recharts/es6/cartesian/Funnel.js:15:7:
+[37m      15 │ import [32momit[37m from 'es-toolkit/compat/omit';
+         ╵        [32m~~~~[0m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:07:44 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/e9BOmnYIaqkL8ftOY5VQU/start_application.shell.exec.0[22m [33m(x2)[39m
+/home/runner/workspace/node_modules/vite/node_modules/esbuild/lib/main.js:1472
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 24 errors:
+node_modules/recharts/es6/cartesian/Brush.js:11:7: ERROR: No matching export in "node_modules/es-toolkit/compat/range.js" for import "default"
+node_modules/recharts/es6/cartesian/CartesianAxis.js:15:7: ERROR: No matching export in "node_modules/es-toolkit/compat/get.js" for import "default"
+node_modules/recharts/es6/cartesian/Funnel.js:15:7: ERROR: No matching export in "node_modules/es-toolkit/compat/omit.js" for import "default"
+node_modules/recharts/es6/chart/Sankey.js:13:7: ERROR: No matching export in "node_modules/es-toolkit/compat/maxBy.js" for import "default"
+node_modules/recharts/es6/chart/Sankey.js:14:7: ERROR: No matching export in "node_modules/es-toolkit/compat/sumBy.js" for import "default"
+...
+    at failureErrorWithLog [90m(/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1472:15[90m)[39m
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:945:25
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1353:9
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  errors: [36m[Getter/Setter][39m,
+  warnings: [36m[Getter/Setter][39m
+}
+
+Node.js v20.20.0
+[1G[0K⠙[1G[0K

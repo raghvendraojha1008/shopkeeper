@@ -1,0 +1,147 @@
+Here's a comprehensive breakdown of the **major issues** found across your codebase:
+
+---
+
+## 🔴 Critical Issues
+
+**1. ID Generation is NOT collision-safe across devices**
+
+`src/utils/idGenerator.ts` uses client-side localStorage counters for generating IDs like `S-101`, `P-102`, etc. If two users (or the same user on two devices/browsers) add records simultaneously, they will generate the **same ID** because there's no atomic server-side counter. `seedCountersFromFirestore` helps but only runs on load — it's still a race condition.
+
+**Fix:** Use Firestore's auto-generated document IDs as the primary key, or use a server-side atomic counter (Firestore transactions or Cloud Functions).
+
+---
+
+**2. Hardcoded default PIN: `'1234'`**
+
+In `EditPasswordContext.tsx`:
+```ts
+password: ep?.password || '1234',
+```
+If a user never changes their edit password, every record in their account is protected by `1234`. This should prompt the user to set a custom PIN and not have a fallback.
+
+---
+
+**3. Invitation codes generated with `Math.random()`**
+
+In the invitation system:
+```ts
+const code = Math.random().toString(36).substring(2, 12).toUpperCase();
+```
+`Math.random()` is cryptographically weak. Invitation codes grant access to firm data — they should use `crypto.getRandomValues()` instead.
+
+---
+
+**4. `openPartyStatement` switches tab before data loads**
+
+```ts
+const openStockValuation = async () => {
+  setStockValuationLoading(true);
+  try { ... }
+  finally { setStockValuationLoading(false); }
+  setActiveTab('stock-valuation'); // ← outside try/catch
+};
+```
+`setActiveTab` is called even if the data fetch fails, showing an empty view. It should only be called on success.
+
+---
+
+## 🟠 High-Severity Issues
+
+**5. `AdvancedAnalyticsDashboard` always receives empty arrays**
+
+In `App.tsx`:
+```tsx
+<AdvancedAnalyticsDashboard
+  ledgerData={[]}
+  expenseData={[]}
+  transactionData={[]}
+  inventoryData={[]}
+  ...
+/>
+```
+This component will always render with no data. It should be fetching its own data or receiving it from a context/hook.
+
+---
+
+**6. Stale data in `ReportsView` PDF export**
+
+In `TransactionsView`, the PDF export re-fetches ALL collections from Firestore (`ledger_entries`, `transactions`, `expenses`, `inventory`) on every PDF button click, ignoring the already-active `dateRange` filter in the UI. This means the PDF can include data outside the displayed range, confusing users.
+
+---
+
+**7. `PartyStatementView` shows stale data on re-open**
+
+`openPartyStatement` sets `selectedPartyStatement` immediately but fetches ledger and transaction data asynchronously. If the user opens a party statement quickly, they might see the previous party's data while the new data is loading, with no loading indicator shown.
+
+---
+
+**8. `idGenerator` counters are shared across users on the same device**
+
+The `localStorage` key `shopkeeper_id_counters` is not namespaced by user ID. If two different users log in on the same device (e.g., shared family phone), their ID counters will collide and each user's counter will advance the other's.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**9. `BulkImport` silently counts failed rows as successful**
+
+```ts
+try {
+  batch.set(ref, docData);
+  opCount++;
+  successful++; // ← incremented before commit
+} catch (err) {
+  failed++;
+}
+```
+`batch.set()` never throws — errors only surface at `batch.commit()`. So `failed` will always be 0 even when records weren't actually written, and `successful` will be inflated.
+
+**Fix:** Move the `successful++` increment to after the `batch.commit()` call, and track commit-level failures.
+
+---
+
+**10. `SeoHead` injects a `<style>` tag on every render without cleanup**
+
+```ts
+const style = document.createElement('style');
+style.id = 'seo-global-styles';
+document.head.appendChild(style);
+```
+There's no check for whether the style tag already exists, and no cleanup in the effect's return function. On hot-reloads or StrictMode double-invocations, this duplicates the style tag.
+
+**Fix:** Add `if (!document.getElementById('seo-global-styles'))` before appending.
+
+---
+
+**11. Settings saved against `user.uid` but read against `adminUid || user.uid`**
+
+```ts
+// Save:
+await ApiService.settings.save(user.uid, normalized);
+
+// Load:
+const effectiveUid = dataUid || user.uid; // dataUid = adminUid || user.uid
+const s = await ApiService.settings.get(effectiveUid);
+```
+For a staff user viewing their admin's firm, settings are saved to their own UID but read from the admin's UID. This means their setting changes are silently discarded.
+
+---
+
+**12. `autoDistribute` FIFO payment logic ignores currency precision**
+
+In `paymentDistribution.ts`, `applied = Math.min(txInfo.remaining, orderPending)` operates on raw floating-point numbers. With many small payments, floating-point rounding errors can accumulate, leading to incorrect "paid" vs "partial" statuses (e.g., a balance of `0.0000000001` instead of `0`).
+
+**Fix:** Round to 2 decimal places after each operation.
+
+---
+
+## 🔵 Lower-Severity / Code Quality Issues
+
+**13. Widespread use of `any` type** — `manualEntryData`, `selectedItem`, `selectedPartyStatement`, and most Firestore document maps are typed as `any`, eliminating TypeScript's safety benefits.
+
+**14. `user-scalable=no` in viewport meta** — This violates WCAG accessibility guidelines and is ignored by iOS Safari 10+. It prevents users with visual impairments from zooming.
+
+**15. `*::-webkit-scrollbar { display: none }` on all elements** — Globally hiding scrollbars on all elements (not just the ones that need it) can hide important UI affordances and makes the app feel unscrollable to non-touch users.
+
+**16. Back button Capacitor listener re-registers on every state change** — The `setupBackButton` effect in `App.tsx` depends on `[showManualModal, showCommandModal, activeTab]`, meaning the listener is removed and re-added on every tab/modal change. This is fine functionally but wasteful; a ref-based approach would be cleaner and avoid any brief gap between remove and re-add.

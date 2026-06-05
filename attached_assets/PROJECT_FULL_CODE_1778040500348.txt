@@ -1,0 +1,711 @@
+PROJECT DOCUMENTATION — shopkeeper-backend
+==================================================
+Generated: 2026-05-03T12:14:13.163Z
+Files included: 14
+
+
+
+────────────────────────────────────────────────────────────
+FILE: package.json
+────────────────────────────────────────────────────────────
+{
+  "name": "shopkeeper-backend",
+  "version": "1.0.0",
+  "description": "Secure Razorpay + Firestore backend for Shopkeeper",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "express": "^4.19.2",
+    "razorpay": "^2.9.4",
+    "firebase-admin": "^12.3.0",
+    "dotenv": "^16.4.5",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
+
+[END: package.json]
+
+
+────────────────────────────────────────────────────────────
+FILE: .env.example
+────────────────────────────────────────────────────────────
+# Razorpay
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxx
+RAZORPAY_WEBHOOK_SECRET=your_webhook_secret_from_dashboard
+
+# Firebase service account JSON, single-line, escaped (or base64 — see lib/firebase.js)
+FIREBASE_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"...","private_key":"-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n","client_email":"..."}
+
+# Server
+PORT=8080
+NODE_ENV=production
+# Comma-separated list of allowed origins for CORS (frontend + admin panel)
+CORS_ORIGINS=https://yourapp.com,https://admin.yourapp.com
+
+[END: .env.example]
+
+
+────────────────────────────────────────────────────────────
+FILE: render.yaml
+────────────────────────────────────────────────────────────
+services:
+  - type: web
+    name: shopkeeper-backend
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+[END: render.yaml]
+
+
+────────────────────────────────────────────────────────────
+FILE: README.md
+────────────────────────────────────────────────────────────
+# Shopkeeper Backend (Razorpay + Firestore)
+
+Production-ready Node.js/Express backend that securely verifies Razorpay payments
+and updates Firestore subscriptions. Replaces Firebase Functions.
+
+## Features
+- ✅ Razorpay order creation
+- ✅ Payment signature verification (HMAC-SHA256)
+- ✅ Webhook signature verification
+- ✅ Idempotent subscription activation
+- ✅ Renewal stacking (`baseDate = max(now, existing.endDate)`)
+- ✅ Manual payment confirmation
+- ✅ Audit logs in `subscription_logs`
+- ✅ Helmet, CORS, JSON size limits
+
+## Setup
+
+```bash
+cp .env.example .env
+# fill in secrets
+npm install
+npm start
+```
+
+### Firebase service account
+Paste the full JSON of your Firebase service account into
+`FIREBASE_SERVICE_ACCOUNT_JSON` (single line). The loader also accepts a
+base64-encoded JSON string for hosts that strip newlines.
+
+## Endpoints
+
+| Method | Path                      | Purpose                                  |
+|--------|---------------------------|------------------------------------------|
+| GET    | `/health`                 | Liveness probe                           |
+| POST   | `/create-order`           | Create Razorpay order for a plan         |
+| POST   | `/verify-payment`         | Verify payment + activate subscription   |
+| POST   | `/confirm-manual-payment` | Admin: activate without Razorpay         |
+| POST   | `/razorpay-webhook`       | Razorpay webhook receiver                |
+
+> ⚠️ The webhook route uses the **raw body** for signature verification. It is
+> registered before `express.json()` — do not change the order in `server.js`.
+
+## Firestore layout (read/written)
+
+```
+users/{uid}/subscription/current
+plans/{planId}             # { name, price, durationDays, graceDays?, currency? }
+config/global              # { defaultGraceDays?, defaultCurrency? }
+subscription_logs/{logId}  # audit trail
+```
+
+## Deploy
+
+### Render
+1. New → Web Service → connect repo
+2. Build: `npm install` · Start: `npm start`
+3. Add env vars from `.env.example`
+4. (Optional) Health check path: `/health`
+
+### Railway
+1. New project from repo
+2. Add env vars
+3. Expose port `$PORT`
+
+After deploy, configure the Razorpay webhook URL to:
+`https://<your-host>/razorpay-webhook` with secret = `RAZORPAY_WEBHOOK_SECRET`,
+subscribed to `payment.captured` and `payment.failed`.
+
+## Security notes
+- Secrets are server-only — never expose in frontend
+- All writes use Firebase Admin SDK
+- Signature verification uses `crypto.timingSafeEqual`
+- Idempotency keyed on `paymentId`
+
+[END: README.md]
+
+
+────────────────────────────────────────────────────────────
+FILE: .gitignore
+────────────────────────────────────────────────────────────
+node_modules
+.env
+*.log
+.DS_Store
+serviceAccount.json
+
+[END: .gitignore]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\lib\firebase.js
+────────────────────────────────────────────────────────────
+const fs = require("fs");
+const admin = require("firebase-admin");
+
+function loadServiceAccount() {
+  let raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  if (!raw) throw new Error("FIREBASE_SERVICE_ACCOUNT_JSON is not set");
+
+  raw = raw.trim();
+  if (
+    (raw.startsWith('"') && raw.endsWith('"')) ||
+    (raw.startsWith("'") && raw.endsWith("'"))
+  ) {
+    raw = raw.slice(1, -1).trim();
+  }
+
+  if (fs.existsSync(raw)) {
+    raw = fs.readFileSync(raw, "utf8").trim();
+  }
+
+  const text = raw.startsWith("{")
+    ? raw
+    : Buffer.from(raw, "base64").toString("utf8");
+  const parsed = JSON.parse(text);
+
+  if (parsed.private_key && parsed.private_key.includes("\\n")) {
+    parsed.private_key = parsed.private_key.replace(/\\n/g, "\n");
+  }
+
+  return parsed;
+}
+[END: src\lib\firebase.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\lib\razorpay.js
+────────────────────────────────────────────────────────────
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+
+const keyId = process.env.RAZORPAY_KEY_ID;
+const keySecret = process.env.RAZORPAY_KEY_SECRET;
+if (!keyId || !keySecret) {
+  throw new Error("RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET not set");
+}
+
+const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
+
+function verifyPaymentSignature({ orderId, paymentId, signature }) {
+  const expected = crypto
+    .createHmac("sha256", keySecret)
+    .update(`${orderId}|${paymentId}`)
+    .digest("hex");
+  return safeEqual(expected, signature);
+}
+
+function verifyWebhookSignature(rawBody, signature) {
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+  if (!secret) throw new Error("RAZORPAY_WEBHOOK_SECRET not set");
+  const expected = crypto
+    .createHmac("sha256", secret)
+    .update(rawBody)
+    .digest("hex");
+  return safeEqual(expected, signature);
+}
+
+function safeEqual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") return false;
+  const ab = Buffer.from(a, "utf8");
+  const bb = Buffer.from(b, "utf8");
+  if (ab.length !== bb.length) return false;
+  return crypto.timingSafeEqual(ab, bb);
+}
+
+module.exports = { razorpay, verifyPaymentSignature, verifyWebhookSignature };
+
+[END: src\lib\razorpay.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\lib\subscription.js
+────────────────────────────────────────────────────────────
+const { db, FieldValue } = require("./firebase");
+
+async function getPlan(planId) {
+  const snap = await db.collection("plans").doc(planId).get();
+  if (!snap.exists) throw new Error(`Plan not found: ${planId}`);
+  return { id: snap.id, ...snap.data() };
+}
+
+async function getGlobalConfig() {
+  const snap = await db.collection("config").doc("global").get();
+  return snap.exists ? snap.data() : {};
+}
+
+function toMillis(value) {
+  if (!value) return 0;
+  if (typeof value.toMillis === "function") return value.toMillis();
+  if (value instanceof Date) return value.getTime();
+  if (typeof value === "number") return value;
+  const t = Date.parse(value);
+  return Number.isNaN(t) ? 0 : t;
+}
+
+/**
+ * Activate or extend a subscription idempotently.
+ * Returns { alreadyProcessed: boolean, subscription }
+ */
+async function activateSubscription({
+  userId,
+  planId,
+  paymentId,
+  source,           // "payment" | "manual" | "webhook"
+  performedBy,      // "system" | "admin:<uid>"
+  action,           // "payment_success" | "manual_payment" | "webhook_captured"
+  extra = {},
+}) {
+  if (!userId || !planId || !paymentId) {
+    throw new Error("userId, planId and paymentId are required");
+  }
+
+  const subRef = db
+    .collection("users").doc(userId)
+    .collection("subscription").doc("current");
+
+  // Always refetch plan + config fresh (plan may have changed mid-payment)
+  const [plan, config] = await Promise.all([getPlan(planId), getGlobalConfig()]);
+
+  const durationDays = Number(plan.durationDays ?? plan.duration ?? 30);
+  const graceDays = Number(
+    plan.graceDays ?? config.defaultGraceDays ?? 3
+  );
+  if (!Number.isFinite(durationDays) || durationDays <= 0) {
+    throw new Error(`Plan ${planId} has invalid durationDays`);
+  }
+
+  return db.runTransaction(async (tx) => {
+    const subSnap = await tx.get(subRef);
+    const existing = subSnap.exists ? subSnap.data() : null;
+
+    // Idempotency: same paymentId already applied
+    if (existing && existing.paymentId === paymentId) {
+      return { alreadyProcessed: true, subscription: existing };
+    }
+
+    const now = Date.now();
+    const existingEnd = toMillis(existing?.endDate);
+    const baseMs = Math.max(now, existingEnd);
+
+    const startDate = new Date(now);
+    const endDate = new Date(baseMs + durationDays * 24 * 60 * 60 * 1000);
+    const graceEndDate = new Date(
+      endDate.getTime() + graceDays * 24 * 60 * 60 * 1000
+    );
+
+    const subscription = {
+      planId,
+      plan: planId,
+      status: "active",
+      startDate,
+      endDate,
+      graceEndDate,
+      paymentId,
+      source,
+      autoRenew: true,
+      updatedAt: FieldValue.serverTimestamp(),
+      ...extra,
+    };
+
+    tx.set(subRef, subscription, { merge: true });
+
+    const logRef = db.collection("subscription_logs").doc();
+    tx.set(logRef, {
+      userId,
+      planId,
+      paymentId,
+      action,
+      performedBy: performedBy || "system",
+      amount: plan.price ?? null,
+      currency: plan.currency ?? config.defaultCurrency ?? "INR",
+      createdAt: FieldValue.serverTimestamp(),
+      meta: extra,
+    });
+
+    return { alreadyProcessed: false, subscription };
+  });
+}
+
+async function logEvent({ userId, planId, paymentId, action, performedBy = "system", meta = {} }) {
+  await db.collection("subscription_logs").add({
+    userId: userId || null,
+    planId: planId || null,
+    paymentId: paymentId || null,
+    action,
+    performedBy,
+    createdAt: FieldValue.serverTimestamp(),
+    meta,
+  });
+}
+
+module.exports = { getPlan, getGlobalConfig, activateSubscription, logEvent };
+
+[END: src\lib\subscription.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\middleware\validate.js
+────────────────────────────────────────────────────────────
+function requireFields(fields) {
+  return (req, res, next) => {
+    const missing = fields.filter((f) => {
+      const v = req.body?.[f];
+      return v === undefined || v === null || v === "";
+    });
+    if (missing.length) {
+      return res.status(400).json({
+        error: "missing_fields",
+        fields: missing,
+      });
+    }
+    next();
+  };
+}
+
+function asyncHandler(fn) {
+  return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+}
+
+module.exports = { requireFields, asyncHandler };
+
+[END: src\middleware\validate.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\routes\manual.js
+────────────────────────────────────────────────────────────
+const express = require("express");
+const { activateSubscription } = require("../lib/subscription");
+const { requireFields, asyncHandler } = require("../middleware/validate");
+
+const router = express.Router();
+
+router.post(
+  "/confirm-manual-payment",
+  requireFields(["userId", "planId"]),
+  asyncHandler(async (req, res) => {
+    const { userId, planId, referenceNote } = req.body;
+    const paymentId = `manual_${Date.now()}`;
+
+    const result = await activateSubscription({
+      userId,
+      planId,
+      paymentId,
+      source: "manual",
+      performedBy: "admin",
+      action: "manual_payment",
+      extra: { referenceNote: referenceNote || null },
+    });
+
+    res.json({
+      success: true,
+      paymentId,
+      alreadyProcessed: result.alreadyProcessed,
+      subscription: result.subscription,
+    });
+  })
+);
+
+module.exports = router;
+
+[END: src\routes\manual.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\routes\orders.js
+────────────────────────────────────────────────────────────
+const express = require("express");
+const { razorpay } = require("../lib/razorpay");
+const { getPlan, getGlobalConfig } = require("../lib/subscription");
+const { requireFields, asyncHandler } = require("../middleware/validate");
+
+const router = express.Router();
+
+router.post(
+  "/create-order",
+  requireFields(["userId", "planId"]),
+  asyncHandler(async (req, res) => {
+    const { userId, planId } = req.body;
+
+    const [plan, config] = await Promise.all([getPlan(planId), getGlobalConfig()]);
+
+    const price = Number(plan.price);
+    if (!Number.isFinite(price) || price <= 0) {
+      return res.status(400).json({ error: "invalid_plan_price" });
+    }
+
+    const currency = plan.currency || config.defaultCurrency || "INR";
+    const amountInPaise = Math.round(price * 100);
+
+    const order = await razorpay.orders.create({
+      amount: amountInPaise,
+      currency,
+      receipt: `sub_${userId}_${Date.now()}`.slice(0, 40),
+      notes: { userId, planId },
+    });
+
+    res.json({
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      keyId: process.env.RAZORPAY_KEY_ID,
+    });
+  })
+);
+
+module.exports = router;
+
+[END: src\routes\orders.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\routes\verify.js
+────────────────────────────────────────────────────────────
+const express = require("express");
+const { verifyPaymentSignature } = require("../lib/razorpay");
+const { activateSubscription } = require("../lib/subscription");
+const { requireFields, asyncHandler } = require("../middleware/validate");
+
+const router = express.Router();
+
+router.post(
+  "/verify-payment",
+  requireFields([
+    "userId",
+    "planId",
+    "razorpay_order_id",
+    "razorpay_payment_id",
+    "razorpay_signature",
+  ]),
+  asyncHandler(async (req, res) => {
+    const {
+      userId,
+      planId,
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    } = req.body;
+
+    const ok = verifyPaymentSignature({
+      orderId: razorpay_order_id,
+      paymentId: razorpay_payment_id,
+      signature: razorpay_signature,
+    });
+    if (!ok) return res.status(400).json({ error: "invalid_signature" });
+
+    const result = await activateSubscription({
+      userId,
+      planId,
+      paymentId: razorpay_payment_id,
+      source: "payment",
+      performedBy: "system",
+      action: "payment_success",
+      extra: { orderId: razorpay_order_id },
+    });
+
+    res.json({
+      success: true,
+      alreadyProcessed: result.alreadyProcessed,
+      subscription: result.subscription,
+    });
+  })
+);
+
+module.exports = router;
+
+[END: src\routes\verify.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\routes\webhook.js
+────────────────────────────────────────────────────────────
+const express = require("express");
+const { verifyWebhookSignature } = require("../lib/razorpay");
+const { activateSubscription, logEvent } = require("../lib/subscription");
+
+const router = express.Router();
+
+// IMPORTANT: rawBody parser is mounted in server.js for this route
+router.post("/razorpay-webhook", async (req, res) => {
+  try {
+    const signature = req.header("x-razorpay-signature");
+    const raw = req.body; // Buffer (raw)
+    if (!signature || !Buffer.isBuffer(raw)) {
+      return res.status(400).send("bad request");
+    }
+    if (!verifyWebhookSignature(raw.toString("utf8"), signature)) {
+      return res.status(401).send("invalid signature");
+    }
+
+    const payload = JSON.parse(raw.toString("utf8"));
+    const event = payload.event;
+    const paymentEntity = payload.payload?.payment?.entity;
+
+    if (!paymentEntity) {
+      return res.status(200).send("ignored");
+    }
+
+    const userId = paymentEntity.notes?.userId;
+    const planId = paymentEntity.notes?.planId;
+    const paymentId = paymentEntity.id;
+    const orderId = paymentEntity.order_id;
+
+    if (event === "payment.captured") {
+      if (!userId || !planId) {
+        await logEvent({
+          paymentId,
+          action: "webhook_captured_missing_notes",
+          meta: { orderId, event },
+        });
+        return res.status(200).send("missing notes");
+      }
+      const result = await activateSubscription({
+        userId,
+        planId,
+        paymentId,
+        source: "webhook",
+        performedBy: "system",
+        action: "webhook_captured",
+        extra: { orderId },
+      });
+      return res.json({ ok: true, alreadyProcessed: result.alreadyProcessed });
+    }
+
+    if (event === "payment.failed") {
+      await logEvent({
+        userId: userId || null,
+        planId: planId || null,
+        paymentId,
+        action: "payment_failed",
+        meta: {
+          orderId,
+          errorCode: paymentEntity.error_code || null,
+          errorDescription: paymentEntity.error_description || null,
+        },
+      });
+      return res.json({ ok: true });
+    }
+
+    // Unhandled event — acknowledge
+    return res.status(200).send("ignored");
+  } catch (err) {
+    console.error("webhook error", err);
+    // Return 200 to avoid endless retries on poison events; we logged it.
+    return res.status(200).send("error_logged");
+  }
+});
+
+module.exports = router;
+
+[END: src\routes\webhook.js]
+
+
+────────────────────────────────────────────────────────────
+FILE: src\server.js
+────────────────────────────────────────────────────────────
+require("dotenv").config();
+
+const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
+const morgan = require("morgan");
+
+// Initialize firebase early so missing env fails fast
+require("./lib/firebase");
+
+const webhookRoute = require("./routes/webhook");
+const ordersRoute = require("./routes/orders");
+const verifyRoute = require("./routes/verify");
+const manualRoute = require("./routes/manual");
+
+const app = express();
+app.set("trust proxy", 1);
+app.use(helmet());
+app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
+
+const origins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+app.use(
+  cors({
+    origin: origins.length ? origins : true,
+    methods: ["GET", "POST", "OPTIONS"],
+  })
+);
+
+// 1) Webhook FIRST with raw body parser (signature needs exact bytes)
+app.use(
+  "/razorpay-webhook",
+  express.raw({ type: "*/*", limit: "1mb" })
+);
+app.use(webhookRoute);
+
+// 2) JSON parser for everything else
+app.use(express.json({ limit: "100kb" }));
+
+app.get("/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
+
+app.use(ordersRoute);
+app.use(verifyRoute);
+app.use(manualRoute);
+
+// 404
+app.use((req, res) => res.status(404).json({ error: "not_found" }));
+
+// Error handler
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, _next) => {
+  console.error("unhandled error", err);
+  res.status(500).json({
+    error: "internal_error",
+    message: err?.message || "unknown",
+  });
+});
+
+const port = Number(process.env.PORT) || 8080;
+app.listen(port, () => {
+  console.log(`Shopkeeper backend listening on :${port}`);
+});
+
+[END: src\server.js]

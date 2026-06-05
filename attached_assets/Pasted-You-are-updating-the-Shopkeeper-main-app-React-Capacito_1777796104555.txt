@@ -1,0 +1,137 @@
+You are updating the Shopkeeper main app (React + Capacitor) to integrate with a **new external backend server** for payments.
+
+---
+
+# 🎯 OBJECTIVE
+
+Replace Firebase Functions with REST API calls to the backend while keeping:
+
+* Firestore as source of truth
+* SubscriptionContext intact
+* Real-time updates working
+
+---
+
+# 🧠 BACKEND BASE URL
+
+```ts
+const API_BASE = "https://your-backend.onrender.com";
+```
+
+---
+
+# 🔧 REQUIRED CHANGES
+
+---
+
+## 1. Replace paymentService.ts (MANDATORY)
+
+Remove Firebase callable functions:
+
+```ts
+getFunctions()
+httpsCallable()
+```
+
+Replace with:
+
+```ts
+createOrder:
+POST `${API_BASE}/create-order`
+
+verifyPayment:
+POST `${API_BASE}/verify-payment`
+
+confirmManualPayment:
+POST `${API_BASE}/confirm-manual-payment`
+```
+
+---
+
+## 2. Razorpay Flow
+
+Update checkout:
+
+```ts
+openRazorpayCheckout({
+  key: response.keyId,
+  order_id: response.orderId
+});
+```
+
+On success:
+
+```ts
+POST /verify-payment
+```
+
+---
+
+## 3. REMOVE FALLBACK LOGIC (CRITICAL)
+
+Delete:
+
+* Direct Firestore write fallback
+* Any client-side subscription writes for payments
+
+👉 Backend must be the only writer
+
+---
+
+## 4. KEEP REAL-TIME SYNC
+
+Do NOT change:
+
+```ts
+onSnapshot(subscriptionDoc)
+```
+
+This ensures instant UI updates after backend writes.
+
+---
+
+## 5. Error Handling
+
+Show UI states for:
+
+* Payment failed
+* Network error
+* Retry option
+
+---
+
+## 6. Edge Case Handling
+
+* Prevent double clicks
+* Retry if backend fails
+* Handle delayed webhook updates
+
+---
+
+## 7. DO NOT
+
+❌ Do NOT store secrets
+❌ Do NOT write subscription directly
+❌ Do NOT modify Firestore schema
+
+---
+
+# 🧪 TEST CASES
+
+1. Razorpay success → subscription active
+2. Manual payment → subscription active
+3. Subscription updates instantly
+4. Payment failure handled properly
+
+---
+
+# ✅ EXPECTED RESULT
+
+* App uses backend APIs for payments
+* No Firebase Functions dependency
+* Subscription updates correctly
+* UI reacts in real-time
+
+---
+
+Focus on clean integration and stability.
