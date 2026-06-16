@@ -1,0 +1,393 @@
+You are working on the main Shopkeeper app (React + Capacitor + Firebase).
+A **Super Admin Panel (separate project)** is already built and acts as the control system.
+
+Your task is to **fully integrate the main app with the Admin Panel backend contracts**, ensuring perfect compatibility, correctness, and future scalability.
+
+---
+
+# 🧠 SYSTEM CONTEXT (CRITICAL)
+
+The system now has **3 layers**:
+
+1. **Admin Panel (Control Layer)** → writes to Firestore
+2. **Firestore (Source of Truth)** → shared backend
+3. **Main App (Execution Layer)** → reads + reacts
+
+👉 You are building the **Execution Layer correctly against Admin contracts**
+
+Reference:  (STRICT SOURCE OF TRUTH — do not deviate)
+
+---
+
+# 🎯 OBJECTIVE
+
+Ensure the main app:
+
+* Reads ALL data exactly as defined by admin panel
+* Reacts correctly to subscription changes
+* Enforces feature access properly
+* Writes correct audit logs
+* Supports full lifecycle (trial → active → grace → expired)
+
+---
+
+# 🚨 NON-NEGOTIABLE RULE
+
+❌ DO NOT invent schemas
+❌ DO NOT rename fields
+❌ DO NOT hardcode plans or features
+
+✅ Follow Firestore contracts EXACTLY
+
+---
+
+# 🔧 IMPLEMENTATION TASKS
+
+---
+
+## 1. 🔌 FIREBASE CONNECTION (MATCH EXACT PROJECT)
+
+Use:
+
+```ts id="1a8z7p"
+projectId: "shopkeeper-1a3fc"
+authDomain: "shopkeeper-1a3fc.firebaseapp.com"
+```
+
+Must match admin panel exactly.
+
+---
+
+## 2. 👤 AUTH + USER LOAD
+
+On login:
+
+* use `onAuthStateChanged`
+* fetch:
+
+```ts id="b9x2rp"
+users/{uid}
+users/{uid}/subscription/current
+```
+
+---
+
+## 3. 📄 SUBSCRIPTION HANDLING (STRICT)
+
+Use schema:
+
+```ts id="zj2l3c"
+planId + plan (both must exist)
+status: 'active' | 'trial' | 'grace' | 'expired'
+```
+
+---
+
+### ALWAYS resolve plan like:
+
+```ts id="czd8py"
+const planId = data.planId ?? data.plan ?? 'free';
+```
+
+---
+
+## 4. 🧾 FETCH PLANS (NO HARDCODING)
+
+```ts id="zjz9y1"
+plans/{planId}
+```
+
+Use:
+
+* price
+* features
+* durationDays
+
+---
+
+## 5. 🌍 GLOBAL CONFIG (MANDATORY)
+
+```ts id="0tkv8q"
+config/global
+```
+
+Use for:
+
+* appMode
+* trialDurationDays
+* gracePeriodDays
+* defaultPlan
+
+---
+
+## 6. 🔐 FEATURE ACCESS SYSTEM
+
+Use EXACT pattern:
+
+```ts id="m2w1cx"
+function canAccess(featureKey) {
+  if (globalConfig.appMode === 'free') return true;
+
+  if (subscription.status === 'expired' && globalConfig.appMode === 'paid') {
+    return false;
+  }
+
+  return plan.features.includes(featureKey);
+}
+```
+
+---
+
+## 7. 🧩 FEATURE KEYS (STRICT MATCH)
+
+Use only:
+
+```ts id="w82qzp"
+basic
+waste_tracking
+analytics
+advanced_analytics
+reports
+pos_billing
+bulk_import
+stock_valuation
+game_timeline
+whatsapp_reminders
+multi_user
+daily_snapshot
+```
+
+---
+
+## 8. 🔄 SUBSCRIPTION STATE MACHINE (MANDATORY)
+
+Implement:
+
+```ts id="8w8nlm"
+if (now > endDate && now <= graceEndDate) → status = 'grace'
+if (now > graceEndDate) → status = 'expired'
+```
+
+---
+
+## 9. 🎁 TRIAL LOGIC
+
+When user starts trial:
+
+* Write subscription:
+
+```ts id="6g8d1k"
+status: 'trial'
+source: 'system'
+```
+
+* Update user:
+
+```ts id="q7sk8f"
+users/{uid}.trialUsed = true
+```
+
+---
+
+## 10. 💳 PAYMENT FLOW (PREPARE)
+
+When payment succeeds:
+
+```ts id="3d9f6p"
+status: 'active'
+source: 'payment'
+paymentId: 'razorpay_id'
+```
+
+---
+
+## 11. 🧾 AUDIT LOG (MANDATORY)
+
+Every change → write:
+
+```ts id="6k8u3l"
+subscription_logs/{autoId}
+```
+
+---
+
+### Required fields:
+
+```ts id="s9k2vm"
+userId
+action
+previousState
+newState
+performedBy: 'system'
+timestamp
+```
+
+---
+
+### Use actions:
+
+```ts id="4m1w7c"
+trial_start
+payment_success
+auto_expire
+auto_grace
+```
+
+---
+
+## 12. 🔔 ANNOUNCEMENTS SYSTEM
+
+Fetch:
+
+```ts id="c1y8l2"
+announcements
+```
+
+Filter:
+
+* isActive === true
+* expiresAt > now
+* targetAudience match
+
+---
+
+## 13. 💳 PAYMENT METHODS
+
+Fetch:
+
+```ts id="7g3c9x"
+config/payment_methods
+```
+
+IMPORTANT:
+
+❌ NEVER use:
+
+* keySecret
+* webhookSecret
+
+✅ ONLY use:
+
+* razorpay.keyId
+* UPI entries (isActive only)
+
+---
+
+## 14. ⚠️ SECURITY RULES
+
+Main app must:
+
+✅ Read:
+
+* users
+* subscription
+* plans
+* config
+* announcements
+
+❌ NEVER write:
+
+* plans
+* config
+* admins
+
+---
+
+## 15. 🔄 REAL-TIME SYNC (IMPORTANT)
+
+Use:
+
+```ts id="9h2gxp"
+onSnapshot(subscriptionDoc)
+```
+
+👉 So admin changes reflect instantly
+
+---
+
+## 16. ⚠️ EDGE CASE HANDLING
+
+---
+
+### Case 1: No subscription doc
+
+→ create default subscription
+
+---
+
+### Case 2: Plan missing
+
+→ fallback to free
+
+---
+
+### Case 3: Config missing
+
+→ fallback:
+
+```ts id="d8k1lm"
+gracePeriodDays = 3
+```
+
+---
+
+### Case 4: Offline
+
+→ use cached subscription
+→ never grant premium by default
+
+---
+
+## 17. 🚫 REMOVE OLD LOGIC
+
+Delete:
+
+* hardcoded plans
+* static feature maps
+* local subscription logic
+
+---
+
+## 18. 🔁 BACKWARD COMPATIBILITY
+
+Support both:
+
+* planId
+* plan
+
+---
+
+# ⚠️ FINAL CONSTRAINTS
+
+* Do NOT break existing UI
+* Do NOT change admin panel schema
+* Do NOT duplicate logic
+* Must be fully data-driven
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. App fully synced with admin panel backend
+2. Subscription updates reflect instantly
+3. Feature gating works correctly
+4. Trial + payment flows correct
+5. Audit logs written correctly
+6. No hardcoded plans or features
+7. Full lifecycle handled
+
+---
+
+# 🧠 FINAL GOAL
+
+Transform the app into:
+
+👉 **Execution Engine controlled by Admin Panel**
+
+Where:
+
+Admin → Firestore → App reacts automatically
+
+---
+
+Focus on correctness, strict contract adherence, and zero assumptions.

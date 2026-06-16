@@ -1,0 +1,2807 @@
+[1G[0K⠙[1G[0K⠹[1G[0K
+> shopkeeper-v2@1.0.0 dev
+> vite
+
+[1G[0K⠹[1G[0K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J
+  [32m[1mVITE[22m v8.0.0-beta.18[39m  [2mready in [0m[1m1280[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.31.103.130:[1m5000[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m10:42:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:42:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions. [33m(x2)[39m
+[2m10:42:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:42:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions. [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:42:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:42:37 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:42:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:42:54.023Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:04 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:42:54.025Z]  @firebase/firestore: Firestore (12.10.0): INTERNAL UNHANDLED ERROR:  Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)
+    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8
+    at Array.forEach (<anonymous>)
+    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)
+    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)
+    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)
+    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48
+[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > __PRIVATE_hardAssert node_modules/@firebase/firestore/dist/common-091f2944.esm.js:202:47
+ > __PRIVATE_TargetState.We node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6578:22
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6623:18
+ > __PRIVATE_WatchChangeAggregator.forEachTarget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6662:45
+ > __PRIVATE_WatchChangeAggregator.tt node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6613:13
+ > __PRIVATE_onWatchStreamChange node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15590:138
+ > __PRIVATE_PersistentListenStream.onNext node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15131:29
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15074:56
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > __PRIVATE_hardAssert node_modules/@firebase/firestore/dist/common-091f2944.esm.js:202:47
+ > __PRIVATE_TargetState.We node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6578:22
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6623:18
+ > __PRIVATE_WatchChangeAggregator.forEachTarget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6662:45
+ > __PRIVATE_WatchChangeAggregator.tt node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6613:13
+ > __PRIVATE_onWatchStreamChange node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15590:138
+ > __PRIVATE_PersistentListenStream.onNext node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15131:29
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15074:56
+ [33m(x2)[39m
+[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:42:54.054Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15097:20
+ > __PRIVATE_StreamBridge.n_ node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15072:12
+ > __PRIVATE_StreamBridge.o_ node_modules/@firebase/firestore/dist/common-091f2944.esm.js:14441:13
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:14644:30
+ > Y.<anonymous> node_modules/@firebase/firestore/dist/common-091f2944.esm.js:14468:12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:04 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:07 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:42:57.529Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:07 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:15 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:05.421Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:15 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:15 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:08.306Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:08.312Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <SubscriptionTab> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at SubscriptionTab (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/settings/SubscriptionTab.tsx:101:19)"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <TransactionHistory> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at TransactionHistory (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/payment/TransactionHistory.tsx:227:19)\n    at div (<anonymous>)\n    at div (<anonymous>)\n    at SubscriptionTab (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/settings/SubscriptionTab.tsx:101:19)"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:08.317Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:08.319Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:08.320Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:211:27
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+
+The above error occurred in the <SubscriptionProvider> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:211:27
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149) {"componentStack":"\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:315:21
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:382:4
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+
+The above error occurred in the <SubscriptionProvider> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:315:21
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:382:4
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66) {"componentStack":"\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <AnnouncementBanner> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m10:43:18 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at AnnouncementBanner (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/common/AnnouncementBanner.tsx:64:38)\n    at div (<anonymous>)\n    at AppContent (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/App.tsx:133:49)\n    at EditPasswordProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/EditPasswordContext.tsx:17:40)\n    at RoleProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/RoleContext.tsx:40:32)\n    at QueryClientProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/modern-nBBCTqIm.js?v=a1050033:2495:30)\n    at PersistQueryClientProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/@tanstack_react-query-persist-client.js?v=a1050033:235:37)\n    at DataProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/DataContext.tsx:281:32)\n    at UIProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/UIContext.tsx:9:30)\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+[2m10:43:20 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:10.292Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:20 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > Qi.window.addEventListener.Oi node_modules/@firebase/firestore/dist/common-091f2944.esm.js:12793:79
+
+[2m10:43:20 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T10:43:10.294Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m10:43:20 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > Wi.document.document.addEventListener.Ni node_modules/@firebase/firestore/dist/common-091f2944.esm.js:12765:20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:20 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:23 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:23 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+[2m10:43:23 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:23 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:43:23 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:43:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:34 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:34 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:34 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:40 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x5)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:40 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x6)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:45 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x7)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:45 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x8)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:52 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x9)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:51:52 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x10)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:02 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x11)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:02 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x12)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/SubscriptionContext.tsx, /src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/components/common/FeatureGate.tsx, /src/components/settings/SubscriptionTab.tsx, /src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:17 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x3)[39m
+[2m10:52:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/SubscriptionContext.tsx[22m Could not Fast Refresh ("useSubscription" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m10:52:18 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/components/common/FeatureGate.tsx, /src/components/settings/SubscriptionTab.tsx, /src/components/payment/PaymentModal.tsx[22m
+[2m10:52:25 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x5)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x6)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x7)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:43 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x8)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:43 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x9)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x10)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x11)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x12)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:52:54 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x13)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x14)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x15)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:06 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x16)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:06 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x17)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x18)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x19)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x20)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x21)[39m
+[2m10:53:15 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:15 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:53:15 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:15 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions. [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:15 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:53:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:53:16 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m10:53:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x5)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:55 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x6)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:59 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x7)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:59 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x8)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:59 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x9)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:16:59 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x10)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:00 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x11)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:00 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x12)[39m
+[2m11:17:03 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+[2m11:17:04 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedDefaultPlans failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:04 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:04 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:04 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:04 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22m[SubscriptionService] seedGlobalConfig failed (non-fatal): FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:04 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:20 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mFailed to fetch users: FirebaseError: Missing or insufficient permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:20 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:45.242Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:45.242Z]  @firebase/firestore: Firestore (12.10.0): INTERNAL UNHANDLED ERROR:  Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)
+    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8
+    at Array.forEach (<anonymous>)
+    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)
+    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)
+    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)
+    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48
+[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > __PRIVATE_hardAssert node_modules/@firebase/firestore/dist/common-091f2944.esm.js:202:47
+ > __PRIVATE_TargetState.We node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6578:22
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6623:18
+ > __PRIVATE_WatchChangeAggregator.forEachTarget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6662:45
+ > __PRIVATE_WatchChangeAggregator.tt node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6613:13
+ > __PRIVATE_onWatchStreamChange node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15590:138
+ > __PRIVATE_PersistentListenStream.onNext node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15131:29
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15074:56
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > __PRIVATE_hardAssert node_modules/@firebase/firestore/dist/common-091f2944.esm.js:202:47
+ > __PRIVATE_TargetState.We node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6578:22
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6623:18
+ > __PRIVATE_WatchChangeAggregator.forEachTarget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6662:45
+ > __PRIVATE_WatchChangeAggregator.tt node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6613:13
+ > __PRIVATE_onWatchStreamChange node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15590:138
+ > __PRIVATE_PersistentListenStream.onNext node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15131:29
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15074:56
+ [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled rejection] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {"ve":-1}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > __PRIVATE_hardAssert node_modules/@firebase/firestore/dist/common-091f2944.esm.js:202:47
+ > __PRIVATE_TargetState.We node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6578:22
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6623:18
+ > __PRIVATE_WatchChangeAggregator.forEachTarget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6662:45
+ > __PRIVATE_WatchChangeAggregator.tt node_modules/@firebase/firestore/dist/common-091f2944.esm.js:6613:13
+ > __PRIVATE_onWatchStreamChange node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15590:138
+ > __PRIVATE_PersistentListenStream.onNext node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15131:29
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15074:56
+ [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:45 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:45.584Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:17:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:45 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:50.553Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:50 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:50.556Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <SubscriptionTab> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at SubscriptionTab (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/settings/SubscriptionTab.tsx?t=1777805534669:101:19)"}
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <TransactionHistory> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at TransactionHistory (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/payment/TransactionHistory.tsx:227:19)\n    at div (<anonymous>)\n    at div (<anonymous>)\n    at SubscriptionTab (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/settings/SubscriptionTab.tsx?t=1777805534669:101:19)"}
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:50.567Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:50.570Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:17:50.570Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"} [33m(x2)[39m
+[2m11:17:50 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:211:27
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+
+The above error occurred in the <SubscriptionProvider> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m11:17:51 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:211:27
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149) {"componentStack":"\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+[2m11:17:51 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:315:21
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:381:4
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+
+The above error occurred in the <SubscriptionProvider> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:17:51 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:17:51 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at Object.current (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:315:21
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:381:4
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66) {"componentStack":"\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+[2m11:17:51 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mError: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55)
+
+The above error occurred in the <AnnouncementBanner> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+[2m11:17:51 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mUncaught error: Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)
+    at fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2693:40)
+    at __PRIVATE_AsyncQueueImpl.uc (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17343:14)
+    at __PRIVATE_AsyncQueueImpl.enqueue (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17309:12)
+    at __PRIVATE_AsyncQueueImpl.enqueueAndForget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:17296:8)
+    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:16724:24
+    at Object.react_stack_bottom_frame (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:12908:5)
+    at runWithFiberInDEV (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:851:66)
+    at commitHookEffectListUnmount (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6642:149)
+    at commitHookPassiveUnmountEffects (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-dom_client.js?v=a1050033:6655:55) {"componentStack":"\n    at AnnouncementBanner (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/components/common/AnnouncementBanner.tsx:64:38)\n    at div (<anonymous>)\n    at AppContent (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/App.tsx?t=1777805534669:133:49)\n    at EditPasswordProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/EditPasswordContext.tsx:17:40)\n    at RoleProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/RoleContext.tsx:40:32)\n    at QueryClientProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/modern-nBBCTqIm.js?v=a1050033:2495:30)\n    at PersistQueryClientProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/@tanstack_react-query-persist-client.js?v=a1050033:235:37)\n    at DataProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/DataContext.tsx:281:32)\n    at UIProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/UIContext.tsx:9:30)\n    at SubscriptionProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/SubscriptionContext.tsx?t=1777805534669:148:40)\n    at AuthProvider (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/src/context/AuthContext.tsx:17:32)\n    at Router (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:4550:29)\n    at HashRouter (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a1050033:6925:23)\n    at App (<anonymous>)"}
+[2m11:18:01 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:01.490Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:18:01 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:01 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:18:16 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:16.503Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:18:16 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:18:25 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:25.293Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:18:25 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > DelayedOperation.handleDelayElapsed node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15923:24
+ > node_modules/@firebase/firestore/dist/common-091f2944.esm.js:15905:50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:25 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:18:26 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:25.780Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:18:26 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > Wi.document.document.addEventListener.Ni node_modules/@firebase/firestore/dist/common-091f2944.esm.js:12765:20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:26 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:18:29 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:29.621Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:29 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:18:29 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > Wi.document.document.addEventListener.Ni node_modules/@firebase/firestore/dist/common-091f2944.esm.js:12765:20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:32 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:32 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:32 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x5)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x6)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m [33m(x7)[39m
+[2m11:18:49 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[2026-05-03T11:18:48.849Z]  @firebase/firestore: Firestore (12.10.0): FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[2m11:18:49 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mError[22m: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: b815) CONTEXT: {"Pc":"Error: FIRESTORE (12.10.0) INTERNAL ASSERTION FAILED: Unexpected state (ID: ca9) CONTEXT: {\"ve\":-1}\n    at __PRIVATE__fail (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2702:31)\n    at __PRIVATE_hardAssert (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:2706:45)\n    at __PRIVATE_TargetState.We (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7628:17)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7655:8\n    at Array.forEach (<anonymous>)\n    at __PRIVATE_WatchChangeAggregator.forEachTarget (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7675:40)\n    at __PRIVATE_WatchChangeAggregator.tt (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:7648:8)\n    at __PRIVATE_onWatchStreamChange (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14618:134)\n    at __PRIVATE_PersistentListenStream.onNext (https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14316:24)\n    at https://646b39e6-8eac-40fe-bcfc-66291af83b53-00-j4xev2rkl6jj.spock.replit.dev/node_modules/.vite/deps/firebase_firestore.js?v=a1050033:14271:48"}
+[39m > __PRIVATE__fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:197:33
+ > fail node_modules/@firebase/firestore/dist/common-091f2944.esm.js:182:42
+ > __PRIVATE_AsyncQueueImpl.uc node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19421:19
+ > __PRIVATE_AsyncQueueImpl.enqueue node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19363:17
+ > __PRIVATE_AsyncQueueImpl.enqueueAndForget node_modules/@firebase/firestore/dist/common-091f2944.esm.js:19348:13
+ > Wi.document.document.addEventListener.Ni node_modules/@firebase/firestore/dist/common-091f2944.esm.js:12765:20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:18:49 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m

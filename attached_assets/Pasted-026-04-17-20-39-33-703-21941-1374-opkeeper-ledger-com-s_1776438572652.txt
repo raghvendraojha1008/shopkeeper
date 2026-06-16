@@ -1,0 +1,20 @@
+026-04-17 20:39:33.703 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.713 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.722 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.725 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.730 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.734 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.739 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.742 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.750 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.754 21941-1374  opkeeper.ledger         com.shopkeeper.ledger                E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.757 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.758 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.758 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.758 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-04-17 20:39:33.758 21941-1217  GPUAUX                  com.shopkeeper.ledger                E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb

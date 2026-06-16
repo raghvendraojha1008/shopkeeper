@@ -1,0 +1,44 @@
+
+> shopkeeper-v2@1.0.8 dev
+> vite
+
+[1G[0K[31mfailed to load config from /home/runner/workspace/vite.config.ts[39m
+[31merror when starting dev server:
+Error: 
+You installed esbuild for another platform than the one you're currently using.
+This won't work because esbuild is written with native code and needs to
+install a platform-specific binary executable.
+
+Specifically the "@esbuild/aix-ppc64" package is present but this platform
+needs the "@esbuild/linux-x64" package instead. People often get into this
+situation by installing esbuild on Windows or macOS and copying "node_modules"
+into a Docker image that runs Linux, or by copying "node_modules" between
+Windows and WSL environments.
+
+If you are installing with npm, you can try not copying the "node_modules"
+directory when you copy the files over, and running "npm ci" or "npm install"
+on the destination platform after the copy. Or you could consider using yarn
+instead of npm which has built-in support for installing a package on multiple
+platforms simultaneously.
+
+If you are installing with yarn, you can try listing both this platform and the
+other platform in your ".yarnrc.yml" file using the "supportedArchitectures"
+feature: https://yarnpkg.com/configuration/yarnrc/#supportedArchitectures
+Keep in mind that this means multiple copies of esbuild will be present.
+
+Another alternative is to use the "esbuild-wasm" package instead, which works
+the same way on all platforms. But it comes with a heavy performance cost and
+can sometimes be 10x slower than the "esbuild" package, so you may also not
+want to do that.
+
+    at generateBinPath (/home/runner/workspace/node_modules/esbuild/lib/main.js:2029:17)
+    at esbuildCommandAndArgs (/home/runner/workspace/node_modules/esbuild/lib/main.js:2110:33)
+    at ensureServiceIsRunning (/home/runner/workspace/node_modules/esbuild/lib/main.js:2267:25)
+    at build (/home/runner/workspace/node_modules/esbuild/lib/main.js:2166:26)
+    at bundleConfigFile (file:///home/runner/workspace/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:66828:24)
+    at loadConfigFromFile (file:///home/runner/workspace/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:66798:27)
+    at resolveConfig (file:///home/runner/workspace/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:66399:30)
+    at _createServer (file:///home/runner/workspace/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62999:24)
+    at createServer (file:///home/runner/workspace/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62996:10)
+    at CAC.<anonymous> (file:///home/runner/workspace/node_modules/vite/dist/node/cli.js:736:26)[39m
+[1G[0K⠙[1G[0K

@@ -1,0 +1,29 @@
+Let me read the full UsersPage and the existing service to understand the exact structure before touching anything.
+
+
+3 actions
+I have a complete picture. Here's the plan:
+
+adminService.ts — add adminResetTrial(uid, adminUid) that writes trialUsed:false to users/{uid} and appends the audit log exactly as specified.
+UsersPage.tsx — extend loadData to extract trialUsed from the already-fetched users collection into a Map, show the "Trial Used" badge in both tables, add the "Reset Trial" button (only when trialUsed===true), and wire the existing ConfirmModal.
+Both files edited in parallel now.
+
+
+6 actions
+Zero TypeScript errors and the hot module reload went through cleanly. The failed-precondition errors in the console are the same pre-existing Firestore rules issue from before — they'll disappear once the developer publishes the rules from the handoff document.
+
+Here's exactly what was built:
+
+adminService.ts — new adminResetTrial function:
+
+Writes { trialUsed: false } to users/{uid} with merge (never touches subscription)
+Appends to subscription_logs with action: 'admin_reset_trial', exact previousState/newState, and performedBy: adminUid (the actual UID, as specified)
+On any Firestore error: logs [AdminPanel][resetTrial] to console and rethrows so the UI doesn't falsely succeed
+UsersPage.tsx — additions to existing tables:
+
+trialUsedMap (Map<uid → boolean>) populated from the users collection fetch that was already happening — no extra Firestore read
+"Trial Used" badge — indigo/purple pill (rgba(99,102,241,0.15) bg, #a78bfa text) — appears in the Badges column of both tables when trialUsed === true, nothing shown otherwise
+"Reset Trial" button — only rendered when trialUsed === true, uses existing ConfirmModal with variant="simple" and confirmColor="red"
+On confirm: calls adminResetTrial, then optimistically updates both trialUsedMap and noSubUsers state so the badge disappears immediately without a full reload
+A new Badges column was added to the Without Subscription table (matching the With Subscription table structure)
+Next, I can add a search and date-range filter bar to the Audit Log page so you can filter events by action type, admin email, or time window. Would you like me to do that?

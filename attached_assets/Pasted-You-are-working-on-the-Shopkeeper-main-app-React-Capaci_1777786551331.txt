@@ -1,0 +1,362 @@
+You are working on the Shopkeeper main app (React + Capacitor + Firebase).
+The subscription system is already fully integrated with the Admin Panel and Firestore contracts.
+
+Your task is to implement a **complete, production-ready Payment & Subscription Activation System**.
+
+This is NOT just UI — it must correctly handle:
+
+* Payment initiation
+* Payment confirmation
+* Subscription activation
+* Audit logging
+* Failure handling
+* Security constraints
+* Future Razorpay webhook compatibility
+
+---
+
+# 🧠 SYSTEM OVERVIEW
+
+Flow:
+
+User → selects plan → chooses payment method → completes payment
+→ App verifies → writes subscription → logs audit
+→ UI unlocks features
+
+---
+
+# 🎯 OBJECTIVE
+
+Build a **full payment lifecycle system** that:
+
+* Works with UPI / Razorpay / manual methods
+* Updates Firestore correctly
+* Matches Admin Panel expectations EXACTLY
+* Is secure and future-proof
+
+---
+
+# 🚨 CRITICAL RULES
+
+❌ Never trust frontend payment blindly
+❌ Never skip audit logs
+❌ Never write incomplete subscription
+
+✅ Always follow Firestore schema from reference
+✅ Always write full subscription record
+✅ Always log actions
+
+---
+
+# 🔧 IMPLEMENTATION TASKS
+
+---
+
+## 1. 💳 PAYMENT METHODS HANDLING
+
+Fetch:
+
+```ts id="x1k8dp"
+config/payment_methods
+```
+
+Support:
+
+### UPI
+
+* show only entries where:
+
+```ts id="x9c4t1"
+enabled === true && entry.isActive === true
+```
+
+### Razorpay
+
+* only use:
+
+```ts id="n8z3yq"
+razorpay.keyId
+```
+
+❌ NEVER expose:
+
+* keySecret
+* webhookSecret
+
+---
+
+## 2. 🧾 PLAN SELECTION
+
+User selects plan → fetch:
+
+```ts id="m2b8sl"
+plans/{planId}
+```
+
+Use:
+
+* price
+* durationDays
+
+---
+
+## 3. 🧮 SUBSCRIPTION CALCULATION
+
+On payment success:
+
+```ts id="k1v9pz"
+startDate = now
+endDate = now + durationDays
+graceEndDate = endDate + gracePeriodDays
+```
+
+---
+
+## 4. 🧾 WRITE SUBSCRIPTION (MANDATORY FULL WRITE)
+
+```ts id="q2w8el"
+users/{uid}/subscription/current
+```
+
+Write:
+
+```ts id="b8z1wr"
+{
+  planId,
+  plan: planId,
+  status: 'active',
+  startDate,
+  endDate,
+  graceEndDate,
+  trialUsed: true,
+  autoRenew: false,
+  paymentId: generatedPaymentId,
+  source: 'payment',
+  introOffer: (price === 0),
+  createdAt,
+  updatedAt
+}
+```
+
+---
+
+## 5. 📜 AUDIT LOG (MANDATORY)
+
+```ts id="p7x3mz"
+subscription_logs/{autoId}
+```
+
+Write:
+
+```ts id="c9k4fs"
+{
+  userId,
+  action: 'payment_success',
+  previousState,
+  newState,
+  performedBy: 'system',
+  timestamp
+}
+```
+
+---
+
+## 6. 💳 UPI FLOW (MANUAL CONFIRMATION)
+
+Flow:
+
+1. Show UPI ID / QR
+2. User pays externally
+3. User clicks "I Paid"
+
+### Then:
+
+```ts id="r5n2vc"
+generate paymentId = 'upi_' + timestamp
+```
+
+Write subscription + audit log
+
+---
+
+## 7. 💳 RAZORPAY FLOW
+
+Use:
+
+Razorpay
+
+---
+
+### Flow:
+
+1. Create order (frontend or backend)
+2. Open Razorpay checkout
+3. On success:
+
+```ts id="j3t8xl"
+paymentId = razorpay_payment_id
+```
+
+Then:
+
+* write subscription
+* log audit
+
+---
+
+### ⚠️ IMPORTANT (Future-ready)
+
+Prepare for webhook:
+
+* Do NOT rely only on frontend success
+* Structure code so backend webhook can update subscription later
+
+---
+
+## 8. ❌ PAYMENT FAILURE HANDLING
+
+If payment fails:
+
+* show error
+* do NOT write subscription
+* optionally log:
+
+```ts id="v7d1pq"
+action: 'payment_failed'
+```
+
+---
+
+## 9. 🔁 RENEWAL FLOW
+
+If user already has subscription:
+
+```ts id="f4c8nx"
+baseDate = max(now, existing.endDate)
+newEndDate = baseDate + durationDays
+```
+
+---
+
+## 10. 🎁 INTRO OFFER SUPPORT
+
+If price = 0:
+
+```ts id="t2v6py"
+introOffer: true
+```
+
+Admin panel will show ₹0
+
+---
+
+## 11. 🔐 SECURITY
+
+* Never trust UI-only payment confirmation
+* Structure code so later:
+
+  * backend verifies payment
+  * then updates Firestore
+
+---
+
+## 12. ⚠️ EDGE CASES
+
+---
+
+### Case 1: Double payment click
+
+→ prevent duplicate writes
+
+---
+
+### Case 2: Network failure after payment
+
+→ retry safe write
+
+---
+
+### Case 3: Subscription exists
+
+→ extend instead of overwrite
+
+---
+
+### Case 4: Plan changed during payment
+
+→ re-fetch plan before write
+
+---
+
+## 13. 🔄 REAL-TIME UPDATE
+
+SubscriptionContext already listens via:
+
+```ts id="g1h8ts"
+onSnapshot(subscription)
+```
+
+So UI updates automatically after write
+
+---
+
+## 14. 🧪 TEST CASES (MANDATORY)
+
+---
+
+### Test 1:
+
+UPI payment → subscription active
+
+### Test 2:
+
+Razorpay payment → subscription active
+
+### Test 3:
+
+Renewal extends correctly
+
+### Test 4:
+
+Audit log created
+
+### Test 5:
+
+Feature access unlocks instantly
+
+---
+
+# ⚠️ DO NOT
+
+❌ Skip audit logs
+❌ Partially update subscription
+❌ Hardcode plan duration
+❌ Ignore grace period
+❌ Trust frontend blindly
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Complete payment system working
+2. Subscription updates correctly
+3. Audit logs created properly
+4. UPI + Razorpay supported
+5. Renewal logic working
+6. Intro offer supported
+7. Edge cases handled
+8. System ready for webhook integration
+
+---
+
+# 🧠 FINAL GOAL
+
+Create a system where:
+
+User pays → Firestore updates → Admin Panel reflects → App unlocks
+
+Fully consistent, secure, and production-ready.
+
+---
+
+Focus on correctness, lifecycle integrity, and future-proof design.

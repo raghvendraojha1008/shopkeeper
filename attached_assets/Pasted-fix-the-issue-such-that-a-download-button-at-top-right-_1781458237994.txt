@@ -1,0 +1,89 @@
+fix the issue such that a download button at top right cornor in party's detail view, giving error as export failed(failed to generate pdf, included logcat output), but another one below it, is working, fix the issues as it is supposed to open share options to share the created file, as true direct download not working as we are building android app using capecitor.
+
+3 hours ago
+
+Show less
+
+2 actions
+Let me find the export service and all PDF-related code to understand what's failing:
+
+
+9 actions
+Let me read the handlePdfExport function and the button area at the top of the view:
+
+
+3 actions
+Let me read the end of handlePdfExport and the vite config to understand the stub setup:
+
+
+3 actions
+The root cause is clear: vite aliases jspdf → stub. So handlePdfExport's await import('jspdf') gets the stub, not the real library, and crashes. The working button uses a different path. Let me check the stubs and the working button:
+
+
+4 actions
+Now I understand the full picture:
+
+Top-right button → handlePdfExport → does await import('jspdf') → gets the stub (vite alias) → doc.output('blob') returns '' → sharePdfBlob('') fails → "Failed to generate PDF"
+Bottom button → handleExport → CSV only, no jsPDF → works fine
+The fix: rewrite handlePdfExport to use nativePdfService.generateAndShare() with section-based data, which calls the native Android PdfGenerator Capacitor plugin directly — no jsPDF at all.
+
+
+4 actions
+Now I have everything I need. Adding the nativePdfService import and rewriting handlePdfExport to bypass jsPDF entirely:
+
+
+2 actions
+Now replacing handlePdfExport entirely — no jsPDF, pure section-based native PDF:
+
+
+2 actions
+Let me check the state of the dead code block and clean it up:
+
+
+2 actions
+Let me see the rest of the dead code block so I can remove it cleanly:
+
+
+4 actions
+Now removing the entire dead code block:
+
+
+2 actions
+Now let me check the logs and also verify there are no leftover unused imports/variables that would cause TypeScript errors:
+
+
+2 actions
+Good, no errors. Let me verify there are no stale references from the removed jsPDF block:
+
+
+2 actions
+All clean — fmtRsPdf and fmtPdfDate are still used in the new function, no jsPDF references remain. Now let me also fix statement.ts — it uses the same stubbed jsPDF (static imports), so it'll fail on Android too:
+
+
+4 actions
+Both files hot-reloaded cleanly. Here's exactly what was wrong and what was fixed:
+
+Root cause
+
+vite.config.ts aliases jspdf and jspdf-autotable to stub files (src/stubs/). These stubs are no-ops — doc.output('blob') returns '', not a real Blob — so sharePdfBlob failed immediately with "Failed to generate PDF". This affects every place that does await import('jspdf').
+
+The two buttons:
+
+Bottom button (CSV) → handleExport → no jsPDF → ✅ worked fine
+Top-right button (PDF) → handlePdfExport → used jsPDF stub → ❌ crashed
+What was fixed
+
+handlePdfExport in PartyDetailView.tsx — completely rewritten to use nativePdfService.generateAndShare() instead of jsPDF:
+
+Builds a structured sections[] array (text + table blocks) covering: party header, period, summary (opening balance + misc net + total billed/paid/balance), sales, purchases, payments, misc charges, and a generation footer
+Calls nativePdfService.generateAndShare() which on Android uses the native PdfGenerator Capacitor plugin → writes to cache → opens the system share sheet (WhatsApp, Drive, Gmail, etc.)
+Shows "PDF ready to share" on success, "Failed to generate PDF" on failure
+statement.ts — same fix applied: removed all jsPDF/jspdf-autotable static imports, rewrote to build sections and call nativePdfService.generateAndShare(). Still correctly applies the pre-period opening balance runningBalance and includes misc charges in the ledger timeline.
+
+Both PDF exports now go through the native share sheet on Android instead of attempting a browser download (which doesn't work in a Capacitor app anyway).
+
+
+Checkpoint made
+2 hours ago
+
+Worked for 5 minutes

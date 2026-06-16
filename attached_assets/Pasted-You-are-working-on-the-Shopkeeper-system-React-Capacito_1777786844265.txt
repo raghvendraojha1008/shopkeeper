@@ -1,0 +1,421 @@
+You are working on the Shopkeeper system (React + Capacitor + Firebase + Firestore).
+The subscription system and Admin Panel are already implemented and aligned with Firestore contracts.
+
+Your task is to implement a **complete, production-grade Payment + Verification + Renewal System**, including backend validation and webhook handling.
+
+---
+
+# 🧠 SYSTEM ARCHITECTURE (UNDERSTAND FIRST)
+
+There are 4 layers:
+
+1. **Frontend App**
+
+   * Initiates payment
+   * Shows UI
+   * NEVER final authority
+
+2. **Backend (Cloud Functions / Server)**
+
+   * Verifies payment
+   * Writes subscription (ONLY trusted layer)
+
+3. **Razorpay Gateway**
+
+   * Handles payment
+   * Sends webhook
+
+4. **Firestore (Source of Truth)**
+
+---
+
+# 🎯 OBJECTIVE
+
+Build a **secure, idempotent, backend-driven payment system** that:
+
+* Prevents fraud
+* Handles retries safely
+* Supports renewals
+* Works with webhook confirmation
+* Fully syncs with Admin Panel
+
+---
+
+# 🚨 NON-NEGOTIABLE RULES
+
+❌ Frontend must NOT directly activate subscription
+❌ Never trust frontend payment success blindly
+❌ Never write subscription without verification
+
+✅ Backend (Cloud Function) is the ONLY authority
+✅ All writes must be idempotent
+✅ All events must be logged
+
+---
+
+# 🔧 PART 1 — FRONTEND PAYMENT FLOW
+
+---
+
+## 1. Create Order (via backend)
+
+Call:
+
+```ts id="f1o8jp"
+POST /create-order
+```
+
+Payload:
+
+```ts id="k8z2nx"
+{
+  planId,
+  userId
+}
+```
+
+---
+
+## 2. Backend returns:
+
+```ts id="z3p7vm"
+{
+  orderId,
+  amount,
+  currency,
+  keyId
+}
+```
+
+---
+
+## 3. Launch Razorpay Checkout
+
+Use:
+
+Razorpay
+
+Pass:
+
+* order_id
+* keyId
+* user info
+
+---
+
+## 4. On success (frontend)
+
+Send to backend:
+
+```ts id="c9d2xm"
+POST /verify-payment
+{
+  razorpay_order_id,
+  razorpay_payment_id,
+  razorpay_signature,
+  planId
+}
+```
+
+---
+
+# 🔧 PART 2 — BACKEND (CLOUD FUNCTIONS)
+
+---
+
+## 1. create-order function
+
+* Validate plan from Firestore
+* Calculate amount
+* Create Razorpay order
+* Return order details
+
+---
+
+## 2. verify-payment function (CRITICAL)
+
+### Steps:
+
+1. Verify signature using Razorpay secret
+2. Check order + payment match
+3. Fetch user subscription
+4. Apply renewal logic
+5. Write subscription
+6. Write audit log
+
+---
+
+## 3. Idempotency check (VERY IMPORTANT)
+
+Before writing:
+
+```ts id="o2k7vs"
+if (subscription.paymentId === incoming.paymentId) return success;
+```
+
+---
+
+## 4. Subscription write (STRICT)
+
+```ts id="l9p4kc"
+{
+  planId,
+  plan: planId,
+  status: 'active',
+  startDate,
+  endDate,
+  graceEndDate,
+  trialUsed: true,
+  autoRenew: true,
+  paymentId,
+  source: 'payment',
+  createdAt,
+  updatedAt
+}
+```
+
+---
+
+## 5. Audit log
+
+```ts id="g7m3qp"
+action: 'payment_success'
+performedBy: 'system'
+```
+
+---
+
+# 🔧 PART 3 — WEBHOOK HANDLER (MANDATORY)
+
+---
+
+## Endpoint:
+
+```ts id="v2c9nb"
+/razorpay-webhook
+```
+
+---
+
+## Handle events:
+
+* payment.captured
+* payment.failed
+* subscription.charged (future)
+
+---
+
+## Logic:
+
+### On success:
+
+* Verify signature
+* Check idempotency
+* Update subscription if not already updated
+
+---
+
+### On failure:
+
+* Log:
+
+```ts id="b3t8wd"
+action: 'payment_failed'
+```
+
+---
+
+# 🔧 PART 4 — RENEWAL SYSTEM
+
+---
+
+## Manual renewal
+
+If user pays again:
+
+```ts id="p8c2ql"
+baseDate = max(now, existing.endDate)
+newEndDate = baseDate + durationDays
+```
+
+---
+
+## Auto-renew (future)
+
+* webhook triggers renewal
+* same logic applies
+
+---
+
+# 🔧 PART 5 — UPI / MANUAL PAYMENT FLOW
+
+---
+
+## Steps:
+
+1. User pays via UPI externally
+2. Clicks "I Paid"
+3. Send to backend:
+
+```ts id="n5x1jq"
+POST /confirm-manual-payment
+{
+  planId,
+  userId,
+  referenceNote
+}
+```
+
+---
+
+## Backend:
+
+* Optionally verify (later)
+* Generate:
+
+```ts id="r3k9zp"
+paymentId = 'manual_' + timestamp
+```
+
+* Write subscription
+* Log:
+
+```ts id="m2f7vx"
+action: 'manual_payment'
+```
+
+---
+
+# 🔧 PART 6 — SECURITY
+
+---
+
+## MUST:
+
+* Store Razorpay secret ONLY in backend
+* NEVER expose in frontend
+* Validate all signatures server-side
+
+---
+
+## Firestore rules:
+
+* Client cannot write subscription directly for payments
+* Only backend should write (via Admin SDK ideally)
+
+---
+
+# 🔧 PART 7 — EDGE CASE HANDLING
+
+---
+
+## 1. Double payment
+
+→ idempotency check prevents duplication
+
+---
+
+## 2. Payment success but network failure
+
+→ webhook will fix state
+
+---
+
+## 3. Payment success but app closed
+
+→ webhook ensures consistency
+
+---
+
+## 4. Plan changed mid-payment
+
+→ fetch latest plan before writing
+
+---
+
+## 5. Expired subscription
+
+→ renewal extends from correct base date
+
+---
+
+# 🔧 PART 8 — TEST CASES
+
+---
+
+### Test 1
+
+Razorpay success → subscription active
+
+### Test 2
+
+Webhook triggers update if frontend fails
+
+### Test 3
+
+Duplicate payment → no duplicate subscription
+
+### Test 4
+
+Renewal extends correctly
+
+### Test 5
+
+Manual payment works
+
+---
+
+# 🔧 PART 9 — OPTIONAL (RECOMMENDED)
+
+---
+
+## 1. Payment history UI
+
+Use:
+
+* collectionGroup('subscription')
+* filter paymentId != null
+
+---
+
+## 2. Retry failed payment UI
+
+---
+
+## 3. Subscription expiry notifications
+
+---
+
+# ⚠️ DO NOT
+
+❌ Write subscription from frontend
+❌ Skip webhook
+❌ Skip idempotency
+❌ Expose secrets
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Secure payment flow working
+2. Backend verification implemented
+3. Webhook handler active
+4. Subscription updates correctly
+5. Renewal logic working
+6. Audit logs consistent
+7. System fraud-safe
+8. Fully production-ready
+
+---
+
+# 🧠 FINAL GOAL
+
+Create a system where:
+
+Frontend → Backend verify → Firestore update → Admin Panel reflects → App unlocks
+
+Fully secure, scalable, and monetization-ready.
+
+---
+
+Focus on security, correctness, and long-term stability — not shortcuts.

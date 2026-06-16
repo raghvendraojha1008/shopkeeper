@@ -1,0 +1,336 @@
+You are working on a production-grade React + Capacitor + Firebase (Firestore + Auth) application. A basic subscription system is already implemented (Firestore model, SubscriptionContext, FeatureGate, hasAccess, ₹0 Pro rollout).
+
+Your task is to **upgrade this into a fully secure, production-ready SaaS subscription system** by fixing architectural gaps, enforcing access correctly, and eliminating hidden bugs.
+
+Do NOT rebuild — **refactor and harden the existing system**.
+
+---
+
+# 🎯 OBJECTIVE
+
+Make the subscription system:
+
+* Secure (cannot be bypassed)
+* Consistent (same behavior across UI, logic, background services)
+* Scalable (ready for real paid plans)
+* Reliable (no edge-case failures)
+
+---
+
+# 🧠 SYSTEM UNDERSTANDING
+
+Current flow:
+UI → FeatureGate → hasAccess()
+
+Problem:
+
+* Enforcement exists only at UI layer
+* Business logic and services are NOT protected
+
+Goal:
+Introduce **multi-layer enforcement architecture**
+
+---
+
+# 🚨 CRITICAL TASKS (DO FIRST)
+
+---
+
+## 1. 🔐 SERVICE-LEVEL ACCESS ENFORCEMENT (MANDATORY)
+
+### Problem:
+
+Users can bypass UI gating and still trigger logic
+
+### Task:
+
+Enforce access inside:
+
+* ApiService (all create/update/delete operations)
+* Data processing functions
+* Any premium feature execution
+
+### Pattern:
+
+```ts
+if (!hasAccess(subscription, "feature_key")) {
+  throw new Error("Subscription required");
+}
+```
+
+### Requirement:
+
+* No premium logic should run without validation
+* UI gating alone is NOT sufficient
+
+---
+
+## 2. ⚠️ NAVIGATION GUARD (PREVENT ENTRY)
+
+### Problem:
+
+User can navigate to restricted tabs before FeatureGate blocks UI
+
+### Task:
+
+Before setting activeTab:
+
+```ts
+if (!hasAccess(subscription, "feature")) {
+  showUpgradePrompt();
+  return;
+}
+```
+
+### Apply to:
+
+* bulk import
+* analytics
+* pos billing
+* stock valuation
+* timeline
+* snapshots
+
+---
+
+## 3. ⚠️ BACKGROUND SERVICES MUST RESPECT SUBSCRIPTION
+
+### Problem:
+
+These run for all users:
+
+* AutoBackupService
+* DailySnapshotService
+* AutoReminderService
+
+### Task:
+
+Wrap execution:
+
+```ts
+if (hasAccess(subscription, "daily_snapshot")) {
+  runService();
+}
+```
+
+### Requirement:
+
+* Free users must NOT receive premium automation
+
+---
+
+## 4. ⚠️ FIX MOBILE KEYBOARD LAYOUT BUG
+
+### Problem:
+
+Root container uses fixed height → causes blank space when keyboard opens
+
+### Fix:
+
+* Replace `h-screen` → `min-h-screen`
+* Remove `overflow-hidden` from root container
+* Ensure main uses `overflow-y-auto`
+
+---
+
+## 5. ⚠️ COMPLETE FEATURE GATING COVERAGE
+
+### Task:
+
+Audit ALL views and enforce gating consistently
+
+### Must include:
+
+* Inventory advanced features
+* Ledger
+* Transactions
+* Waste
+* Vehicles
+* Party statements
+* Timeline
+* Reports
+* Analytics
+
+### Rule:
+
+* No feature left ungated
+* Use hasAccess() ONLY
+
+---
+
+## 6. ⚠️ SUBSCRIPTION IN LOGIC LAYER
+
+### Problem:
+
+Subscription only used in UI
+
+### Task:
+
+Pass subscription into:
+
+* ApiService calls
+* business logic
+* background services
+
+---
+
+## 7. ⚠️ SUBSCRIPTION LOADING STATE
+
+### Problem:
+
+UI renders before subscription is ready
+
+### Task:
+
+Block rendering:
+
+```tsx
+if (subscriptionLoading) return <LoadingView />
+```
+
+---
+
+## 8. ⚠️ MULTI-TENANT SUBSCRIPTION DESIGN
+
+### Problem:
+
+dataUid = adminUid || user.uid mixes:
+
+* user identity
+* firm identity
+
+### Task:
+
+Clarify subscription ownership:
+
+Choose one:
+
+* subscription tied to admin (firm-level)
+* OR user-level subscription
+
+Ensure consistency across app
+
+---
+
+## 9. ⏱ RUNTIME EXPIRY VALIDATION
+
+### Task:
+
+Add periodic check (every ~60 sec):
+
+* If expired → refresh subscription
+* Downgrade immediately
+
+---
+
+## 10. ⚠️ SAFE OFFLINE FALLBACK
+
+### Fix:
+
+* Use last known subscription
+* If unavailable → fallback to FREE
+
+NEVER default to Pro offline
+
+---
+
+# 🚀 IMPROVEMENTS (IMPORTANT)
+
+---
+
+## 11. 📊 TELEMETRY (UPGRADE SIGNALS)
+
+Track:
+
+```ts
+TelemetryService.track("feature_blocked", {
+  feature,
+  plan
+});
+```
+
+---
+
+## 12. 🎯 FEATURE REGISTRY (CENTRALIZED)
+
+Create:
+
+```ts
+FEATURES = {
+  analytics: {
+    label: "Advanced Analytics",
+    description: "Deep insights"
+  }
+}
+```
+
+Use across:
+
+* UI
+* FeatureGate
+* upgrade prompts
+
+---
+
+## 13. 💡 UPGRADE UX
+
+Improve FeatureGate:
+
+* show feature benefits
+* show locked reason
+* CTA to upgrade
+
+---
+
+## 14. ⚡ PERFORMANCE OPTIMIZATION
+
+* Memoize hasAccess results
+* Avoid unnecessary re-renders in FeatureGate
+
+---
+
+## 15. 🔄 PLAN MIGRATION READINESS
+
+Prepare for future:
+
+* introOffer flag
+* migration logic when pricing starts
+* downgrade handling
+
+---
+
+# ⚠️ CONSTRAINTS
+
+* Do NOT break existing functionality
+* Keep UI responsive
+* Maintain modular architecture
+* Avoid duplicated logic
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Service-level enforcement implemented
+2. Navigation guard added
+3. Background services gated
+4. Keyboard layout fixed
+5. All features properly gated
+6. Subscription used across logic layer
+7. Loading + expiry handling working
+8. Offline-safe behavior implemented
+9. Telemetry + feature registry added
+10. System ready for real monetization
+
+---
+
+# 🧠 FINAL GOAL
+
+Convert current system from:
+👉 UI-based gating system
+
+Into:
+👉 Full SaaS-grade subscription engine with multi-layer enforcement
+
+---
+
+Focus on correctness, security, and long-term scalability.

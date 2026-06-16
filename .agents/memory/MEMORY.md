@@ -1,0 +1,8 @@
+- [Toast invalid-type crash](toast-invalid-type-crash.md) — `'warning'` passed to showToast crashes Toast render; only `'success'|'error'|'info'` are valid types.
+- [Anonymous block let scope bug](anonymous-block-let-scope.md) — `let` vars declared inside `{ }` anonymous block in ManualEntryModal caused ReferenceError outside block; fix: declare before the block.
+- [PDF generation strategy](pdf-generation-strategy.md) — jsPDF is stubbed (vite alias), native PdfGenerator plugin crashes GPU on Android; use purePdf (src/utils/purePdf.ts) as the working fallback.
+- [PDF Tm operator syntax](pdf-tm-operator.md) — PDF `Tm` operator needs 6 args (`1 0 0 1 x y Tm`), not 2. Passing 2 args silently drops ALL text; path ops (borders) still draw.
+- [SyncQueue pending-forever fix](sync-queue-retry.md) — SyncQueue only retries on offline→online event; if device is online-but-slow, call processQueue(uid) immediately after addToQueue in WRITE_TIMEOUT path.
+- [Party cascade party_id](party-id-cascade.md) — partySync queries both party_id AND party_name for all collections; ManualEntryModal stamps party_id from safeParties cache on every new ledger/txn entry.
+- [Firebase cache — persistentLocalCache](firebase-cache-decision.md) — NEVER use memoryLocalCache; it requires live network per write → stuck pending. Use persistentLocalCache+forceOwnership:true.
+- [Non-blocking save pattern](non-blocking-save.md) — ManualEntryModal uses ApiService.prepareBatch (synchronous, no await); IDs generated locally; modal closes instantly; commit fires in background; cascade inside .then().

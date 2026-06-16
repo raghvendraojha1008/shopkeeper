@@ -1,0 +1,98 @@
+in the party adding form if user choose Role as Supplier then show an additional fiel items(connect this field with the items list in stock, don't add same item multiple times) user can attach as many items here. now the idea when user creates any purchase order and chooses supplier and an item then remmember this set of (supplier, item, quantity, and rate) and when next time user creates any sale/purchase order and user selscts that supplier(in purchase order or Source supplier in sale order) then auto fill item infomation saved in just prevoius purchase/sale order.
+
+little updation needed in the party detail view to include two buttons to add sale/purchase order and payment(with autofill party info) based on the party type(customer/supplier), so user can add info directly from party detail view.
+
+same sale/purchase order adding buttons in item detail view with autofill relevent information.
+
+clearly understand the idea and then refine and then implement
+
+
+Show more
+32 minutes ago
+
+Planning purchase order pre-fill logic (9 seconds)
+This is a meaty multi-part feature. Let me explore all the relevant areas in parallel before writing any code:
+
+
+Show less
+
+Documented party form and data flow
+
+Documented ManualEntryModal functionality for orders
+
+Investigated item detail view rendering
+
+Waiting for background explore tasks
+Waited 24 seconds for background jobs to complete
+
+Planning party form supplier items (14 seconds)
+Now I have a good understanding of the codebase. Let me plan the implementation clearly.
+
+Feature Breakdown
+Feature 1: Supplier's "Items" field in Party Form
+In SimpleForms.tsx → PartyForm, when role === 'supplier', show a multi-select items field
+Items come from inventory (passed in via props from ManualEntryModal or PartiesView)
+No duplicates
+Stored in party document as linked_items: string[]
+Need to add linked_items to Party type
+Feature 2: Smart auto-fill for orders (last order memory)
+For purchase and sale orders, I'll capture the items and details whenever an order is saved, then use that to pre-populate the same fields when the user selects that supplier again. The cleanest approach is storing this last_order data directly in the party document itself rather than creating a separate collection.
+
+Actually, I can simplify this further—instead of storing anything new, I'll just query the existing ledger entries that are already cached in DataContext to find the most recent order for that party, then auto-fill from there. This avoids extra storage, always stays current with actual order history, and leverages data we're already managing.
+
+So when a user picks a supplier in a purchase order or selects a source_supplier in a sale order, I'll search through the ledger entries to locate the latest matching order and pull its items into the form.
+
+Now I'm planning out the quick-action buttons for the party and item detail views—adding "New Sale Order" and "Record Payment" options for customers, "New Purchase Order" and "Record Payment" for suppliers, and similar shortcuts in the inventory item view. These will pre-fill the ManualEntryModal with the relevant context. Let me check the files I need to modify to implement this.
+
+Now I have a clear picture of the full scope. Let me read the key files I need to modify before writing code:
+
+
+4 actions
+Let me read the remaining key sections I need before building:
+
+
+Show less
+
+Opened PartyDetailView.tsx
+
+Opened SimpleForms.tsx
+
+Opened InventoryItemDetailView.tsx
+
+Ran rg
+
+Planning data structure integration
+Let me read more of the key files I need before implementing. I need to see:
+
+The rest of PartyForm (SimpleForms.tsx) - the role field and how it ends
+PartyDetailView - the header area where buttons would go
+InventoryItemDetailView - the header area where buttons would go
+ManualEntryModal - how initialData pre-fills and how it's opened from existing views
+How InventoryView opens InventoryItemDetailView and ManualEntryModal
+Let me read these in parallel.
+
+Let me read the remaining pieces I need to build against:
+
+
+16 actions
+One more targeted read before I start building:
+
+
+3 actions
+Let me read the final pieces I need:
+
+
+4 actions
+Now I have everything I need. Let me read the ManualEntryModal render section and then start building all features in parallel:
+
+
+3 actions
+Good — I have everything I need. Let me read the ManualEntryModal render area and the existing PartyDetailView modal usage, then I'll implement all 5 parts simultaneously:
+
+
+Show less
+
+Opened PartyDetailView.tsx
+
+Opened ManualEntryModal.tsx
+You've reached your monthly free quota limit. It will reset on June 8, 2026

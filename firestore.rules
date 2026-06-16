@@ -1,0 +1,167 @@
+rules_version = '2';
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Shopkeeper — Firestore Security Rules
+// Project: shopkeeper-1a3fc
+//
+// ADMIN PANEL SETUP (one-time):
+//   The Super Admin Panel must set a custom claim on each admin account:
+//     admin.auth().setCustomUserClaims(uid, { superAdmin: true })
+//   Until that is done, write access to config/plans/announcements is
+//   blocked for everyone from the client (which is safe — seed data is
+//   written during development via the Firebase Console or Admin SDK).
+// ═══════════════════════════════════════════════════════════════════════════════
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isAuth() && request.auth.uid == uid;
+    }
+
+    // Super Admin Panel users carry a custom claim set by Firebase Admin SDK.
+    function isSuperAdmin() {
+      return isAuth() && request.auth.token.get('superAdmin', false) == true;
+    }
+
+    // Staff who have been granted access to a firm's namespace.
+    // firm_accesses documents have fields: { user_id, firmUid, role }
+    // We look up by a stable composite doc ID: "{staffUid}_{adminUid}"
+    function hasStaffAccess(adminUid) {
+      return isAuth() &&
+        exists(/databases/$(database)/documents/firm_accesses/$(request.auth.uid + '_' + adminUid));
+    }
+
+    // ── User profile + all sub-collections ────────────────────────────────────
+
+    match /users/{uid} {
+      // Profile doc: owner or super admin
+      allow read:   if isOwner(uid) || isSuperAdmin();
+      // Writes include updating trialUsed, profile fields, etc.
+      allow write:  if isOwner(uid) || isSuperAdmin();
+    }
+
+    // Subscription sub-document — owner can READ; only super admin can WRITE.
+    // End-users must never write subscription docs directly (bypasses payment).
+    // All subscription writes must go through the backend service account or
+    // the super-admin panel (both use the Firebase Admin SDK, bypassing rules).
+    match /users/{uid}/subscription/{doc} {
+      allow read:   if isOwner(uid) || isSuperAdmin();
+      allow write:  if isSuperAdmin();
+    }
+
+    // Business data (transactions, parties, expenses, products, vehicles, waste,
+    // ledger_entries, recycle_bin, settings, backup_meta, audit_logs, feedback,
+    // error_logs, daily_snapshots, …)
+    // Owner + staff with firm access + super admin.
+    match /users/{uid}/{subcollection}/{docId} {
+      allow read:  if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);
+      allow write: if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);
+    }
+
+    // ── Admin panel accounts ───────────────────────────────────────────────────
+    // Only super admins can read or write the admins collection.
+
+    match /admins/{uid} {
+      allow read, write: if isSuperAdmin();
+    }
+
+    // ── Subscription audit log ─────────────────────────────────────────────────
+    // Immutable from the client — create only. No updates or deletes.
+    // A user can read their own entries; super admin can read all.
+
+    match /subscription_logs/{logId} {
+      allow create: if isAuth();
+      allow read:   if isSuperAdmin()
+                    || (isAuth() && resource.data.userId == request.auth.uid);
+      allow update, delete: if false;
+    }
+
+    // ── Global config (config/global, config/payment_methods) ─────────────────
+    // All authenticated users must be able to read:
+    //   • config/global       — grace period, appMode, trial settings
+    //   • config/payment_methods — UPI/bank details shown in SubscriptionTab
+    // Only super admin can write.
+
+    match /config/{doc} {
+      allow read:  if isAuth();
+      allow write: if isSuperAdmin();
+    }
+
+    // ── Subscription plans ─────────────────────────────────────────────────────
+    // Authenticated users read plan details for SubscriptionTab display.
+    // Only super admin can write.
+
+    match /plans/{planId} {
+      allow read:  if isAuth();
+      allow write: if isSuperAdmin();
+    }
+
+    // ── Announcements ──────────────────────────────────────────────────────────
+    // AnnouncementBanner uses onSnapshot — all authenticated users must read.
+    // Only super admin can create/update/delete.
+
+    match /announcements/{announcementId} {
+      allow read:  if isAuth();
+      allow write: if isSuperAdmin();
+    }
+
+    // ── Crash logs (global collection) ────────────────────────────────────────
+    // Any authenticated user can CREATE a crash log (fire-and-forget from the
+    // client crash reporter). Only super admins can READ, UPDATE (mark resolved),
+    // or DELETE entries.  No unauthenticated access — "anonymous" uid is still
+    // written by an authenticated Firestore client connection.
+
+    match /crash_logs/{logId} {
+      allow create: if isAuth();
+      allow read, update, delete: if isSuperAdmin();
+    }
+
+    // ── Multi-firm: firm accesses ──────────────────────────────────────────────
+    // Document ID format: "{staffUid}_{adminUid}"
+    // Admin (firmUid) creates records for their staff.
+    // Staff can read their own access records.
+
+    match /firm_accesses/{accessId} {
+      allow read:   if isAuth() && (
+                      resource.data.user_id  == request.auth.uid ||
+                      resource.data.firmUid  == request.auth.uid ||
+                      isSuperAdmin()
+                    );
+      allow create: if isAuth() && request.resource.data.firmUid == request.auth.uid;
+      allow update: if isAuth() && resource.data.firmUid == request.auth.uid;
+      allow delete: if isAuth() && (
+                      resource.data.firmUid  == request.auth.uid ||
+                      resource.data.user_id  == request.auth.uid
+                    );
+    }
+
+    // ── Multi-firm: invitations ────────────────────────────────────────────────
+    // Any authenticated user can read invitations (they need the code to accept).
+    // Only the inviting admin can delete their own invitations.
+
+    match /invitations/{invitationId} {
+      allow read:   if isAuth();
+      allow create: if isAuth();
+      allow update: if isAuth() && (
+                      resource.data.adminUid      == request.auth.uid ||
+                      resource.data.invitedEmail  == request.auth.token.email
+                    );
+      allow delete: if isAuth() && resource.data.adminUid == request.auth.uid;
+    }
+
+    // ── User roles (in-app role assignments within a firm) ─────────────────────
+
+    match /user_roles/{uid} {
+      allow read:  if isOwner(uid) || isSuperAdmin();
+      allow write: if isOwner(uid) || isSuperAdmin();
+    }
+
+  }
+}

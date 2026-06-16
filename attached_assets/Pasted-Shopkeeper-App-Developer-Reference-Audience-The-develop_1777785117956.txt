@@ -1,0 +1,605 @@
+Shopkeeper App — Developer Reference
+Audience: The developer agent building the main Shopkeeper mobile/web app. Source of truth: This document is compiled directly from the Super Admin Panel source code (artifacts/admin-panel/src/). Every collection path, field name, enum value, and business rule described here is exactly what the admin panel reads and writes. Build the main app against these contracts without deviation.
+
+Table of Contents
+Firebase Project
+Authentication Architecture
+Firestore — Collection Reference
+3.1 users/{uid}
+3.2 users/{uid}/subscription/current
+3.3 plans/{planId}
+3.4 config/global
+3.5 config/payment_methods
+3.6 subscription_logs/{autoId}
+3.7 announcements/{autoId}
+3.8 admins/{uid}
+Subscription State Machine
+Plan Hierarchy & Feature Keys
+Admin Action Contracts
+Payment Record Discovery
+Giveaway / Grant Log
+Firestore Security Model
+Audit Log Reference
+Key Business Rules
+1. Firebase Project
+Property	Value
+Project ID	shopkeeper-1a3fc
+Auth domain	shopkeeper-1a3fc.firebaseapp.com
+Storage bucket	shopkeeper-1a3fc.appspot.com
+SDK	Firebase JS v10 (modular)
+The admin panel initialises Firebase with:
+
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+const app = initializeApp({
+  apiKey: "...",
+  authDomain: "shopkeeper-1a3fc.firebaseapp.com",
+  projectId: "shopkeeper-1a3fc",
+  storageBucket: "shopkeeper-1a3fc.appspot.com",
+  messagingSenderId: "...",
+  appId: "...",
+});
+export const db   = getFirestore(app);
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
+Use the exact same projectId / authDomain in the main app.
+
+2. Authentication Architecture
+2.1 Admin-panel auth (for context only — do NOT replicate in the main app)
+The admin panel uses Firebase Custom Claims rather than a Firestore admins lookup:
+
+signInWithEmailAndPassword / signInWithPopup
+  → getIdTokenResult(forceRefresh = true)
+    → token.claims.superAdmin === true  ✓ allow
+    → anything else                    → firebaseSignOut() immediately
+
+The admins/{uid} Firestore collection has no client-readable security rule, so the admin panel never reads it from the client. The custom claim is set via the Admin SDK:
+
+admin.auth().setCustomUserClaims(uid, { superAdmin: true });
+
+2.2 Main-app auth (what you must implement)
+Regular users sign in with signInWithEmailAndPassword or Google OAuth. They do not have superAdmin: true in their token. The main app must:
+
+Call onAuthStateChanged to track the current user.
+Read users/{uid} to get the user profile.
+Read users/{uid}/subscription/current to get subscription state.
+Gate features by checking subscription.status and subscription.planId.
+Never write to admins/, config/, or plans/ — those are admin-only.
+3. Firestore — Collection Reference
+3.1 users/{uid}
+One document per Firebase Auth user. Created at registration.
+
+interface UserDoc {
+  email:       string;          // mirrors Auth email
+  displayName: string;          // mirrors Auth displayName
+  createdAt:   Timestamp;       // when the account was created
+  trialUsed:   boolean;         // true once the user has consumed a free trial
+}
+
+Important notes:
+
+trialUsed starts as false. The main app sets it to true the moment a trial subscription is activated.
+The admin panel can reset trialUsed to false via adminResetTrial(). When this happens a subscription_logs entry is written with action: 'admin_reset_trial'.
+No other fields are written by the admin panel. The main app may add additional fields but must not remove or rename these four.
+3.2 users/{uid}/subscription/current
+A single fixed-name document (not auto-ID) at the sub-collection path subscription/current.
+
+interface SubscriptionRecord {
+  planId:       string;                            // 'free' | 'pro' | 'enterprise'
+  plan:         string;                            // DUPLICATE of planId — always kept in sync
+  status:       'active' | 'trial' | 'expired' | 'grace';
+  startDate:    Timestamp;                         // when this period started
+  endDate:      Timestamp;                         // when the paid/trial period ends
+  graceEndDate: Timestamp;                         // endDate + gracePeriodDays (from config/global)
+  trialUsed:    boolean;                           // whether this record represents a trial
+  autoRenew:    boolean;                           // whether Razorpay auto-renew is active
+  paymentId:    string | null;                     // Razorpay payment/order ID, null for admin grants
+  source:       'system' | 'admin' | 'payment';   // how this sub was created/last modified
+  introOffer?:  boolean;                           // optional: true if subscriber paid ₹0 intro price
+  createdAt:    Timestamp;
+  updatedAt:    Timestamp;
+}
+
+Reading this document — collectionGroup query used by admin panel:
+
+getDocs(collectionGroup(db, 'subscription'))
+// path of each doc: users/{uid}/subscription/current
+// extract uid from: d.ref.path.split('/')[1]
+
+The main app reads this document by direct reference:
+
+const subRef = doc(db, 'users', uid, 'subscription', 'current');
+const snap = await getDoc(subRef);
+
+Field duplication: Both planId and plan always hold the same value (e.g. 'pro'). Write both when you write either. This duplication exists for legacy reasons — older reads used plan, newer code uses planId. Support reading whichever is present:
+
+const planId = data.planId ?? data.plan ?? 'free';
+
+3.3 plans/{planId}
+Three documents, with fixed IDs: free, pro, enterprise.
+
+interface Plan {
+  id:          string;    // document ID — 'free' | 'pro' | 'enterprise'
+  name:        string;    // human-readable, e.g. "Pro Plan"
+  price:       number;    // amount in INR (integer), e.g. 499
+  currency:    'INR';     // always INR
+  durationDays: number;   // subscription length, e.g. 30 or 365
+  features:    string[];  // array of FEATURE_KEYS (see §5)
+  isActive:    boolean;   // if false, don't offer this plan to new users
+  createdAt:   Timestamp;
+  updatedAt:   Timestamp;
+}
+
+Example pro document:
+
+{
+  "name": "Pro Plan",
+  "price": 499,
+  "currency": "INR",
+  "durationDays": 30,
+  "features": ["basic", "waste_tracking", "analytics", "reports", "pos_billing"],
+  "isActive": true
+}
+
+The admin panel allows editing all fields. The main app should:
+
+Fetch plans/ collection to display plan pricing.
+Derive what features are enabled for the current user from plans/{subscription.planId}.features.
+Check plan.isActive before rendering a plan as purchasable.
+Plan hierarchy (for upgrade/downgrade logic):
+
+free (0) < pro (1) < enterprise (2)
+
+This order is used by adminChangePlan() to determine audit action: 'upgrade', 'downgrade', or 'admin_override'.
+
+3.4 config/global
+A single document at path config/global. Contains app-wide settings.
+
+interface GlobalConfig {
+  freeTrialEnabled:  boolean;           // whether new users can start a free trial
+  trialDurationDays: number;            // how many days a trial lasts, e.g. 7
+  defaultPlan:       string;            // planId to assign on signup, usually 'free'
+  gracePeriodDays:   number;            // days after endDate before status → 'expired', e.g. 3
+  appMode:           'free' | 'paid' | 'hybrid';
+  updatedAt?:        Timestamp;
+}
+
+appMode meanings:
+
+Value	Meaning
+'free'	All features are free; subscriptions are not enforced
+'paid'	Full paywall; users must subscribe
+'hybrid'	Free tier exists; premium features require subscription
+The main app must read this document at startup (or subscribe with onSnapshot) and adapt its feature-gating logic accordingly. Cache it locally — it changes rarely.
+
+Grace period logic (implemented by admin panel and expected of main app):
+
+if (now > endDate && now <= graceEndDate) → status = 'grace'
+if (now > graceEndDate)                  → status = 'expired'
+
+The graceEndDate is pre-computed as endDate + gracePeriodDays and stored on the subscription document, so the main app can compare dates without reading config/global on every check.
+
+3.5 config/payment_methods
+A single document at path config/payment_methods. Contains all payment configuration. The main app reads this to know which payment options to show.
+
+interface PaymentConfig {
+  upi: {
+    enabled: boolean;
+    entries: Array<{
+      id:       string;   // unique key, e.g. 'upi_1'
+      label:    string;   // display name, e.g. 'Shopkeeper Official'
+      upiId:    string;   // e.g. 'shopkeeper@upi'
+      isActive: boolean;  // only show entries where isActive === true
+    }>;
+  };
+  razorpay: {
+    enabled:       boolean;
+    keyId:         string;  // Razorpay Key ID (starts with 'rzp_')
+    keySecret:     string;  // ⚠️ DO NOT expose to client — read from backend only
+    webhookSecret: string;  // ⚠️ DO NOT expose to client
+  };
+  bankTransfer: {
+    enabled:       boolean;
+    accountName:   string;
+    accountNumber: string;
+    ifscCode:      string;
+    bankName:      string;
+    branch:        string;
+  };
+  cash: {
+    enabled:      boolean;
+    instructions: string;  // free-text instructions for cash payment
+  };
+  updatedAt: Timestamp;
+}
+
+Security note: razorpay.keySecret and razorpay.webhookSecret are stored in this document by the admin panel. The main app must never read these fields on the client. Only use razorpay.keyId on the client. The secret and webhook values are for a backend/Cloud Function only.
+
+3.6 subscription_logs/{autoId}
+Auto-ID collection. Every subscription mutation (by admin or by the system) writes one document here. This is the primary audit trail.
+
+interface AuditLog {
+  id:             string;                    // document ID (auto-generated)
+  userId:         string;                    // uid of the affected user
+  action:         string;                    // see §10 for all action values
+  previousState:  Record<string, any> | null; // snapshot before the change, null for first grant
+  newState:       Record<string, any>;        // snapshot after the change
+  performedBy:    'system' | 'admin';        // 'admin' = human; 'system' = automated
+  timestamp:      Timestamp;
+}
+
+The main app should write to this collection whenever it modifies a subscription (e.g. when a user starts a trial, completes a payment, or the system detects expiry). Use performedBy: 'system' for automated changes.
+
+3.7 announcements/{autoId}
+Auto-ID collection. Admin-authored messages displayed in the main app.
+
+interface Announcement {
+  id:             string;    // document ID
+  title:          string;    // short headline
+  message:        string;    // body text (may contain line breaks)
+  type:           'info' | 'warning' | 'success' | 'maintenance';
+  isActive:       boolean;   // only show to users when true
+  targetAudience: 'all' | 'active' | 'expired';
+  createdAt:      Timestamp;
+  createdBy:      string;    // admin UID
+  expiresAt:      Timestamp | null;  // if set, stop showing after this date
+}
+
+Main app display logic:
+
+// Fetch active, non-expired announcements for the current user
+const now = Timestamp.now();
+query(
+  collection(db, 'announcements'),
+  where('isActive', '==', true),
+  orderBy('createdAt', 'desc')
+)
+// Then filter client-side:
+//   if (expiresAt && now > expiresAt)  → skip
+//   if (targetAudience === 'active')   → show only to users with status 'active'
+//   if (targetAudience === 'expired')  → show only to users with status 'expired'
+//   if (targetAudience === 'all')      → show to everyone
+
+type → UI treatment:
+
+Type	Colour / Icon
+info	Blue / info icon
+warning	Amber / warning triangle
+success	Green / check circle
+maintenance	Orange / wrench / may need to block app usage
+3.8 admins/{uid}
+Documents for admin-panel users only. The main app must never read or write this collection. Firestore rules do not grant client read access to it.
+
+interface AdminDoc {
+  email:     string;
+  role:      'super_admin' | 'support';
+  createdAt: Timestamp;
+}
+
+4. Subscription State Machine
+              ┌─────────────────────────────────────────────┐
+              │              New user signs up               │
+              └──────────────────────┬──────────────────────┘
+                                     │
+                    freeTrialEnabled? │
+                   ┌─────────────────┴────────────────┐
+                   │ yes                               │ no
+                   ▼                                   ▼
+             status='trial'                    status='expired'
+             planId=defaultPlan               planId='free'
+             endDate=now+trialDays
+                   │
+          endDate reached?
+                   │
+                   ▼
+             status='grace'   ◄── graceEndDate not yet passed
+                   │
+          graceEndDate reached?
+                   │
+                   ▼
+             status='expired'
+                   │
+      user pays / admin grants
+                   │
+                   ▼
+             status='active'
+             planId='pro'|'enterprise'
+             source='payment'|'admin'
+                   │
+          endDate reached?  (repeat grace→expired cycle)
+
+Status definitions:
+
+Status	Access level
+'active'	Full access to all features in their plan
+'trial'	Access to features of the defaultPlan for the trial duration
+'grace'	Plan features still accessible; show "renew soon" warning
+'expired'	Downgrade to free tier or block, depending on appMode
+5. Plan Hierarchy & Feature Keys
+5.1 Plan order
+free (0) → pro (1) → enterprise (2)
+
+5.2 Feature keys
+These are the canonical string values used in plan.features[]. The main app gates UI sections using these exact strings.
+
+const FEATURE_KEYS = {
+  basic:               'Core Billing',
+  waste_tracking:      'Waste Log',
+  analytics:           'Sales & Purchase Dashboards',
+  advanced_analytics:  'Advanced Analytics',
+  reports:             'GST Reports',
+  pos_billing:         'POS Quick Billing',
+  bulk_import:         'Bulk CSV Import',
+  stock_valuation:     'Stock Valuation',
+  game_timeline:       'Activity Timeline',
+  whatsapp_reminders:  'WhatsApp Reminders',
+  multi_user:          'Staff Accounts',
+  daily_snapshot:      'Daily Snapshots',
+};
+
+Feature gate pattern (main app):
+
+// 1. Fetch plan once and cache
+const planSnap = await getDoc(doc(db, 'plans', subscription.planId));
+const enabledFeatures: string[] = planSnap.data()?.features ?? [];
+// 2. Check before rendering a feature
+function canAccess(featureKey: string): boolean {
+  if (globalConfig.appMode === 'free') return true;
+  if (subscription.status === 'expired' && globalConfig.appMode === 'paid') return false;
+  return enabledFeatures.includes(featureKey);
+}
+// 3. Example usage
+if (canAccess('pos_billing')) { /* show POS screen */ }
+
+6. Admin Action Contracts
+These are the exact operations the admin panel performs. The main app may need to mirror some (e.g. trial activation, payment completion). All admin-originated writes also write an audit log entry.
+
+6.1 adminGrantSubscription(uid, planId, durationDays, adminEmail?)
+Creates or replaces users/{uid}/subscription/current with a fresh subscription:
+
+{
+  planId,
+  plan: planId,           // always duplicated
+  status: 'active',
+  startDate: Timestamp.now(),
+  endDate: Timestamp.fromDate(now + durationDays),
+  graceEndDate: Timestamp.fromDate(endDate + gracePeriodDays),
+  trialUsed: false,
+  autoRenew: false,
+  paymentId: null,        // no payment — admin grant
+  source: 'admin',
+  createdAt: Timestamp.now(),
+  updatedAt: Timestamp.now(),
+}
+
+Audit log action: 'grant'
+
+Audit newState also includes adminEmail for display in the Giveaway Log.
+
+6.2 adminChangePlan(uid, planId)
+Partial merge into users/{uid}/subscription/current:
+
+{
+  planId,
+  plan: planId,
+  status: 'active',
+  source: 'admin',
+  updatedAt: Timestamp.now(),
+}
+
+Audit log action:
+
+'upgrade' — new plan is higher tier than previous
+'downgrade' — new plan is lower tier
+'admin_override' — same tier (or unknown)
+6.3 adminExtendSubscription(uid, days)
+Extends the existing endDate by days. Base date is max(now, existing endDate):
+
+{
+  endDate: Timestamp.fromDate(baseDate + days),
+  graceEndDate: Timestamp.fromDate(newEnd + gracePeriodDays),
+  status: 'active',
+  source: 'admin',
+  updatedAt: Timestamp.now(),
+}
+
+Audit log action: 'extend'
+
+6.4 adminCancelSubscription(uid)
+Immediately expires the subscription:
+
+{
+  status: 'expired',
+  planId: 'free',
+  plan: 'free',
+  autoRenew: false,
+  source: 'admin',
+  updatedAt: Timestamp.now(),
+}
+
+Audit log action: 'cancel'
+
+6.5 adminResetTrial(uid, performedByUid)
+Resets trialUsed on the user document (not the subscription):
+
+// users/{uid}  ← setDoc with merge
+{ trialUsed: false }
+
+Audit log action: 'admin_reset_trial' previousState: { trialUsed: true } newState: { trialUsed: false }
+
+6.6 Main-app equivalents to write yourself
+User action	What to write	source	action in audit log
+User starts free trial	subscription/current full doc	'system'	'trial_start' (your choice)
+User completes payment	subscription/current full doc	'payment'	'payment' (your choice)
+System detects expiry	merge { status: 'expired' }	'system'	'expire' (your choice)
+System detects grace	merge { status: 'grace' }	'system'	'grace' (your choice)
+Always write a matching subscription_logs entry. The admin panel audit page reads from this collection to show a full history.
+
+7. Payment Record Discovery
+The admin Payment History page discovers payment records using a Firestore collection-group query:
+
+getDocs(collectionGroup(db, 'subscription'))
+// Matches every document in any sub-collection named 'subscription'
+// i.e. users/*/subscription/current
+
+A record appears in the payment history only if it has a non-null paymentId.
+
+// Derives amount from the plan price
+const price = planMap[data.planId]?.price ?? 0;
+const amount = data.introOffer ? 0 : price;
+
+This means:
+
+If introOffer: true → displayed amount is ₹0, even if plan has a price.
+If paymentId: null → record is excluded from payment history (e.g. admin grants, trials).
+Collectiongroup index requirement: You must enable the subscription collection-group index in Firebase console for the query getDocs(collectionGroup(db, 'subscription')) to work without ordering. If you add orderBy you'll need a composite index.
+
+8. Giveaway / Grant Log
+The Giveaway Log page queries subscription_logs filtered to only action === 'grant':
+
+query(
+  collection(db, 'subscription_logs'),
+  where('action', '==', 'grant'),
+  orderBy('timestamp', 'desc'),
+)
+
+Fields it reads from each log entry:
+
+userId — the affected user
+newState.planId or newState.plan — plan that was granted
+newState.startDate / newState.endDate — to compute duration
+newState.adminEmail or data.adminEmail — who performed the grant
+timestamp — when it happened
+This means: when you write an admin grant audit log, the newState object must include adminEmail if you want it to appear correctly in the Giveaway Log.
+
+9. Firestore Security Model
+The admin panel comments document the intended rules:
+
+isSuperAdmin() → request.auth.token.superAdmin === true
+
+All admin write paths are gated behind this function. The main app user never has superAdmin: true.
+
+Expected rules structure (inferred):
+
+// Users can read/write their own documents
+match /users/{uid} {
+  allow read, write: if request.auth.uid == uid;
+  match /subscription/current {
+    allow read: if request.auth.uid == uid;
+    allow write: if request.auth.uid == uid
+                 || request.auth.token.superAdmin == true;
+  }
+}
+// Admin-only collections
+match /plans/{planId} {
+  allow read: if request.auth != null;          // all authenticated users can read plans
+  allow write: if request.auth.token.superAdmin == true;
+}
+match /config/{docId} {
+  allow read: if request.auth != null;
+  allow write: if request.auth.token.superAdmin == true;
+}
+match /announcements/{annoId} {
+  allow read: if request.auth != null;
+  allow write: if request.auth.token.superAdmin == true;
+}
+match /subscription_logs/{logId} {
+  allow read: if request.auth.token.superAdmin == true;
+  allow write: if request.auth != null;          // main app also writes logs
+}
+match /admins/{uid} {
+  // NO client read — admin panel never reads this from client
+  allow write: if request.auth.token.superAdmin == true;
+}
+
+Note: The actual Firestore rules are deployed separately. The above is the intended model derived from the admin panel's auth strategy and usage patterns. Confirm with the actual rules file before deploying the main app.
+
+10. Audit Log Reference
+All possible action values written by the admin panel to subscription_logs:
+
+action value	Written by	Trigger
+'grant'	adminGrantSubscription	Admin manually gives a free subscription
+'upgrade'	adminChangePlan	Admin changes plan to a higher tier
+'downgrade'	adminChangePlan	Admin changes plan to a lower tier
+'admin_override'	adminChangePlan or adminUpdateUserSubscription	Admin changes to same tier or partial field update
+'extend'	adminExtendSubscription	Admin adds days to existing subscription
+'cancel'	adminCancelSubscription	Admin forces expiry and downgrades to free
+'admin_reset_trial'	adminResetTrial	Admin resets trialUsed flag on user doc
+Reserve these action values for the main app (not currently used by admin panel, add your own as needed):
+
+Suggested action	Trigger
+'trial_start'	User activates free trial
+'payment_success'	User completes payment via Razorpay
+'auto_expire'	System detects subscription past grace period
+'auto_grace'	System detects subscription past end date
+'renewal'	Razorpay auto-renew webhook succeeds
+'renewal_failed'	Razorpay auto-renew webhook fails
+11. Key Business Rules
+These rules are enforced by the admin panel and must be mirrored in the main app:
+
+11.1 Grace period is always computed from config/global
+const configSnap = await getDoc(doc(db, 'config', 'global'));
+const gracePeriodDays = configSnap.data()?.gracePeriodDays ?? 3;  // default: 3
+
+When writing a new subscription, always compute and store graceEndDate:
+
+const graceEnd = new Date(endDate);
+graceEnd.setDate(graceEnd.getDate() + gracePeriodDays);
+
+11.2 Both planId and plan must always be written together
+// Always write both:
+{ planId: 'pro', plan: 'pro', ... }
+// Never write only one.
+
+11.3 trialUsed is on the user document, not the subscription
+When a trial starts:
+
+Write subscription/current with status: 'trial', source: 'system'.
+Merge { trialUsed: true } into users/{uid}.
+Check users/{uid}.trialUsed before offering a trial — if true, don't offer again even if the subscription record is gone.
+11.4 Admin grants always have paymentId: null
+Admin-granted subscriptions never appear in Payment History (which filters paymentId != null), but they do appear in the Giveaway Log (which filters action == 'grant').
+
+11.5 Intro offer pricing
+If a user subscribes at ₹0 (introductory offer):
+
+Set introOffer: true on the subscription record.
+The Payment History page renders the amount as ₹0 when introOffer === true, regardless of plan price.
+11.6 source field semantics
+source	When to use
+'system'	Automated action — trial start, expiry detection, renewal webhook
+'admin'	A human super-admin performed the action via the admin panel
+'payment'	User completed a payment through Razorpay or another payment method
+11.7 UPI entries — filter by isActive
+When displaying UPI payment options to users:
+
+const activeUpiEntries = paymentConfig.upi.entries.filter(e => e.isActive);
+
+11.8 Default grace period fallback
+If config/global cannot be read (network error, rules), use 3 as the default gracePeriodDays. This is the hardcoded fallback in adminGrantSubscription and adminExtendSubscription.
+
+11.9 collectionGroup('subscription') index
+The admin Payment History page relies on a collection-group query on subscription. You must create a Firestore composite index in the Firebase console:
+
+Collection group: subscription
+Fields indexed: paymentId (Ascending), updatedAt (Descending) — or at minimum ensure collection-group queries are enabled.
+11.10 Announcement expiry is client-side
+The admin panel stores expiresAt as a Timestamp but does not use a Firestore where('expiresAt', '>', now) filter (which would require a composite index). Instead it fetches all active announcements and filters client-side. The main app should do the same to avoid index requirements:
+
+const q = query(
+  collection(db, 'announcements'),
+  where('isActive', '==', true),
+  orderBy('createdAt', 'desc')
+);
+const snaps = await getDocs(q);
+const visible = snaps.docs
+  .map(d => ({ id: d.id, ...d.data() }))
+  .filter(a => {
+    if (a.expiresAt && a.expiresAt.toDate() < new Date()) return false;
+    // audience filtering...
+    return true;
+  });
+
+Document generated from admin panel source: artifacts/admin-panel/src/ — Firebase project shopkeeper-1a3fc. Last updated: May 2026.

@@ -1,0 +1,289 @@
+You are working on a production-grade React + Capacitor + Firebase (Firestore + Auth) application that already has a basic subscription system implemented.
+
+Your task is to **upgrade it into a fully production-ready, secure, and consistent Subscription Management System**. Do NOT rebuild from scratch — refine and harden the existing implementation.
+
+---
+
+# 🎯 OBJECTIVE
+
+Transform the current working subscription system into a **robust, enforceable, and scalable monetization layer**.
+
+This includes:
+
+* Strong access enforcement (not just UI gating)
+* Correct lifecycle handling
+* Safe offline behavior
+* Full feature coverage
+* Future payment readiness
+
+---
+
+# 🧠 CURRENT STATE (ASSUME)
+
+Already implemented:
+
+* Firestore subscription model
+* SubscriptionContext
+* hasAccess() feature mapping
+* UI in Settings
+* Auto-provisioned Pro (₹0)
+
+---
+
+# 🚨 CRITICAL UPGRADES (MANDATORY)
+
+---
+
+## 1. 🔐 HARD ACCESS ENFORCEMENT (CRITICAL)
+
+### Problem:
+
+Access control currently exists only at UI level → NOT secure
+
+### Task:
+
+Enforce access at **logic/action level**
+
+### Apply checks in:
+
+* ApiService operations
+* Data creation/update flows
+* Bulk import
+* POS billing
+* Reports/analytics generation
+* Any premium feature logic
+
+### Pattern:
+
+```ts
+if (!hasAccess(subscription, "feature_key")) {
+  throw new Error("Subscription required");
+}
+```
+
+### Requirement:
+
+* No premium feature should execute without validation
+* Prevent bypass via UI or direct calls
+
+---
+
+## 2. ⏱ RUNTIME EXPIRY VALIDATION
+
+### Problem:
+
+Subscription is only validated on app load
+
+### Task:
+
+Add continuous validation
+
+### Implementation:
+
+* Periodically check subscription expiry (every ~60 seconds)
+* If expired → refresh from Firestore and downgrade if needed
+
+### Requirement:
+
+* No stale access after expiry
+* Works even if app stays open
+
+---
+
+## 3. ⚠️ SAFE OFFLINE FALLBACK
+
+### Problem:
+
+Offline fallback currently defaults to Pro → security flaw
+
+### Task:
+
+Fix fallback strategy
+
+### Correct behavior:
+
+* Use last known subscription from local/cache
+* If unavailable → fallback to Free plan ONLY
+
+### Requirement:
+
+* Never grant elevated access offline by default
+
+---
+
+## 4. 🔄 MULTI-DEVICE CONSISTENCY
+
+### Problem:
+
+Subscription state can drift across devices
+
+### Task:
+
+Ensure consistency
+
+### Implement:
+
+* Always fetch fresh subscription on app start
+* Add optional Firestore listener for real-time updates
+
+### Requirement:
+
+* Changes reflect across devices immediately or on next open
+
+---
+
+## 5. 🧩 COMPLETE FEATURE GATING COVERAGE
+
+### Task:
+
+Audit entire codebase and ensure ALL premium features are gated
+
+### Must include (based on app structure):
+
+* Advanced Analytics
+* Reports
+* POS Billing
+* Bulk Import
+* Stock Valuation
+* Timeline
+* Daily Snapshot
+* Waste Tracking
+* Multi-user features
+* Any future premium modules
+
+### Requirement:
+
+* No feature left ungated
+* Use centralized hasAccess() ONLY
+
+---
+
+## 6. 🔽 DOWNGRADE STRATEGY (VERY IMPORTANT)
+
+### Define behavior when subscription expires:
+
+* User data must NOT be deleted
+* Features become:
+
+  * read-only OR hidden with upgrade prompt
+* No crashes or broken UI
+
+### Implement:
+
+* Graceful degradation across all views
+
+---
+
+## 7. ⏳ GRACE PERIOD SUPPORT
+
+### Add:
+
+* 2–3 day grace period after expiry
+
+### Behavior:
+
+* During grace → still allow access
+* After grace → downgrade
+
+### Requirement:
+
+* Improves UX and retention
+
+---
+
+## 8. 🧱 FEATURE GATE COMPONENT (UI LAYER)
+
+Create reusable component:
+
+```tsx
+<FeatureGate feature="analytics">
+  <AnalyticsView />
+</FeatureGate>
+```
+
+### Behavior:
+
+* If access allowed → render children
+* Else → show upgrade prompt
+
+### Requirement:
+
+* Must use hasAccess()
+* Must be reusable across app
+
+---
+
+## 9. 🧠 CENTRALIZED ACCESS SYSTEM
+
+Ensure:
+
+* hasAccess() is the ONLY decision function
+* No duplicate logic anywhere
+* Feature keys are consistent and scalable
+
+---
+
+## 10. 💳 PAYMENT-READY STRUCTURE (DO NOT SKIP)
+
+Prepare for future integration with:
+
+* Razorpay
+* Stripe
+
+Ensure:
+
+* paymentId field used properly
+* subscription updates are backend-compatible
+* no UI-payment tight coupling
+
+---
+
+# 🔍 ADDITIONAL IMPROVEMENTS (MANDATORY)
+
+While implementing:
+
+### UI Layer:
+
+* Ensure upgrade prompts are consistent
+* No broken layouts when access denied
+
+### Data Layer:
+
+* Validate subscription before critical DB writes
+* Prevent silent failures
+
+### State Layer:
+
+* Avoid race conditions in subscription loading
+* Ensure cleanup on logout / user switch
+
+---
+
+# ⚠️ CONSTRAINTS
+
+* Do NOT break existing functionality
+* Maintain performance
+* Avoid unnecessary re-renders
+* Keep architecture modular and clean
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Secure access enforcement across app
+2. Runtime subscription validation implemented
+3. Safe offline handling
+4. Full feature gating coverage
+5. Grace period + downgrade handling
+6. FeatureGate component integrated
+7. Payment-ready architecture preserved
+8. Summary of:
+
+   * what was improved
+   * what risks were fixed
+   * what is now production-ready
+
+---
+
+Focus on system integrity, not quick fixes.
+This system must support real monetization without future refactoring.

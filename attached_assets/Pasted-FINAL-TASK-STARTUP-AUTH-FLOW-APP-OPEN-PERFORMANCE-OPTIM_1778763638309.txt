@@ -1,0 +1,368 @@
+FINAL TASK — STARTUP, AUTH FLOW & APP OPEN PERFORMANCE OPTIMIZATION
+
+SYSTEM CONTEXT
+
+This is a production-stage Capacitor + React Android app:
+ShopLedger: Billing & Stock
+
+Architecture already includes:
+
+* offline-first persistence
+* IndexedDB hydration
+* lifecycle recovery
+* sync queue
+* React Query cache persistence
+* native navigation handling
+* error boundaries
+* performance hardening
+
+The app is now in the final UX/perceived-performance optimization phase before closed testing and production.
+
+---
+
+PRIMARY OBJECTIVE
+
+Make app startup and authentication feel:
+
+* instant
+* native
+* smooth
+* uninterrupted
+* trustable
+
+Current issue:
+Even when actual load time is acceptable, the app FEELS slow because:
+
+* unnecessary intermediate loading states appear
+* auth provider pages remain visible too long
+* hydration/sync states are visually noisy
+* startup sequencing is not perception-optimized
+
+Goal:
+Reduce perceived startup friction to near-native quality.
+
+---
+
+SECTION A — APP OPEN / STARTUP EXPERIENCE
+
+CURRENT PROBLEM
+
+Every app open feels slower than necessary.
+
+Too many visible phases:
+
+1. loading your business data
+2. syncing with cloud
+3. almost there
+
+This creates psychological latency.
+
+---
+
+REQUIRED BEHAVIOR
+
+The app should:
+
+* render meaningful UI almost immediately
+* progressively hydrate in background
+* avoid blocking startup with non-critical work
+
+Target experience:
+
+* app opens directly into usable UI
+* background sync happens silently
+* no excessive startup messaging
+
+---
+
+IMPLEMENTATION GOALS
+
+1. PRIORITIZE PERCEIVED PERFORMANCE
+
+Show:
+
+* cached dashboard immediately
+* last known data immediately
+
+Do NOT wait for:
+
+* sync completion
+* cloud freshness
+* analytics preload
+* non-critical initialization
+
+before rendering UI.
+
+---
+
+2. REMOVE MULTI-STAGE STARTUP TEXT
+
+Avoid sequential:
+
+* “loading your business data”
+* “syncing with cloud”
+* “almost there”
+
+Replace with:
+
+* minimal/single lightweight loading state
+  OR
+* no loading screen at all if cached UI available
+
+Preferred:
+instant dashboard hydration.
+
+---
+
+3. STARTUP TASK PRIORITIZATION
+
+Split startup into:
+
+CRITICAL:
+
+* auth restore
+* cache hydration
+* minimal UI render
+
+BACKGROUND:
+
+* sync
+* analytics
+* admin config refresh
+* AI preload
+* cleanup tasks
+
+Critical rendering must NOT wait for background tasks.
+
+---
+
+4. SILENT BACKGROUND SYNC
+
+If cached data exists:
+
+* render immediately
+* sync silently in background
+
+Avoid:
+
+* blocking overlays
+* fullscreen loading
+* startup spinners
+
+Use subtle sync indicators only if necessary.
+
+---
+
+5. PRELOAD OPTIMIZATION
+
+Audit startup path for:
+
+* duplicate fetches
+* sequential awaits
+* unnecessary blocking initialization
+* eager-loading heavy modules
+
+Convert:
+
+* non-critical imports
+* analytics
+* AI modules
+* reports
+
+to lazy/background loading where safe.
+
+---
+
+6. HYDRATION PERFORMANCE
+
+Audit:
+
+* IndexedDB hydration timing
+* persisted cache restoration
+* startup re-renders
+
+Ensure:
+
+* minimal startup rerender cascade
+* no hydration flicker
+* no temporary empty state before hydrated state
+
+---
+
+SECTION B — GOOGLE LOGIN FLOW UX
+
+CURRENT PROBLEM
+
+Google sign-in currently exposes unnecessary intermediate UI/loading states.
+
+The Google loading window remains visible too long and feels unpolished.
+
+Current flow visually feels:
+web-like instead of native.
+
+---
+
+REQUIRED BEHAVIOR
+
+Google login should feel:
+
+* fast
+* native
+* clean
+* uninterrupted
+
+Minimal visible transitions.
+
+---
+
+IMPLEMENTATION GOALS
+
+1. MINIMIZE GOOGLE AUTH VISIBILITY
+
+Reduce visible duration of:
+
+* unnecessary Google loading overlays
+* blank auth screens
+* transitional states
+
+Requirements:
+
+* immediately transition after auth success
+* avoid lingering provider windows
+
+---
+
+2. ELIMINATE REDUNDANT LOADING SCREENS
+
+Avoid:
+
+* auth success → loading page → another loading page → dashboard
+
+Preferred:
+
+* auth success → dashboard immediately
+
+with background hydration/sync.
+
+---
+
+3. CACHE-FIRST AUTH RESTORE
+
+If user already authenticated:
+
+* bypass unnecessary login initialization
+* restore session immediately
+
+Avoid:
+
+* flashing login screen before restoring session
+
+---
+
+4. AUTH FLOW STATE COORDINATION
+
+Ensure:
+
+* auth restore
+* admin config hydration
+* subscription gating
+* dashboard preload
+
+happen in coordinated order.
+
+Prevent:
+
+* flicker
+* temporary wrong UI
+* transient screens
+
+---
+
+5. REDUCE STARTUP VISUAL NOISE
+
+Avoid:
+
+* stacked spinners
+* repeated “loading”
+* multiple progress texts
+* flashing placeholders
+
+Use:
+
+* calm/single transition
+* immediate cached UI
+* subtle background refresh
+
+---
+
+6. TRANSITION POLISH
+
+Ensure:
+
+* no abrupt black screens
+* no white flashes
+* no blank intermediate frames
+
+Transitions should feel:
+
+* continuous
+* smooth
+* native Android quality
+
+---
+
+SECTION C — PERFORMANCE & SAFETY REQUIREMENTS
+
+DO NOT:
+
+* break offline-first behavior
+* break persistence
+* remove recovery protections
+* bypass error boundaries
+* create auth race conditions
+
+Maintain:
+
+* security
+* stability
+* lifecycle recovery
+* deterministic startup
+
+---
+
+VALIDATION REQUIRED
+
+Test:
+
+1. Cold app open
+2. Warm app resume
+3. Offline app open
+4. Slow internet login
+5. Returning authenticated user
+6. First login after install
+7. Process-death restore
+
+Measure:
+
+* perceived startup speed
+* time-to-interactive
+* unnecessary visual blocking
+
+---
+
+SUCCESS CRITERIA
+
+✔ App opens almost instantly
+✔ Cached UI visible immediately
+✔ Background sync silent
+✔ No multi-step startup loading
+✔ Google auth flow visually minimal
+✔ No redundant loading pages
+✔ No login flicker
+✔ No temporary wrong UI states
+✔ Startup feels native-quality
+✔ No regressions to offline/security systems
+
+END GOAL
+
+“The app should feel instantly available and continuous like a polished native Android production app, with startup and authentication latency psychologically minimized.”

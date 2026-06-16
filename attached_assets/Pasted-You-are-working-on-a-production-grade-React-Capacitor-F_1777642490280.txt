@@ -1,0 +1,213 @@
+You are working on a production-grade React + Capacitor + Firebase app. Your task is to fix multiple UI, data consistency, and lifecycle issues holistically (not superficially). Follow a systems-first approach: understand root causes, not just symptoms.
+
+---
+
+## 🎯 GOAL
+
+Stabilize UI behavior, ensure complete data visibility, and enforce correct data lifecycle (especially backups/snapshots), while maintaining performance and clean architecture.
+
+---
+
+# 🔧 ISSUE 1 — Keyboard causes blank space (CRITICAL UI BUG)
+
+### Problem:
+
+When the mobile keyboard opens, a large blank area appears and hides content.
+
+### Root Cause:
+
+* Root container uses fixed height (`h-screen`)
+* Layout uses `overflow-hidden`
+* Capacitor + mobile viewport resizing is not handled
+
+### Fix:
+
+* Replace all `h-screen` with `min-h-screen`
+* Replace `overflow-hidden` on main container with `overflow-y-auto` where needed
+* Ensure `<main>` scrolls, not the root container
+* Avoid fixed viewport locking anywhere
+
+### Validate:
+
+* Test on Android device
+* Input fields should remain visible when keyboard opens
+* No empty space at bottom
+
+---
+
+# 🧭 ISSUE 2 — Incorrect Timeline Heading
+
+### Problem:
+
+Timeline page shows “Game Timeline”
+
+### Fix:
+
+* Change heading to strictly: "Timeline"
+* Ensure no other references to "Game Timeline" remain
+
+---
+
+# 📊 ISSUE 3 — Missing Data in Timeline & Detail Views (CRITICAL DATA ISSUE)
+
+### Problem:
+
+User-entered fields like:
+
+* supplies (sales)
+* destination customer (purchase)
+* other metadata
+
+are NOT visible in:
+
+* timeline
+* detailed views
+
+### Root Cause:
+
+Data is stored but not passed/rendered properly
+
+### Fix:
+
+#### Step 1 — Ensure data is stored completely
+
+Check all create/update flows:
+
+* sales
+* purchases
+* transactions
+
+Ensure fields are saved in DB
+
+#### Step 2 — Timeline system fix
+
+Where timeline entries are created:
+
+* Pass FULL metadata (not partial)
+* Include all relevant fields
+
+#### Step 3 — Timeline UI fix
+
+Render all meaningful fields dynamically:
+
+* Do NOT hardcode limited fields
+* Use flexible rendering:
+
+  * show only non-null fields
+  * label properly
+
+#### Step 4 — Detail views fix
+
+In:
+
+* ItemDetailView
+* TransactionDetail
+* Sales/Purchase views
+
+Ensure ALL stored fields are displayed
+
+### Validate:
+
+* Create entry with extra fields → must appear everywhere
+
+---
+
+# 🗂 ISSUE 4 — Daily Snapshot Archive shows deleted data
+
+### Problem:
+
+Deleted/invalid snapshots still appear
+
+### Root Cause:
+
+* No filtering OR improper deletion
+
+### Fix:
+
+* Only show active snapshots
+* Filter out:
+
+  * deleted
+  * corrupted
+  * invalid entries
+
+---
+
+# 🔄 ISSUE 5 — Backup Retention (CRITICAL LOGIC)
+
+### Problem:
+
+Old backups are not deleted properly
+
+### Requirement:
+
+Keep ONLY last 3 backups
+
+### Fix:
+
+* Sort backups by timestamp DESC
+* After new backup:
+
+  * delete older ones beyond 3
+* Ensure atomic behavior (no race conditions)
+
+### Edge Cases:
+
+* Failed deletion retry
+* Offline handling
+* Duplicate backups
+
+---
+
+# 🧠 ADDITIONAL REQUIRED IMPROVEMENTS (FIND & FIX)
+
+You must also scan the codebase and fix:
+
+### 1. UI Layer
+
+* Any other fixed-height layout issues
+* Hidden overflow bugs
+* Non-scrollable views
+
+### 2. Data Layer
+
+* Missing fields in API calls
+* Inconsistent schema usage
+* Silent failures
+
+### 3. State Layer
+
+* Race conditions (like async fetch overwriting state)
+* Stale data rendering
+* Improper cleanup on navigation
+
+### 4. Timeline System
+
+* Ensure it is generic, not hardcoded per type
+* Must support future fields automatically
+
+---
+
+# ⚠️ CONSTRAINTS
+
+* Do NOT break existing features
+* Do NOT introduce unnecessary re-renders
+* Maintain performance
+* Keep code modular and clean
+
+---
+
+# ✅ EXPECTED OUTPUT
+
+1. Fixes implemented across relevant files
+2. Clean, consistent UI behavior
+3. Full data visibility across app
+4. Correct snapshot + backup lifecycle
+5. Brief summary of:
+
+   * what was fixed
+   * what was improved beyond given issues
+
+---
+
+Focus on correctness, not quick hacks.

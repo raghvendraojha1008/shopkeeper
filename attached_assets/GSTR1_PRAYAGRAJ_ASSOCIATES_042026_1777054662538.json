@@ -1,0 +1,78 @@
+{
+  "gstin": "09AAHPO5014H2ZP",
+  "fp": "042026",
+  "version": "GST3.0.4",
+  "hash": "hash",
+  "b2b": [],
+  "b2cl": [],
+  "b2cs": [
+    {
+      "sply_ty": "INTRA",
+      "rt": 18,
+      "txval": 108000,
+      "iamt": 0,
+      "camt": 9720,
+      "samt": 9720,
+      "csamt": 0
+    },
+    {
+      "sply_ty": "INTRA",
+      "rt": 0,
+      "txval": 2250,
+      "iamt": 0,
+      "camt": 0,
+      "samt": 0,
+      "csamt": 0
+    }
+  ],
+  "hsn": {
+    "data": [
+      {
+        "num": 1,
+        "hsn_sc": "2523",
+        "desc": "Cement Bag",
+        "uqc": "Bag",
+        "qty": 300,
+        "val": 123900,
+        "txval": 105000,
+        "iamt": 0,
+        "camt": 9450,
+        "samt": 9450,
+        "csamt": 0,
+        "rt": 18
+      },
+      {
+        "num": 2,
+        "hsn_sc": "MISC",
+        "desc": "Cement ",
+        "uqc": "Pcs",
+        "qty": 7,
+        "val": 5790,
+        "txval": 5250,
+        "iamt": 0,
+        "camt": 270,
+        "samt": 270,
+        "csamt": 0,
+        "rt": 18
+      }
+    ]
+  },
+  "doc_issue": {
+    "doc_det": [
+      {
+        "doc_num": 1,
+        "doc_typ": "Invoices for outward supply",
+        "docs": [
+          {
+            "num": 5,
+            "from": "S-104",
+            "to": "INV001",
+            "totnum": 5,
+            "cancel": 0,
+            "net_issue": 5
+          }
+        ]
+      }
+    ]
+  }
+}

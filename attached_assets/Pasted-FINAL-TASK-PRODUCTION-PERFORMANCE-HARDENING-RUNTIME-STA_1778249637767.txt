@@ -1,0 +1,451 @@
+FINAL TASK — PRODUCTION PERFORMANCE HARDENING & RUNTIME STABILITY AUDIT
+
+SYSTEM CONTEXT
+
+This is a production-stage Capacitor + React Android application with:
+
+* offline-first architecture
+* React Query persistence
+* optimistic updates
+* sync queue
+* lifecycle recovery
+* overlays/modals
+* forms
+* analytics
+* large datasets
+* navigation stacks
+
+The goal is NOT superficial optimization.
+
+The goal is to harden the runtime system so the app remains:
+
+* responsive
+* memory-safe
+* battery-efficient
+* stable under long-term usage
+* performant on low-end Android devices
+
+The app should remain smooth and predictable under real-world conditions.
+
+---
+
+PRIMARY OBJECTIVE
+
+Perform a deep runtime-performance and stability audit across:
+
+* rendering
+* memory
+* event listeners
+* persistence
+* lists
+* async operations
+* sync flows
+* navigation
+* lifecycle recovery
+* overlays
+
+Then implement targeted hardening improvements WITHOUT breaking existing architecture.
+
+---
+
+CORE PRINCIPLE
+
+The app must:
+
+* remain responsive during long sessions
+* avoid memory growth over time
+* avoid unnecessary rerenders
+* avoid excessive background work
+* scale safely with larger datasets
+
+Performance work must prioritize:
+
+1. Stability
+2. Predictability
+3. Runtime efficiency
+4. User-perceived smoothness
+
+NOT premature micro-optimizations.
+
+---
+
+MODULE 1 — RENDER STABILITY AUDIT
+
+Audit all critical screens for:
+
+* unnecessary rerenders
+* unstable props
+* recreated callbacks
+* expensive derived calculations
+
+Critical screens:
+
+* Dashboard
+* Ledger
+* Inventory
+* Transactions
+* POS Billing
+* Reports
+* Analytics
+
+Requirements:
+
+* memoize expensive calculations
+* stabilize callbacks
+* avoid render storms
+
+Avoid:
+
+* blanket overuse of memoization
+* stale memo bugs
+
+---
+
+MODULE 2 — LARGE LIST HARDENING
+
+Critical.
+
+Audit:
+
+* ledger lists
+* inventory lists
+* analytics tables
+* transaction history
+
+Requirements:
+
+* virtualization where needed
+* stable keys
+* incremental rendering
+* lightweight row rendering
+
+Avoid:
+
+* full list rerender on small update
+* expensive inline computations
+* nested heavy components
+
+---
+
+MODULE 3 — MEMORY LEAK AUDIT
+
+Critical.
+
+Audit for leaks in:
+
+* listeners
+* timers
+* intervals
+* subscriptions
+* async tasks
+* modal systems
+* keyboard listeners
+* Capacitor listeners
+
+Requirements:
+
+* guaranteed cleanup
+* no orphan listeners
+* no duplicate bindings
+
+Verify:
+
+* repeated navigation does not increase memory usage
+
+---
+
+MODULE 4 — ASYNC OPERATION HARDENING
+
+Audit:
+
+* fetches
+* sync queue
+* optimistic mutations
+* retries
+* PDF generation
+* export flows
+
+Requirements:
+
+* cancellation-safe async logic
+* abort stale requests
+* prevent duplicate async execution
+
+Avoid:
+
+* unresolved promises
+* retry loops
+* race-condition rerenders
+
+---
+
+MODULE 5 — REACT QUERY HARDENING
+
+Audit:
+
+* staleTime
+* gcTime
+* invalidation frequency
+* cache size
+* persistence size
+
+Requirements:
+
+* prevent excessive refetching
+* prevent cache thrashing
+* avoid oversized persisted payloads
+
+Ensure:
+
+* efficient offline persistence
+* predictable cache invalidation
+
+---
+
+MODULE 6 — INDEXEDDB & PERSISTENCE PERFORMANCE
+
+Audit:
+
+* persistence write frequency
+* serialization size
+* hydration cost
+* queue persistence overhead
+
+Requirements:
+
+* avoid excessive persistence writes
+* batch intelligently
+* prevent large synchronous blocks
+
+Avoid:
+
+* writing on every keystroke
+* oversized persisted UI state
+
+---
+
+MODULE 7 — OFFLINE SYNC PERFORMANCE
+
+Audit:
+
+* queue processing
+* reconnect sync
+* retry handling
+* duplicate invalidations
+
+Requirements:
+
+* efficient batching
+* no sync storms
+* stable reconnect behavior
+
+Avoid:
+
+* repeated sync loops
+* aggressive invalidation cascades
+
+---
+
+MODULE 8 — OVERLAY & MODAL PERFORMANCE
+
+Audit:
+
+* bottom sheets
+* dialogs
+* overlays
+* dropdowns
+
+Requirements:
+
+* lazy mount where appropriate
+* remove hidden overlays cleanly
+* avoid hidden DOM buildup
+
+Avoid:
+
+* invisible mounted trees
+* stale overlay state retention
+
+---
+
+MODULE 9 — KEYBOARD & VIEWPORT PERFORMANCE
+
+Audit:
+
+* resize listeners
+* viewport recalculations
+* keyboard transitions
+
+Requirements:
+
+* throttled resize handling
+* minimal layout thrashing
+* stable viewport calculations
+
+Avoid:
+
+* repeated forced reflow
+* cascading layout recalculations
+
+---
+
+MODULE 10 — STARTUP & RESUME PERFORMANCE
+
+Critical.
+
+Optimize:
+
+* cold start
+* hydration
+* resume recovery
+
+Requirements:
+
+* avoid blocking startup work
+* defer non-critical initialization
+* progressive restoration where possible
+
+Target:
+
+* fast perceived startup
+* responsive first interaction
+
+---
+
+MODULE 11 — BATTERY & BACKGROUND EFFICIENCY
+
+Audit:
+
+* polling
+* intervals
+* background listeners
+* reconnect loops
+
+Requirements:
+
+* no unnecessary background work
+* pause non-critical tasks when app backgrounded
+
+Avoid:
+
+* continuous wakeups
+* excessive network activity
+
+---
+
+MODULE 12 — PDF & EXPORT PERFORMANCE
+
+Audit:
+
+* PDF generation memory usage
+* share flow
+* image handling
+
+Requirements:
+
+* avoid UI freeze during export
+* progressive generation where possible
+* safe cleanup of temporary files
+
+---
+
+MODULE 13 — LOW-END DEVICE HARDENING
+
+Critical.
+
+Ensure acceptable behavior on:
+
+* weak CPUs
+* low RAM devices
+* slow storage
+* older Android versions
+
+Requirements:
+
+* graceful degradation
+* avoid large synchronous operations
+* avoid excessive animations
+
+---
+
+MODULE 14 — PERFORMANCE OBSERVABILITY
+
+Implement lightweight diagnostics for:
+
+* slow renders
+* long tasks
+* repeated retries
+* sync congestion
+
+Requirements:
+
+* development visibility
+* production-safe logging
+* no noisy console spam
+
+---
+
+MODULE 15 — EDGE CASES
+
+Handle:
+
+* huge inventory datasets
+* rapid navigation during sync
+* long offline sessions
+* app open for hours
+* repeated modal usage
+* interrupted hydration
+* reconnect storms
+* low-memory reclaim
+
+---
+
+MODULE 16 — FINAL CLEANUP AUDIT
+
+Remove:
+
+* dead code
+* unused listeners
+* stale utilities
+* duplicate abstractions
+* experimental code paths
+
+Ensure:
+
+* predictable architecture
+* maintainable runtime behavior
+
+---
+
+SUCCESS CRITERIA
+
+✔ No memory growth during long sessions
+✔ Large lists remain responsive
+✔ No render storms
+✔ No excessive battery usage
+✔ Startup/resume feels fast
+✔ Offline sync remains stable under load
+✔ No hidden listener leaks
+✔ Smooth performance on low-end Android devices
+✔ Runtime remains predictable over time
+
+---
+
+STRICT RULES
+
+* Do NOT rewrite the entire architecture
+* Do NOT introduce premature complexity
+* Do NOT optimize blindly
+
+Focus on:
+
+* measured bottlenecks
+* runtime stability
+* predictable performance
+* production resilience
+
+---
+
+END GOAL
+
+“The app remains smooth, stable, memory-safe, and predictable during real-world long-term usage like a mature production Android application.”

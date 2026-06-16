@@ -1,0 +1,138 @@
+const fs = require('fs');
+const path = require('path');
+
+const outputFile = 'PROJECT_FULL_CODE.txt';
+const rootDir = __dirname;
+
+// ── Folders to scan (relative to project root) ──────────────────────────────
+const scanDirs = [
+  'artifacts',
+  'lib',
+  'scripts',
+  'tools',
+  'docs',
+  'attached_assets',
+];
+
+// ── Folders/names to skip entirely ──────────────────────────────────────────
+const ignoreDirs = new Set([
+  'node_modules',
+  '.git',
+  'dist',
+  '.turbo',
+  'build',
+  '.cache',
+  'coverage',
+  '__pycache__',
+  'mockup-sandbox', // generated UI sandbox — usually too large
+]);
+
+// ── Individual filenames to skip ─────────────────────────────────────────────
+const ignoreFiles = new Set([
+  '.DS_Store',
+  'vite-env.d.ts',
+  'pnpm-lock.yaml',
+  'package-lock.json',
+  'yarn.lock',
+  'PROJECT_FULL_CODE.txt', // don't include previous output
+  'tsconfig.tsbuildinfo',
+]);
+
+// ── Extensions to skip ───────────────────────────────────────────────────────
+const ignoreExts = new Set([
+  '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.svg',
+  '.woff', '.woff2', '.ttf', '.eot',
+  '.map',          // source maps
+  '.lock',
+  '.tsbuildinfo',
+]);
+
+// ── Root-level files to always include ───────────────────────────────────────
+const rootFiles = [
+  'package.json',
+  'tsconfig.json',
+  'tsconfig.base.json',
+  'pnpm-workspace.yaml',
+  '.npmrc',
+  'replit.md',
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+function shouldSkipDir(name) {
+  return ignoreDirs.has(name);
+}
+
+function shouldSkipFile(filePath) {
+  const name = path.basename(filePath);
+  const ext  = path.extname(filePath);
+  return ignoreFiles.has(name) || ignoreExts.has(ext);
+}
+
+function getAllFiles(dirPath, arrayOfFiles = []) {
+  let entries;
+  try {
+    entries = fs.readdirSync(dirPath);
+  } catch {
+    return arrayOfFiles;
+  }
+
+  for (const entry of entries) {
+    if (shouldSkipDir(entry)) continue;
+
+    const fullPath = path.join(dirPath, entry);
+    let stat;
+    try { stat = fs.statSync(fullPath); } catch { continue; }
+
+    if (stat.isDirectory()) {
+      getAllFiles(fullPath, arrayOfFiles);
+    } else if (!shouldSkipFile(fullPath)) {
+      arrayOfFiles.push(fullPath);
+    }
+  }
+  return arrayOfFiles;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+try {
+  let allFiles = [];
+
+  // 1. Root-level config files
+  for (const f of rootFiles) {
+    const full = path.join(rootDir, f);
+    if (fs.existsSync(full)) allFiles.push(full);
+  }
+
+  // 2. Source directories
+  for (const dir of scanDirs) {
+    const full = path.join(rootDir, dir);
+    if (fs.existsSync(full)) getAllFiles(full, allFiles);
+  }
+
+  // Deduplicate (just in case)
+  allFiles = [...new Set(allFiles)];
+
+  let content = `PROJECT DOCUMENTATION — Admin Portal\n${'='.repeat(50)}\n`;
+  content += `Generated: ${new Date().toISOString()}\n`;
+  content += `Files included: ${allFiles.length}\n\n`;
+
+  for (const file of allFiles) {
+    const relativePath = path.relative(rootDir, file);
+    content += `\n\n${'─'.repeat(60)}\n`;
+    content += `FILE: ${relativePath}\n`;
+    content += `${'─'.repeat(60)}\n`;
+    try {
+      content += fs.readFileSync(file, 'utf8');
+    } catch {
+      content += `[Could not read file — may be binary]\n`;
+    }
+    content += `\n[END: ${relativePath}]\n`;
+  }
+
+  fs.writeFileSync(outputFile, content, 'utf8');
+  console.log(`✅ SUCCESS! Created '${outputFile}' with ${allFiles.length} files.`);
+  console.log(`👉 Attach or paste the content of this file into your AI chat.`);
+} catch (e) {
+  console.error('❌ Error generating context:', e);
+}

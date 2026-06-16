@@ -1,0 +1,87 @@
+2026-06-05 01:08:54.469 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.490 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.495 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.496 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.555 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.556 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.560 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187685, pluginId: App, methodName: addListener
+2026-06-05 01:08:54.560 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187685, pluginId: App, methodName: addListener, methodData: {"eventName":"backButton"}
+2026-06-05 01:08:54.562 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187686, pluginId: App, methodName: addListener
+2026-06-05 01:08:54.562 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187686, pluginId: App, methodName: addListener, methodData: {"eventName":"appStateChange"}
+2026-06-05 01:08:54.569 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.569 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.570 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.571 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.572 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.574 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187687, pluginId: StatusBar, methodName: setStyle
+2026-06-05 01:08:54.574 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187687, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+2026-06-05 01:08:54.576 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187688, pluginId: StatusBar, methodName: setBackgroundColor
+2026-06-05 01:08:54.576 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187688, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#0b0e1a"}
+2026-06-05 01:08:54.577 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187689, pluginId: Keyboard, methodName: setScroll
+2026-06-05 01:08:54.577 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187689, pluginId: Keyboard, methodName: setScroll, methodData: {"isDisabled":true}
+2026-06-05 01:08:54.578 21421-22625 Capacitor               com.shopledger.india                 D  Sending plugin error: {"save":false,"callbackId":"27187689","pluginId":"Keyboard","methodName":"setScroll","success":false,"error":{"message":"not implemented","code":"UNIMPLEMENTED"}}
+2026-06-05 01:08:54.587 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.587 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.587 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.587 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: undefined
+2026-06-05 01:08:54.588 21421-21421 Capacitor/Console       com.shopledger.india                 E  File:  - Line 330 - Msg: [object Object]
+2026-06-05 01:08:54.588 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.589 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: undefined
+2026-06-05 01:08:54.599 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187690, pluginId: Keyboard, methodName: setAccessoryBarVisible
+2026-06-05 01:08:54.599 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187690, pluginId: Keyboard, methodName: setAccessoryBarVisible, methodData: {"isVisible":false}
+2026-06-05 01:08:54.599 21421-22625 Capacitor               com.shopledger.india                 D  Sending plugin error: {"save":false,"callbackId":"27187690","pluginId":"Keyboard","methodName":"setAccessoryBarVisible","success":false,"error":{"message":"not implemented","code":"UNIMPLEMENTED"}}
+2026-06-05 01:08:54.601 21421-21421 Capacitor/Console       com.shopledger.india                 E  File:  - Line 330 - Msg: [object Object]
+2026-06-05 01:08:54.752 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.754 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:08:54.758 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187691, pluginId: StatusBar, methodName: setStyle
+2026-06-05 01:08:54.759 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187691, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+2026-06-05 01:08:54.761 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187692, pluginId: StatusBar, methodName: setBackgroundColor
+2026-06-05 01:08:54.761 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.762 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187692, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#0b0e1a"}
+2026-06-05 01:08:54.768 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: undefined
+2026-06-05 01:08:54.769 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: undefined
+2026-06-05 01:08:54.773 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.778 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.787 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.794 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:08:54.796 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.796 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.796 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.797 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.802 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.855 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:54.938 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:08:55.022 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:09.966 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:09.986 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:10.000 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:10.019 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:10.024 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.024 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.024 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.024 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.904 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.904 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.905 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:10.905 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:11.941 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:11.943 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:11.943 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:11.953 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:11.958 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:12.119 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:26.990 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:09:26.992 21421-21421 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-05 01:09:26.995 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187693, pluginId: App, methodName: removeListener
+2026-06-05 01:09:26.996 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187693, pluginId: App, methodName: removeListener, methodData: {"eventName":"appStateChange","callbackId":"27187686"}
+2026-06-05 01:09:27.000 21421-21421 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 27187694, pluginId: App, methodName: removeListener
+2026-06-05 01:09:27.000 21421-21421 Capacitor               com.shopledger.india                 V  callback: 27187694, pluginId: App, methodName: removeListener, methodData: {"eventName":"backButton","callbackId":"27187685"}
+2026-06-05 01:09:27.022 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:27.031 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:27.041 21421-22628 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-05 01:09:27.051 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:27.052 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:27.052 21421-22577 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-05 01:09:37.033 21421-21421 TranClassInfo           com.shopledger.india                 D  instance successfully. com.transsion.hubcore.spdopts.appturbo.implement.TranAppturboComponentImpl@996de93 from com.transsion.hubcore.appturbo.ITranAppturboComponent
+2026-06-05 01:09:37.033 21421-21421 TranClassInfo           com.shopledger.india                 D  instance successfully. com.transsion.hubcore.spdopts.magellan.implement.TranMagellanComponentImpl@5bfbed0 from com.transsion.hubcore.magellan.ITranMagellanComponent
+2026-06-05 01:09:37.034 21421-21421 ScrollIdentify          com.shopledger.india                 I  on fling

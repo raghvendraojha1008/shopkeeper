@@ -1,0 +1,141 @@
+Here are all the **new major issues** not covered before:
+
+---
+
+## 🔴 Critical Issues
+
+**1. Gemini API Key Exposed in Client-Side Bundle**
+
+`src/services/gemini.ts` imports `GEMINI_API_KEY` directly from `src/config/constants` and embeds it in the request URL client-side:
+```ts
+const API_URL = `${BASE_URL}${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`;
+```
+In a Capacitor Android build, the entire JS bundle is bundled in the APK and can be extracted with simple APK decompilation tools. Anyone can pull your API key and bill your quota or abuse it. The key must never live in client code — it should be called through a backend function (Firebase Cloud Function) that holds the key server-side.
+
+---
+
+**2. `OfflineQueueService`, `SyncQueueService`, and `OfflineSyncService` — Three Competing Sync Systems**
+
+The codebase itself acknowledges this in a comment:
+> *"The codebase has three independent sync systems (SyncQueueService, OfflineSyncService, OfflineQueueService)"*
+
+All three listen for the `online` event and process queues independently. Even with the concurrency lock added in `SyncQueueService`, the other two services have no awareness of it. When connectivity is restored, **all three can fire simultaneously**, leading to duplicate Firestore writes for the same offline operation. This is a data integrity issue — users could end up with duplicate sales, payments, or expenses after reconnecting.
+
+---
+
+**3. `TrashService.restoreItem` Restores to the Original Document ID — Which May Now Be Taken**
+
+```ts
+const origRef = doc(db, 'users', userId, item.collection_name, item.original_id);
+batch.set(origRef, item.data); // ← overwrites if ID already re-used
+```
+If a user deletes a record, then creates a new record that gets the same Firestore auto-ID (extremely unlikely but possible), and then restores the deleted record, it silently **overwrites the new record** with the old data. There is no existence check before restoring.
+
+---
+
+## 🟠 High-Severity Issues
+
+**4. `ItemDetailView` Re-fetches ALL Ledger Entries on Every Item Open**
+
+```ts
+const [ledgerSnap, partySnap] = await Promise.all([
+  ApiService.getAll(user.uid, 'ledger_entries'), // fetches entire collection
+  ApiService.getAll(user.uid, 'parties')
+]);
+```
+There's no Firestore query filter — it downloads every ledger entry just to find ones matching a single item name. For a business with 1,000+ entries, this is a significant performance and data cost issue on every item tap. The same pattern exists in `DashboardView` and `PartyStatementView`.
+
+---
+
+**5. Inventory Stock Calculation Ignores `current_stock` Field Inconsistency**
+
+In `InventoryView`:
+```ts
+const netStock = item.current_stock; // Use Firebase stock (already managed)
+const stockIn = purchased;           // from ledger index
+const stockOut = sold;               // from ledger index
+```
+`current_stock` is a manually-managed field in Firestore, but `stockIn`/`stockOut` are computed live from ledger entries. These two systems are **not reconciled** — the displayed "net stock" is from Firestore while the summary bar (In/Out/Waste totals) is computed from ledger. They will drift apart over time (e.g. if records are bulk-imported or edited directly), showing contradictory numbers on the same screen to the user.
+
+---
+
+**6. `SyncQueueService` Processes Items in Sort Order But Removes Mid-Loop**
+
+```ts
+for (let i = 0; i < sorted.length; i++) {
+  const item = sorted[i];
+  // ...
+  SyncQueueService.removeFromQueue(item.id); // mutates localStorage mid-loop
+```
+`removeFromQueue` rewrites the queue in `localStorage` on every successful item. But `sorted` is a snapshot taken before the loop. If something reads the queue mid-loop (e.g., a new item is added while syncing), the `sorted` snapshot is stale. More critically, if the app is killed mid-loop, partially-processed items won't be retried because `removeFromQueue` already removed them from the persistent store before confirming success.
+
+---
+
+**7. `notificationService.scheduleOverdueReminder` Has ID Collision Risk**
+
+```ts
+id: Math.abs(partyName.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0)) % 9000 + 1000,
+```
+Two different party names can produce the same notification ID via hash collision. When the second notification is scheduled, it **silently replaces** the first one on Android, so one overdue reminder is lost without any error.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**8. `BulkImportView` Has Two Separate Import Implementations That Are Out of Sync**
+
+There are two bulk import flows in the codebase — `BulkImportView` (the full tab view, line ~6833) and `BulkImportModal` (used inside `InventoryView`, line ~17374). They have **different validation logic, different column schemas, and different batch strategies**. A user importing parties via the modal gets different validation rules than via the full view. Any bug fix or schema change applied to one won't be applied to the other.
+
+---
+
+**9. `DailySnapshotService` Uses `userEmail` Prefix for File Paths But Falls Back to `'default'`**
+
+```ts
+const prefix = userEmail
+  ? userEmail.split('@')[0].replace(/[^a-zA-Z0-9_-]/g, '_')
+  : 'default';
+```
+If `userEmail` is not passed (it's optional in `createSnapshot`), all snapshots go to `ShopkeeperLedger/default/DailySnapshots/`. On a shared device or if the user uses `createSnapshot` directly from `DailySnapshotView` (which calls it without email), snapshots from multiple users land in the same folder and overwrite each other.
+
+---
+
+**10. `OfflineQueueService` Stores File Blobs as Base64 in `localStorage`**
+
+```ts
+const base64 = await new Promise<string>((res) => {
+  const reader = new FileReader();
+  reader.onload = () => res(reader.result as string);
+  reader.readAsDataURL(file);
+});
+fileData = { name: file.name, type: file.type, data: base64 };
+// stored in localStorage
+```
+Image files are often 1–5MB. `localStorage` is typically limited to 5MB **total** on Android WebView. Storing even one photo attachment in the offline queue can fill `localStorage` entirely, causing all other queue writes, ID counters, and settings to silently fail with `QuotaExceededError`.
+
+---
+
+## 🔵 Lower-Severity Issues
+
+**11. `parseCSV` in `BulkImportView` Doesn't Handle Escaped Quotes Correctly**
+```ts
+if (c === '"') { inQ = !inQ; continue; }
+```
+RFC 4180 CSV uses `""` to represent a literal quote inside a quoted field. This parser toggles `inQ` on every `"`, so `"He said ""hello"""` would be misread. Any party name or address containing a quote (e.g. `"Ram's Shop"`) will be parsed incorrectly and silently imported with broken data.
+
+**12. `fullReportToPdf` Shows "Recent Ledger (top 20)" Without Date Sorting**
+```ts
+data.ledger.slice(0, 20)
+```
+`slice(0, 20)` takes the first 20 records in whatever order Firestore returned them (insertion order, not date order). The "recent ledger" section in the PDF can show old records if newer ones were inserted later. It should be `.sort()` by date descending before slicing.
+
+**13. `loadFirmName` in `InvitationManager` Reads from Wrong Settings Path**
+```ts
+const settings = await ApiService.settings.get(user.uid);
+if (settings?.firm_name) setFirmName(settings.firm_name); // ← root level
+```
+Firm name is stored under `settings.profile.firm_name` (as seen in `normalizeAppSettings`) but is read here at `settings.firm_name`. This will always fall back to `'Your Firm'`, meaning every invitation shows the wrong firm name.
+
+**14. `DailySnapshotView` Doesn't Pass `userEmail` to `createSnapshot`**
+```ts
+await DailySnapshotService.createSnapshot(userId, dateStr); // no email
+```

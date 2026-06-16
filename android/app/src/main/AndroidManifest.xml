@@ -1,0 +1,130 @@
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  ─── Permissions ─────────────────────────────────────────────────────  -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--  Camera — required by barcode scanner (@capacitor-community/barcode-scanner)  -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--  Contacts — required for party name/phone suggestions from device contacts  -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Microphone — required for AI audio / getUserMedia in WebView -->
+    <!-- RECORD_AUDIO: runtime permission to capture audio -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- MODIFY_AUDIO_SETTINGS: normal permission required by Chromium WebView's
+         cr_media layer — without this it refuses to open any audio device even
+         when RECORD_AUDIO is granted, producing "No audio device will be available
+         for recording" in logcat and NotAllowedError in getUserMedia. -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <!--
+          WRITE_EXTERNAL_STORAGE: only needed below API 29 (Android 9).
+          Android 10+ uses scoped storage; all writes go to app-private
+          Directory.Cache which requires zero storage permission.
+         -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <!--  ─── Package Visibility (Android 11+ / API 30+) ─────────────────────  -->
+    <!--
+          Required for BOTH Share (CSV) and FileOpener (PDF).
+
+          Without this block:
+            • Share sheet appears empty for PDF/CSV on Android 11+
+            • FileOpener.openFile() silently fails because Android can't find
+              any apps matching ACTION_VIEW / application/pdf
+
+          ACTION_SEND  → used by @capacitor/share for CSV/text exports
+          ACTION_VIEW  → used by @capawesome-team/capacitor-file-opener for PDFs
+         -->
+    <queries>
+        <!--  FileOpener: open PDF with native viewer (ACTION_VIEW)  -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:mimeType="application/pdf"/>
+        </intent>
+        <!--  Share: CSV / generic file sharing (ACTION_SEND)  -->
+        <intent>
+            <action android:name="android.intent.action.SEND"/>
+            <data android:mimeType="*/*"/>
+        </intent>
+        <!--  Share: text / WhatsApp sharing  -->
+        <intent>
+            <action android:name="android.intent.action.SEND"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+        <!--  WhatsApp deep-link  -->
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <!--  ─── Main Activity ───────────────────────────────────────────────  -->
+        <!--
+              android:name uses the fully-qualified class name because the Java
+              source package (com.shopkeeper.ledger) differs from the applicationId
+              (com.shopkeeper.Webledger). Using the short ".MainActivity" form would
+              resolve to com.shopkeeper.Webledger.MainActivity which does not exist.
+             -->
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:name="com.shopledger.india.MainActivity"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <!--  Deep-link for Firebase email verification / password reset  -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="shopkeeper-v2.firebaseapp.com" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
+        <!--  Google Play Services version (required for Google Sign-In)  -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!--  ─── FileProvider (required by FileOpener + Share on Android 7+) ─  -->
+        <!--
+                  FileProvider wraps the Cache URI with a content:// URI and grants
+                  the target app a one-shot read permission via
+                  FLAG_GRANT_READ_URI_PERMISSION.  This is how Android 7+ allows
+                  sharing/opening app-private files without MANAGE_EXTERNAL_STORAGE.
+
+                  The authorities value MUST match what FileOpener uses internally:
+                    ${applicationId}.fileprovider
+                  → "com.shopkeeper.Webledger.fileprovider"
+                 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>

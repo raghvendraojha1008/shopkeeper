@@ -1,0 +1,59 @@
+I'll build the Super Admin Panel — a full-featured Firebase-connected dashboard with auth, user subscription management, plan editing, config, and audit logs. Let me start by creating the app.
+
+
+2 actions
+Now let me install Firebase and React Router, and build all the files simultaneously.
+
+
+2 actions
+Now let me build all the source files in parallel.
+
+
+4 actions
+Building all files in parallel now.
+
+
+19 actions
+Now let me write App.tsx, update main.tsx, and set the CSS theme all at once.
+
+
+4 actions
+Now let me update the CSS theme and fix main.tsx simultaneously, then start the workflow.
+
+
+7 actions
+The app is running. Let me take a screenshot to verify it looks right.
+
+
+2 actions
+The app is live and looking sharp. Let me present it to you.
+
+
+Presented output
+Shopkeeper Admin Panel
+Website
+
+Open
+
+Planning app deployment strategy
+The Shopkeeper Admin Panel is fully built and running. Here's what's included:
+
+Login — Firebase email/password auth with admin doc verification. Access denied immediately if the user isn't in the admins collection.
+
+Dashboard — Live stats cards (active subscriptions, free users, expired/grace, recent changes), plus a real-time activity feed of the last 20 audit events.
+
+Users — Full subscription list via collectionGroup('subscription'), with plan/status filters, user ID search, copy-to-clipboard UIDs, color-coded status badges, intro offer badges, and 25-per-page pagination.
+
+User Detail — Complete subscription record, Change Plan/Extend/Cancel actions (each writing an audit log entry), and full per-user audit history. Cancel requires typing CONFIRM in the destructive action modal.
+
+Plans — Inline editor for all 3 plans (free/pro/enterprise) with price, duration, active toggle, and feature checkboxes for all 12 feature keys.
+
+Config — Single form for config/global — trial toggle, trial days, grace period, default plan, and app mode radio.
+
+Audit Log — Browsable, filterable log with click-to-expand rows showing previousState → newState as formatted JSON. 50-per-page pagination.
+
+All writes go through adminService.ts, every mutation produces an audit entry, and toast notifications confirm every action.
+
+Next, I can add a bulk admin action on the Users page to change the plan for multiple selected users at once. Would you like me to do that?
+
+

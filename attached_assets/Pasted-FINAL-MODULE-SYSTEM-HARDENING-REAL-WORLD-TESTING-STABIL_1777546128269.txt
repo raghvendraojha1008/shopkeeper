@@ -1,0 +1,174 @@
+FINAL MODULE — SYSTEM HARDENING, REAL-WORLD TESTING & STABILITY
+
+SYSTEM GOAL
+Ensure the app performs reliably under real shop conditions, not just ideal scenarios.
+
+Convert the system into:
+
+```text
+Stable + Predictable + Fail-safe
+```
+
+---
+
+SCOPE
+
+IN SCOPE:
+
+* Stress testing
+* Failure handling
+* Performance under load
+* Real-world usage simulation
+
+OUT OF SCOPE:
+
+* New features
+* UI redesign
+
+---
+
+1. REAL SHOP SIMULATION TESTS
+
+Simulate real usage patterns:
+
+A. Fast billing test
+
+* Add 20–30 items rapidly
+* Generate invoices continuously
+* Repeat 10–20 times
+
+Expected:
+
+* No lag
+* No incorrect totals
+* No crashes
+
+---
+
+B. Offline usage test
+
+* Disable internet
+* Create multiple bills
+* Restart app
+* Reconnect
+
+Expected:
+
+* Data persists locally
+* Sync completes correctly
+* No duplicates
+
+---
+
+C. Large data test
+
+* 1000+ inventory items
+* 500+ ledger entries
+
+Expected:
+
+* Search remains instant
+* No UI freezing
+
+---
+
+2. FAILURE HANDLING
+
+Test:
+
+* Kill app during sync
+* Kill app during backup
+* Network drops mid-operation
+
+Expected behavior:
+
+```text
+No data loss
+No corruption
+Graceful recovery
+```
+
+---
+
+3. DATA CONSISTENCY
+
+Ensure:
+
+* Inventory always matches ledger
+* No duplicate invoice numbers
+* No negative stock unless allowed
+
+---
+
+4. PERFORMANCE MONITORING
+
+Add lightweight logging:
+
+* Time taken:
+
+  * POS billing
+  * Search
+  * Sync
+
+Goal:
+
+```text
+Billing < 5 sec
+Search < 50 ms
+Screen load < 200 ms
+```
+
+---
+
+5. MEMORY & RE-RENDER CONTROL
+
+Check:
+
+* No unnecessary re-renders
+* No memory leaks (listeners, effects)
+* Components unmount cleanly
+
+---
+
+6. UX STABILITY
+
+Ensure:
+
+* No flicker
+* No layout jumps
+* No stuck loaders
+
+---
+
+7. FINAL CLEANUP
+
+* Remove debug logs
+* Ensure all errors handled
+* Confirm all flows tested
+
+---
+
+SUCCESS CRITERIA
+
+System is complete when:
+
+✔ Works offline without issues
+✔ Handles large data smoothly
+✔ Survives app restarts mid-operation
+✔ No crashes in stress testing
+✔ Feels fast and stable always
+
+---
+
+IMPORTANT RULE
+
+Do NOT add new features.
+
+Focus only on:
+
+* Stability
+* Reliability
+* Performance under stress
+
+Goal:
+“App works perfectly in a real shop for 8–10 hours daily”
