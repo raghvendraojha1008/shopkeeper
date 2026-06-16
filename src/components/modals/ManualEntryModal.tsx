@@ -72,7 +72,7 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
   // Use the shared React Query cache — no Firestore reads on modal open.
   const uid = user?.uid ?? '';
   const { data: cachedParties }   = useParties(uid);
-  const { data: cachedInventory, refetch: refetchInventory } = useInventory(uid);
+  const { data: cachedInventory, refetch: refetchInventory, setData: setInventoryData } = useInventory(uid);
   const { data: cachedLedger,    refetch: refetchLedger }    = useLedger(uid);
   const { refetch: refetchTransactions }                     = useTransactions(uid);
 
@@ -317,11 +317,18 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
       if (field === 'item_name') {
         const matchedItem = inventoryList.find(x => x.name === value);
         if (matchedItem) {
-          updated.hsn_code = matchedItem.hsn_code || '';
+          // Stamp the inventory doc ID so submit-time matching uses ID (reliable
+          // even when the TanStack Query cache is stale) rather than name only
+          // (which fails after a rename or when the cache hasn't caught up).
+          updated._item_id   = matchedItem.id;
+          updated.hsn_code   = matchedItem.hsn_code || '';
           updated.gst_percent = matchedItem.gst_percent || '';
-          updated.rate = type === 'sales' ? (matchedItem.sale_rate || '') : (matchedItem.purchase_rate || '');
-          updated.unit = matchedItem.unit || 'Pcs';
+          updated.rate       = type === 'sales' ? (matchedItem.sale_rate || '') : (matchedItem.purchase_rate || '');
+          updated.unit       = matchedItem.unit || 'Pcs';
           updated.price_type = matchedItem.price_type || 'exclusive';
+        } else {
+          // Typed manually — clear any stale _item_id from a previous selection.
+          updated._item_id = undefined;
         }
       }
 
@@ -594,7 +601,15 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
           items.forEach((lineItem: any) => {
             if (!lineItem.item_name?.trim()) return;
-            const match = inventoryList.find((i: any) =>
+            // Prefer ID-based match — stamped when user picks from autocomplete.
+            // This is immune to stale-cache problems: even if the TanStack Query
+            // cache hasn't caught up after a previous offline save, the lineItem
+            // carries the correct inventory document ID from when autocomplete
+            // was rendered, preventing a spurious ADD for an existing stock item.
+            const matchById = lineItem._item_id
+              ? inventoryList.find((i: any) => i.id === lineItem._item_id)
+              : undefined;
+            const match = matchById ?? inventoryList.find((i: any) =>
               i.name?.toLowerCase() === lineItem.item_name?.toLowerCase()
             );
 
@@ -653,7 +668,9 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
           // Strip UI-only flags from items before persisting to Firestore
           if (payload.items) {
-            payload.items = payload.items.map(({ _auto_add_to_stock: _flag, ...rest }: any) => rest);
+            // Strip internal UI-only flags before persisting — Firestore rejects unknown reserved keys
+            // and these are never needed server-side.
+            payload.items = payload.items.map(({ _auto_add_to_stock: _flag, _item_id: _iid, ...rest }: any) => rest);
           }
         }
 
@@ -687,15 +704,23 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
         showToast(`${inventoryAddedCount} item${inventoryAddedCount > 1 ? 's' : ''} added to inventory`, 'info');
       if (inventoryUpdatedCount > 0)
         showToast(`${inventoryUpdatedCount} inventory item${inventoryUpdatedCount > 1 ? 's' : ''} updated`, 'info');
+      // Reset loading/guard BEFORE onClose so the button never shows "Saving…"
+      // during the modal exit animation. React 18 batches these state updates
+      // with the onClose parent state change into a single paint.
+      setLoading(false);
+      submittingRef.current = false;
       onClose();
       onSuccess?.(payload);
 
       // ── Fire-and-forget background commit ─────────────────────────────────
       // Snapshot every value we need before the async boundary so nothing can
       // be mutated from underneath us.
-      const _uid           = user.uid;
-      const _batchOpsSnap  = capturedBatchOps;
-      const _doInvRefresh  = inventoryAddedCount > 0 || inventoryUpdatedCount > 0;
+      const _uid              = user.uid;
+      const _batchOpsSnap     = capturedBatchOps;
+      // Snapshot batchResults so we can resolve IDs for new inventory items
+      // added in the background commit (needed for the optimistic cache update).
+      const _batchResultsSnap = batchResults;
+      const _doInvRefresh     = inventoryAddedCount > 0 || inventoryUpdatedCount > 0;
       const _autoPartyLink = autoAddPartyData && payload.party_id && payload.id && collection !== 'parties'
         ? { col: collection, entryId: payload.id as string, partyId: payload.party_id as string }
         : null;
@@ -712,8 +737,33 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
       capturedCommit()
         .then(() => {
-          // Refresh inventory cache AFTER the batch lands in IndexedDB
-          if (_doInvRefresh) refetchInventory();
+          if (_doInvRefresh) {
+            // Optimistically apply inventory changes to the TanStack Query cache
+            // immediately after the IndexedDB write. This makes the corrected
+            // stock values visible to the NEXT modal open without waiting for the
+            // async Firestore getDocs round-trip from refetchInventory().
+            // Critical for rapid back-to-back offline saves where the second
+            // modal opens before the first refetch has completed.
+            setInventoryData(old => {
+              let updated = [...old];
+              _batchOpsSnap.forEach((op, idx) => {
+                if (op.col !== 'inventory') return;
+                if (op.type === 'add') {
+                  const newId = _batchResultsSnap[idx]?.id;
+                  if (newId && !updated.some(i => i.id === newId)) {
+                    updated = [{ id: newId, ...op.data }, ...updated];
+                  }
+                } else if (op.type === 'update' && op.id) {
+                  const itemIdx = updated.findIndex(i => i.id === op.id);
+                  if (itemIdx >= 0) updated[itemIdx] = { ...updated[itemIdx], ...op.data };
+                }
+              });
+              return updated;
+            });
+            // Also trigger a background refetch to sync with Firestore local cache
+            // (catches any edge-cases where the optimistic update missed something).
+            refetchInventory();
+          }
 
           // Link the auto-added party's ID back into the entry (best-effort)
           if (_autoPartyLink) {
@@ -758,7 +808,8 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
     } catch (err) {
       console.error(err);
       showToast('Save failed', 'error');
-    } finally {
+      // Clear loading state in the error path — the success path already
+      // clears these before onClose() so the button never shows "Saving…"
       setLoading(false);
       submittingRef.current = false;
     }

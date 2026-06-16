@@ -334,48 +334,47 @@ const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBa
     }
     if (savingRef.current) return null;
     savingRef.current = true;
-
     setSaving(true);
-    const endPerf   = perfMonitor.start('pos.bill.save');
-    const isOffline = !navigator.onLine;
+    const endPerf = perfMonitor.start('pos.bill.save');
 
-    // Declared before try so catch can reference them for rollback and telemetry.
     let resolvedPartyId = partyId;
     const resolvedParty = partyName.trim();
-    const tempId        = `temp_${Date.now()}`;
+    // Declared outside try so catch can reference for rollback.
+    let payload: any  = null;
+    const invMatchOps: { matchId: string; newStock: number }[] = [];
+
+    // Snapshot stock BEFORE any optimistic decrement so rollback can restore
+    // exact values even when Math.max(0,…) capped the decrement.
+    const stockSnapshot = new Map<string, number>(
+      (inventory as any[]).map((item: any) => [item.id, Number(item.current_stock) || 0])
+    );
 
     try {
-      // 1. Create the party on-the-fly when the user typed a name that isn't
-      //    in the customers list yet (mirrors ManualEntryModal's auto-add).
+      // ── 1. Build all ops into a single atomic batch ──────────────────────
+      const batchOps: Array<{ type: 'add' | 'update'; col: string; data: any; id?: string }> = [];
+
+      // Party auto-create — now part of the batch so it works offline too.
+      let partyOpIndex = -1;
       if (!resolvedPartyId && resolvedParty) {
         const existing = (parties as any[]).find(
           p => p.role === 'customer' && p.name?.toLowerCase() === resolvedParty.toLowerCase()
         );
         if (existing) {
           resolvedPartyId = existing.id;
-        } else if (!isOffline) {
-          const partyPayload: any = {
-            name: resolvedParty, role: 'customer',
-            address: partyAddress || '',
-            phone: partyPhone || '',
-            gstin: partyGstin || '',
-            created_at: new Date().toISOString(),
-          };
-          const r = await ApiService.add(user.uid, 'parties', partyPayload);
-          resolvedPartyId = r.id;
         } else {
-          SyncQueueService.addToQueue(user.uid, 'create', 'parties', {
-            name: resolvedParty, role: 'customer',
-            address: partyAddress || '',
-            phone: partyPhone || '',
-            gstin: partyGstin || '',
-            created_at: new Date().toISOString(),
+          partyOpIndex = batchOps.length;
+          batchOps.push({
+            type: 'add', col: 'parties',
+            data: {
+              name: resolvedParty, role: 'customer',
+              address: partyAddress || '', phone: partyPhone || '',
+              gstin: partyGstin || '', created_at: new Date().toISOString(),
+            },
           });
         }
       }
 
-      // 2. Build the ledger payload using the same shape as ManualEntryModal
-      //    so existing views (LedgerView, PartyStatement, reports) just work.
+      // Ledger entry — same shape as ManualEntryModal so all views work.
       const items = cart.map(l => ({
         item_name:   l.item_name,
         quantity:    String(l.quantity),
@@ -386,99 +385,95 @@ const POSBillingView: React.FC<POSBillingViewProps> = ({ user, appSettings, onBa
         price_type:  l.price_type,
         total:       l.quantity * l.rate,
       }));
-
-      // Advance the counter to the invoice number being saved.
-      // peekNextID was used on mount so the counter hasn't moved yet.
       confirmID(rawInvoiceNo, 'sales');
-
-      const payload: any = {
-        type:           'sell',
-        date:           today,
-        invoice_no:     displayInvoiceNo,   // user-facing INV-0001 format
-        prefixed_id:    rawInvoiceNo,       // raw counter id (collision-safe)
-        party_name:     resolvedParty || 'Cash Sale',
-        party_id:       resolvedPartyId || null,
-        address:        partyAddress || '',
-        party_phone:    partyPhone || '',
-        party_gstin:    partyGstin || '',
-        is_interstate:  interstate,         // freezes the GST split for re-prints
-        round_off:      totals.roundOff,
-        round_to_rupee: roundToRupee,
+      payload = {
+        type: 'sell', date: today,
+        invoice_no: displayInvoiceNo, prefixed_id: rawInvoiceNo,
+        party_name: resolvedParty || 'Cash Sale', party_id: resolvedPartyId || null,
+        address: partyAddress || '', party_phone: partyPhone || '', party_gstin: partyGstin || '',
+        is_interstate: interstate,
+        round_off: totals.roundOff, round_to_rupee: roundToRupee,
         items,
-        subtotal:       totals.subtotal,
-        cgst_amount:    totals.totalCgst,
-        sgst_amount:    totals.totalSgst,
-        igst_amount:    totals.totalIgst,
-        gst_amount:     totals.totalGst,
-        total_amount:   totals.grandTotal,
-        created_at:     new Date().toISOString(),
+        subtotal: totals.subtotal,
+        cgst_amount: totals.totalCgst, sgst_amount: totals.totalSgst,
+        igst_amount: totals.totalIgst, gst_amount: totals.totalGst,
+        total_amount: totals.grandTotal,
+        created_at: new Date().toISOString(),
       };
+      const ledgerOpIndex = batchOps.length;
+      batchOps.push({ type: 'add', col: 'ledger_entries', data: payload });
 
-      // 3. Optimistic UI update — inject the new entry into the ledger cache
-      //    and decrement inventory immediately so both views update without
-      //    waiting for the Firestore round-trip.
-      setLedgerCache(old => [{ ...payload, id: tempId }, ...old]);
-
-      // Snapshot original stock values keyed by item id BEFORE decrementing so
-      // the rollback can restore exact values even when Math.max(0,...) capped
-      // the decrement (e.g. selling 3 units when only 1 was in stock).
-      const stockSnapshot = new Map<string, number>(
-        (inventory as any[]).map((item: any) => [item.id, Number(item.current_stock) || 0])
-      );
-
-      // Apply optimistic inventory decrement immediately — online and offline alike.
-      // Offline rollback is handled in the catch block using stockSnapshot.
+      // Inventory update ops — unified path, no online/offline split.
       if (appSettings?.automation?.auto_update_inventory !== false) {
-        setInventoryCache(old => old.map(item => {
-          const li = items.find(
-            (l: any) => String(l.item_name).toLowerCase() === String(item.name).toLowerCase()
-          );
-          if (!li) return item;
-          const newStock = Math.max(0, (Number(item.current_stock) || 0) - Number(li.quantity));
-          return { ...item, current_stock: newStock };
-        }));
-      }
-
-      // 4. Write to Firestore (or queue when offline).
-      if (isOffline) {
-        SyncQueueService.addToQueue(user.uid, 'create', 'ledger_entries', payload);
-        showToast('Saved offline — will sync', 'info');
-      } else {
-        const r = await ApiService.add(user.uid, 'ledger_entries', payload);
-        payload.id = r.id;
-        // Replace the optimistic temp entry with the confirmed Firestore document.
-        setLedgerCache(old => old.map(e => e.id === tempId ? { ...payload } : e));
-      }
-
-      // 5. Persist the stock decrements — queue via SyncQueueService when offline
-      //    so stock is updated the moment connectivity returns (not silently dropped).
-      if (appSettings?.automation?.auto_update_inventory !== false) {
-        await Promise.all(items.map(async (li: any) => {
+        cart.forEach(li => {
           const match = (inventory as any[]).find(
             (i: any) => String(i.name || '').toLowerCase() === String(li.item_name).toLowerCase()
           );
           if (!match?.id) return;
           const newStock = Math.max(0, (Number(match.current_stock) || 0) - Number(li.quantity));
-          if (isOffline) {
-            SyncQueueService.addToQueue(user.uid, 'update', 'inventory', { current_stock: newStock }, match.id);
-          } else {
-            await ApiService.update(user.uid, 'inventory', match.id, { current_stock: newStock });
-          }
+          batchOps.push({ type: 'update', col: 'inventory', data: { current_stock: newStock }, id: match.id });
+          invMatchOps.push({ matchId: match.id, newStock });
+        });
+      }
+
+      // ── 2. Resolve Firestore doc IDs synchronously (no network needed) ───
+      // prepareBatch uses Firestore's client-side CUID — zero round-trips.
+      // commit() writes to IndexedDB (< 100 ms, works offline) and the SDK
+      // syncs to the server silently once connectivity is available.
+      const { results: batchResults, commit } = ApiService.prepareBatch(user.uid, batchOps);
+
+      if (partyOpIndex >= 0 && batchResults[partyOpIndex]?.id) {
+        resolvedPartyId = batchResults[partyOpIndex].id;
+        payload.party_id = resolvedPartyId;
+      }
+      payload.id = batchResults[ledgerOpIndex]?.id ?? `temp_${Date.now()}`;
+
+      // ── 3. Optimistic UI — instant update with real Firestore IDs ─────────
+      setLedgerCache(old => [{ ...payload }, ...old]);
+      if (invMatchOps.length > 0) {
+        setInventoryCache(old => old.map(item => {
+          const op = invMatchOps.find(o => o.matchId === item.id);
+          return op ? { ...item, current_stock: op.newStock } : item;
         }));
       }
 
+      // ── 4. Non-blocking background commit ─────────────────────────────────
+      const _uid          = user.uid;
+      const _batchOpsSnap = [...batchOps];
+      const _payloadId    = payload.id;
+
+      commit()
+        .then(() => { /* IndexedDB write confirmed — Firestore syncs to server silently */ })
+        .catch(err => {
+          console.error('[POSBillingView] bg commit failed:', err);
+          // Roll back and queue for sync ONLY when truly offline.
+          // When online the Firestore SDK retries internally — rolling back
+          // would incorrectly discard a successfully committed cache entry.
+          if (!navigator.onLine) {
+            setLedgerCache(old => old.filter(e => e.id !== _payloadId));
+            if (invMatchOps.length > 0) {
+              setInventoryCache(old => old.map(item => {
+                const original = stockSnapshot.get(item.id);
+                return original !== undefined ? { ...item, current_stock: original } : item;
+              }));
+            }
+            for (const op of _batchOpsSnap) {
+              SyncQueueService.addToQueue(
+                _uid, op.type === 'add' ? 'create' : 'update',
+                op.col, op.data, op.id,
+              );
+            }
+          }
+        });
+
+      clearPosDraft(`pos-cart-${user.uid}`);
       haptic.success();
-      clearPosDraft(`pos-cart-${user.uid}`);   // Module 3 — invalidate draft on success
       return payload;
+
     } catch (e: any) {
-      // Rollback optimistic ledger update.
-      setLedgerCache(old => old.filter(entry => entry.id !== tempId));
-      // Rollback optimistic inventory decrements using the pre-decrement snapshot
-      // so stock is restored to its exact original value (avoids overshoot when
-      // the decrement was capped by Math.max(0,...)).
-      // Runs unconditionally because the optimistic decrement now happens
-      // regardless of online/offline state.
-      if (appSettings?.automation?.auto_update_inventory !== false) {
+      // Synchronous error during batch build — rollback any optimistic changes.
+      if (payload?.id) setLedgerCache(old => old.filter(entry => entry.id !== payload.id));
+      if (invMatchOps.length > 0) {
         setInventoryCache(old => old.map(item => {
           const original = stockSnapshot.get(item.id);
           return original !== undefined ? { ...item, current_stock: original } : item;
