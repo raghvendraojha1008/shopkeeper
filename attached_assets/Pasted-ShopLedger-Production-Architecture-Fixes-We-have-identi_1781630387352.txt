@@ -1,0 +1,152 @@
+ShopLedger Production Architecture Fixes
+
+We have identified two critical architecture issues that must be fixed before further scaling.
+
+ISSUE 1: Excessive Firestore Usage
+
+Observed behavior:
+
+* Firestore repeatedly reaches very high daily write counts despite low user volume.
+* The app uses an offline-first architecture with IndexedDB, React Query, optimistic updates, and a sync queue.
+* Current usage patterns suggest unnecessary reads/writes, duplicate synchronization, excessive query invalidation, duplicate listeners, retry loops, or inefficient write patterns.
+
+Required investigation:
+
+1. Firestore Audit
+
+* Log every Firestore read and write.
+* Identify the top sources of reads and writes.
+* Produce a report showing which features generate the most operations.
+
+2. Listener Audit
+
+* Find all onSnapshot listeners.
+* Remove duplicate listeners.
+* Ensure proper cleanup/unsubscribe.
+* Replace real-time listeners with one-time fetches where real-time updates are not required.
+
+3. React Query Audit
+
+* Find all invalidateQueries() usage.
+* Remove broad invalidations.
+* Replace unnecessary refetches with optimistic cache updates.
+* Prevent full dashboard refreshes after every mutation.
+
+4. Sync Queue Audit
+
+* Detect infinite retry loops.
+* Add exponential backoff.
+* Add retry limits.
+* Track retryCount, lastError, and lastAttempt.
+* Prevent a single failed item from blocking the entire queue.
+
+5. Write Optimization
+
+* Replace sequential writes with writeBatch() or transactions where appropriate.
+* Ensure a single business action generates the minimum possible Firestore operations.
+
+6. Diagnostics
+   Create a developer diagnostics screen showing:
+
+* Pending queue count
+* Failed queue count
+* Firestore writes
+* Firestore reads
+* Active listeners
+* Last sync time
+* Last sync error
+* Retry statistics
+
+Target:
+Reduce Firestore reads and writes by at least 80% without changing user-facing behavior.
+
+---
+
+ISSUE 2: Party Data Normalization & Referential Integrity
+
+Current problem:
+
+When a user edits a party name, the system effectively treats it as a new party.
+
+Example:
+
+Party:
+ID = P001
+Name = ABC Traders
+
+Invoice references:
+ABC Traders
+
+User edits:
+ABC Traders → ABC Hardware
+
+Result:
+Invoices still display ABC Traders.
+New operations use ABC Hardware.
+
+This creates inconsistent records.
+
+Required architecture change:
+
+Parties must be identified by a permanent immutable Party ID.
+
+Rules:
+
+1. Party ID is the source of truth.
+
+* Party name must never be used as a relational key.
+* Party address must never be used as a relational key.
+* Mobile number must never be used as a relational key.
+
+2. All business records must reference:
+
+* partyId
+
+Examples:
+
+* invoices
+* ledger entries
+* payments
+* sales
+* purchases
+* transactions
+* reports
+* analytics
+
+3. When a party is edited:
+
+* Update the Party document only.
+* Do not create a new party.
+* Do not break existing relationships.
+
+4. Historical records must continue to point to the same partyId.
+
+5. Display behavior:
+   Whenever invoices, ledgers, payments, reports, or transactions are displayed:
+
+Lookup:
+partyId → latest party record
+
+Display:
+
+* current name
+* current address
+* current phone
+* current GST details
+* any other latest party metadata
+
+This ensures that if a party name or address changes, all related records automatically display the latest information.
+
+6. Migration
+   Audit the current schema and identify any locations where party names are being used instead of partyId.
+   Create a migration plan to move all references to partyId-based relationships.
+
+Goal:
+Implement proper normalized data relationships and eliminate party-name-based linking throughout the application.
+
+Expected outcome:
+
+* Party edits never create duplicate identities.
+* All historical and future records remain connected.
+* Changing a party name instantly reflects across the entire application.
+* Data consistency is guaranteed.

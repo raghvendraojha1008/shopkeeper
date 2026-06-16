@@ -101,14 +101,29 @@ export const nativePdfService = {
           }
         }
         const content = lines.join('\n');
-        const txtFileName = data.fileName.replace(/\.pdf$/i, '.txt');
+        // Use the filename but strip chars that can break Android file paths
+        const safeBase = data.fileName
+          .replace(/\.pdf$/i, '')
+          .replace(/[^a-zA-Z0-9_\-]/g, '_');
+        const txtFileName = `${safeBase}.txt`;
 
         const { Filesystem, Directory } = await import('@capacitor/filesystem');
         const { Share } = await import('@capacitor/share');
 
+        // Encode as UTF-8 bytes then base64 — avoids the Capacitor
+        // `encoding: 'utf8'` quirk that fails on some Android WebView versions
+        // when content contains non-ASCII characters (e.g. Indian names).
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(content);
+        let binary = '';
+        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+        const b64content = btoa(binary);
+
         const writeResult = await Filesystem.writeFile({
-          path: txtFileName, data: content,
-          directory: Directory.Cache, encoding: 'utf8' as any,
+          path: txtFileName,
+          data: b64content,
+          directory: Directory.Cache,
+          // No encoding param — data is already base64
         });
         let fileUri = writeResult.uri;
         if (!fileUri) {

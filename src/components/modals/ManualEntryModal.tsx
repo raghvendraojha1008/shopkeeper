@@ -737,14 +737,23 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
         })
         .catch(err => {
           console.error('[ManualEntryModal] bg write failed:', err);
-          for (const op of _batchOpsSnap) {
-            SyncQueueService.addToQueue(
-              _uid,
-              op.type === 'add' ? 'create' : 'update',
-              op.col, op.data, op.id,
-            );
+          // DUPLICATE PREVENTION: only route to SyncQueue when the device is
+          // genuinely offline. With memoryLocalCache the Firestore SDK keeps
+          // the batch in its own in-memory queue and retries it automatically
+          // when connectivity is restored. If we ALSO add the ops to SyncQueue
+          // here, both paths eventually write to Firestore → duplicate documents.
+          // When offline, the SDK has no persistence across restarts, so the
+          // SyncQueue is still needed as the durable fallback.
+          if (!navigator.onLine) {
+            for (const op of _batchOpsSnap) {
+              SyncQueueService.addToQueue(
+                _uid,
+                op.type === 'add' ? 'create' : 'update',
+                op.col, op.data, op.id,
+              );
+            }
+            setTimeout(() => SyncQueueService.processQueue(_uid).catch(() => {}), 1000);
           }
-          setTimeout(() => SyncQueueService.processQueue(_uid).catch(() => {}), 1000);
         });
     } catch (err) {
       console.error(err);

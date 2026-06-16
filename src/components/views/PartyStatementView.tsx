@@ -97,8 +97,12 @@ const PartyStatementView: React.FC<PartyStatementViewProps> = ({
 
   // ── Build timeline ───────────────────────────────────────────────────────
   const { timeline, summary, agingMap } = useMemo(() => {
-    const partyLedger = ledger.filter(l => l.party_name === party.name);
-    const partyTrans  = transactions.filter(t => t.party_name === party.name);
+    const partyLedger = ledger.filter(l =>
+      (party.id && l.party_id === party.id) || l.party_name === party.name
+    );
+    const partyTrans  = transactions.filter(t =>
+      (party.id && t.party_id === party.id) || t.party_name === party.name
+    );
     const role        = party.role || 'customer';
 
     let combined = [

@@ -163,8 +163,17 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
   // ─────────────────────────────────────────────────────────────────────────
 
   const { timeline, stats } = useMemo(() => {
-      const partyLedger = (allLedger || []).filter((l: any) => l.party_name === party.name);
-      const partyTrans = (allTransactions || []).filter((t: any) => t.party_name === party.name);
+      // Match by party_id (stable, survives renames) OR party_name (legacy fallback).
+      // party_id is preferred: after a rename, party.name changes immediately in state
+      // but cached records still carry the old party_name until the cascade + refetch
+      // completes. Without the id-based path the view would show zero records
+      // during that window.
+      const partyLedger = (allLedger || []).filter((l: any) =>
+        (party.id && l.party_id === party.id) || l.party_name === party.name
+      );
+      const partyTrans = (allTransactions || []).filter((t: any) =>
+        (party.id && t.party_id === party.id) || t.party_name === party.name
+      );
       
       const combined = [
           ...partyLedger.map((i: any) => ({...i, docType: 'invoice'})),
