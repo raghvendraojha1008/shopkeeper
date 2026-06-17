@@ -1,0 +1,142 @@
+🧠 AI Agent Prompt: Fix Party Edit Synchronization (Cascade + UI Consistency)
+🎯 Goal
+When a user edits a party name (or any other party field like address, GSTIN, site, etc.), the system must:
+
+Update the party document in Firestore.
+
+Cascade the change to all related records across collections (ledger_entries, transactions, misc_charges, recurring_templates) that reference that party, replacing the old party name (and other fields) with the new values.
+
+Ensure no stale data remains: old party name must not appear in any record after the update.
+
+Reflect the changes immediately in all UI views (Parties list, Party Detail, Ledger, Transactions, Pending, etc.) without duplicate entries or visual glitches.
+
+🐛 Observed Issues
+After editing a party name, the Parties list shows multiple entries for the same party (old name and new name), indicating a cache inconsistency.
+
+Records (ledger, transactions) that belonged to the old party name are not updated with the new name — they still show the old name.
+
+Newly created records after the edit are correctly associated with the new party name, but old records remain "orphaned" under the old name, causing fragmentation.
+
+🔍 Root Cause Analysis (to be verified by AI)
+Cascade function syncPartyToRecords is called asynchronously after the party document is saved, but the UI may refresh its data before the cascade completes, leading to stale views.
+
+React Query cache invalidation (invalidateQueries for ledger and transactions) happens after the cascade (in partySync.ts), but the PartyDetailView and PartiesView may have already re-rendered with stale data.
+
+Optimistic updates in PartiesView (handleLocalUpdate) update the party list correctly, but the ledger/transactions caches are not invalidated immediately after the cascade, so the detail view still shows old data.
+
+The party_id field might be missing from some older records, causing the cascade to fall back to querying by party_name, but if the name is changed, those records are missed (though the code queries by both, but there could be a timing issue).
+
+Duplicate entries in the parties list may arise from:
+
+Optimistic update adding the new party without removing the old one (if ID mismatch).
+
+Multiple re-renders causing stale cache entries.
+
+The setPartiesCache merge logic not correctly identifying the existing party.
+
+✅ Desired Behavior
+Editing a party should be a transactional operation: either all related data is updated, or none.
+
+Immediate UI feedback: the party list updates instantly (optimistic), and all related lists (ledger, transactions) refresh automatically as soon as the cascade finishes.
+
+No duplicate parties: after the edit, only one party appears with the new name.
+
+All historical records (ledger entries, transactions, misc charges) should reflect the new party name and other updated fields (address, GSTIN, site).
+
+🛠️ Action Plan for AI Agent
+1. Audit the Party Edit Flow
+Entry point: ManualEntryModal → handleSubmit → when type === 'parties' and initialData?.id exists (edit).
+
+Check: after saving the party document, the code calls syncPartyToRecords as a background promise (in ManualEntryModal). This is fire-and-forget; the UI does not wait for it.
+
+Problem: The UI (e.g., PartyDetailView) refreshes its data immediately after onSuccess, but the cascade may not have completed yet.
+
+2. Make the Cascade Synchronous or Await it Before UI Refresh
+In ManualEntryModal, when editing a party, await the result of syncPartyToRecords before calling onSuccess (or before closing the modal).
+
+This ensures that by the time the UI refreshes, all related records are already updated.
+
+Implementation: Modify the handleSubmit logic for type === 'parties' to:
+
+Save the party document.
+
+Wait for syncPartyToRecords to complete.
+
+Then trigger onSuccess and close modal.
+
+3. Invalidate All Related Caches After Cascade
+After syncPartyToRecords completes, invalidate all relevant queries:
+
+parties (if edited, already updated optimistically)
+
+ledger
+
+transactions
+
+misc_charges (if using a custom hook)
+
+recurring_templates (if used)
+
+Use queryClient.invalidateQueries with exact keys.
+
+4. Fix Optimistic Update in PartiesView
+In PartiesView, the handleLocalUpdate is used for both create and edit.
+
+Ensure that for an edit, the cache update replaces the existing party by ID.
+
+Verify that the party object passed to handleLocalUpdate contains the correct id and that setPartiesCache maps correctly.
+
+5. Review partySync.ts for Completeness and Edge Cases
+Ensure the function updates all required fields: party_name, address, site, gstin, contact, state.
+
+Ensure it queries by both party_id and party_name to catch all records, even those missing party_id.
+
+Add a fallback for records that still reference the old name but were not caught (though the query should catch them).
+
+Consider using a batch write with a limit to avoid performance issues.
+
+6. UI Refreshing in PartyDetailView
+When onSuccess is called after editing, the PartyDetailView should reload its data (ledger/transactions) after the cascade has completed (now guaranteed by step 2).
+
+Ensure that the refreshData function in PartyDetailView invalidates and refetches the queries.
+
+7. Test for Duplicate Party Entries
+After editing, check if the old party entry remains in the cache.
+
+If using setPartiesCache, ensure it's a replace (map) not an append (push).
+
+If the party list is paginated, the edit may affect multiple pages; invalidate the entire query.
+
+8. Handle Legacy Data
+For records without party_id, the cascade updates by party_name.
+
+After the edit, those records will have the new name. Also, consider backfilling party_id during the cascade to avoid future issues.
+
+📁 Files to Modify
+src/components/modals/ManualEntryModal.tsx – ensure async cascade before onSuccess.
+
+src/services/partySync.ts – review and possibly improve the cascade logic.
+
+src/components/views/PartiesView.tsx – confirm optimistic update correctness.
+
+src/components/views/PartyDetailView.tsx – ensure data refresh after edit.
+
+Any other view that displays party names and updates from the cache (LedgerView, TransactionsView, PendingView) – ensure they also invalidate on party edit (though the cascade will update the underlying data; they just need to refetch if they have stale caches).
+
+🧪 Expected Outcome
+Editing a party name updates all related records seamlessly.
+
+No duplicate parties appear in the list.
+
+All views reflect the new name immediately after editing.
+
+The system is robust for both online and offline scenarios (the cascade should work even when offline; Firestore writes will queue).
+
+📝 Additional Notes
+The syncPartyToRecords function currently uses getDocs queries and then updates in batches. This is fine, but ensure it uses writeBatch with a chunk size of 400 to avoid hitting Firestore limits.
+
+The cascade should be idempotent – running it multiple times should not cause issues.
+
+Consider adding a toast notification to inform the user that all related records are being updated (optional).
+
+AI Agent: Please analyze the codebase with these instructions, identify any gaps in the current implementation, and apply the necessary fixes. After changes, test the party edit flow thoroughly to ensure consistency.

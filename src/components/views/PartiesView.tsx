@@ -116,22 +116,38 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
     setShowModal(true);
   };
 
-  const ledgerByParty = useMemo(() => {
+  // Index ledger/transactions by party_id (primary — stable through renames) so
+  // the balance display survives a party rename without waiting for the cascade.
+  // Records that predate party_id stamping get a "name:<party_name>" fallback key
+  // so they are still found for parties whose name hasn't changed.
+  const ledgerByPartyId = useMemo(() => {
     const map: Record<string, any[]> = {};
     ledger.forEach(l => {
-      const name = l.party_name;
-      if (!map[name]) map[name] = [];
-      map[name].push(l);
+      if (l.party_id) {
+        if (!map[l.party_id]) map[l.party_id] = [];
+        map[l.party_id].push(l);
+      } else if (l.party_name) {
+        // Legacy record — no party_id stamped; key by name with prefix to
+        // avoid collisions with Firestore document IDs.
+        const k = `name:${l.party_name}`;
+        if (!map[k]) map[k] = [];
+        map[k].push(l);
+      }
     });
     return map;
   }, [ledger]);
 
-  const transactionsByParty = useMemo(() => {
+  const transactionsByPartyId = useMemo(() => {
     const map: Record<string, any[]> = {};
     transactions.forEach(t => {
-      const name = t.party_name;
-      if (!map[name]) map[name] = [];
-      map[name].push(t);
+      if (t.party_id) {
+        if (!map[t.party_id]) map[t.party_id] = [];
+        map[t.party_id].push(t);
+      } else if (t.party_name) {
+        const k = `name:${t.party_name}`;
+        if (!map[k]) map[k] = [];
+        map[k].push(t);
+      }
     });
     return map;
   }, [transactions]);
@@ -150,12 +166,18 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
   // on EVERY render (search keystrokes, filter toggles, etc). With 100+ parties this
   // was running 100+ times per keystroke. Memoized here so it only recomputes when
   // the underlying ledger/transaction data actually changes.
+  //
+  // KEY FIX: use party_id (stable) as the primary lookup key so a rename never
+  // causes the balance to flash to 0 while the cascade is still in-flight.
+  // The `name:` fallback covers records that predate party_id stamping.
   const partyAccounting = useMemo(() => {
     const map: Record<string, { totalBilled: number; totalPaid: number; balance: number }> = {};
     for (const party of parties) {
+      const partyLedger = ledgerByPartyId[party.id] || ledgerByPartyId[`name:${party.name}`] || [];
+      const partyTrans  = transactionsByPartyId[party.id] || transactionsByPartyId[`name:${party.name}`] || [];
       map[party.id] = calculateAccounting(
-        ledgerByParty[party.name] || [],
-        transactionsByParty[party.name] || [],
+        partyLedger,
+        partyTrans,
         party.role,
         {
           openingBalance: Number(party.opening_balance) || 0,
@@ -164,7 +186,7 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
       );
     }
     return map;
-  }, [parties, ledgerByParty, transactionsByParty]);
+  }, [parties, ledgerByPartyId, transactionsByPartyId]);
 
   const handleExportParties = useCallback(async () => {
     if (filteredParties.length === 0) {

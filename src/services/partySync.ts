@@ -82,6 +82,7 @@ export async function syncPartyToRecords(
       return true;
     });
     if (allDocs.length > 0) {
+      const updatedIds = new Set(allDocs.map(d => d.id));
       const updates: Array<[any, Record<string, any>]> = allDocs.map(d => {
         const fields: Record<string, any> = { party_name: newName, party_id: partyId };
         if (updated.address !== undefined) fields.address = updated.address;
@@ -90,6 +91,19 @@ export async function syncPartyToRecords(
       });
       await flushUpdates(updates);
       totalUpdated += updates.length;
+
+      // Immediately patch the React Query ledger cache so UI reflects the new
+      // name without waiting for the background refetch to complete.
+      // The subsequent invalidateQueries (step 5) will reconcile with Firestore.
+      queryClient.setQueryData(['ledger', uid], (old: any[] = []) =>
+        old.map(entry => {
+          if (!updatedIds.has(entry.id)) return entry;
+          const patched: any = { ...entry, party_name: newName, party_id: partyId };
+          if (updated.address !== undefined) patched.address = updated.address;
+          if (updated.site    !== undefined) patched.site    = updated.site;
+          return patched;
+        })
+      );
     }
   } catch (e) {
     console.error('[partySync] ledger_entries update failed:', e);
@@ -109,12 +123,21 @@ export async function syncPartyToRecords(
       return true;
     });
     if (allDocs.length > 0) {
+      const updatedIds = new Set(allDocs.map(d => d.id));
       const updates: Array<[any, Record<string, any>]> = allDocs.map(d => [
         fsDoc(db, `users/${uid}/transactions`, d.id),
         { party_name: newName, party_id: partyId },
       ]);
       await flushUpdates(updates);
       totalUpdated += updates.length;
+
+      // Immediately patch the transactions cache.
+      queryClient.setQueryData(['transactions', uid], (old: any[] = []) =>
+        old.map(entry => {
+          if (!updatedIds.has(entry.id)) return entry;
+          return { ...entry, party_name: newName, party_id: partyId };
+        })
+      );
     }
   } catch (e) {
     console.error('[partySync] transactions update failed:', e);
@@ -169,9 +192,15 @@ export async function syncPartyToRecords(
   }
 
   // ── 5. Invalidate TanStack Query caches ──────────────────────────────────
-  // Force a fresh read from Firestore so any open PartyDetailView
-  // immediately gets the renamed party_name instead of the stale cached copy.
+  // The setQueryData calls above patch the in-memory cache immediately so the
+  // UI is already consistent. invalidateQueries triggers background refetches
+  // from Firestore local cache (IndexedDB) to confirm the writes landed and
+  // reconcile any edge-cases (e.g. records the queries above missed).
+  //
+  // Also invalidate 'parties' so any aggregate computed from the parties list
+  // (e.g. party_code or other derived fields) reflects the updated doc.
   try {
+    queryClient.invalidateQueries({ queryKey: ['parties', uid], exact: true });
     queryClient.invalidateQueries({ queryKey: ['ledger', uid], exact: true });
     queryClient.invalidateQueries({ queryKey: ['transactions', uid], exact: true });
   } catch (_) {}
