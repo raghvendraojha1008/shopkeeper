@@ -38,6 +38,13 @@ service cloud.firestore {
         exists(/databases/$(database)/documents/firm_accesses/$(request.auth.uid + '_' + adminUid));
     }
 
+    // Check whether the current user is the firm admin for the given staff uid.
+    // Used to allow admins to write role documents for their own staff.
+    function isFirmAdmin(staffUid) {
+      return isAuth() &&
+        exists(/databases/$(database)/documents/firm_accesses/$(staffUid + '_' + request.auth.uid));
+    }
+
     // ── User profile + all sub-collections ────────────────────────────────────
 
     match /users/{uid} {
@@ -56,9 +63,19 @@ service cloud.firestore {
       allow write:  if isSuperAdmin();
     }
 
+    // Audit logs — immutable from the client side.  Must be listed BEFORE the
+    // general wildcard rule below so that Firestore evaluates this more-specific
+    // rule first and the wildcard does not accidentally allow deletes/updates.
+    match /users/{uid}/audit_logs/{logId} {
+      allow create: if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);
+      allow read:   if isOwner(uid) || isSuperAdmin();
+      // Only super admins may update or delete audit entries — never the user.
+      allow update, delete: if isSuperAdmin();
+    }
+
     // Business data (transactions, parties, expenses, products, vehicles, waste,
-    // ledger_entries, recycle_bin, settings, backup_meta, audit_logs, feedback,
-    // error_logs, daily_snapshots, …)
+    // ledger_entries, recycle_bin, settings, backup_meta, feedback,
+    // error_logs, daily_snapshots, recurring_templates, …)
     // Owner + staff with firm access + super admin.
     match /users/{uid}/{subcollection}/{docId} {
       allow read:  if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);
@@ -75,9 +92,11 @@ service cloud.firestore {
     // ── Subscription audit log ─────────────────────────────────────────────────
     // Immutable from the client — create only. No updates or deletes.
     // A user can read their own entries; super admin can read all.
+    // FIX: create now validates that the userId field matches the authenticated
+    // user — prevents one user from spoofing subscription logs for another.
 
     match /subscription_logs/{logId} {
-      allow create: if isAuth();
+      allow create: if isAuth() && request.resource.data.userId == request.auth.uid;
       allow read:   if isSuperAdmin()
                     || (isAuth() && resource.data.userId == request.auth.uid);
       allow update, delete: if false;
@@ -127,6 +146,9 @@ service cloud.firestore {
     // Document ID format: "{staffUid}_{adminUid}"
     // Admin (firmUid) creates records for their staff.
     // Staff can read their own access records.
+    // FIX: create now validates that the document ID encodes the correct
+    // staff_uid and admin_uid, preventing a user from spoofing access to any
+    // other admin's namespace by crafting a matching document ID.
 
     match /firm_accesses/{accessId} {
       allow read:   if isAuth() && (
@@ -134,7 +156,11 @@ service cloud.firestore {
                       resource.data.firmUid  == request.auth.uid ||
                       isSuperAdmin()
                     );
-      allow create: if isAuth() && request.resource.data.firmUid == request.auth.uid;
+      // Create: creator must be the firm owner AND the document ID must be
+      // exactly "{user_id}_{firmUid}" — prevents ID-spoofing attacks.
+      allow create: if isAuth()
+                    && request.resource.data.firmUid == request.auth.uid
+                    && accessId == (request.resource.data.user_id + '_' + request.auth.uid);
       allow update: if isAuth() && resource.data.firmUid == request.auth.uid;
       allow delete: if isAuth() && (
                       resource.data.firmUid  == request.auth.uid ||
@@ -144,23 +170,34 @@ service cloud.firestore {
 
     // ── Multi-firm: invitations ────────────────────────────────────────────────
     // Any authenticated user can read invitations (they need the code to accept).
-    // Only the inviting admin can delete their own invitations.
+    // FIX: create now validates adminUid == auth.uid so users cannot spoof
+    //      invitations on behalf of other admins.
+    // FIX: update now validates that immutable fields (adminUid, invitedEmail)
+    //      cannot be changed by the invited party when accepting.
 
     match /invitations/{invitationId} {
       allow read:   if isAuth();
-      allow create: if isAuth();
-      allow update: if isAuth() && (
-                      resource.data.adminUid      == request.auth.uid ||
-                      resource.data.invitedEmail  == request.auth.token.email
-                    );
+      // Only the inviting admin can create — must set themselves as adminUid.
+      allow create: if isAuth() && request.resource.data.adminUid == request.auth.uid;
+      // Admin or the invited user (by email) can update invitation status,
+      // but neither can change the core identity fields.
+      allow update: if isAuth()
+                    && (resource.data.adminUid     == request.auth.uid ||
+                        resource.data.invitedEmail == request.auth.token.email)
+                    && request.resource.data.adminUid     == resource.data.adminUid
+                    && request.resource.data.invitedEmail == resource.data.invitedEmail;
       allow delete: if isAuth() && resource.data.adminUid == request.auth.uid;
     }
 
     // ── User roles (in-app role assignments within a firm) ─────────────────────
+    // FIX: isOwner is intentionally NOT allowed to write their own role document
+    //      — this prevents self-escalation to admin/founder.  Only the firm admin
+    //      who created the firm_access for this staff member, or a superAdmin,
+    //      may write role documents.
 
     match /user_roles/{uid} {
       allow read:  if isOwner(uid) || isSuperAdmin();
-      allow write: if isOwner(uid) || isSuperAdmin();
+      allow write: if isSuperAdmin() || isFirmAdmin(uid);
     }
 
   }

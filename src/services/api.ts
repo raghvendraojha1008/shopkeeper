@@ -58,8 +58,9 @@ function withWriteTimeout<T>(promise: Promise<T>): Promise<T> {
 /**
  * Recursively removes undefined values from an object so Firestore never
  * receives `undefined` fields (which it rejects with an error).
+ * Exported so callers that write directly via writeBatch can also sanitize.
  */
-function sanitizeForFirestore(obj: any): any {
+export function sanitizeForFirestore(obj: any): any {
   if (obj === null || obj === undefined) return obj;
   if (Array.isArray(obj)) return obj.map(sanitizeForFirestore);
   if (typeof obj === 'object' && !(obj instanceof Date)) {

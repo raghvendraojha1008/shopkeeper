@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Upload, Download, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import * as XLSX from 'xlsx';
-import { writeBatch, doc, collection } from 'firebase/firestore';
+import { writeBatch, doc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useUI } from '../../context/UIContext';
 import { exportService } from '../../services/export';
+import { sanitizeForFirestore } from '../../services/api';
 
 const { read, utils } = XLSX;
 
@@ -222,6 +223,27 @@ export const BulkImportModal: React.FC<BulkImportModalProps> = ({
     let successful = 0;
     let failed = 0;
 
+    // Pre-compute starting sequential ID number for inventory and parties
+    // so that imported records get proper item_id / party_code stamps.
+    // This prevents ManualEntryModal from treating them as unknown items.
+    let nextIdNumber = 1;
+    if (entityType === 'inventory' || entityType === 'parties') {
+      try {
+        const snap = await getDocs(collection(db, `users/${userId}/${entityType}`));
+        const prefix = entityType === 'inventory' ? 'I-' : 'P-';
+        snap.docs.forEach(d => {
+          const idField = entityType === 'inventory' ? d.data().item_id : d.data().party_code;
+          if (typeof idField === 'string' && idField.startsWith(prefix)) {
+            const n = parseInt(idField.slice(prefix.length), 10);
+            if (!isNaN(n) && n >= nextIdNumber) nextIdNumber = n + 1;
+          }
+        });
+      } catch {
+        // Non-fatal: fall back to timestamp-based IDs
+        nextIdNumber = Date.now();
+      }
+    }
+
     const reverseMapping: Record<string, string> = {};
     Object.entries(columnMapping).forEach(([excelCol, appField]) => {
       reverseMapping[appField] = excelCol;
@@ -239,13 +261,19 @@ export const BulkImportModal: React.FC<BulkImportModalProps> = ({
         docData[appField] = value;
       });
 
-      if (entityType === 'inventory' && !docData.price_type) {
-        docData.price_type = 'exclusive';
+      if (entityType === 'inventory') {
+        if (!docData.price_type) docData.price_type = 'exclusive';
+        docData.item_id = `I-${String(nextIdNumber + i).padStart(4, '0')}`;
+      } else if (entityType === 'parties') {
+        docData.party_code = `P-${String(nextIdNumber + i).padStart(4, '0')}`;
       }
 
       try {
         const ref = doc(collection(db, `users/${userId}/${entityType}`));
-        batch.set(ref, docData);
+        // sanitizeForFirestore strips undefined values — without this, any
+        // optional column left blank by the user would send `undefined` to
+        // Firestore and cause the entire batch to be rejected with an error.
+        batch.set(ref, sanitizeForFirestore(docData));
         opCount++;
         successful++;
 

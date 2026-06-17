@@ -25,6 +25,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { queryClient } from '../context/DataContext';
+import { TelemetryService } from './telemetryService';
 
 const BATCH_CHUNK = 400;
 
@@ -107,6 +108,7 @@ export async function syncPartyToRecords(
     }
   } catch (e) {
     console.error('[partySync] ledger_entries update failed:', e);
+    TelemetryService.logError(uid, 'partySync', 'ledger_entries cascade failed', { error: String(e) }).catch(() => {});
   }
 
   // ── 2. transactions ──────────────────────────────────────────────────────
@@ -141,6 +143,7 @@ export async function syncPartyToRecords(
     }
   } catch (e) {
     console.error('[partySync] transactions update failed:', e);
+    TelemetryService.logError(uid, 'partySync', 'transactions cascade failed', { error: String(e) }).catch(() => {});
   }
 
   // ── 3. misc_charges ──────────────────────────────────────────────────────
@@ -164,6 +167,7 @@ export async function syncPartyToRecords(
     }
   } catch (e) {
     console.error('[partySync] misc_charges update failed:', e);
+    TelemetryService.logError(uid, 'partySync', 'misc_charges cascade failed', { error: String(e) }).catch(() => {});
   }
 
   // ── 4. recurring_templates ───────────────────────────────────────────────
@@ -189,6 +193,7 @@ export async function syncPartyToRecords(
     }
   } catch (e) {
     console.error('[partySync] recurring_templates update failed:', e);
+    TelemetryService.logError(uid, 'partySync', 'recurring_templates cascade failed', { error: String(e) }).catch(() => {});
   }
 
   // ── 5. Invalidate TanStack Query caches ──────────────────────────────────

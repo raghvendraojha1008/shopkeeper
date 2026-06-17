@@ -5,16 +5,32 @@ import { db } from '../config/firebase';
 export const StatementService = {
   generatePartyStatement: async (uid: string, party: any, startDate: string, endDate: string, _firmProfile: any) => {
     // 1. Fetch Data
+    // Use party_id as primary filter when available — it is a stable indexed
+    // field that survives renames.  Fall back to party_name only for legacy
+    // records that pre-date party_id stamping.
     const ledgerRef = collection(db, `users/${uid}/ledger_entries`);
     const txRef     = collection(db, `users/${uid}/transactions`);
     const miscRef   = collection(db, `users/${uid}/misc_charges`);
 
-    const qLedger = query(ledgerRef, where('party_name', '==', party.name));
-    const qTx     = query(txRef,     where('party_name', '==', party.name));
-    const [lSnap, tSnap, mSnap] = await Promise.all([
-      getDocs(qLedger),
-      getDocs(qTx),
-      getDocs(miscRef),
+    // Build queries: prefer party_id filter (O(party docs)), but also include
+    // party_name to catch pre-stamping legacy records.  Deduplicate by doc ID.
+    const buildDedupedQuery = async (ref: any): Promise<any[]> => {
+      const promises: Promise<any>[] = [getDocs(query(ref, where('party_name', '==', party.name)))];
+      if (party.id) promises.push(getDocs(query(ref, where('party_id', '==', party.id))));
+      const snaps = await Promise.all(promises);
+      const seen = new Set<string>();
+      const docs: any[] = [];
+      snaps.forEach(snap => snap.docs.forEach((d: any) => {
+        if (!seen.has(d.id)) { seen.add(d.id); docs.push(d); }
+      }));
+      return docs;
+    };
+
+    // misc_charges uses party_id OR party_name (no separate index needed — small collection)
+    const miscSnap = await getDocs(miscRef);
+    const [lDocs, tDocs] = await Promise.all([
+      buildDedupedQuery(ledgerRef),
+      buildDedupedQuery(txRef),
     ]);
 
     const toLocalDate = (raw: any): string => {
@@ -26,14 +42,14 @@ export const StatementService = {
       return String(raw).substring(0, 10);
     };
 
-    const miscDocs = mSnap.docs
+    const miscDocs = miscSnap.docs
       .map(d => ({ id: d.id, ...d.data() as any }))
       .filter((c: any) => c.party_id === party.id || c.party_name === party.name);
 
     // 2. Combine & Sort (all time, ascending)
     let allEntries: any[] = [
-      ...lSnap.docs.map(d => ({ ...d.data(), _type: 'BILL' })),
-      ...tSnap.docs.map(d => ({ ...d.data(), _type: 'PAYMENT' })),
+      ...lDocs.map(d => ({ ...d.data(), _type: 'BILL' })),
+      ...tDocs.map(d => ({ ...d.data(), _type: 'PAYMENT' })),
       ...miscDocs.map(d => ({ ...d, _type: 'MISC' })),
     ];
     allEntries.sort((a, b) => toLocalDate(a.date).localeCompare(toLocalDate(b.date)));
