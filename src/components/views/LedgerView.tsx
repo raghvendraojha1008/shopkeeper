@@ -109,6 +109,9 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
   const [showEntryModal, setShowEntryModal] = useState(false);
   const [editData, setEditData] = useState<any | null>(null);
   const [entryType, setEntryType] = useState<'sales' | 'purchases'>('sales');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
   const [showExportModal, setShowExportModal] = useState(false);
   const [paymentDetailsFor, setPaymentDetailsFor] = useState<{
     autoPayments: any[];
@@ -175,15 +178,21 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
     });
   }, [entries, searchTerm, currentFilter, dateRange]);
 
-  const searchSuggestions = useMemo(() => {
+  const allPartyNames = useMemo(() => {
     return parties
       .filter(p => {
         if (currentFilter === 'sell') return p.role === 'customer';
         if (currentFilter === 'purchase') return p.role === 'supplier';
         return true;
       })
-      .map(p => p.name);
+      .map(p => p.name as string);
   }, [parties, currentFilter]);
+
+  const filteredSuggestions = useMemo(() => {
+    if (!searchTerm.trim()) return allPartyNames.slice(0, 8);
+    const lower = searchTerm.toLowerCase();
+    return allPartyNames.filter(n => n.toLowerCase().includes(lower)).slice(0, 8);
+  }, [allPartyNames, searchTerm]);
 
   // Compute payment distribution for all ledger entries (not just filtered)
   // so FIFO distribution is correct across all orders of a party
@@ -691,13 +700,56 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
                         <div className="flex-1 relative">
                           <Search className="absolute left-3 top-2.5 text-slate-400" size={13} />
                           <input
-                            className="w-full pl-8 p-2 border border-white/12 rounded-2xl text-xs font-semibold outline-none focus:ring-2 focus:ring-primary/30"
+                            ref={searchInputRef}
+                            className="w-full pl-8 pr-3 p-2 border border-white/12 rounded-2xl text-xs font-semibold outline-none focus:ring-2 focus:ring-primary/30"
+                            style={{ background: 'rgba(255,255,255,0.06)', color: '#fff' }}
                             placeholder={currentFilter === 'sell' ? 'Search Customer...' : currentFilter === 'purchase' ? 'Search Supplier...' : 'Search Party...'}
                             value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                            list="ledger-search-suggestions"
+                            onChange={e => { setSearchTerm(e.target.value); setShowSuggestions(true); }}
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            autoCapitalize="off"
+                            spellCheck={false}
                           />
-                          <datalist id="ledger-search-suggestions">{searchSuggestions.map((name, i) => <option key={i} value={name} />)}</datalist>
+                          {/* Custom party suggestion dropdown — replaces <datalist> which
+                              blocks the keyboard and misbehaves on Android WebView/Capacitor */}
+                          {showSuggestions && filteredSuggestions.length > 0 && (
+                            <div
+                              ref={suggestionsRef}
+                              className="absolute left-0 right-0 top-full mt-1 z-50 rounded-2xl overflow-hidden"
+                              style={{ background: 'rgba(15,20,50,0.98)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}
+                            >
+                              {filteredSuggestions.map((name, i) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  className="w-full text-left px-3 py-2.5 text-xs font-semibold active:bg-white/10 transition-colors flex items-center gap-2"
+                                  style={{ color: 'rgba(240,244,255,0.85)', borderBottom: i < filteredSuggestions.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}
+                                  onMouseDown={e => {
+                                    e.preventDefault();
+                                    setSearchTerm(name);
+                                    setShowSuggestions(false);
+                                    searchInputRef.current?.blur();
+                                  }}
+                                >
+                                  <Search size={10} className="text-slate-500 flex-shrink-0" />
+                                  {name}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                          {searchTerm.length > 0 && (
+                            <button
+                              type="button"
+                              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full"
+                              style={{ color: 'rgba(148,163,184,0.5)' }}
+                              onMouseDown={e => { e.preventDefault(); setSearchTerm(''); setShowSuggestions(false); }}
+                            >
+                              ✕
+                            </button>
+                          )}
                         </div>
                       </div>
                       <DateRangeFilter
