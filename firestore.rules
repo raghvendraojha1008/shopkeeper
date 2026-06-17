@@ -73,10 +73,28 @@ service cloud.firestore {
       allow update, delete: if isSuperAdmin();
     }
 
+    // Sensitive owner-only sub-collections — listed BEFORE the wildcard so
+    // Firestore evaluates the more-specific path first.
+    // Staff members may read business data but must not access app settings,
+    // device backups, or crash/error logs belonging to the owner account.
+    match /users/{uid}/settings/{docId} {
+      allow read, write: if isOwner(uid) || isSuperAdmin();
+    }
+    match /users/{uid}/backup_meta/{docId} {
+      allow read, write: if isOwner(uid) || isSuperAdmin();
+    }
+    match /users/{uid}/crash_logs/{docId} {
+      allow create: if isOwner(uid) || isSuperAdmin();
+      allow read:   if isOwner(uid) || isSuperAdmin();
+      allow update, delete: if isSuperAdmin();
+    }
+
     // Business data (transactions, parties, expenses, products, vehicles, waste,
-    // ledger_entries, recycle_bin, settings, backup_meta, feedback,
-    // error_logs, daily_snapshots, recurring_templates, …)
+    // ledger_entries, recycle_bin, feedback, daily_snapshots,
+    // recurring_templates, misc_charges, …)
     // Owner + staff with firm access + super admin.
+    // NOTE: settings/backup_meta/crash_logs are handled by the specific rules
+    // above and will NOT fall through to this wildcard.
     match /users/{uid}/{subcollection}/{docId} {
       allow read:  if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);
       allow write: if isOwner(uid) || isSuperAdmin() || hasStaffAccess(uid);

@@ -809,8 +809,8 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
         .catch(err => {
           console.error('[ManualEntryModal] bg write failed:', err);
           // DUPLICATE PREVENTION: only route to SyncQueue when the device is
-          // genuinely offline. With memoryLocalCache the Firestore SDK keeps
-          // the batch in its own in-memory queue and retries it automatically
+          // genuinely offline. With persistentLocalCache the Firestore SDK keeps
+          // the batch in its own IndexedDB queue and retries it automatically
           // when connectivity is restored. If we ALSO add the ops to SyncQueue
           // here, both paths eventually write to Firestore → duplicate documents.
           // When offline, the SDK has no persistence across restarts, so the
@@ -824,6 +824,14 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
               );
             }
             setTimeout(() => SyncQueueService.processQueue(_uid).catch(() => {}), 1000);
+          } else {
+            // Online but commit failed (transient server error, network blip, etc.).
+            // The optimistic cache update has already been applied — trigger a refetch
+            // so the cache reconciles with the true Firestore state rather than
+            // staying permanently diverged until the next app restart.
+            refetchLedger();
+            refetchTransactions();
+            if (_doInvRefresh) refetchInventory();
           }
         });
     } catch (err) {

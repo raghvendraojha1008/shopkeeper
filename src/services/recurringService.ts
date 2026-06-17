@@ -67,12 +67,19 @@ export const RecurringService = {
     const today = new Date().toISOString().split('T')[0];
     const lastRun = localStorage.getItem(LAST_RUN_KEY);
     if (lastRun === today) return;
-    localStorage.setItem(LAST_RUN_KEY, today);
+    // NOTE: LAST_RUN_KEY is set AFTER writes complete so that a crash
+    // between the guard-check and the Firestore writes doesn't permanently
+    // skip an entire day of recurring entries. Each template's nextDue is
+    // advanced independently, so any partially-completed run is safely
+    // resumed on the next startup without producing duplicates.
 
     try {
       const templates = await this.getAll(uid);
       const due = templates.filter(t => t.isActive && t.nextDue <= today);
-      if (due.length === 0) return;
+      if (due.length === 0) {
+        localStorage.setItem(LAST_RUN_KEY, today);
+        return;
+      }
 
       const txnCol = collection(db, 'users', uid, 'transactions');
       const created: string[] = [];
@@ -97,6 +104,9 @@ export const RecurringService = {
         const sign = tmpl.type === 'received' ? '+' : '-';
         created.push(`${sign}₹${Number(tmpl.amount).toLocaleString('en-IN')} — ${tmpl.party_name}`);
       }
+
+      // Mark as run only after all writes succeed
+      localStorage.setItem(LAST_RUN_KEY, today);
 
       if (created.length > 0) {
         await NotificationService.schedule([{

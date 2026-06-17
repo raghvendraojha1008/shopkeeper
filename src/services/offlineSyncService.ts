@@ -61,7 +61,19 @@ const CONFLICT_KEY  = 'osync_conflicts_v3';
 const MAX_RETRIES   = 3;
 
 const readQueue     = (): SyncQueueItem[] => { try { const raw = localStorage.getItem(QUEUE_KEY); if (!raw) return []; const q = JSON.parse(raw); return Array.isArray(q) ? q : []; } catch { return []; } };
-const saveQueue     = (q: SyncQueueItem[]) => { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch {} };
+const saveQueue     = (q: SyncQueueItem[]) => {
+  try {
+    localStorage.setItem(QUEUE_KEY, JSON.stringify(q));
+  } catch (e: any) {
+    // QuotaExceededError: the new item was NOT persisted to disk.
+    // If the app is closed now, this offline operation will be lost.
+    // Dispatch a window event so UI components can warn the user.
+    if (e?.name === 'QuotaExceededError' || e?.code === 22 || e?.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      console.error('[OfflineSyncService] localStorage quota exceeded — offline queue item NOT saved to disk. Clear old data or free device storage.');
+      try { window.dispatchEvent(new CustomEvent('shopkeeper:quota-exceeded')); } catch {}
+    }
+  }
+};
 const readConflicts = (): SyncConflict[]   => { try { const raw = localStorage.getItem(CONFLICT_KEY); if (!raw) return []; const c = JSON.parse(raw); return Array.isArray(c) ? c : []; } catch { return []; } };
 const saveConflicts = (c: SyncConflict[])  => { try { localStorage.setItem(CONFLICT_KEY, JSON.stringify(c)); } catch {} };
 

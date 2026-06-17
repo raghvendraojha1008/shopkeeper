@@ -160,6 +160,18 @@ const AppContent = () => {
     return () => { (window as any).__crashReporterUid__ = null; };
   }, [user]);
 
+  // ── Offline-storage quota warning ─────────────────────────────────────────
+  // OfflineSyncService dispatches this event when localStorage is full so
+  // that a pending offline operation could NOT be saved to disk. Alert the
+  // user immediately so they know the entry is at risk if the app is closed.
+  useEffect(() => {
+    const handler = () => {
+      showToast('Device storage full — this offline entry may not be saved. Please free up storage.', 'error');
+    };
+    window.addEventListener('shopkeeper:quota-exceeded', handler);
+    return () => window.removeEventListener('shopkeeper:quota-exceeded', handler);
+  }, [showToast]);
+
   // Cache pre-warm gate: true while PersistQueryClientProvider is rehydrating
   // the IndexedDB cache into the QueryClient memory. Until this completes,
   // queries have no data and every view renders its loading skeleton.

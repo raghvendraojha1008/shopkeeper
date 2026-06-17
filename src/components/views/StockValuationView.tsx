@@ -36,24 +36,50 @@ function getMarginColor(m: number): string {
   return '#f87171';
 }
 
-// Extract purchase history from ledger for an item
-function getPurchaseHistory(itemName: string, ledger: any[]): { date: string; rate: number; qty: number; total: number }[] {
-  const history: { date: string; rate: number; qty: number; total: number }[] = [];
+// Pre-index ledger entries by item name for O(1) lookup inside enrichedItems.
+// Builds two maps in a single O(L) pass — avoids O(I×L) per-item scanning.
+function buildLedgerMaps(ledger: any[]): {
+  purchaseMap: Map<string, { date: string; rate: number; qty: number; total: number }[]>;
+  sellMap30:   Map<string, number>;
+} {
+  const purchaseMap = new Map<string, { date: string; rate: number; qty: number; total: number }[]>();
+  const sellMap30   = new Map<string, number>();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
   for (const entry of ledger) {
-    if (entry.type !== 'purchase') continue;
-    const found = (entry.items || []).find((i: any) =>
-      i.item_name?.toLowerCase() === itemName?.toLowerCase()
-    );
-    if (found) {
-      history.push({
-        date:  entry.date?.toDate ? entry.date.toDate().toISOString().split('T')[0] : String(entry.date || ''),
-        rate:  Number(found.rate || 0),
-        qty:   Number(found.quantity || 0),
-        total: Number(found.rate || 0) * Number(found.quantity || 0),
-      });
+    const entryDate = entry.date?.toDate ? entry.date.toDate() : new Date(entry.date || 0);
+    const dateStr   = entryDate.getFullYear() + '-'
+      + String(entryDate.getMonth() + 1).padStart(2, '0') + '-'
+      + String(entryDate.getDate()).padStart(2, '0');
+
+    if (entry.type === 'purchase') {
+      for (const i of (entry.items || [])) {
+        const key = (i.item_name || '').toLowerCase();
+        if (!key) continue;
+        const arr = purchaseMap.get(key) ?? [];
+        arr.push({
+          date:  dateStr,
+          rate:  Number(i.rate || 0),
+          qty:   Number(i.quantity || 0),
+          total: Number(i.rate || 0) * Number(i.quantity || 0),
+        });
+        purchaseMap.set(key, arr);
+      }
+    } else if (entry.type === 'sell' && entryDate >= thirtyDaysAgo) {
+      for (const i of (entry.items || [])) {
+        const key = (i.item_name || '').toLowerCase();
+        if (!key) continue;
+        sellMap30.set(key, (sellMap30.get(key) ?? 0) + Number(i.quantity || 0));
+      }
     }
   }
-  return history.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 20);
+
+  // Sort each purchase list descending by date and cap at 20
+  for (const [k, arr] of purchaseMap) {
+    purchaseMap.set(k, arr.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 20));
+  }
+  return { purchaseMap, sellMap30 };
 }
 
 // Tiny sparkline SVG for margin trend
@@ -94,6 +120,11 @@ const StockValuationView: React.FC<StockValuationViewProps> = ({ items, ledger, 
 
   const firmName = settings?.profile?.firm_name || 'My Firm';
 
+  // ── Pre-index ledger in a single O(L) pass ────────────────────────────────
+  // Building purchaseMap + sellMap30 here avoids an O(I×L) scan inside
+  // the items loop below (was ~5M ops for 500 items × 10k ledger entries).
+  const { purchaseMap, sellMap30 } = useMemo(() => buildLedgerMaps(ledger), [ledger]);
+
   // ── Enrich items ──────────────────────────────────────────────────────────
   const enrichedItems = useMemo(() => {
     return items.map(item => {
@@ -105,21 +136,14 @@ const StockValuationView: React.FC<StockValuationViewProps> = ({ items, ledger, 
       const margin     = calcMargin(saleRate, purchRate);
       const profitPerUnit = saleRate - purchRate;
 
-      // Purchase history from ledger
-      const history    = getPurchaseHistory(item.name, ledger);
+      // Purchase history — O(1) lookup from pre-built map
+      const key        = (item.name || '').toLowerCase();
+      const history    = purchaseMap.get(key) ?? [];
       const lastRates  = history.slice(0, 5).map(h => h.rate);
       const avgPurchase = lastRates.length ? lastRates.reduce((s, r) => s + r, 0) / lastRates.length : purchRate;
 
-      // Sales from ledger (last 30 days)
-      const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      let soldQty30 = 0;
-      for (const entry of ledger) {
-        if (entry.type !== 'sell') continue;
-        const d = entry.date?.toDate ? entry.date.toDate() : new Date(entry.date || 0);
-        if (d < thirtyDaysAgo) continue;
-        const found = (entry.items || []).find((i: any) => i.item_name?.toLowerCase() === item.name?.toLowerCase());
-        if (found) soldQty30 += Number(found.quantity || 0);
-      }
+      // Sales last 30 days — O(1) lookup from pre-built map
+      const soldQty30   = sellMap30.get(key) ?? 0;
       const turnoverDays = soldQty30 > 0 ? Math.round(qty / (soldQty30 / 30)) : null;
 
       // FIFO cost — use historical purchase rates weighted by qty
@@ -141,7 +165,7 @@ const StockValuationView: React.FC<StockValuationViewProps> = ({ items, ledger, 
         history, lastRates, avgPurchase, soldQty30, turnoverDays, fifoValue, rateTrend,
       };
     });
-  }, [items, ledger]);
+  }, [items, purchaseMap, sellMap30]);
 
   // ── Summary stats ─────────────────────────────────────────────────────────
   const summary = useMemo(() => {
