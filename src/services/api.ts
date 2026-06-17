@@ -302,6 +302,8 @@ export const ApiService = {
       'vehicles',
       'expenses',
       'waste_entries',
+      'misc_charges',
+      'recurring_templates',
       'settings',
       'audit_logs',
       'recycle_bin',
