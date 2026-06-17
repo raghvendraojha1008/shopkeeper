@@ -735,6 +735,30 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
                        state:   payload.state } }
         : null;
 
+      // ── Party cascade — fire IMMEDIATELY, independent of commit timing ─────
+      // ROOT FIX: The cascade used to live inside capturedCommit().then().
+      // On memory-pressured Android (MALI GPU pressure, heavy WebView GC pauses)
+      // batch.commit() can take >8 s to notify the JS Promise even though the
+      // Firestore SDK has already written to IndexedDB.  Our withWriteTimeout()
+      // wrapper fires WRITE_TIMEOUT at 8 s, which causes .then() to be skipped
+      // and .catch() to run instead — the cascade is NEVER called.  The party
+      // name saves fine (Firestore SDK retries internally), but ALL linked
+      // ledger/transaction records are orphaned under the old name forever.
+      //
+      // The cascade only queries ledger_entries / transactions by party_id or
+      // party_name — those records haven't been modified yet regardless of
+      // whether the party commit has resolved, so running in parallel is safe.
+      if (_cascade) {
+        syncPartyToRecords(_uid, _cascade.partyId, _cascade.oldName, _cascade.fields)
+          .then(n => {
+            if (n > 0)
+              showToast(`Updated ${n} linked record${n !== 1 ? 's' : ''}`, 'info');
+            refetchLedger();
+            refetchTransactions();
+          })
+          .catch(e => console.error('[partySync] cascade failed:', e));
+      }
+
       capturedCommit()
         .then(() => {
           if (_doInvRefresh) {
@@ -769,20 +793,6 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
           if (_autoPartyLink) {
             ApiService.update(_uid, _autoPartyLink.col, _autoPartyLink.entryId,
               { party_id: _autoPartyLink.partyId }).catch(() => {});
-          }
-
-          // Party cascade: update all denormalized copies in related collections.
-          // Runs AFTER commit so Firestore's local cache already has the updated
-          // party doc before we query ledger_entries / transactions.
-          if (_cascade) {
-            syncPartyToRecords(_uid, _cascade.partyId, _cascade.oldName, _cascade.fields)
-              .then(n => {
-                if (n > 0)
-                  showToast(`Updated ${n} linked record${n !== 1 ? 's' : ''}`, 'info');
-                refetchLedger();
-                refetchTransactions();
-              })
-              .catch(e => console.error('[partySync] cascade failed:', e));
           }
         })
         .catch(err => {
