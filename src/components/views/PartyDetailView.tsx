@@ -71,8 +71,8 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
   const { requireEditPassword } = useEditPassword();
   const { useLedger, useTransactions } = useData();
 
-  const { data: allLedger, refetch: refetchLedger } = useLedger(user.uid);
-  const { data: allTransactions, refetch: refetchTransactions } = useTransactions(user.uid);
+  const { data: allLedger, refetch: refetchLedger, setData: setLedgerData } = useLedger(user.uid);
+  const { data: allTransactions, refetch: refetchTransactions, setData: setTransactionsData } = useTransactions(user.uid);
 
   const [activeTab, setActiveTab] = useState<'all' | 'orders' | 'payments' | 'summary'>('all');
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -584,7 +584,7 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
               {party.role === 'customer' ? (
                 <>
                   <button
-                    onClick={() => { setNewModalType('sales'); setNewModalData({ party_name: party.name, paid_by: party.name, address: party.address || '' }); setShowNewModal(true); }}
+                    onClick={() => { setNewModalType('sales'); setNewModalData({ party_name: party.name, party_id: party.id, paid_by: party.name, address: party.address || '' }); setShowNewModal(true); }}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-bold text-xs transition-all active:scale-95"
                     style={{ background: 'rgba(52,211,153,0.12)', color: '#34d399', border: '1px solid rgba(52,211,153,0.22)' }}>
                     <ShoppingCart size={13}/> New Sale
@@ -597,7 +597,7 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
                     <Tag size={13}/> Misc
                   </button>
                   <button
-                    onClick={() => { setNewModalType('transactions'); setNewModalData({ type: 'received', paid_by: party.name, party_name: party.name }); setShowNewModal(true); }}
+                    onClick={() => { setNewModalType('transactions'); setNewModalData({ type: 'received', paid_by: party.name, party_name: party.name, party_id: party.id }); setShowNewModal(true); }}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-bold text-xs transition-all active:scale-95"
                     style={{ background: 'rgba(99,102,241,0.12)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.22)' }}>
                     <CreditCard size={13}/> Payment
@@ -606,7 +606,7 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
               ) : (
                 <>
                   <button
-                    onClick={() => { setNewModalType('purchases'); setNewModalData({ party_name: party.name, paid_to: party.name, address: party.address || '' }); setShowNewModal(true); }}
+                    onClick={() => { setNewModalType('purchases'); setNewModalData({ party_name: party.name, party_id: party.id, paid_to: party.name, address: party.address || '' }); setShowNewModal(true); }}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-bold text-xs transition-all active:scale-95"
                     style={{ background: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.2)' }}>
                     <Truck size={13}/> New Purchase
@@ -619,7 +619,7 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
                     <Tag size={13}/> Misc
                   </button>
                   <button
-                    onClick={() => { setNewModalType('transactions'); setNewModalData({ type: 'paid', paid_to: party.name, party_name: party.name }); setShowNewModal(true); }}
+                    onClick={() => { setNewModalType('transactions'); setNewModalData({ type: 'paid', paid_to: party.name, party_name: party.name, party_id: party.id }); setShowNewModal(true); }}
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-bold text-xs transition-all active:scale-95"
                     style={{ background: 'rgba(99,102,241,0.12)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.22)' }}>
                     <CreditCard size={13}/> Payment
@@ -858,9 +858,22 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
             user={user}
             initialData={editingItem}
             appSettings={appSettings}
-            onSuccess={() => { 
-                refreshData(); 
-                setShowEditModal(false);
+            onSuccess={(data: any) => {
+                // Optimistically patch the cached record immediately so the
+                // updated data appears in the timeline without waiting for
+                // the background Firestore commit + refetch to complete.
+                if (data?.id) {
+                  if (editType === 'sales' || editType === 'purchases') {
+                    setLedgerData((old: any[]) =>
+                      (old || []).map((e: any) => e.id === data.id ? { ...e, ...data } : e)
+                    );
+                  } else {
+                    setTransactionsData((old: any[]) =>
+                      (old || []).map((e: any) => e.id === data.id ? { ...e, ...data } : e)
+                    );
+                  }
+                }
+                refreshData();
             }}
         />}
 
@@ -872,9 +885,28 @@ const PartyDetailView: React.FC<PartyDetailViewProps> = ({ party, user, onBack, 
             user={user}
             initialData={newModalData}
             appSettings={appSettings}
-            onSuccess={() => {
+            onSuccess={(data: any) => {
+                // Optimistically prepend the new record to the correct cache so it
+                // appears in the party timeline immediately — before the background
+                // Firestore commit resolves and before the refetch completes.
+                // Guard against duplicates: ManualEntryModal may have already patched
+                // the shared cache via its own onSuccess path.
+                if (data?.id) {
+                  if (newModalType === 'sales' || newModalType === 'purchases') {
+                    setLedgerData((old: any[]) => {
+                      const arr = old || [];
+                      if (arr.some((e: any) => e.id === data.id)) return arr;
+                      return [data, ...arr];
+                    });
+                  } else if (newModalType === 'transactions') {
+                    setTransactionsData((old: any[]) => {
+                      const arr = old || [];
+                      if (arr.some((e: any) => e.id === data.id)) return arr;
+                      return [data, ...arr];
+                    });
+                  }
+                }
                 refreshData();
-                setShowNewModal(false);
             }}
         />}
 

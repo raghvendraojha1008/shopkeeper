@@ -759,33 +759,40 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
           .catch(e => console.error('[partySync] cascade failed:', e));
       }
 
+      // ── Inventory optimistic cache update — fire IMMEDIATELY ──────────────
+      // ROOT FIX: Previously this lived inside capturedCommit().then().
+      // On memory-pressured Android the 8s WRITE_TIMEOUT fires before .then()
+      // is reached, so the inventory cache was NEVER updated even though the
+      // Firestore SDK had already written the new item to IndexedDB.
+      //
+      // IDs are generated synchronously by prepareBatch (client-side CUID),
+      // so _batchResultsSnap already has every new item's Firestore ID.
+      // We can safely patch the in-memory cache right now, before the commit.
+      // The background refetchInventory() in .then() is a secondary reconcile.
+      if (_doInvRefresh) {
+        setInventoryData((old: any[]) => {
+          let updated = [...(old || [])];
+          _batchOpsSnap.forEach((op, idx) => {
+            if (op.col !== 'inventory') return;
+            if (op.type === 'add') {
+              const newId = _batchResultsSnap[idx]?.id;
+              if (newId && !updated.some((i: any) => i.id === newId)) {
+                updated = [{ id: newId, ...op.data }, ...updated];
+              }
+            } else if (op.type === 'update' && op.id) {
+              const itemIdx = updated.findIndex((i: any) => i.id === op.id);
+              if (itemIdx >= 0) updated[itemIdx] = { ...updated[itemIdx], ...op.data };
+            }
+          });
+          return updated;
+        });
+      }
+
       capturedCommit()
         .then(() => {
+          // Background refetch to reconcile any edge-cases (e.g. stock values
+          // for items the optimistic update missed, or server-side corrections).
           if (_doInvRefresh) {
-            // Optimistically apply inventory changes to the TanStack Query cache
-            // immediately after the IndexedDB write. This makes the corrected
-            // stock values visible to the NEXT modal open without waiting for the
-            // async Firestore getDocs round-trip from refetchInventory().
-            // Critical for rapid back-to-back offline saves where the second
-            // modal opens before the first refetch has completed.
-            setInventoryData(old => {
-              let updated = [...old];
-              _batchOpsSnap.forEach((op, idx) => {
-                if (op.col !== 'inventory') return;
-                if (op.type === 'add') {
-                  const newId = _batchResultsSnap[idx]?.id;
-                  if (newId && !updated.some(i => i.id === newId)) {
-                    updated = [{ id: newId, ...op.data }, ...updated];
-                  }
-                } else if (op.type === 'update' && op.id) {
-                  const itemIdx = updated.findIndex(i => i.id === op.id);
-                  if (itemIdx >= 0) updated[itemIdx] = { ...updated[itemIdx], ...op.data };
-                }
-              });
-              return updated;
-            });
-            // Also trigger a background refetch to sync with Firestore local cache
-            // (catches any edge-cases where the optimistic update missed something).
             refetchInventory();
           }
 
