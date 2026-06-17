@@ -1,0 +1,1428 @@
+
+> shopkeeper-v2@1.0.8 dev
+> vite
+
+[1G[0K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m162[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5000[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.24.0.2:[1m5000[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:21 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/replit/agent/.latest.json[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:21 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/component/DefaultLegendContent.js:22:23:
+[37m      22 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:21 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x2)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/maxBy"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:26:18:
+[37m      26 │ import maxBy from [32m'lodash/maxBy'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/maxBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isString"[0m
+
+    node_modules/recharts/es6/util/DataUtils.js:1:21:
+[37m      1 │ import isString from [32m'lodash/isString'[37m;
+        ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isString" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:29:20:
+[37m      29 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/min"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:27:16:
+[37m      27 │ import min from [32m'lodash/min'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/min" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/uniqBy"[0m
+
+    node_modules/recharts/es6/util/payload/getUniqPayload.js:1:19:
+[37m      1 │ import uniqBy from [32m'lodash/uniqBy'[37m;
+        ╵                    [32m~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/uniqBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/sortBy"[0m
+
+    node_modules/recharts/es6/component/DefaultTooltipContent.js:19:19:
+[37m      19 │ import sortBy from [32m'lodash/sortBy'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/sortBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/component/Text.js:13:18:
+[37m      13 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/component/Label.js:18:18:
+[37m      18 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/component/LabelList.js:19:18:
+[37m      19 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:23:20:
+[37m      23 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/throttle"[0m
+
+    node_modules/recharts/es6/component/ResponsiveContainer.js:18:21:
+[37m      18 │ import throttle from [32m'lodash/throttle'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/throttle" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/shape/Rectangle.js:19:20:
+[37m      19 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/upperFirst"[0m
+
+    node_modules/recharts/es6/shape/Curve.js:13:23:
+[37m      13 │ import upperFirst from [32m'lodash/upperFirst'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/upperFirst" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:21 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x3)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/shape/Curve.js:14:23:
+[37m      14 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:28:16:
+[37m      28 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/util/payload/getUniqPayload.js:2:23:
+[37m      2 │ import isFunction from [32m'lodash/isFunction'[37m;
+        ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/component/DefaultTooltipContent.js:20:18:
+[37m      20 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/component/Label.js:19:23:
+[37m      19 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isObject"[0m
+
+    node_modules/recharts/es6/component/LabelList.js:20:21:
+[37m      20 │ import isObject from [32m'lodash/isObject'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isObject" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isObject"[0m
+
+    node_modules/recharts/es6/util/types.js:3:21:
+[37m      3 │ import isObject from [32m'lodash/isObject'[37m;
+        ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isObject" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/util/PolarUtils.js:13:18:
+[37m      13 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/upperFirst"[0m
+
+    node_modules/recharts/es6/shape/Symbols.js:15:23:
+[37m      15 │ import upperFirst from [32m'lodash/upperFirst'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/upperFirst" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/polar/PolarAngleAxis.js:22:23:
+[37m      22 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/maxBy"[0m
+
+    node_modules/recharts/es6/polar/PolarRadiusAxis.js:26:18:
+[37m      26 │ import maxBy from [32m'lodash/maxBy'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/maxBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:24:16:
+[37m      24 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:21 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x4)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:25:20:
+[37m      25 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/ReferenceLine.js:28:23:
+[37m      28 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/ReferenceDot.js:22:23:
+[37m      22 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:28:20:
+[37m      28 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isObject"[0m
+
+    node_modules/recharts/es6/component/Label.js:20:21:
+[37m      20 │ import isObject from [32m'lodash/isObject'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isObject" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/component/LabelList.js:21:23:
+[37m      21 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/ReferenceArea.js:22:23:
+[37m      22 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/CartesianAxis.js:27:23:
+[37m      27 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/minBy"[0m
+
+    node_modules/recharts/es6/polar/PolarRadiusAxis.js:27:18:
+[37m      27 │ import minBy from [32m'lodash/minBy'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/minBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:25:20:
+[37m      25 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/sumBy"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:29:18:
+[37m      29 │ import sumBy from [32m'lodash/sumBy'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/sumBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/cartesian/Scatter.js:23:20:
+[37m      23 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/cartesian/Bar.js:27:20:
+[37m      27 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNaN"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:21:18:
+[37m      21 │ import isNan from [32m'lodash/isNaN'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNaN" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNaN"[0m
+
+    node_modules/recharts/es6/util/DataUtils.js:2:18:
+[37m      2 │ import isNan from [32m'lodash/isNaN'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNaN" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:33:18:
+[37m      33 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:30:23:
+[37m      30 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/shape/Trapezoid.js:19:20:
+[37m      19 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:6:16:
+[37m      6 │ import get from [32m'lodash/get'[37m;
+        ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/polar/RadialBar.js:27:20:
+[37m      27 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/component/Customized.js:9:23:
+[37m      9 │ import isFunction from [32m'lodash/isFunction'[37m;
+        ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/CartesianGrid.js:16:23:
+[37m      16 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/Brush.js:24:23:
+[37m      24 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/cartesian/Line.js:32:20:
+[37m      32 │ import Animate from [32m'react-smooth'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:26:18:
+[37m      26 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/some"[0m
+
+    node_modules/recharts/es6/cartesian/ReferenceLine.js:29:17:
+[37m      29 │ import some from [32m'lodash/some'[37m;
+         ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/some" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:22 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x5)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/last"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:27:17:
+[37m      27 │ import last from [32m'lodash/last'[37m;
+         ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/last" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/range"[0m
+
+    node_modules/recharts/es6/cartesian/Brush.js:25:18:
+[37m      25 │ import range from [32m'lodash/range'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/range" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/Line.js:33:23:
+[37m      33 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/getTicks.js:7:23:
+[37m      7 │ import isFunction from [32m'lodash/isFunction'[37m;
+        ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/cartesian/Line.js:34:18:
+[37m      34 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/util/PolarUtils.js:15:23:
+[37m      15 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:29:23:
+[37m      29 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/cartesian/CartesianAxis.js:28:16:
+[37m      28 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/polar/PolarRadiusAxis.js:28:23:
+[37m      28 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:26:18:
+[37m      26 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/chart/Sankey.js:30:23:
+[37m      30 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/cartesian/Scatter.js:24:18:
+[37m      24 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/mapValues"[0m
+
+    node_modules/recharts/es6/util/CartesianUtils.js:10:22:
+[37m      10 │ import mapValues from [32m'lodash/mapValues'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/mapValues" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/cartesian/Bar.js:28:20:
+[37m      28 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:22:23:
+[37m      22 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/util/DataUtils.js:3:16:
+[37m      3 │ import get from [32m'lodash/get'[37m;
+        ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:34:23:
+[37m      34 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:7:18:
+[37m      7 │ import isNil from [32m'lodash/isNil'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNumber"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:31:21:
+[37m      31 │ import isNumber from [32m'lodash/isNumber'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNumber" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/last"[0m
+
+    node_modules/recharts/es6/component/LabelList.js:22:17:
+[37m      22 │ import last from [32m'lodash/last'[37m;
+         ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/last" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/polar/RadialBar.js:28:20:
+[37m      28 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/cartesian/Line.js:35:20:
+[37m      35 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/find"[0m
+
+    node_modules/recharts/es6/context/chartLayoutContext.js:4:17:
+[37m      4 │ import find from [32m'lodash/find'[37m;
+        ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/find" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/max"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:15:16:
+[37m      15 │ import max from [32m'lodash/max'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/max" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/first"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:28:18:
+[37m      28 │ import first from [32m'lodash/first'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/first" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/max"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:30:16:
+[37m      30 │ import max from [32m'lodash/max'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/max" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:31:18:
+[37m      31 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/every"[0m
+
+    node_modules/recharts/es6/context/chartLayoutContext.js:5:18:
+[37m      5 │ import every from [32m'lodash/every'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/every" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/min"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:16:16:
+[37m      16 │ import min from [32m'lodash/min'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/min" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:29:20:
+[37m      29 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:22 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x6)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNaN"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:32:18:
+[37m      32 │ import isNan from [32m'lodash/isNaN'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNaN" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/memoize"[0m
+
+    node_modules/recharts/es6/util/calculateViewBox.js:1:20:
+[37m      1 │ import memoize from [32m'lodash/memoize'[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/memoize" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:17:18:
+[37m      17 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/polar/Radar.js:30:23:
+[37m      30 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/polar/Pie.js:27:23:
+[37m      27 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/cartesian/Scatter.js:25:20:
+[37m      25 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/every"[0m
+
+    node_modules/recharts/es6/util/CartesianUtils.js:11:18:
+[37m      11 │ import every from [32m'lodash/every'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/every" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNil"[0m
+
+    node_modules/recharts/es6/cartesian/Bar.js:29:18:
+[37m      29 │ import isNil from [32m'lodash/isNil'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNil" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/omit"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:23:17:
+[37m      23 │ import omit from [32m'lodash/omit'[37m;
+         ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/omit" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNumber"[0m
+
+    node_modules/recharts/es6/util/DataUtils.js:4:27:
+[37m      4 │ import lodashIsNumber from [32m'lodash/isNumber'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNumber" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/range"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:35:18:
+[37m      35 │ import range from [32m'lodash/range'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/range" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isString"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:8:21:
+[37m      8 │ import isString from [32m'lodash/isString'[37m;
+        ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isString" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isString"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:32:21:
+[37m      32 │ import isString from [32m'lodash/isString'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isString" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/polar/RadialBar.js:29:23:
+[37m      29 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/cartesian/Area.js:33:20:
+[37m      33 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:18:23:
+[37m      18 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:24:16:
+[37m      24 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:36:16:
+[37m      36 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:9:23:
+[37m      9 │ import isFunction from [32m'lodash/isFunction'[37m;
+        ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/omit"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:33:17:
+[37m      33 │ import omit from [32m'lodash/omit'[37m;
+         ╵                  [32m~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/omit" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/cartesian/Scatter.js:26:23:
+[37m      26 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:09:22 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m.local/state/workflow-logs/tKLqm85k-qp0M9_iq8dcq/start_application.shell.exec.0[22m [33m(x7)[39m
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isString"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:19:21:
+[37m      19 │ import isString from [32m'lodash/isString'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isString" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/sortBy"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:37:19:
+[37m      37 │ import sortBy from [32m'lodash/sortBy'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/sortBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isObject"[0m
+
+    node_modules/recharts/es6/util/ReactUtils.js:10:21:
+[37m      10 │ import isObject from [32m'lodash/isObject'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isObject" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/numberAxis/Funnel.js:34:20:
+[37m      34 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isFunction"[0m
+
+    node_modules/recharts/es6/util/ActiveShapeUtils.js:11:23:
+[37m      11 │ import isFunction from [32m'lodash/isFunction'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isFunction" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "react-smooth"[0m
+
+    node_modules/recharts/es6/chart/Treemap.js:30:19:
+[37m      30 │ import Smooth from [32m'react-smooth'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "react-smooth" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/get"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:20:16:
+[37m      20 │ import get from [32m'lodash/get'[37m;
+         ╵                 [32m~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/get" as external to exclude it from the bundle,
+  which will remove this error and leave the unresolved path in the bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/throttle"[0m
+
+    node_modules/recharts/es6/chart/generateCategoricalChart.js:38:21:
+[37m      38 │ import throttle from [32m'lodash/throttle'[37m;
+         ╵                      [32m~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/throttle" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isPlainObject"[0m
+
+    node_modules/recharts/es6/util/ActiveShapeUtils.js:12:26:
+[37m      12 │ import isPlainObject from [32m'lodash/isPlainObject'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isPlainObject" as external to exclude it from
+  the bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isBoolean"[0m
+
+    node_modules/recharts/es6/util/ActiveShapeUtils.js:13:22:
+[37m      13 │ import isBoolean from [32m'lodash/isBoolean'[37m;
+         ╵                       [32m~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isBoolean" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/flatMap"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:21:20:
+[37m      21 │ import flatMap from [32m'lodash/flatMap'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/flatMap" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/util/ActiveShapeUtils.js:14:20:
+[37m      14 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isNaN"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:22:18:
+[37m      22 │ import isNan from [32m'lodash/isNaN'[37m;
+         ╵                   [32m~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isNaN" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/upperFirst"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:23:23:
+[37m      23 │ import upperFirst from [32m'lodash/upperFirst'[37m;
+         ╵                        [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/upperFirst" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/isEqual"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:24:20:
+[37m      24 │ import isEqual from [32m'lodash/isEqual'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/isEqual" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "lodash/sortBy"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:25:19:
+[37m      25 │ import sortBy from [32m'lodash/sortBy'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "lodash/sortBy" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "recharts-scale"[0m
+
+    node_modules/recharts/es6/util/ChartUtils.js:26:60:
+[37m      26 │ ...tNiceTickValues, getTickValuesFixedDomain } from [32m'recharts-scale'[37m;
+         ╵                                                     [32m~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "recharts-scale" as external to exclude it from the
+  bundle, which will remove this error and leave the unresolved path in the
+  bundle.
+
+/home/runner/workspace/node_modules/vite/node_modules/esbuild/lib/main.js:1472
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 120 errors:
+node_modules/recharts/es6/cartesian/Area.js:28:20: ERROR: Could not resolve "react-smooth"
+node_modules/recharts/es6/cartesian/Area.js:29:23: ERROR: Could not resolve "lodash/isFunction"
+node_modules/recharts/es6/cartesian/Area.js:30:16: ERROR: Could not resolve "lodash/max"
+node_modules/recharts/es6/cartesian/Area.js:31:18: ERROR: Could not resolve "lodash/isNil"
+node_modules/recharts/es6/cartesian/Area.js:32:18: ERROR: Could not resolve "lodash/isNaN"
+...
+    at failureErrorWithLog [90m(/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1472:15[90m)[39m
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:945:25
+    at [90m/home/runner/workspace/[39mnode_modules/[4mvite[24m/node_modules/[4mesbuild[24m/lib/main.js:1353:9
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  errors: [36m[Getter/Setter][39m,
+  warnings: [36m[Getter/Setter][39m
+}
+
+Node.js v20.20.0
+[1G[0K⠙[1G[0K
