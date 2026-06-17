@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { AuditService } from './audit';
+import { diagnosticLogger } from '../utils/diagnosticLogger';
 
 // FIX: Audit logging is fire-and-forget.  The old implementation awaited every
 // audit write inside add/update/delete, which:
@@ -32,23 +33,29 @@ function auditAsync(...args: Parameters<typeof AuditService.log>) {
  * WRITE TIMEOUT GUARD
  * ─────────────────────────────────────────────────────────────────────────────
  * With persistentLocalCache, every Firestore write lands in local IndexedDB
- * and resolves in < 100 ms regardless of network state.  This timeout now acts
- * as a last-resort sentinel for a genuine IndexedDB lock freeze (e.g. storage
- * quota exceeded, corrupted database).  Under normal conditions it should never
- * fire.  8 s is a generous allowance for first-launch IndexedDB initialisation
- * while being short enough that a real freeze doesn't block the UI for long.
+ * and resolves in < 100 ms under normal conditions.  However, on low-memory
+ * Android devices (especially with GPU memory pressure), IndexedDB writes can
+ * block during garbage collection or memory pressure events lasting several
+ * seconds. This timeout acts as a last-resort sentinel for genuine IndexedDB
+ * lock freezes (e.g. storage quota exceeded, corrupted database).
+ * Increased from 8s to 15s to handle Android GC pauses and MALI GPU pressure.
  */
-const WRITE_TIMEOUT_MS = 8_000;
+const WRITE_TIMEOUT_MS = 15_000;
 
 function withWriteTimeout<T>(promise: Promise<T>): Promise<T> {
   return Promise.race([
-    promise,
+    promise.catch(err => {
+      // Log Firestore errors for diagnostics
+      diagnosticLogger.writeError('unknown', 'write', err);
+      throw err;
+    }),
     new Promise<T>((_, reject) =>
       setTimeout(() => {
         const err: any = new Error(
           'Save timed out — queued for background sync.',
         );
         err.code = 'WRITE_TIMEOUT';
+        diagnosticLogger.warn(`Write timeout after ${WRITE_TIMEOUT_MS}ms - possible Android memory pressure or IndexedDB lock`);
         reject(err);
       }, WRITE_TIMEOUT_MS),
     ),

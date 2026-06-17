@@ -77,6 +77,7 @@ import { useSyncStatus } from './hooks/useOnlineStatus';
 import UpdateBanner from './components/common/UpdateBanner';
 import { TelemetryService } from './services/telemetryService';
 import { UndoSnackbar, flushPendingDeletes } from './components/common/UndoSnackbar';
+import DiagnosticsPanel from './components/common/DiagnosticsPanel';
 import { initCountersForUser } from './utils/idGenerator';
 import SeoHead from './components/common/SeoHead';
 
@@ -1162,6 +1163,9 @@ const AppContent = () => {
           onSuccess={() => { handleRefresh(); if (manualEntryType === 'vehicles') setVehicleRefreshKey(k => k + 1); setShowManualModal(false); setManualEntryData(null); }}
         />
       </Suspense>
+
+      {/* Debug diagnostics panel - press Ctrl+Shift+D to enable */}
+      <DiagnosticsPanel />
     </div>
   );
 };

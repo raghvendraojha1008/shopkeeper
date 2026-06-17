@@ -834,9 +834,23 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
             if (_doInvRefresh) refetchInventory();
           }
         });
-    } catch (err) {
-      console.error(err);
-      showToast('Save failed', 'error');
+    } catch (err: any) {
+      console.error('[ManualEntryModal] Save error:', err?.message || err);
+      console.error('[ManualEntryModal] Full error:', err);
+      
+      // Provide more specific error messages to help with debugging
+      let errorMsg = 'Save failed';
+      if (err?.code === 'WRITE_TIMEOUT') {
+        errorMsg = 'Save timed out — will retry in background';
+      } else if (err?.message?.includes('permission')) {
+        errorMsg = 'Permission denied — check authentication';
+      } else if (err?.message?.includes('offline')) {
+        errorMsg = 'Offline — will sync when connection restored';
+      } else if (err?.message) {
+        errorMsg = `Save failed: ${err.message.substring(0, 50)}`;
+      }
+      
+      showToast(errorMsg, 'error');
       // Clear loading state in the error path — the success path already
       // clears these before onClose() so the button never shows "Saving…"
       setLoading(false);
