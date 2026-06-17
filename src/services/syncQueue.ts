@@ -135,6 +135,13 @@ export const SyncQueueService = {
             await ApiService.update(userId, item.collection, item.docId, item.data);
           } else if (item.operation === 'delete' && item.docId) {
             await ApiService.delete(userId, item.collection, item.docId);
+          } else {
+            // Malformed item (unknown operation or missing docId for update/delete).
+            // Remove immediately so it never blocks the queue forever.
+            SyncQueueService.removeFromQueue(item.id);
+            failedCount++;
+            errors.set(item.id, `Malformed queue item: op=${item.operation} col=${item.collection}`);
+            continue;
           }
           // Remove the item from localStorage immediately after a successful
           // write — NOT batched at the end — so that if the app is killed

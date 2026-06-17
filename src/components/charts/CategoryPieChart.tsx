@@ -75,7 +75,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ expenses }) => {
                 fontSize: '12px',
               }}
               formatter={(value: any, name: any) => [
-                `₹${Number(value || 0).toLocaleString('en-IN')} (${((Number(value || 0) / total) * 100).toFixed(1)}%)`,
+                `₹${Number(value || 0).toLocaleString('en-IN')} (${total > 0 ? ((Number(value || 0) / total) * 100).toFixed(1) : '0.0'}%)`,
                 name
               ]}
             />

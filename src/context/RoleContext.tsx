@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { doc, getDoc, setDoc, deleteDoc, collection, getDocs, query, where, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
@@ -359,32 +359,42 @@ export const RoleProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setRegistrationComplete(true);
   }, []);
 
+  const contextValue = useMemo(() => ({
+    role,
+    loading,
+    isAdmin: role === 'admin',
+    isStaff: role === 'staff',
+    isFounder,
+    adminUid,
+    founderUid,
+    setUserRole,
+    deleteUser,
+    allUsers,
+    refreshUsers,
+    registrationComplete,
+    markRegistrationComplete,
+    firmAccesses,
+    activeFirm,
+    isViewingOtherFirm,
+    switchToFirm,
+    switchToOwnAccount,
+    pendingInvitations,
+    acceptInvitation,
+    declineInvitation,
+    refreshInvitations,
+    leaveFirm,
+  }), [
+    role, loading, isFounder, adminUid, founderUid,
+    setUserRole, deleteUser, allUsers, refreshUsers,
+    registrationComplete, markRegistrationComplete,
+    firmAccesses, activeFirm, isViewingOtherFirm,
+    switchToFirm, switchToOwnAccount,
+    pendingInvitations, acceptInvitation, declineInvitation,
+    refreshInvitations, leaveFirm,
+  ]);
+
   return (
-    <RoleContext.Provider value={{
-      role,
-      loading,
-      isAdmin: role === 'admin',
-      isStaff: role === 'staff',
-      isFounder,
-      adminUid,
-      founderUid,
-      setUserRole,
-      deleteUser,
-      allUsers,
-      refreshUsers,
-      registrationComplete,
-      markRegistrationComplete,
-      firmAccesses,
-      activeFirm,
-      isViewingOtherFirm,
-      switchToFirm,
-      switchToOwnAccount,
-      pendingInvitations,
-      acceptInvitation,
-      declineInvitation,
-      refreshInvitations,
-      leaveFirm,
-    }}>
+    <RoleContext.Provider value={contextValue}>
       {children}
     </RoleContext.Provider>
   );

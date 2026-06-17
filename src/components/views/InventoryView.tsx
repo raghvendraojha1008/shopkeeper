@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useNavState } from '../../services/useNavState';
+import { useDebounce } from '../../hooks/usePaginatedData';
 import { useBackHandler } from '../../services/useBackHandler';
 import { User } from 'firebase/auth';
 import {
@@ -57,6 +58,7 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
   useEffect(() => { TelemetryService.trackScreen(user.uid, 'inventory'); }, [user.uid]);
 
   const [searchTerm, setSearchTerm] = useNavState<string>('inventory_search', '');
+  const debouncedSearch = useDebounce(searchTerm, 300);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
@@ -150,9 +152,10 @@ const InventoryView: React.FC<InventoryViewProps> = ({ user, settings, onAdd, on
       setShowBarcodeScanner(false);
   };
 
-  const filtered = useMemo(() => 
-      items.filter(i => i.name?.toLowerCase().includes(searchTerm.toLowerCase())),
-  [items, searchTerm]);
+  const filtered = useMemo(() => {
+    const s = debouncedSearch.toLowerCase();
+    return !s ? items : items.filter(i => i.name?.toLowerCase().includes(s));
+  }, [items, debouncedSearch]);
 
   // Compute net stock for each item using pre-indexed data (O(1) per item)
   const enrichedItems = useMemo(() => {

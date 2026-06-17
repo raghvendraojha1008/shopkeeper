@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useNavState } from '../../services/useNavState';
+import { useDebounce } from '../../hooks/usePaginatedData';
 import { useBackHandler } from '../../services/useBackHandler';
 import { User } from 'firebase/auth';
 import {
@@ -83,6 +84,7 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
   const settings = appSettings && Object.keys(appSettings).length > 0 ? appSettings : fetchedSettings;
 
   const [searchTerm, setSearchTerm] = useNavState<string>('ledger_search', '');
+  const debouncedSearch = useDebounce(searchTerm, 300);
   const [currentFilter, setCurrentFilter] = useNavState<'all' | 'sell' | 'purchase'>('ledger_filter', typeFilter || 'all');
   const [dateRange, setDateRange] = useState(() => getDefaultDateRange(appSettings));
 
@@ -167,16 +169,17 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
   };
 
   const filtered = useMemo(() => {
+    const s = debouncedSearch.toLowerCase();
     return entries.filter(e => {
-      const matchesSearch =
-        e.party_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        e.invoice_no?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = !s ||
+        e.party_name?.toLowerCase().includes(s) ||
+        e.invoice_no?.toLowerCase().includes(s);
       const matchesType = currentFilter === 'all' ? true : e.type === currentFilter;
       const recordDate = toDateString(e.date);
       const matchesDate = (!dateRange.start || recordDate >= dateRange.start) && (!dateRange.end || recordDate <= dateRange.end);
       return matchesSearch && matchesType && matchesDate;
     });
-  }, [entries, searchTerm, currentFilter, dateRange]);
+  }, [entries, debouncedSearch, currentFilter, dateRange]);
 
   const allPartyNames = useMemo(() => {
     return parties
@@ -189,10 +192,10 @@ const LedgerView: React.FC<LedgerViewProps> = ({ user, onBack, appSettings, type
   }, [parties, currentFilter]);
 
   const filteredSuggestions = useMemo(() => {
-    if (!searchTerm.trim()) return allPartyNames.slice(0, 8);
-    const lower = searchTerm.toLowerCase();
+    if (!debouncedSearch.trim()) return allPartyNames.slice(0, 8);
+    const lower = debouncedSearch.toLowerCase();
     return allPartyNames.filter(n => n.toLowerCase().includes(lower)).slice(0, 8);
-  }, [allPartyNames, searchTerm]);
+  }, [allPartyNames, debouncedSearch]);
 
   // Compute payment distribution for all ledger entries (not just filtered)
   // so FIFO distribution is correct across all orders of a party

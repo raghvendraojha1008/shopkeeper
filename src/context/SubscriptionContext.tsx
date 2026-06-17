@@ -393,6 +393,8 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
    *   • Web (browser tab):         document.visibilitychange
    */
   const setupForegroundListener = useCallback((uid: string) => {
+    let cleanedUp = false;
+
     // --- Web: visibilitychange ---
     const onVisibility = () => {
       if (document.visibilityState === 'visible') runExpiryTick(uid);
@@ -404,12 +406,20 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
       CapacitorApp.addListener('appStateChange', state => {
         if (state.isActive) runExpiryTick(uid);
       })
-        .then(handle => { capacitorListenerRef.current = handle; })
+        .then(handle => {
+          if (cleanedUp) {
+            handle.remove().catch(() => {});
+          } else {
+            capacitorListenerRef.current = handle;
+          }
+        })
         .catch(() => {});
     }
 
-    // Return cleanup for the web listener (Capacitor handle cleaned up separately via ref).
+    // Return cleanup — sets flag so a late-arriving Capacitor handle is
+    // immediately removed even if teardown() already ran before it resolved.
     return () => {
+      cleanedUp = true;
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, [runExpiryTick]);

@@ -146,15 +146,19 @@ export const ApiService = {
   },
 
   batchAdd: async (uid: string, items: any[]) => {
-    const batch = writeBatch(db);
-    items.forEach(item => {
-      const { _collection, ...data } = item;
-      if (_collection) {
-        const ref = doc(collection(db, `users/${uid}/${_collection}`));
-        batch.set(ref, sanitizeForFirestore(data));
-      }
-    });
-    return await batch.commit();
+    const CHUNK = 450;
+    for (let i = 0; i < items.length; i += CHUNK) {
+      const chunk = items.slice(i, i + CHUNK);
+      const batch = writeBatch(db);
+      chunk.forEach(item => {
+        const { _collection, ...data } = item;
+        if (_collection) {
+          const ref = doc(collection(db, `users/${uid}/${_collection}`));
+          batch.set(ref, sanitizeForFirestore(data));
+        }
+      });
+      await batch.commit();
+    }
   },
 
   /**
@@ -168,21 +172,27 @@ export const ApiService = {
     operations: Array<{ type: 'add' | 'update'; col: string; data: any; id?: string }>,
   ): Promise<{ type: string; id: string }[]> => {
     if (operations.length === 0) return [];
-    const batch = writeBatch(db);
-    const results: { type: string; id: string }[] = [];
-    for (const op of operations) {
-      if (op.type === 'add') {
-        const ref = doc(collection(db, `users/${uid}/${op.col}`));
-        batch.set(ref, sanitizeForFirestore(op.data));
-        results.push({ type: 'add', id: ref.id });
-      } else if (op.type === 'update' && op.id) {
-        const ref = doc(db, `users/${uid}/${op.col}`, op.id);
-        batch.update(ref, sanitizeForFirestore(op.data));
-        results.push({ type: 'update', id: op.id });
+    const CHUNK = 450;
+    const allResults: { type: string; id: string }[] = [];
+    for (let i = 0; i < operations.length; i += CHUNK) {
+      const chunk = operations.slice(i, i + CHUNK);
+      const batch = writeBatch(db);
+      const chunkResults: { type: string; id: string }[] = [];
+      for (const op of chunk) {
+        if (op.type === 'add') {
+          const ref = doc(collection(db, `users/${uid}/${op.col}`));
+          batch.set(ref, sanitizeForFirestore(op.data));
+          chunkResults.push({ type: 'add', id: ref.id });
+        } else if (op.type === 'update' && op.id) {
+          const ref = doc(db, `users/${uid}/${op.col}`, op.id);
+          batch.update(ref, sanitizeForFirestore(op.data));
+          chunkResults.push({ type: 'update', id: op.id });
+        }
       }
+      await withWriteTimeout(batch.commit());
+      allResults.push(...chunkResults);
     }
-    await withWriteTimeout(batch.commit());
-    return results;
+    return allResults;
   },
 
   /**

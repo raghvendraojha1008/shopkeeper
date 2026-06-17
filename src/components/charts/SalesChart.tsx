@@ -24,36 +24,39 @@ interface SalesChartProps {
 
 const SalesChart: React.FC<SalesChartProps> = ({ ledger, expenses, days = 30 }) => {
   const chartData = useMemo(() => {
-    const now = new Date();
-    const data: ChartData[] = [];
+    // O(N) single-pass — build lookup maps first, then generate day series
+    const salesMap: Record<string, number> = {};
+    const expenseMap: Record<string, number> = {};
 
-    // Generate last N days
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
-      
-      // Calculate sales for this day
-      const daySales = ledger
-        .filter((l: any) => l.date === dateStr && l.type === 'sell')
-        .reduce((sum: number, l: any) => {
-          const rent = Number(l.vehicle_rent) || 0;
-          const total = Number(l.total_amount) || 0;
-          return sum + (total - rent);
-        }, 0);
-
-      // Calculate expenses for this day
-      const dayExpenses = expenses
-        .filter((e: any) => e.date === dateStr)
-        .reduce((sum: number, e: any) => sum + (Number(e.amount) || 0), 0);
-
-      data.push({
-        date: date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),
-        sales: Math.round(daySales),
-        expenses: Math.round(dayExpenses),
-      });
+    for (const l of ledger) {
+      if (l.type !== 'sell') continue;
+      const dateStr = String(l.date || '').slice(0, 10);
+      if (!dateStr) continue;
+      const rent  = Number(l.vehicle_rent) || 0;
+      const total = Number(l.total_amount) || 0;
+      salesMap[dateStr] = (salesMap[dateStr] || 0) + (total - rent);
     }
 
+    for (const e of expenses) {
+      const dateStr = String(e.date || '').slice(0, 10);
+      if (!dateStr) continue;
+      expenseMap[dateStr] = (expenseMap[dateStr] || 0) + (Number(e.amount) || 0);
+    }
+
+    const now = new Date();
+    const data: ChartData[] = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      const dateStr = `${y}-${m}-${d}`;
+      data.push({
+        date: date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),
+        sales:    Math.round(salesMap[dateStr]   || 0),
+        expenses: Math.round(expenseMap[dateStr] || 0),
+      });
+    }
     return data;
   }, [ledger, expenses, days]);
 

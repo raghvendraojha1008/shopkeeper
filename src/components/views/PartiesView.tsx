@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useNavState } from '../../services/useNavState';
+import { useDebounce } from '../../hooks/usePaginatedData';
 import { useBackHandler } from '../../services/useBackHandler';
 import { User } from 'firebase/auth';
 import {
@@ -47,6 +48,7 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
   const loading = partiesLoading || ledgerLoading || transactionsLoading;
 
   const [search, setSearch] = useNavState<string>('parties_search', '');
+  const debouncedSearch = useDebounce(search, 300);
   const [filterRole, setFilterRole] = useNavState<'all' | 'customer' | 'supplier'>('parties_filter', 'all');
 
   const [selectedParty, setSelectedParty] = useState<any>(null);
@@ -153,14 +155,15 @@ const PartiesView: React.FC<PartiesViewProps> = ({ user, onAdd, onEdit, onBack, 
   }, [transactions]);
 
   const filteredParties = useMemo(() => {
+    const s = debouncedSearch.toLowerCase();
     return parties.filter(p => {
-      const name = (p.name || '').toLowerCase();
-      const matchesSearch = name.includes(search.toLowerCase()) ||
-        (p.contact || '').includes(search);
+      const matchesSearch = !s ||
+        (p.name || '').toLowerCase().includes(s) ||
+        (p.contact || '').includes(debouncedSearch);
       const matchesRole = filterRole === 'all' || p.role === filterRole;
       return matchesSearch && matchesRole;
     });
-  }, [parties, search, filterRole]);
+  }, [parties, debouncedSearch, filterRole]);
 
   // PERF FIX: calculateAccounting was called inside the render loop for EVERY party
   // on EVERY render (search keystrokes, filter toggles, etc). With 100+ parties this

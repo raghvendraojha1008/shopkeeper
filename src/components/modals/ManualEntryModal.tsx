@@ -38,6 +38,7 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
   const [loading, setLoading] = useState(false);
   const [gstFetching, setGstFetching] = useState(false);
+  const gstFetchingRef = useRef(false);
   const [gstStatus, setGstStatus]     = useState<string>('');
   const [formData, setFormData] = useState<any>({});
   const [items, setItems] = useState<any[]>([{ item_name: '', quantity: '', rate: '', hsn_code: '', gst_percent: '', unit: 'Pcs', total: 0, price_type: 'exclusive', _auto_add_to_stock: true }]);
@@ -269,6 +270,8 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
 
   const handleFetchGSTIN = async () => {
     if (!formData.gstin || formData.gstin.length !== 15) return showToast('Invalid GSTIN', 'error');
+    if (gstFetchingRef.current) return;
+    gstFetchingRef.current = true;
     setGstFetching(true);
     setGstStatus('');
     try {
@@ -288,6 +291,7 @@ const ManualEntryModal: React.FC<ManualEntryModalProps> = ({ isOpen, onClose, ty
     } catch (e: any) {
       showToast(e?.message || 'Failed to fetch GST details', 'error');
     } finally {
+      gstFetchingRef.current = false;
       setGstFetching(false);
     }
   };

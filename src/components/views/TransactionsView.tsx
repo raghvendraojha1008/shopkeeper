@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback, useRef, memo, useEffect, useLayoutEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useNavState } from '../../services/useNavState';
+import { useDebounce } from '../../hooks/usePaginatedData';
 import { User } from 'firebase/auth';
 import {
   Search, FileText, Edit2, Trash2, Filter, Download, Plus,
@@ -189,6 +190,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
   const ledgerEntries = useMemo(() => ledgerRaw       || [], [ledgerRaw]);
 
   const [searchTerm, setSearchTerm] = useNavState<string>('txn_search', '');
+  const debouncedSearch = useDebounce(searchTerm, 300);
   const [currentFilter, setCurrentFilter] = useNavState<'all' | 'received' | 'paid'>('txn_filter', initialTypeFilter ?? 'all');
   const [dateRange, setDateRange] = useState(() => getDefaultDateRange(appSettings));
 
@@ -223,7 +225,7 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
   };
 
   const filtered = useMemo(() => {
-    const s = searchTerm.toLowerCase().trim();
+    const s = debouncedSearch.toLowerCase().trim();
     return transactions.filter(t => {
       const matchesSearch = !s || (
         t.party_name?.toLowerCase().includes(s) ||
@@ -235,13 +237,11 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
         String(t.amount ?? '').includes(s)
       );
       const matchesType = currentFilter === 'all' ? true : t.type === currentFilter;
-      // FIX: use toDateString (which calls parseRecordDate) so Timestamp values
-      // are normalised before string comparison.
       const recordDate = toDateString(t.date);
       const matchesDate = (!dateRange.start || recordDate >= dateRange.start) && (!dateRange.end || recordDate <= dateRange.end);
       return matchesSearch && matchesType && matchesDate;
     });
-  }, [transactions, searchTerm, currentFilter, dateRange]);
+  }, [transactions, debouncedSearch, currentFilter, dateRange]);
 
   const stats = useMemo(() => {
     return filtered.reduce(
@@ -356,13 +356,13 @@ const TransactionsView: React.FC<TransactionsViewProps> = ({ user, onBack, appSe
     <div className="pb-2">
       <TransactionRow
         item={item}
-        searchTerm={searchTerm}
+        searchTerm={debouncedSearch}
         isStaff={isStaff}
         onDelete={handleDelete}
         onView={setSelectedDetail}
       />
     </div>
-  ), [searchTerm, isStaff, handleDelete, setSelectedDetail]);
+  ), [debouncedSearch, isStaff, handleDelete, setSelectedDetail]);
 
   if (selectedDetail) {
     return (

@@ -332,7 +332,10 @@ const PendingView: React.FC<PendingViewProps> = ({ user, onBack, appSettings = {
     };
   }, [filteredOrders]);
 
-  const totalOutstanding = filteredOrders.reduce((sum, o) => sum + o.balance, 0);
+  const totalOutstanding = useMemo(
+    () => filteredOrders.reduce((sum, o) => sum + o.balance, 0),
+    [filteredOrders]
+  );
 
   if (selectedPartyData) {
     return <PartyDetailView party={selectedPartyData} user={user} onBack={() => setSelectedPartyData(null)} appSettings={appSettings} />;
