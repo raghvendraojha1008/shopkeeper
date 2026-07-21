@@ -1,0 +1,269 @@
+Now I have everything. Here is the complete, precise handoff for the project developer — nothing assumed, nothing left out.
+
+Shopkeeper Super Admin Panel — Developer Handoff
+Overview
+This is a standalone React 18 + TypeScript + Vite + Tailwind dark-theme Super Admin Panel deployed at artifacts/admin-panel in this monorepo. It connects directly to the same Firebase project (shopkeeper-1a3fc) that your main Shopkeeper app uses. It does not have its own backend. All reads and writes go directly to Firestore from the browser using the Firebase JS SDK v10, secured entirely by Firestore Security Rules.
+
+1 — Firebase Connection
+Project ID: shopkeeper-1a3fc
+Auth Domain: shopkeeper-1a3fc.firebaseapp.com
+
+The panel uses Firebase Auth (email/password + Google Sign-In) and Firestore. The config lives in src/config/firebase.ts and is already wired up.
+
+Authentication model: When a user signs in, the panel immediately reads admins/{uid} from Firestore. If that document does not exist, the user is signed out automatically and denied access. There is no way in to the panel without a document in the admins collection.
+
+2 — Firestore Collections: Complete Map
+Every collection the panel reads or writes, exactly as it expects them:
+
+admins/{uid}
+Who can log into the admin panel.
+
+{
+  email: string,          // admin's email address
+  role: 'super_admin' | 'support'
+}
+
+super_admin: can add/remove other admins, access everything
+support: read-only on most things, can grant subscriptions
+To create your first admin: manually add a document in Firebase Console with the UID of the Firebase Auth user you want to promote.
+users/{uid}
+Your main app's user profiles. The admin panel reads these but never writes them. Used only to show the "Without Subscription" tab on the Users page.
+
+Expected fields (panel reads these if present; all optional):
+
+{
+  email: string,
+  displayName: string,
+  createdAt: Timestamp
+}
+
+users/{uid}/subscription/current
+The subscription subcollection document. This is the core document the panel manages. Your main app creates/updates it; the panel reads and writes it via admin actions.
+
+Full document shape (matches SubscriptionRecord type):
+
+{
+  planId:       string,                           // e.g. 'free' | 'pro' | 'enterprise'
+  plan:         string,                           // same as planId (legacy mirror field)
+  status:       'active' | 'trial' | 'expired' | 'grace',
+  startDate:    Timestamp,
+  endDate:      Timestamp,
+  graceEndDate: Timestamp,
+  trialUsed:    boolean,
+  autoRenew:    boolean,
+  paymentId:    string | null,
+  source:       'system' | 'admin' | 'payment',  // 'admin' = written by this panel
+  introOffer:   boolean,                          // optional
+  createdAt:    Timestamp,
+  updatedAt:    Timestamp
+}
+
+Admin actions and what they write:
+
+Action	Fields changed
+Grant Subscription	Entire document overwritten (setDoc)
+Change Plan	planId, plan, status: 'active', source: 'admin', updatedAt (merged)
+Extend Subscription	endDate, graceEndDate, status: 'active', source: 'admin', updatedAt (merged). New endDate = current endDate + N days. graceEndDate = endDate + gracePeriodDays from config
+Cancel Subscription	status: 'expired', planId: 'free', plan: 'free', autoRenew: false, source: 'admin', updatedAt (merged)
+subscription_logs/{auto-id}
+Written automatically after every admin action (change plan, extend, cancel, grant). Never deleted. Your main app can also write here; the panel only reads and appends.
+
+{
+  userId:        string,           // uid of the affected user
+  action:        string,           // 'upgrade' | 'downgrade' | 'admin_override' | 'extend' | 'cancel' | 'grant'
+  previousState: object | null,    // snapshot before change
+  newState:      object,           // snapshot after change (includes adminEmail for 'grant' actions)
+  performedBy:   'admin' | 'system',
+  timestamp:     Timestamp
+}
+
+action: 'grant' also stores adminEmail inside newState so the Giveaway Log page can attribute who granted it.
+plans/{planId}
+Subscription plan definitions. The panel creates, edits, and activates/deactivates these.
+
+{
+  name:         string,
+  price:        number,            // in INR (paise or rupees — your choice, be consistent)
+  currency:     'INR',
+  durationDays: number,
+  features:     string[],          // array of feature keys from FEATURE_KEYS constant
+  isActive:     boolean,
+  createdAt:    Timestamp,
+  updatedAt:    Timestamp
+}
+
+Feature keys the panel knows about (defined in src/types/index.ts):
+basic, waste_tracking, analytics, advanced_analytics, reports, pos_billing, bulk_import, stock_valuation, game_timeline, whatsapp_reminders, multi_user, daily_snapshot
+
+Your main app should check these keys against the user's plan to gate features.
+
+config/global
+A single document. The panel reads and writes it. Your main app should read this too to know the current app mode, trial settings, and grace period.
+
+{
+  freeTrialEnabled:  boolean,       // whether new users get a free trial
+  trialDurationDays: number,        // e.g. 14
+  defaultPlan:       string,        // e.g. 'free'
+  gracePeriodDays:   number,        // days after expiry before hard block (e.g. 3)
+  appMode:           'free' | 'paid' | 'hybrid',
+  updatedAt:         Timestamp
+}
+
+The adminExtendSubscription and adminGrantSubscription functions read gracePeriodDays from this document automatically to compute graceEndDate.
+
+config/payment_methods
+A single document. The panel reads and writes it. Your main app reads this to display payment options to users.
+
+{
+  upiId:              string,
+  upiName:            string,
+  bankName:           string,
+  accountNumber:      string,
+  ifsc:               string,
+  accountHolderName:  string,
+  razorpayEnabled:    boolean,
+  razorpayKeyId:      string,
+  updatedAt:          Timestamp
+}
+
+announcements/{auto-id}
+The panel creates, activates/deactivates, and deletes these. Your main app should read active ones and show them in-app.
+
+{
+  title:          string,
+  message:        string,          // max 500 chars
+  type:           'info' | 'warning' | 'success' | 'maintenance',
+  targetAudience: 'all' | 'active' | 'expired',
+  isActive:       boolean,
+  createdBy:      string,          // admin email
+  createdAt:      Timestamp,
+  expiresAt:      Timestamp | null // null = no expiry
+}
+
+Your main app query to fetch active announcements:
+
+query(
+  collection(db, 'announcements'),
+  where('isActive', '==', true)
+)
+
+Then optionally filter client-side by targetAudience against the current user's subscription status, and by expiresAt > now().
+
+3 — Critical: Firestore Security Rules
+This is the single most important thing to do. Without publishing these rules, the admin panel will show permission-denied and failed-precondition errors on every page.
+
+Go to Firebase Console → Firestore Database → Rules → paste the entire block below → click Publish.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function isSuperAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'super_admin';
+    }
+    // ── Users ──────────────────────────────────────────────────────────────
+    // Admin panel reads user profiles (email, displayName) for the Users page.
+    // The main app writes its own user doc; admin panel never writes here.
+    match /users/{uid} {
+      allow read: if isAdmin();
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    // ── Subscription subcollection (direct path) ────────────────────────────
+    // Used by admin panel writes (grant, extend, change plan, cancel).
+    // Used by main app reads and writes.
+    match /users/{uid}/subscription/{docId} {
+      allow read, write: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+    }
+    // ── collectionGroup('subscription') ────────────────────────────────────
+    // REQUIRED for the Users page "With Subscription" tab.
+    // Without this rule, Firestore returns failed-precondition for any
+    // collectionGroup query, even if the direct path rule above exists.
+    match /{path=**}/subscription/{docId} {
+      allow read: if isAdmin();
+    }
+    // ── Plans ───────────────────────────────────────────────────────────────
+    // Admin panel reads and writes. Main app reads.
+    match /plans/{planId} {
+      allow read: if request.auth != null;     // any logged-in user can read plans
+      allow write: if isAdmin();
+    }
+    // ── Global config ────────────────────────────────────────────────────────
+    // Admin panel reads and writes. Main app reads.
+    match /config/{docId} {
+      allow read: if request.auth != null;     // any logged-in user can read config
+      allow write: if isAdmin();
+    }
+    // ── Subscription audit logs ──────────────────────────────────────────────
+    // Admin panel reads all, appends new entries.
+    // Main app can append its own entries (e.g. payment events).
+    match /subscription_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin() || request.auth != null;
+      allow update, delete: if false;          // logs are append-only
+    }
+    // ── Admin accounts ────────────────────────────────────────────────────────
+    // Any admin can read (needed for auth check on login).
+    // Only super_admin can add or remove admins.
+    match /admins/{uid} {
+      allow read: if request.auth != null;     // needed for login check before isAdmin() resolves
+      allow create, delete: if isSuperAdmin();
+      allow update: if false;
+    }
+    // ── Announcements ─────────────────────────────────────────────────────────
+    // Admin panel manages. Main app reads active ones.
+    match /announcements/{docId} {
+      allow read: if request.auth != null;     // any logged-in user can read announcements
+      allow write: if isAdmin();
+    }
+  }
+}
+
+Why failed-precondition happens: Firestore requires a /{path=**}/subscription/{docId} wildcard match block in the rules for any collectionGroup('subscription') query to be permitted at all — even if the direct path users/{uid}/subscription/{docId} is already allowed. Without it, Firestore refuses the query before even evaluating permissions.
+
+4 — Creating Your First Admin Account
+In your main app or Firebase Console, create (or find the UID of) the Firebase Auth user you want to make super admin.
+In Firebase Console → Firestore → admins collection → Add document:
+Document ID: the user's Firebase Auth UID
+Fields: email: "their@email.com", role: "super_admin"
+That user can now log in and create additional admin accounts from the Admins page in the panel.
+5 — Pages and What Each Does
+Page	Route	Reads	Writes
+Dashboard	/	collectionGroup(subscription), subscription_logs, plans	—
+Users	/users	collectionGroup(subscription), users, plans	—
+User Detail	/users/:uid	users/{uid}/subscription/current, subscription_logs	users/{uid}/subscription/current, subscription_logs
+Plans	/plans	plans	plans
+Config	/config	config/global, config/payment_methods	config/global, config/payment_methods
+Audit Log	/audit	subscription_logs	—
+Admins	/admins	admins	admins
+Payments	/payments	config/payment_methods	config/payment_methods
+Payment History	/payment-history	subscription_logs filtered by source: 'payment'	—
+Announcements	/announcements	announcements	announcements
+Giveaway Log	/giveaway-log	subscription_logs filtered by action: 'grant'	—
+6 — Confirmation Dialogs: What Requires Confirmation
+Every destructive or important action in the panel requires explicit confirmation before it executes:
+
+Action	Confirmation type
+Sign Out	Simple modal — Yes / Cancel
+Change Plan	Simple modal — Yes, apply / Cancel
+Extend Subscription	Simple modal — Yes, apply / Cancel
+Cancel Subscription	Must type CONFIRM in a text field
+Grant Subscription	Filling in the grant modal is the confirmation
+Delete Admin	Must type CONFIRM
+Delete Announcement	Must type CONFIRM
+Deactivate Announcement	Simple modal — Yes, deactivate / Cancel
+Activate Announcement	Simple modal — Yes, activate / Cancel
+7 — What Your Main App Should Do
+To fully integrate with this admin panel, your main app needs to:
+
+Publish the Firestore rules above (step 3 above — mandatory).
+Create a user profile doc at users/{uid} with at least email, displayName, createdAt when a new user signs up.
+Write the subscription doc at users/{uid}/subscription/current when a user subscribes or starts a trial — using the exact schema from section 2.
+Read config/global on app startup to know freeTrialEnabled, trialDurationDays, gracePeriodDays, and appMode.
+Read plans to show available subscription plans to users.
+Read announcements filtered by isActive == true to show in-app banners. Filter client-side by targetAudience and expiresAt.
+Append to subscription_logs whenever a payment event occurs so Payment History page picks it up — set source: 'payment' on those log entries.
+That's everything. The admin panel is fully functional; all you need to do is publish the Firestore rules and create the first admins document.

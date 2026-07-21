@@ -1,0 +1,303 @@
+2026-06-17 09:43:25.353 20542-20542 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-17 09:43:25.358 20542-20542 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 32691115, pluginId: Contacts, methodName: checkPermissions
+2026-06-17 09:43:25.359 20542-20542 Capacitor               com.shopledger.india                 V  callback: 32691115, pluginId: Contacts, methodName: checkPermissions, methodData: {}
+2026-06-17 09:43:25.392 20542-20542 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"contacts":"denied"}
+2026-06-17 09:43:25.408 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.436 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.452 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.455 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.455 20542-20542 AssistStructure         com.shopledger.india                 I  Flattened final assist data: 10584 bytes, containing 1 windows, 15 views
+2026-06-17 09:43:25.462 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.473 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.479 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.481 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.493 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.502 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.511 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.518 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.522 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.532 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.541 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.544 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.547 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.551 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.556 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.570 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.574 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.588 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.594 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.599 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.600 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.600 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.600 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.600 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.601 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.601 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.601 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.601 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.601 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.602 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.603 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.603 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.616 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.629 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.638 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.650 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.658 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.664 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.675 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.681 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.684 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.694 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.703 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.708 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.720 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.730 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.736 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.740 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.741 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.741 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.742 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.742 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.742 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.742 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.743 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.745 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.762 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.769 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:25.938 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.939 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:25.939 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:26.713 20542-20542 InputMethodManager      com.shopledger.india                 D  invalidateInput sessionid: 0
+2026-06-17 09:43:26.723 20542-20542 ImeTracker              com.shopledger.india                 I  com.shopledger.india:2608ac03: onRequestShow at ORIGIN_CLIENT_SHOW_SOFT_INPUT reason SHOW_SOFT_INPUT
+2026-06-17 09:43:26.723 20542-20542 InputMethodManager      com.shopledger.india                 D  showSoftInput() view=com.getcapacitor.CapacitorWebView{36da91e VFEDHVC.. .F...... 0,0-1080,2460 #7f080213 app:id/webview aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+2026-06-17 09:43:26.752 20542-20542 AssistStructure         com.shopledger.india                 I  Flattened final assist data: 11948 bytes, containing 1 windows, 15 views
+2026-06-17 09:43:26.755 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:26.764 20542-20542 VRI[PopupW...w:96725e2] com.shopledger.india                 D  hardware acceleration = true, forceHwAccelerated = false
+2026-06-17 09:43:26.764 20542-20542 ViewRootImpl            com.shopledger.india                 D  setView appearance:0 PopupWindow:96725e2
+2026-06-17 09:43:26.774 20542-20542 InputTransport          com.shopledger.india                 D  Create ARC handle: 0xb400006ed8a0e5c0
+2026-06-17 09:43:26.775 20542-20542 InputEventReceiver      com.shopledger.india                 D  Input log is disabled in InputEventReceiver.
+2026-06-17 09:43:26.775 20542-20542 InputTransport          com.shopledger.india                 D  Input log is disabled in InputChannel.
+2026-06-17 09:43:26.817 20542-20542 BufferQueueConsumer     com.shopledger.india                 D  [](id:503e00000022,api:0,p:-1,c:20542) connect: controlledByApp=false
+2026-06-17 09:43:26.820 20542-6482  OpenGLRenderer          com.shopledger.india                 E  Unable to match the desired swap behavior.
+2026-06-17 09:43:26.837 20542-6482  BLASTBufferQueue        com.shopledger.india                 D  [VRI[PopupWindow:96725e2]#34](f:0,a:1) acquireNextBufferLocked size=60x72 mFrameNumber=1 applyTransaction=true mTimestamp=15250938278216(auto) mPendingTransactions.size=0 graphicBufferId=88227218194708 transform=0
+2026-06-17 09:43:26.875 20542-12474 cr_AutofillHintsService com.shopledger.india                 E  onViewTypeAvailable  (Fix with AI)
+                                                                                                    java.lang.NullPointerException: Attempt to get length of null array
+                                                                                                    	at android.os.Parcel.createExceptionOrNull(Parcel.java:3095)
+                                                                                                    	at android.os.Parcel.createException(Parcel.java:3073)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:3056)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:2998)
+                                                                                                    	at WV.x11.l(chromium-SystemWebViewGoogle6432.aab-stable-777821503:59)
+                                                                                                    	at WV.ke.onTransact(chromium-SystemWebViewGoogle6432.aab-stable-777821503:61)
+                                                                                                    	at android.os.Binder.execTransactInternal(Binder.java:1344)
+                                                                                                    	at android.os.Binder.execTransact(Binder.java:1275)
+2026-06-17 09:43:27.114 20542-20542 InsetsController        com.shopledger.india                 D  show(ime(), fromIme=true)
+2026-06-17 09:43:27.131 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 V  Notifying listeners for event keyboardWillShow
+2026-06-17 09:43:27.131 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 D  No listeners found for event keyboardWillShow
+2026-06-17 09:43:27.143 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.143 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.143 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.143 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.143 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.144 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.147 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.219 20542-6529  Capacitor               com.shopledger.india                 D  Handling local request: https://localhost/pwa-192x192.png
+2026-06-17 09:43:27.251 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.282 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.304 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.305 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.305 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.309 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.322 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.325 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.336 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.350 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.353 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.360 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.365 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.370 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.375 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.378 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.385 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.391 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.396 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.404 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.411 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.415 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.415 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.415 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.415 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.415 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.416 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.417 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.417 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.417 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.417 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.427 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.446 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.461 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.467 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.472 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.476 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.483 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.487 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.490 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.493 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.500 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.505 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.509 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.516 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.521 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.524 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.524 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.524 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.524 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.525 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.527 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.533 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.542 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.553 20542-20542 ImeTracker              com.shopledger.india                 I  com.shopledger.india:2608ac03: onShown
+2026-06-17 09:43:27.553 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.554 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 V  Notifying listeners for event keyboardDidShow
+2026-06-17 09:43:27.554 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 D  No listeners found for event keyboardDidShow
+2026-06-17 09:43:27.559 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.568 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:27.577 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.577 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.577 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:27.577 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.156 20542-20542 WindowOnBackDispatcher  com.shopledger.india                 W  sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda20@48ed3d0
+2026-06-17 09:43:28.179 20542-20542 View                    com.shopledger.india                 D  [Warning] assignParent to null: this = android.widget.PopupWindow$PopupDecorView{1a31b83 V.E...... R.....ID 0,0-60,72}
+2026-06-17 09:43:28.185 20542-20542 BLASTBufferQueue        com.shopledger.india                 D  [VRI[PopupWindow:96725e2]#34](f:0,a:1) destructor()
+2026-06-17 09:43:28.185 20542-20542 BufferQueueConsumer     com.shopledger.india                 D  [VRI[PopupWindow:96725e2]#34(BLAST Consumer)34](id:503e00000022,api:0,p:-1,c:20542) disconnect
+2026-06-17 09:43:28.202 20542-20542 InputTransport          com.shopledger.india                 D  Destroy ARC handle: 0xb400006ed8a0e5c0
+2026-06-17 09:43:28.316 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:28.355 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.359 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.360 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.360 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.360 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:28.424 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.424 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.424 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.425 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.426 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.611 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.612 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.613 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.613 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.745 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.746 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.746 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.746 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.746 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.746 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.747 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:28.748 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.161 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.162 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.162 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.162 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.163 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:29.918 20542-20542 ImeTracker              com.shopledger.india                 I  com.shopledger.india:5389ad32: onRequestHide at ORIGIN_CLIENT_HIDE_SOFT_INPUT reason HIDE_SOFT_INPUT
+2026-06-17 09:43:29.929 20542-7637  RemoteInpu...ectionImpl com.shopledger.india                 W  requestCursorAnchorInfo on inactive InputConnection
+2026-06-17 09:43:29.949 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:29.957 20542-20542 WindowOnBackDispatcher  com.shopledger.india                 W  sendCancelIfRunning: isInProgress=falsecallback=ImeCallback=ImeOnBackInvokedCallback@55703739 Callback=android.window.IOnBackInvokedCallback$Stub$Proxy@f26d100
+2026-06-17 09:43:29.965 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 V  Notifying listeners for event keyboardWillHide
+2026-06-17 09:43:29.965 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 D  No listeners found for event keyboardWillHide
+2026-06-17 09:43:29.985 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:30.019 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.021 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.031 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.031 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.031 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.031 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.032 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.039 20542-6529  Capacitor               com.shopledger.india                 D  Handling local request: https://localhost/pwa-192x192.png
+2026-06-17 09:43:30.078 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:30.087 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:30.088 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.088 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.088 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.088 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-17 09:43:30.329 20542-20542 ImeTracker              com.shopledger.india                 I  com.shopledger.india:d24e59bd: onRequestHide at ORIGIN_CLIENT_HIDE_SOFT_INPUT reason HIDE_SOFT_INPUT_BY_INSETS_API
+2026-06-17 09:43:30.332 20542-20542 ImeTracker              com.shopledger.india                 I  com.shopledger.india:5389ad32: onHidden
+2026-06-17 09:43:30.334 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 V  Notifying listeners for event keyboardDidHide
+2026-06-17 09:43:30.334 20542-20542 Capacitor/...oardPlugin com.shopledger.india                 D  No listeners found for event keyboardDidHide
+2026-06-17 09:43:30.363 20542-6581  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-17 09:43:30.392 20542-6482  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb

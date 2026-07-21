@@ -1,0 +1,159 @@
+CRITICAL IMPLEMENTATION INSTRUCTIONS
+
+You are not allowed to immediately start coding.
+
+Follow this process exactly:
+
+PHASE 1 - REQUIREMENT VALIDATION
+
+1. Read the entire specification.
+2. Identify every business rule.
+3. Identify every entity.
+4. Identify every relationship.
+5. Identify every financial flow.
+6. Identify every ambiguity.
+7. Produce a Requirements Understanding Report.
+
+The report must contain:
+
+* Features
+* Entities
+* Relationships
+* Business Rules
+* Assumptions
+* Open Questions
+* Risks
+
+Do not proceed until this report is complete.
+
+==================================================
+
+PHASE 2 - SYSTEM DESIGN
+
+Before writing code:
+
+Produce:
+
+1. Database Schema
+2. Entity Relationship Diagram
+3. Firestore Collections
+4. TypeScript Interfaces
+5. Staff Ledger Accounting Rules
+6. Running Balance Logic
+7. Salary Calculation Logic
+8. Data Migration Plan
+9. Offline Sync Strategy
+10. Firestore Cost Impact Analysis
+
+For every design decision:
+
+Explain:
+
+* Why chosen
+* Alternatives considered
+* Risks
+
+==================================================
+
+PHASE 3 - FAILURE ANALYSIS
+
+Before implementation:
+
+Act as:
+
+* Senior Accountant
+* Senior QA Engineer
+* Senior Database Architect
+* Senior React Engineer
+
+Attempt to break the design.
+
+Find:
+
+* Data corruption scenarios
+* Duplicate record scenarios
+* Incorrect balance scenarios
+* Rename-related issues
+* Sync conflicts
+* Migration risks
+* Performance risks
+
+Fix the design before coding.
+
+==================================================
+
+PHASE 4 - IMPLEMENTATION
+
+Only after design approval:
+
+Implement incrementally.
+
+After each implementation step:
+
+1. Explain changes.
+2. Explain affected files.
+3. Explain migration impact.
+4. Explain rollback strategy.
+
+==================================================
+
+PHASE 5 - VERIFICATION
+
+Create automated and manual tests for:
+
+* Staff creation
+* Staff editing
+* Staff deletion
+* Staff rename
+* Salary payments
+* Salary advances
+* Collections
+* Settlements
+* Reimbursements
+* Expense recording
+* Running balance calculations
+* Offline mode
+* Sync recovery
+
+==================================================
+
+PHASE 6 - FINAL CERTIFICATION
+
+Before completion:
+
+Provide:
+
+* Architecture Review
+* Data Integrity Review
+* Firestore Usage Review
+* Performance Review
+* Migration Review
+* Risk Assessment
+
+Then answer:
+
+1. What could still fail?
+2. What technical debt remains?
+3. What should be improved before 1,000 users?
+4. What should be improved before 10,000 users?
+
+Only then mark the feature as complete.
+
+==================================================
+
+ABSOLUTE RULES
+
+* Never use staff name as a relational key.
+* Always use immutable staffId.
+* Never create duplicate staff identities.
+* Never break historical records.
+* Never perform destructive migrations.
+* Never increase Firestore usage unnecessarily.
+* Never bypass offline-first architecture.
+* Never introduce data loss risk.
+* Always prefer normalized relationships.
+* Always maintain backward compatibility.
+* Every design decision must be justified.
+* Every business rule must be traceable to the requirements.
+
+If any requirement is unclear, stop and ask questions instead of making assumptions.

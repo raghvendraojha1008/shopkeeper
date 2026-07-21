@@ -1,0 +1,377 @@
+FINAL TASK — PRODUCTION-GRADE KEYBOARD, SAFE-AREA & NATIVE ANDROID BEHAVIOR SYSTEM
+
+SYSTEM CONTEXT
+
+This is a production-stage Capacitor + React Android application with:
+
+* bottom navigation
+* forms
+* overlays
+* modals
+* sheets
+* offline workflows
+* large lists
+* POS flows
+
+The goal is NOT simply to “fix keyboard overlap”.
+
+The goal is to create a native-quality Android interaction system where:
+
+* keyboard behavior
+* viewport resizing
+* focus transitions
+* safe-area handling
+* touch interactions
+  all feel physically correct and polished.
+
+The app should feel indistinguishable from a well-built native Android app.
+
+---
+
+PRIMARY OBJECTIVE
+
+Implement a centralized keyboard and native-behavior architecture that ensures:
+
+* predictable layout behavior
+* safe-area correctness
+* stable viewport resizing
+* proper focus handling
+* interruption-safe interactions
+
+across all screens and device sizes.
+
+---
+
+CORE PRINCIPLE
+
+Keyboard appearance/disappearance must NEVER:
+
+* cover inputs
+* break layout
+* trap scrolling
+* overlap buttons
+* cause viewport jumps
+* create hidden actions
+
+The UI should adapt smoothly and predictably.
+
+---
+
+MODULE 1 — CENTRALIZED KEYBOARD MANAGEMENT
+
+Create ONE centralized keyboard behavior system.
+
+Use:
+
+* Capacitor Keyboard plugin
+* viewport listeners
+* focus tracking
+
+Avoid:
+
+* scattered ad-hoc fixes
+* per-component hacks
+* inconsistent resize logic
+
+Requirements:
+
+* deterministic keyboard handling
+* global coordination
+* listener cleanup
+
+---
+
+MODULE 2 — VIEWPORT RESIZE STRATEGY
+
+Handle correctly:
+
+* keyboard open
+* keyboard close
+* orientation changes
+* split-screen mode
+* small-screen devices
+
+Requirements:
+
+* smooth viewport resizing
+* stable content positioning
+* no sudden jumps/reflows
+
+Avoid:
+
+* hardcoded keyboard offsets
+* magic spacing values
+
+---
+
+MODULE 3 — INPUT VISIBILITY GUARANTEE
+
+Critical.
+
+Whenever an input gains focus:
+
+* ensure field remains visible
+* auto-scroll intelligently if necessary
+
+Especially for:
+
+* POS billing
+* Manual entry
+* Settings
+* Party forms
+* Search inputs
+* PIN/password fields
+
+Requirements:
+
+* no hidden submit buttons
+* no clipped inputs
+* smooth scroll behavior
+
+---
+
+MODULE 4 — SAFE AREA & STATUS BAR HANDLING
+
+Ensure proper handling of:
+
+* status bar
+* navigation bar
+* notch devices
+* gesture navigation phones
+
+Requirements:
+
+* consistent top padding
+* consistent bottom inset handling
+* no overlap with system UI
+
+Critical:
+
+* apply bottom inset ONLY where navigation exists
+* avoid unnecessary blank padding
+
+---
+
+MODULE 5 — BOTTOM NAVIGATION + KEYBOARD INTERACTION
+
+Critical.
+
+When keyboard opens:
+
+* bottom nav should behave predictably
+
+Choose ONE consistent strategy:
+
+* hide bottom nav
+  OR
+* reposition safely
+
+Avoid:
+
+* overlapping keyboard/nav
+* layout jitter
+* floating gaps
+
+---
+
+MODULE 6 — MODAL & SHEET KEYBOARD BEHAVIOR
+
+Critical for:
+
+* bottom sheets
+* dialogs
+* fullscreen forms
+
+Requirements:
+
+* modal resizes correctly
+* sheet content remains scrollable
+* focused input always visible
+* keyboard dismissal behaves naturally
+
+Avoid:
+
+* trapped scroll
+* inaccessible buttons
+* modal clipping
+
+---
+
+MODULE 7 — TOUCH & FOCUS CONTINUITY
+
+Implement native-feeling focus behavior:
+
+Requirements:
+
+* tap outside dismisses keyboard
+* focus transitions smoothly
+* next/previous field navigation works
+* no accidental focus loss
+
+Avoid:
+
+* keyboard flicker
+* focus loops
+* unexpected blur events
+
+---
+
+MODULE 8 — ANDROID BACK + KEYBOARD PRIORITY
+
+When Android back is pressed:
+
+1. close keyboard first
+2. then overlays/modals
+3. then navigation
+
+Avoid:
+
+* accidental page exit while typing
+* inconsistent back behavior
+
+---
+
+MODULE 9 — LARGE FORM PERFORMANCE
+
+Optimize:
+
+* multiple input forms
+* dynamic field rendering
+* rapid typing
+
+Requirements:
+
+* no typing lag
+* minimal rerenders
+* stable cursor position
+
+Avoid:
+
+* controlled-input jitter
+* focus reset during rerender
+
+---
+
+MODULE 10 — SCROLL CONTAINER SAFETY
+
+Critical.
+
+Ensure:
+
+* only ONE primary scroll container per screen
+* keyboard-aware scrolling
+* no nested scroll conflicts
+
+Avoid:
+
+* frozen scroll
+* bounce-lock
+* partial scrolling
+
+---
+
+MODULE 11 — NATIVE FEEDBACK & INTERACTION POLISH
+
+Ensure:
+
+* ripple/touch feedback consistency
+* press states feel responsive
+* gestures behave naturally
+
+Avoid:
+
+* delayed taps
+* ghost clicks
+* accidental double taps
+
+---
+
+MODULE 12 — ORIENTATION & SMALL DEVICE SAFETY
+
+Handle:
+
+* compact devices
+* landscape mode
+* keyboard fullscreen mode
+* split-screen Android mode
+
+Requirements:
+
+* no clipped layouts
+* no horizontal overflow
+* adaptive spacing
+
+---
+
+MODULE 13 — ACCESSIBILITY & INPUT SAFETY
+
+Ensure:
+
+* proper input labels
+* visible focus states
+* readable spacing
+* accessible touch targets
+
+Avoid:
+
+* tiny close buttons
+* cramped fields
+
+---
+
+MODULE 14 — EDGE CASES
+
+Handle safely:
+
+* keyboard during modal transition
+* rapid open/close
+* async form save while keyboard open
+* keyboard + toast overlap
+* device rotation mid-input
+* app background while typing
+* IME-specific keyboard quirks
+
+---
+
+MODULE 15 — PERFORMANCE & MEMORY SAFETY
+
+Requirements:
+
+* clean listener removal
+* no resize event leaks
+* no layout thrashing
+* minimal reflows
+
+Avoid:
+
+* excessive viewport calculations
+* repeated forced measurements
+
+---
+
+SUCCESS CRITERIA
+
+✔ Inputs never hidden
+✔ Keyboard interactions feel native
+✔ No layout jumps
+✔ Bottom nav behaves correctly
+✔ Modals resize safely
+✔ Forms remain usable on all devices
+✔ Android back behaves predictably while typing
+✔ Safe-area handling is consistent
+✔ No typing lag or focus instability
+
+---
+
+STRICT RULES
+
+* Do NOT apply random per-screen hacks
+* Do NOT use excessive hardcoded spacing
+* Do NOT rewrite the entire UI architecture
+* Focus on centralized behavior consistency
+
+---
+
+END GOAL
+
+“The app behaves physically like a polished native Android application during all keyboard, focus, and interaction scenarios.”

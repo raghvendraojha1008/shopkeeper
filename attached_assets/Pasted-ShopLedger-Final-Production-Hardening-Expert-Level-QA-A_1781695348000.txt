@@ -1,0 +1,256 @@
+ShopLedger Final Production Hardening & Expert-Level QA Audit
+
+Objective:
+
+Perform a complete end-to-end audit of the entire ShopLedger application and deliver a final production-ready version that meets professional software quality standards.
+
+Do not focus only on reported issues. Assume unknown defects exist and actively search for them.
+
+==================================================
+PHASE 1 - FULL CODEBASE AUDIT
+=============================
+
+Perform a complete scan of:
+
+* React Components
+* Hooks
+* Contexts
+* Services
+* Firebase Layer
+* Firestore Queries
+* IndexedDB Layer
+* Sync Queue
+* React Query
+* Routing
+* Capacitor Integration
+* Android Platform Code
+* Utility Functions
+* PDF Generation
+* AI Features
+* Billing System
+* Inventory System
+* Party Management
+* Dashboard
+* Reports
+
+Identify:
+
+* Dead code
+* Duplicate logic
+* Unused dependencies
+* Memory leaks
+* Infinite loops
+* Race conditions
+* Circular dependencies
+* State inconsistencies
+* Error-prone patterns
+* Security risks
+* Data corruption risks
+
+==================================================
+PHASE 2 - DATABASE & DATA INTEGRITY AUDIT
+=========================================
+
+Verify:
+
+* Referential integrity
+* Party ID normalization
+* Invoice consistency
+* Inventory consistency
+* Ledger consistency
+* Transaction consistency
+* Data migration safety
+* Offline queue integrity
+
+Simulate:
+
+* Party rename
+* Party merge
+* Party delete
+* Invoice edit
+* Inventory edit
+* Concurrent updates
+
+Ensure no data corruption occurs.
+
+==================================================
+PHASE 3 - OFFLINE-FIRST STRESS TESTING
+======================================
+
+Test:
+
+* Internet disconnect during save
+* Internet disconnect during sync
+* App kill during sync
+* Device restart during sync
+* Multiple pending queue items
+* Large queue recovery
+* Failed sync recovery
+* Duplicate sync prevention
+
+Verify:
+
+* No data loss
+* No duplicate records
+* No stuck queue items
+* Proper retry behavior
+
+==================================================
+PHASE 4 - FIRESTORE OPTIMIZATION AUDIT
+======================================
+
+Audit:
+
+* Reads
+* Writes
+* Listeners
+* Query invalidations
+* Retry loops
+
+Goals:
+
+* Eliminate unnecessary reads
+* Eliminate unnecessary writes
+* Remove duplicate listeners
+* Replace broad invalidations
+* Batch related writes
+
+Provide:
+
+* Top read sources
+* Top write sources
+* Estimated cost impact
+* Optimization report
+
+==================================================
+PHASE 5 - PERFORMANCE AUDIT
+===========================
+
+Measure:
+
+* App startup time
+* Dashboard load time
+* Invoice creation time
+* Inventory update time
+* Search performance
+* PDF generation speed
+* Sync speed
+
+Optimize:
+
+* Rendering
+* Re-renders
+* Large lists
+* Queries
+* Cache usage
+
+Target:
+
+* No visible lag
+* No UI freezing
+* No unnecessary loading states
+
+==================================================
+PHASE 6 - ERROR RECOVERY TESTING
+================================
+
+Force failures:
+
+* Firebase unavailable
+* Auth expiration
+* Corrupted IndexedDB
+* Invalid records
+* Empty datasets
+* Missing fields
+* Permission errors
+* Network failures
+
+Verify:
+
+* Graceful recovery
+* Meaningful error messages
+* No crashes
+* No white screens
+
+==================================================
+PHASE 7 - SECURITY AUDIT
+========================
+
+Review:
+
+* Firestore rules
+* Authentication flows
+* User isolation
+* Data access controls
+* Input validation
+* Injection risks
+
+Verify:
+
+* Users cannot access another user's data
+* Unauthorized writes are impossible
+
+==================================================
+PHASE 8 - ANDROID PRODUCTION TESTING
+====================================
+
+Test:
+
+* Fresh install
+* Upgrade install
+* Background/foreground transitions
+* Back navigation
+* Process death recovery
+* Orientation changes
+* Low memory scenarios
+
+Verify:
+
+* Native Android behavior
+* No crashes
+* No state loss
+
+==================================================
+PHASE 9 - LARGE DATASET TESTING
+===============================
+
+Generate test data:
+
+* 10,000 inventory items
+* 5,000 parties
+* 50,000 transactions
+* 10,000 invoices
+
+Verify:
+
+* Search performance
+* Report generation
+* Dashboard responsiveness
+* Sync reliability
+
+==================================================
+PHASE 10 - FINAL RELEASE CERTIFICATION
+======================================
+
+Before declaring completion:
+
+1. Fix every discovered issue.
+2. Re-run all tests.
+3. Verify all fixes.
+4. Produce a final audit report.
+
+Provide:
+
+* Issues found
+* Severity
+* Fix implemented
+* Remaining risks
+* Performance metrics
+* Firestore optimization metrics
+* Production readiness score
+
+Do not stop after reporting issues.
+
+Continue iterating until all critical and major issues are fixed.
+
+Final deliverable must be a production-grade release candidate suitable for real business users with maximum stability, reliability, data integrity, and maintainability.

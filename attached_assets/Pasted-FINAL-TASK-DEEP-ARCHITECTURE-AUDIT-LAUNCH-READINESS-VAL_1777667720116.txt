@@ -1,0 +1,187 @@
+FINAL TASK — DEEP ARCHITECTURE AUDIT & LAUNCH READINESS VALIDATION
+
+SYSTEM CONTEXT
+
+This is a production-level business app with:
+
+* POS billing
+* Inventory + ledger
+* Offline-first architecture (IndexedDB)
+* React Query cache layer
+* Sync queue to Firebase
+* Optimistic UI updates
+* Backup + restore
+
+The system is COMPLETE.
+
+Your role is NOT to build.
+
+Your role is to:
+
+```text
+Audit deeply, find hidden flaws, and prove system correctness
+```
+
+---
+
+PRIMARY OBJECTIVE
+
+Ensure there are NO hidden issues in:
+
+* Data flow
+* State consistency
+* Sync behavior
+* Offline reliability
+* Performance under load
+
+---
+
+MODULE 1 — DATA FLOW AUDIT
+
+Trace full lifecycle:
+
+```text
+User action → UI → Cache → IndexedDB → Sync → Firebase → Back to UI
+```
+
+Verify:
+
+* No step bypasses the flow
+* No direct API calls skipping local DB
+* No duplicate sources of truth
+
+---
+
+MODULE 2 — SOURCE OF TRUTH VALIDATION
+
+Ensure:
+
+* IndexedDB = single source of truth
+* React Query = UI cache only
+* Firebase = remote sync layer
+
+Detect any violations.
+
+---
+
+MODULE 3 — SYNC ENGINE AUDIT
+
+Check:
+
+* Queue persistence across restarts
+* No duplicate sync entries
+* Conflict handling (timestamp / last-write-wins)
+* Correct tempId → real ID replacement
+
+---
+
+MODULE 4 — CACHE CONSISTENCY
+
+Verify:
+
+* React Query cache always matches IndexedDB
+* No stale data after mutations
+* No race conditions between cache + DB + API
+
+---
+
+MODULE 5 — EDGE CASE ANALYSIS
+
+Identify and validate:
+
+* App closed mid-write
+* App closed mid-sync
+* Network drop during operation
+* Partial sync failure
+
+Ensure:
+
+```text
+No data loss
+No corruption
+Clean recovery
+```
+
+---
+
+MODULE 6 — PERFORMANCE AUDIT
+
+Check:
+
+* Large datasets (1000+ items)
+* Frequent updates (rapid billing)
+* Re-render behavior
+
+Ensure:
+
+* No unnecessary re-renders
+* No UI blocking
+* No memory leaks
+
+---
+
+MODULE 7 — CODE QUALITY AUDIT
+
+Ensure:
+
+* No dead code
+* No duplicate logic paths
+* No debug traces
+* No inconsistent patterns
+
+---
+
+MODULE 8 — FINAL FAILURE SIMULATION
+
+Simulate:
+
+1. Offline → usage → restart → online
+2. Rapid repeated actions
+3. Network instability
+
+Verify:
+
+* System remains consistent
+* No duplicates
+* No missing entries
+
+---
+
+OUTPUT REQUIREMENT
+
+Provide:
+
+1. List of ALL issues found (if any)
+2. Severity:
+
+   * Critical (must fix before launch)
+   * Minor (can fix later)
+3. Exact fix suggestions (only if necessary)
+
+If NO issues:
+
+Explicitly confirm:
+
+```text
+System is safe for production use
+```
+
+---
+
+STRICT RULES
+
+* Do NOT add features
+* Do NOT refactor unnecessarily
+* Do NOT suggest improvements unless critical
+
+Focus ONLY on:
+
+* correctness
+* safety
+* reliability
+
+---
+
+FINAL GOAL
+
+“System can be trusted with real business data in production”

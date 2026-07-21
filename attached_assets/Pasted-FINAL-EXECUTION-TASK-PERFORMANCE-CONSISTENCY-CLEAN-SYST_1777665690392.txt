@@ -1,0 +1,154 @@
+FINAL EXECUTION TASK — PERFORMANCE, CONSISTENCY & CLEAN SYSTEM (NO FOOTPRINT RULE)
+
+SYSTEM CONTEXT
+
+This is a production-ready POS + inventory system with:
+
+* POS billing
+* Ledger + inventory
+* Firebase (ApiService)
+* Cache layer
+* Offline sync
+* Tab-based navigation
+
+The system works but needs:
+
+* Instant UI updates (ledger delay issue)
+* Performance optimization
+* Clean architecture preservation
+
+---
+
+PRIMARY OBJECTIVE
+
+```text
+Make the system fast, consistent, and clean — without leaving unnecessary code or structure changes
+```
+
+---
+
+🚨 CRITICAL FIX — LEDGER DELAY
+
+Implement:
+
+OPTIMISTIC UPDATE FLOW:
+
+```text
+User action
+→ Update UI immediately (ledger + inventory)
+→ Update cache
+→ Sync in background
+```
+
+NO waiting for API before UI update.
+
+---
+
+⚡ PERFORMANCE RULES
+
+1. Cache-first reads:
+
+```text
+UI → Cache → API (background)
+```
+
+2. Incremental updates:
+
+* Do NOT refetch entire datasets
+* Update only affected entries
+
+3. Memoization:
+
+* React.memo
+* useMemo
+* useCallback
+
+---
+
+🧱 CLEAN ARCHITECTURE — STRICT RULES (VERY IMPORTANT)
+
+You MUST follow these constraints:
+
+1. DO NOT create unnecessary new services, managers, or abstraction layers
+
+   * Use existing structures (ApiService, CacheService, existing contexts)
+
+2. DO NOT duplicate logic
+
+   * If logic exists → improve it
+   * Do NOT create parallel implementations
+
+3. DO NOT leave unused code
+
+   * Remove dead code if replaced
+
+4. DO NOT leave debug logs
+
+   * Remove console.log, temporary debug statements
+
+5. DO NOT partially refactor
+
+   * If a pattern is updated → keep consistency everywhere it applies
+
+6. DO NOT introduce “temporary fixes”
+
+   * Every change must be production-quality
+
+---
+
+🔁 CONSISTENCY RULES
+
+Ensure:
+
+* Same data flow pattern everywhere
+* Same cache usage pattern everywhere
+* Same loading/error handling pattern everywhere
+
+NO mixed approaches.
+
+---
+
+🧪 TEST BEFORE COMPLETION
+
+Agent must verify:
+
+1. Ledger updates instantly after billing
+2. Inventory updates instantly
+3. No UI flicker
+4. Works offline → sync works
+5. No duplicate entries
+6. No unnecessary re-renders
+
+---
+
+🚫 FORBIDDEN ACTIONS
+
+* Creating new helper layers without strong justification
+* Adding wrappers around wrappers
+* Leaving TODO comments or incomplete logic
+* Keeping old + new code together
+
+---
+
+🎯 SUCCESS CRITERIA
+
+✔ Ledger updates instantly
+✔ UI feels fast everywhere
+✔ No full reload delays
+✔ Codebase remains clean and consistent
+✔ No unnecessary abstractions added
+
+---
+
+FINAL RULE
+
+If a change improves performance but harms code clarity → REJECT it
+If a change adds complexity without clear benefit → DO NOT implement
+
+---
+
+END GOAL
+
+```text
+Fast + clean + maintainable + production-quality system
+```

@@ -1,0 +1,259 @@
+MODULE 5 — DATA TRUST, BACKUP & RELIABILITY SYSTEM
+
+SYSTEM GOAL
+Upgrade the app from “works well” → “trusted for real business use”.
+
+This module ensures:
+
+```text
+No data loss
+User confidence
+Recovery in failure scenarios
+```
+
+Without this, no shopkeeper will rely on the app long-term.
+
+---
+
+SCOPE BOUNDARY
+
+IN SCOPE:
+
+* Backup system (manual + auto)
+* Restore system
+* Data export
+* Sync reliability visibility
+* Error transparency
+
+OUT OF SCOPE:
+
+* Cloud infrastructure changes
+* Enterprise-level redundancy
+* Multi-region replication
+
+---
+
+1. BACKUP SYSTEM
+
+A. Manual Backup
+
+Add:
+
+* Button: “Backup Now”
+
+Behavior:
+
+```text
+User clicks → Export full data → Save locally OR upload to cloud
+```
+
+Data to include:
+
+* inventory
+* ledger_entries
+* transactions
+* parties
+* settings
+
+Format:
+
+* JSON (primary)
+* Optional: CSV export (future)
+
+---
+
+B. Auto Backup
+
+Extend existing AutoBackupService:
+
+Requirements:
+
+* Run daily (already partially exists)
+* Store last backup timestamp
+* Show in UI:
+  “Last backup: Today 2:30 PM”
+
+---
+
+2. RESTORE SYSTEM
+
+Critical feature.
+
+User flow:
+
+```text
+Select backup file → Validate → Preview → Restore
+```
+
+Requirements:
+
+* Validate file structure
+* Confirm before overwrite
+* Option:
+
+  * Full restore
+  * Merge restore (future-ready)
+
+---
+
+Edge cases:
+
+* Corrupted file
+* Partial restore
+* App crash during restore
+
+---
+
+3. DATA EXPORT (USER CONTROL)
+
+Allow user to:
+
+* Export:
+
+  * All data
+  * Or specific (ledger / inventory)
+
+Formats:
+
+* JSON (must)
+* CSV (optional)
+
+Purpose:
+
+* Migration
+* Safety
+* Transparency
+
+---
+
+4. SYNC STATUS VISIBILITY
+
+User must know system state.
+
+Add indicators:
+
+States:
+
+```text
+✔ Synced
+⏳ Syncing
+⚠ Pending changes
+❌ Error
+```
+
+Display:
+
+* Top bar OR settings screen
+
+---
+
+5. ERROR TRANSPARENCY
+
+NO silent failures.
+
+Implement:
+
+* Toast messages for:
+
+  * Sync failure
+  * Backup failure
+  * Restore failure
+
+Example:
+
+```text
+“Sync failed. Will retry automatically.”
+“Backup completed successfully.”
+```
+
+---
+
+6. RETRY SYSTEM
+
+For failed operations:
+
+* Automatic retry with backoff
+* Queue persistence (already partially exists)
+
+---
+
+7. DATA INTEGRITY CHECKS
+
+Add basic checks:
+
+* Duplicate prevention (invoice numbers, entries)
+* Missing required fields
+* Corrupted data detection
+
+---
+
+8. USER TRUST UI
+
+Add simple UI section:
+
+Settings → Data & Safety
+
+Show:
+
+* Last backup time
+* Sync status
+* Backup button
+* Restore option
+
+---
+
+9. PERFORMANCE REQUIREMENTS
+
+* Backup < 2 seconds (small data)
+* Restore safe (no crash)
+* No UI freeze during operations
+
+---
+
+10. EDGE CASES
+
+Must handle:
+
+* App closed during backup
+* Network failure mid-sync
+* Large data export
+* Restore on existing data
+
+---
+
+11. INTEGRATION POINTS
+
+Must integrate with:
+
+* Existing AutoBackupService
+* Sync queue (Module 2)
+* SettingsView
+
+---
+
+12. SUCCESS CRITERIA
+
+Module complete when:
+
+✔ User can backup data anytime
+✔ User can restore safely
+✔ No data loss in failures
+✔ Sync status visible
+✔ Errors are clearly shown
+
+---
+
+IMPORTANT RULE
+
+Do NOT overcomplicate.
+
+Start with:
+
+* Manual backup (JSON)
+* Restore system
+* Sync status indicator
+
+Then extend.
+
+Goal:
+“User trusts the app with real business data”

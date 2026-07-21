@@ -1,0 +1,241 @@
+MODULE 4 — PERFORMANCE + LOCAL CACHING LAYER
+
+SYSTEM GOAL
+Upgrade the app from “network-dependent UI” to a **fast, instant-feeling system** using local caching and optimized rendering.
+
+Current state:
+
+* Data fetched via ApiService (Firebase)
+* Some offline write queue exists
+* UI may flicker / delay on load
+
+Target state:
+
+```text
+Instant UI → Local cache → Background sync
+```
+
+---
+
+SCOPE BOUNDARY
+
+IN SCOPE:
+
+* Local caching layer
+* Fast read performance
+* UI optimization (re-render reduction)
+* Inventory + ledger performance
+
+OUT OF SCOPE:
+
+* Full offline database redesign (already in Module 2)
+* Backend changes
+* New features
+
+---
+
+1. LOCAL CACHING LAYER (CORE)
+
+Wrap all data access behind a cache-first system.
+
+New flow:
+
+```text
+UI → Cache → (instant render)
+        ↓
+     API → update cache → refresh UI
+```
+
+---
+
+Implement:
+
+A. Cache store
+
+* In-memory cache (Map or object)
+* Optional persistent layer (IndexedDB/localStorage)
+
+Cache keys:
+
+* inventory
+* ledger_entries
+* transactions
+* parties
+
+---
+
+B. Cache API wrapper
+
+Replace direct calls like:
+
+```ts
+ApiService.getAll(...)
+```
+
+With:
+
+```ts
+CacheService.get('inventory', fetchFn)
+```
+
+Behavior:
+
+* If cache exists → return immediately
+* Then fetch fresh data in background
+* Update cache + notify UI
+
+---
+
+C. Cache invalidation
+
+Triggers:
+
+* After create/update/delete
+* Manual refresh
+* Time-based (TTL: 5–10 min)
+
+---
+
+2. SEARCH OPTIMIZATION (CRITICAL FOR POS)
+
+Problem:
+
+* Searching inventory repeatedly is slow
+
+Solution:
+
+A. Preload inventory once
+
+* Store in memory
+
+B. Build search index
+
+* Lowercase name
+* Barcode
+* HSN
+
+C. Search locally (NO API call)
+
+---
+
+3. UI PERFORMANCE OPTIMIZATION
+
+A. Memoization
+
+Apply:
+
+* React.memo for list items
+* useMemo for computed values (totals, filters)
+* useCallback for handlers
+
+---
+
+B. Prevent unnecessary re-renders
+
+Avoid:
+
+* Passing new object references every render
+* Recomputing cart totals fully on every change
+
+---
+
+C. Cart optimization
+
+* Only update changed item
+* Do not re-render entire cart
+
+---
+
+4. LARGE LIST HANDLING
+
+For inventory / ledger lists:
+
+* Use virtualization (react-window or similar)
+  OR
+* Pagination / lazy load
+
+---
+
+5. LOADING EXPERIENCE
+
+Replace blocking loaders with:
+
+* Instant cached UI
+* Background refresh indicator (subtle)
+
+Example:
+
+```text
+Data shown instantly
+→ small spinner for refresh
+```
+
+---
+
+6. ERROR HANDLING
+
+* If API fails → keep cached data
+* Show toast: “Using last saved data”
+* Do NOT clear UI
+
+---
+
+7. PERFORMANCE TARGETS
+
+Must achieve:
+
+* Inventory screen load: < 200ms (from cache)
+* POS search: instant (< 50ms)
+* No visible flicker on navigation
+* Smooth scrolling (no jank)
+
+---
+
+8. EDGE CASES
+
+Handle:
+
+* Cache empty (first load)
+* Cache stale
+* Partial updates
+* App restart (optional persistent cache)
+
+---
+
+9. INTEGRATION POINTS
+
+Apply caching to:
+
+* InventoryView
+* POSBillingView (item search)
+* LedgerView
+* Dashboard stats
+
+---
+
+10. SUCCESS CRITERIA
+
+Module complete when:
+
+✔ Screens load instantly (no waiting spinner)
+✔ POS search is instant
+✔ No UI flicker during navigation
+✔ App usable even with slow network
+✔ Cached data shown when offline
+
+---
+
+IMPORTANT RULE
+
+Do NOT over-engineer.
+
+Start with:
+
+* In-memory cache
+* Basic wrapper around ApiService
+* Inventory caching + POS search optimization
+
+Then extend if needed.
+
+Goal:
+“App feels instant, even on slow internet”

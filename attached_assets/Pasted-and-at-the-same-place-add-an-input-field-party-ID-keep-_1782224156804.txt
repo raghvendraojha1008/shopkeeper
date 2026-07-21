@@ -1,0 +1,63 @@
+and at the same place add an input field(party ID, keep it unique & non empty) user can update(but in advance auto fill this in sequence with one increment), this must be provided to each and every party added irrespective of the mode(direct user entry, via ai, via bulk import) of adding party. make this id primary key.
+
+3 days ago
+
+Planning Party ID field implementation (11 seconds)
+Let me read the PartyForm sub-component and understand the current state of things:
+
+
+9 actions
+Let me read the PartyForm JSX section and the ManualEntryModal formData initialization:
+
+
+3 actions
+Now I have everything. Let me implement this in one sweep — restore the counter utilities, add the editable Party ID field to the form, seed/assign across all three import paths.
+
+
+4 actions
+I have all the context. Making all 5 file changes in parallel now:
+
+
+5 actions
+Now wire up the counter seeding, pre-fill, validation, and the form field itself:
+
+
+4 actions
+Now add the Party ID input field to PartyForm in SimpleForms.tsx, and wire the remaining two files:
+
+
+2 actions
+Now wire up CommandModal and BulkImportView:
+
+
+4 actions
+Let me verify the build is clean:
+
+
+2 actions
+Clean build — zero errors. Let me take a screenshot to confirm the form looks right:
+
+
+2 actions
+App is running cleanly. Here's what's now in place:
+
+Party ID field — what changed
+In the "New Parties" form (the same spot as before, but now inside the form as an editable input):
+
+A Party ID field appears at the very top of the form, above GSTIN
+Auto-filled with the next sequential value (P-0001, P-0002…)
+User can freely edit it to any value they want (max 20 chars, forced uppercase)
+Hint text: "Unique identifier — auto-filled, you can edit"
+A red * marks it as required
+Validation on save:
+
+Empty → blocked with toast: "Party ID is required"
+Duplicate → blocked with toast: "Party ID 'P-0003' is already taken"
+Counter advances only after a successful save
+All three add paths assign the ID:
+
+Path	Behaviour
+Manual form	Pre-filled via peekNextPartyCode(), user can edit, confirmed on save
+AI (CommandModal)	Auto-assigned via generatePartyCode() at save time
+Bulk CSV import	Auto-assigned via generatePartyCode() if the CSV row doesn't include a party_code column
+Editing existing parties — the field is shown pre-filled with the party's existing ID, uniqueness check skips the party's own record so it doesn't falsely block saving.

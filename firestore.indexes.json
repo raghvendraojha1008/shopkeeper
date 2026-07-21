@@ -1,0 +1,48 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "subscription_logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId",    "order": "ASCENDING"  },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "staff_transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "staff_id", "order": "ASCENDING"  },
+        { "fieldPath": "date",     "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "staff_transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "staff_id", "order": "ASCENDING"  },
+        { "fieldPath": "type",     "order": "ASCENDING"  },
+        { "fieldPath": "date",     "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "staff_transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "staff_id",     "order": "ASCENDING" },
+        { "fieldPath": "salary_month", "order": "ASCENDING" },
+        { "fieldPath": "type",         "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "staff_transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "staff_id", "order": "ASCENDING"  },
+        { "fieldPath": "deleted",  "order": "ASCENDING"  },
+        { "fieldPath": "date",     "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -1,0 +1,105 @@
+Before implementation, re-review the entire Staff Module design and validate every assumption against accounting correctness, existing ShopLedger architecture, offline-first behavior, and future scalability.
+
+Do not proceed with implementation until all assumptions have been challenged.
+
+Specifically review:
+
+1. Salary Accounting
+
+* Verify whether SALARY_PAYMENT should affect "Money With Staff" balance.
+* Provide accounting justification.
+* Explain alternative approaches and consequences.
+
+2. Existing Record Linking
+
+* Determine whether name-based linking is acceptable.
+* Propose a permanent staffId migration strategy.
+* Eliminate future dependence on name matching.
+
+3. Staff Rename Safety
+
+* Staff name changes must never break relationships.
+* Staff history must remain intact.
+* Staff merges, duplicates, and renames must be handled safely.
+
+4. Balance Calculation
+
+* Produce real-world examples with numbers.
+* Verify formulas using:
+
+  * advances
+  * collections
+  * expenses
+  * settlements
+  * reimbursements
+  * salaries
+
+5. Offline-First Compatibility
+
+* Verify every operation works offline.
+* Verify queue recovery.
+* Verify no duplicate records after reconnect.
+
+6. Firestore Optimization
+
+* Estimate read/write impact.
+* Ensure no unnecessary listeners.
+* Ensure no unnecessary refetches.
+
+7. Multi-Business Scalability
+
+* Validate architecture for:
+
+  * 100 users
+  * 1,000 users
+  * 10,000 users
+
+8. Data Integrity
+
+* Verify there is no possible scenario where:
+
+  * money disappears
+  * balances become inconsistent
+  * transactions become orphaned
+  * staff records become duplicated
+
+9. Future Features
+   Validate compatibility with:
+
+* attendance
+* commissions
+* incentives
+* leave management
+* employee login
+* branch-wise staff assignment
+
+10. Final Architecture Review
+
+Act as:
+
+* Senior Accounting Software Architect
+* Senior Database Architect
+* Senior Product Architect
+* Senior QA Engineer
+
+Challenge every design decision.
+
+Do not assume the current design is correct.
+
+Identify:
+
+* design flaws
+* accounting flaws
+* scalability risks
+* migration risks
+* future maintenance risks
+
+Then provide:
+
+1. Approved Design Decisions
+2. Rejected Design Decisions
+3. Required Changes
+4. Recommended Improvements
+5. Final Production Architecture
+
+Only after this review is complete should implementation begin.

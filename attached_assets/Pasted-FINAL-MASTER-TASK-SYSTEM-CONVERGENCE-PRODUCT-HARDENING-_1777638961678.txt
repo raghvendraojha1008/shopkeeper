@@ -1,0 +1,288 @@
+FINAL MASTER TASK — SYSTEM CONVERGENCE, PRODUCT HARDENING & LAUNCH READINESS
+
+SYSTEM CONTEXT
+
+This is a Capacitor-based business app with:
+
+* POS billing
+* Inventory + ledger
+* Offline sync system
+* Invoice generation
+* Caching layer
+* Backup + restore
+* Multi-firm + roles
+* Tab-based navigation (activeTab system)
+
+The system is functionally complete.
+
+Your task is NOT to add features.
+
+Your task is to:
+
+```text
+Unify, stabilize, and finalize the system into a production-ready product
+```
+
+---
+
+PRIMARY OBJECTIVE
+
+Transform the app from:
+
+```text
+Feature-complete system
+→
+Reliable, intuitive, real-world product
+```
+
+---
+
+CORE PRINCIPLES
+
+1. No new features
+2. No over-engineering
+3. Fix friction, not expand scope
+4. Optimize for real shop usage
+5. Prioritize reliability over complexity
+
+---
+
+MODULE A — UX CONSISTENCY & FLOW FIX
+
+Goal:
+Remove confusion and friction in navigation and usage
+
+Tasks:
+
+1. Standardize navigation behavior:
+
+   * Ensure every screen has predictable back behavior
+   * Avoid dead-end screens
+   * Ensure activeTab transitions are consistent
+
+2. Eliminate blank states:
+
+   * Every empty screen must show:
+
+     * message
+     * action button
+
+3. Fix loading gaps:
+
+   * Every async operation must have:
+
+     * loading state
+     * fallback UI
+
+4. Prevent double actions:
+
+   * Disable buttons during processing
+   * Prevent duplicate submissions
+
+---
+
+MODULE B — CORE WORKFLOW VALIDATION
+
+Goal:
+Ensure POS → ledger → inventory → invoice is 100% consistent
+
+Validate:
+
+1. POS flow:
+
+   * Add items → cart → save
+   * Inventory updates correctly
+   * Ledger entry created correctly
+
+2. Invoice:
+
+   * Matches POS totals exactly
+   * GST calculation correct
+   * PDF always generates
+
+3. Data consistency:
+
+   * No mismatch between inventory and ledger
+   * No duplicate invoice numbers
+
+---
+
+MODULE C — OFFLINE + SYNC RELIABILITY
+
+Goal:
+System must never lose data
+
+Validate and fix:
+
+1. Offline behavior:
+
+   * Create bills offline
+   * Restart app → data still present
+
+2. Sync:
+
+   * No duplicate writes
+   * Retry logic works
+   * Failure is visible (toast)
+
+3. Conflict handling:
+
+   * Last-write-wins or timestamp-based resolution
+
+---
+
+MODULE D — PERFORMANCE HARDENING
+
+Goal:
+App must feel instant
+
+Tasks:
+
+1. Ensure:
+
+   * Inventory loads from cache instantly
+   * POS search is local and fast
+
+2. Optimize:
+
+   * Avoid unnecessary re-renders
+   * Memoize heavy components
+
+3. Large data handling:
+
+   * Test with 1000+ items
+   * No lag or freeze
+
+---
+
+MODULE E — TRUST & SAFETY VALIDATION
+
+Goal:
+User trusts app with real data
+
+Tasks:
+
+1. Backup:
+
+   * Manual backup works
+   * Auto backup runs
+
+2. Restore:
+
+   * Safe restore without crash
+
+3. Sync visibility:
+
+   * User sees sync state
+
+4. Error handling:
+
+   * No silent failures anywhere
+
+---
+
+MODULE F — FIRST-USE EXPERIENCE
+
+Goal:
+User understands app without help
+
+Tasks:
+
+1. Add simple onboarding:
+
+   * Add item
+   * Create bill
+   * View report
+
+2. Ensure:
+
+   * No confusion on first open
+   * Clear next steps
+
+---
+
+MODULE G — MONETIZATION STRUCTURE (BASIC)
+
+Goal:
+Prepare app for future revenue
+
+Tasks:
+
+1. Identify premium features:
+
+   * Analytics
+   * Backup
+   * Multi-device
+
+2. Add:
+
+   * “Pro” labels
+   * Upgrade screen (static)
+
+NO payment integration yet
+
+---
+
+MODULE H — FINAL STABILITY TEST
+
+Simulate:
+
+1. Heavy usage:
+
+   * 50+ bills
+   * fast actions
+
+2. Offline cycle:
+
+   * offline → usage → online
+
+3. Failure:
+
+   * kill app during sync
+   * restart
+
+Expected:
+
+```text
+No crash
+No data loss
+No UI break
+```
+
+---
+
+FINAL SUCCESS CRITERIA
+
+System is complete when:
+
+✔ No blank screens
+✔ No broken flows
+✔ No data inconsistency
+✔ Works offline reliably
+✔ Feels fast and stable
+✔ New user understands app quickly
+✔ App is ready for real-world usage
+
+---
+
+FINAL RULE
+
+If something works but feels confusing or slow:
+→ Fix it
+
+If something is technically correct but bad UX:
+→ Improve it
+
+Do NOT stop at “working”
+
+Stop only at:
+
+```text
+Smooth + reliable + intuitive
+```
+
+---
+
+END GOAL
+
+“Shopkeeper can use this app daily without frustration or fear”

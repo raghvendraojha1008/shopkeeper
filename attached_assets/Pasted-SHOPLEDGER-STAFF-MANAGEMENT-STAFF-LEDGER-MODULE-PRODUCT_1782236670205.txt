@@ -1,0 +1,423 @@
+SHOPLEDGER - STAFF MANAGEMENT & STAFF LEDGER MODULE (PRODUCTION GRADE)
+
+Objective
+
+Design and implement a complete Staff Management, Staff Accounting, and Staff Ledger System.
+
+This is NOT just an employee list.
+
+The goal is to track every financial interaction involving staff members and provide complete money-trail visibility between:
+
+Owner ↔ Staff
+Staff ↔ Customers
+Staff ↔ Vendors
+Staff ↔ External Expenses
+
+At any time, the owner must be able to determine:
+
+* How much money is currently with each staff member
+* How much salary is due
+* How much salary has been paid
+* How much advance has been given
+* How much reimbursement is pending
+* What money a staff member collected
+* What money a staff member spent
+* Complete financial history of a staff member
+
+==================================================
+MASTER STAFF ENTITY
+===================
+
+Use immutable:
+
+staffId
+
+as the only relational identifier.
+
+Never use:
+
+* name
+* phone
+* address
+
+as relational keys.
+
+Staff fields:
+
+* staffId
+* name
+* phone
+* address
+* joiningDate
+* monthlySalary
+* salaryType
+* status
+* notes
+* createdAt
+* updatedAt
+
+The existing Staff List in Settings becomes the master source.
+
+Changes made from:
+
+Settings
+OR
+Staff Module
+
+must remain synchronized automatically.
+
+==================================================
+DASHBOARD INTEGRATION
+=====================
+
+Add:
+
+Dashboard
+→ Staff
+
+Summary Cards:
+
+* Total Staff
+* Active Staff
+* Total Salary Due
+* Total Salary Paid This Month
+* Total Advances Outstanding
+* Total Reimbursements Due
+* Total Money Held By Staff
+
+Display Staff List.
+
+Clicking a staff member opens Staff Detail View.
+
+==================================================
+STAFF DETAIL VIEW
+=================
+
+Sections:
+
+1. Profile
+
+2. Financial Summary
+
+3. Transaction History
+
+4. Salary History
+
+5. Linked Collections & Payments
+
+6. Documents & Attachments
+
+Financial Summary must display:
+
+* Current Balance With Staff
+* Company Owes Staff
+* Staff Owes Company
+* Salary Due
+* Salary Paid This Month
+* Total Collections Received
+* Total Expenses Made
+* Total Advances Given
+* Total Settlements Returned
+
+==================================================
+UNIFIED STAFF LEDGER ENGINE
+===========================
+
+DO NOT create separate disconnected systems.
+
+Implement a single normalized ledger system.
+
+Entity:
+
+StaffTransaction
+
+Fields:
+
+* transactionId
+* staffId
+* type
+* date
+* amount
+* mode
+* purpose
+* description
+* notes
+* referenceNumber
+* attachmentUrl
+* createdAt
+* updatedAt
+* createdBy
+
+Transaction Types:
+
+SALARY_PAYMENT
+
+SALARY_ADVANCE
+
+EXPENSE_ADVANCE
+
+STAFF_EXPENSE
+
+COLLECTION
+
+SETTLEMENT
+
+REIMBURSEMENT
+
+ADJUSTMENT
+
+==================================================
+PAYMENT MODES
+=============
+
+Support:
+
+* Cash
+* UPI
+* Bank Transfer
+* Cheque
+* Other
+
+==================================================
+LINK EXISTING SHOPLEDGER PAYMENTS
+=================================
+
+The application already stores:
+
+* receivedBy
+* paidBy
+* paymentMode
+
+These records must automatically appear in the relevant staff ledger.
+
+Do not duplicate records.
+
+Create derived views from existing transactions.
+
+Example:
+
+receivedBy = Rahul
+
+Appears in Rahul's ledger.
+
+paidBy = Rahul
+
+Appears in Rahul's ledger.
+
+==================================================
+MONEY TRAIL ACCOUNTING
+======================
+
+Track complete money flow.
+
+Examples:
+
+Owner → Staff
+
+Staff → Customer
+
+Customer → Staff
+
+Staff → Vendor
+
+Staff → Owner
+
+The owner must always know where money currently resides.
+
+==================================================
+BALANCE CALCULATION
+===================
+
+Calculate:
+
+Current Money With Staff
+
+Formula:
+
+Collections Received By Staff
+
+* Advances Given To Staff
+
+* Owner Transfers To Staff
+
+- Expenses Paid By Staff
+
+- Settlements Returned To Owner
+
+- Salary Paid From Staff-Held Funds
+
+Result:
+
+Positive:
+Money currently held by staff.
+
+Negative:
+Company owes money to staff.
+
+==================================================
+SALARY MANAGEMENT
+=================
+
+Support:
+
+* Monthly salary
+* Partial salary payments
+* Multiple salary payments
+* Salary advances
+* Salary settlements
+
+Example:
+
+Salary = ₹20,000
+
+Paid:
+₹8,000
+₹7,000
+
+Pending:
+₹5,000
+
+Monthly history required.
+
+==================================================
+STAFF EXPENSES
+==============
+
+Support:
+
+* Petrol
+* Fuel
+* Delivery
+* Transport
+* Labour
+* Loading
+* Unloading
+* Food
+* Accommodation
+* Purchases
+* Miscellaneous
+
+Fields:
+
+* date
+* amount
+* purpose
+* paidTo
+* mode
+* notes
+* attachment
+
+==================================================
+NOTES & ATTACHMENTS
+===================
+
+For every financial transaction support:
+
+* Notes
+* Attachments
+* Reference Number
+
+Examples:
+
+* UPI Screenshot
+* Receipt Image
+* Petrol Bill
+* Salary Voucher
+* Bank Reference
+
+==================================================
+TRANSACTION HISTORY
+===================
+
+Show ledger-style history.
+
+Columns:
+
+Date
+Description
+Credit
+Debit
+Running Balance
+
+Filters:
+
+* Date Range
+* Month
+* Transaction Type
+* Payment Mode
+
+Search support required.
+
+==================================================
+REPORTS
+=======
+
+Generate:
+
+* Staff Ledger Report
+* Salary Report
+* Staff Balance Report
+* Advance Report
+* Expense Report
+* Collection Report
+* Reimbursement Report
+
+==================================================
+AUDIT TRAIL
+===========
+
+Every record must store:
+
+* createdAt
+* updatedAt
+* createdBy
+
+Avoid hard deletion.
+
+Prefer soft delete.
+
+Maintain history integrity.
+
+==================================================
+PERFORMANCE REQUIREMENTS
+========================
+
+* Offline-first compatible
+* IndexedDB support
+* Optimistic updates
+* Queue synchronization support
+* Efficient queries
+* No duplicate writes
+* No duplicate listeners
+
+==================================================
+MIGRATION REQUIREMENTS
+======================
+
+Audit all existing staff references.
+
+Replace name-based relationships with:
+
+staffId
+
+Create migration strategy if necessary.
+
+Existing records must remain linked.
+
+Staff name changes must never break historical relationships.
+
+==================================================
+SUCCESS CRITERIA
+================
+
+At any moment the owner should be able to answer:
+
+* How much money is currently with Rahul?
+* How much salary is pending?
+* How much salary was paid this month?
+* What payments did Rahul collect?
+* What expenses did Rahul make?
+* How much advance is still outstanding?
+* What is the complete money trail for Rahul?
+
+Implement with production-grade architecture, normalized relationships, strong data integrity, and future scalability.

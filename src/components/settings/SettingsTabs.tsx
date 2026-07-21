@@ -1,0 +1,1391 @@
+import React, { useState } from 'react';
+import { 
+    User, Store, MapPin, Phone, Hash, Globe, 
+    List, Plus, Trash2, Shield, Lock, Smartphone, 
+    Sun, Moon, Bell, IndianRupee, Mail, Key, Palette, Image as ImageIcon, FileSignature, MessageSquare,
+    Zap, Home, Calendar, LayoutList
+} from 'lucide-react';
+import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'; 
+import { SettingsSection, SettingInput, LoadingButton } from './SettingsCommon';
+import { GSTService } from '../../services/gstApi';
+import { useUI } from '../../context/UIContext';
+import { useAuth } from '../../context/AuthContext';
+import { getPinStrength, getPasswordStrength } from '../../utils/passwordStrength';
+import { auth } from '../../config/firebase'; 
+import { ThemePicker } from './ThemePicker';
+
+export const ProfileTab = ({ formData, setFormData, userEmail }: any) => {
+    const { showToast } = useUI();
+    const [gstFetching, setGstFetching] = useState(false);
+    const [gstStatus, setGstStatus]     = useState<string>('');
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+    // FIX: already uses functional updater — correct pattern
+    const updateProfile = (patch: any) => {
+        setFormData((prev: any) => ({
+            ...prev,
+            profile: { ...(prev.profile || {}), ...patch }
+        }));
+    };
+
+    const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Check file size (max 500KB)
+        if (file.size > 500 * 1024) {
+            showToast('Logo size must be less than 500KB', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64 = event.target?.result as string;
+            updateProfile({ logo_base64: base64 });
+            showToast('Logo uploaded successfully', 'success');
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleFetchGST = async () => {
+        const gstin = formData.profile?.gstin;
+        if (!gstin || gstin.length !== 15) return showToast('Invalid GSTIN', 'error');
+        setGstFetching(true);
+        setGstStatus('');
+        try {
+            const data = await GSTService.fetchDetails(gstin);
+            if (data) {
+                // tradeName = business/shop name; legalName = registered owner name
+                const firmName  = data.tradeName || data.legalName || formData.profile?.firm_name;
+                const ownerName = data.legalName || formData.profile?.owner_name;
+                const city      = (data as any).city || formData.profile?.city;
+                updateProfile({
+                    firm_name : firmName,
+                    owner_name: ownerName,
+                    address   : data.address || formData.profile?.address,
+                    state     : data.state   || formData.profile?.state,
+                    ...(city ? { city } : {}),
+                });
+                setGstStatus(data.status || '');
+                showToast('Business Details Fetched', 'success');
+            }
+        } catch (e) {
+            showToast('Failed to fetch GST details', 'error');
+        } finally {
+            setGstFetching(false);
+        }
+    };
+
+    return (
+        <div className="space-y-4 animate-in slide-in-from-right duration-300">
+            <SettingsSection title="Business Identity" icon={Store}>
+                <div className="mb-4">
+                    <SettingInput 
+                        label="Registered Email" 
+                        value={userEmail || ''} 
+                        onChange={() => {}} 
+                        icon={Mail} 
+                        disabled={true} 
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <SettingInput 
+                            label="GSTIN (Optional)" 
+                            value={formData.profile?.gstin || ''} 
+                            onChange={(v: string) => { updateProfile({ gstin: v.toUpperCase() }); setGstStatus(''); }} 
+                            placeholder="22AAAAA0000A1Z5"
+                            icon={Hash}
+                        />
+                        <button 
+                            type="button"
+                            onClick={handleFetchGST}
+                            disabled={gstFetching || !formData.profile?.gstin}
+                            className="absolute right-2 top-8 text-app-sm font-bold bg-blue-100 text-blue-600 px-2 py-1 rounded-lg disabled:opacity-50"
+                        >
+                            {gstFetching ? 'Fetching...' : 'Auto-Fill'}
+                        </button>
+                        {/* GST Status badge */}
+                        {gstStatus && (
+                            <div className="flex items-center gap-2 mt-1.5">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-app-sm font-black"
+                                    style={
+                                        gstStatus.toLowerCase() === 'active'
+                                            ? { background: 'var(--col-emerald-12)', color: "var(--col-success)", border: '1px solid var(--col-emerald-25)' }
+                                            : { background: 'var(--col-danger-15)',  color: "var(--col-danger)", border: '1px solid var(--col-danger-22)' }
+                                    }>
+                                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                                        style={{ background: gstStatus.toLowerCase() === 'active' ? "var(--col-success)" : "var(--col-danger)" }} />
+                                    GST: {gstStatus}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                    <SettingInput label="Business Name" value={formData.profile?.firm_name || ''} onChange={(v: string) => updateProfile({ firm_name: v })} icon={Store} placeholder="My Shop Name" />
+                    <SettingInput label="Owner Name" value={formData.profile?.owner_name || ''} onChange={(v: string) => updateProfile({ owner_name: v })} icon={User} placeholder="Your Name" />
+                    <SettingInput label="Phone Number" value={formData.profile?.contact || ''} onChange={(v: string) => updateProfile({ contact: v })} icon={Phone} placeholder="+91 9876543210" />
+                </div>
+                <SettingInput label="Email" value={formData.profile?.email || ''} onChange={(v: string) => updateProfile({ email: v })} icon={Mail} placeholder="business@example.com" />
+                <SettingInput label="Business Address" value={formData.profile?.address || ''} onChange={(v: string) => updateProfile({ address: v })} icon={MapPin} placeholder="Full Address" />
+                <SettingInput label="Website / Link" value={formData.profile?.website || ''} onChange={(v: string) => updateProfile({ website: v })} icon={Globe} placeholder="https://myshop.com" />
+            </SettingsSection>
+
+            <SettingsSection title="Invoice & Printing Settings" icon={FileSignature}>
+                {/* Business Logo Upload */}
+                <div className="mb-4">
+                    <label className="text-xs font-bold text-[var(--text-secondary)] block mb-2">Business Logo (Max 500KB)</label>
+                    <div className="flex gap-3 items-center">
+                        {formData.profile?.logo_base64 && (
+                            <img 
+                                src={formData.profile.logo_base64} 
+                                alt="Logo Preview" 
+                                className="w-20 h-20 object-contain rounded-lg p-2"
+                            />
+                        )}
+                        <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-colors active:scale-95"
+                        >
+                            <ImageIcon className="inline mr-2" size={16} />
+                            {formData.profile?.logo_base64 ? 'Change Logo' : 'Upload Logo'}
+                        </button>
+                        {formData.profile?.logo_base64 && (
+                            <button
+                                type="button"
+                                onClick={() => updateProfile({ logo_base64: undefined })}
+                                className="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg text-sm font-bold transition-colors"
+                            >
+                                Remove
+                            </button>
+                        )}
+                    </div>
+                    <input 
+                        ref={fileInputRef}
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleLogoUpload}
+                        className="hidden"
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <SettingInput 
+                        label="Authorized Signatory Name" 
+                        value={formData.profile?.authorized_signatory || ''} 
+                        onChange={(v: string) => updateProfile({ authorized_signatory: v })} 
+                        icon={FileSignature}
+                        placeholder="Name of person authorized to sign"
+                    />
+                    <SettingInput 
+                        label="Business Email (For Invoices)" 
+                        value={formData.profile?.business_email || ''} 
+                        onChange={(v: string) => updateProfile({ business_email: v })} 
+                        icon={Mail}
+                        placeholder="contact@business.com"
+                    />
+                </div>
+
+                <div className="mt-4 p-3 bg-[var(--col-info-08)] rounded-lg border border-[var(--col-info-25)]">
+                    <p className="text-xs text-col-info-light">
+                        Authorized Signatory Name and Business Email set here will override any template defaults on all generated invoices and receipts. Leave blank to use the template default.
+                    </p>
+                </div>
+            </SettingsSection>
+        </div>
+    );
+};
+
+export const GeneralTab = ({ formData, setFormData }: any) => {
+    // FIX: use functional updater (prev =>) instead of stale closure spread
+    const updatePreferences = (patch: any) => {
+        setFormData((prev: any) => ({
+            ...prev,
+            preferences: {
+                ...(prev.preferences || {}),
+                ...patch,
+            },
+        }));
+    };
+
+    const updateAutomation = (patch: any) => {
+        setFormData((prev: any) => ({
+            ...prev,
+            automation: {
+                ...(prev.automation || {}),
+                ...patch,
+            },
+        }));
+    };
+
+    return (
+        <div className="space-y-4 animate-in slide-in-from-right duration-300">
+            <SettingsSection title="App Preferences" icon={Store}>
+                <div className="flex items-center justify-between p-2 border-b pb-4" style={{ borderColor: 'var(--separator)' }}>
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg" style={{ background: formData.preferences?.dark_mode ? 'var(--col-violet-15)' : 'rgba(251,191,36,0.15)' }}>
+                            {formData.preferences?.dark_mode
+                                ? <Moon size={20} style={{ color: "var(--col-violet)" }} />
+                                : <Sun size={20} style={{ color: "var(--col-warning)" }} />
+                            }
+                        </div>
+                        <div>
+                            <div className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>Display Mode</div>
+                            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                                {formData.preferences?.dark_mode ? 'Dark mode active' : 'Light mode active'}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex p-1 rounded-2xl gap-1" style={{ background: 'var(--rgba-white-07)', border: '1px solid var(--glass-border)' }}>
+                        <button
+                            type="button"
+                            onClick={() => updatePreferences({ dark_mode: false })}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all active:scale-95"
+                            style={!formData.preferences?.dark_mode
+                                ? { background:  'var(--rgba-white-92)', color: "var(--col-surface-dark2)", boxShadow: '0 1px 6px var(--rgba-black-18)' }
+                                : { color: 'var(--text-muted)' }
+                            }
+                        >
+                            <Sun size={13} /> Light
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => updatePreferences({ dark_mode: true })}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all active:scale-95"
+                            style={formData.preferences?.dark_mode
+                                ? { background: 'var(--col-violet-20)', color: "var(--col-violet)", boxShadow: '0 1px 6px var(--rgba-black-35)', border: '1px solid var(--col-violet-35)' }
+                                : { color: 'var(--text-muted)' }
+                            }
+                        >
+                            <Moon size={13} /> Dark
+                        </button>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4 pt-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-warning-15)] text-col-warning"><Bell size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Notifications</div>
+                            <div className="text-xs text-[var(--text-muted)]">Payment reminders & alerts</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            className="sr-only peer" 
+                            checked={!!formData.notifications_enabled} 
+                            onChange={e => { const v = e.target.checked; setFormData((prev: any) => ({...prev, notifications_enabled: v})); }} 
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                    </label>
+                </div>
+
+                {/* ── Auto WhatsApp Reminder ─────────────────────────────── */}
+                <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4 pt-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[rgba(34,197,94,0.15)] text-col-green-light">
+                            <MessageSquare size={20}/>
+                        </div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Auto WhatsApp Reminders</div>
+                            <div className="text-xs text-[var(--text-muted)]">Daily alert for overdue customers</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={!!formData.automation?.auto_reminder_enabled}
+                            onChange={e => updateAutomation({ auto_reminder_enabled: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                    </label>
+                </div>
+
+                {/* Reminder period selector — only visible when reminder is enabled */}
+                {!!formData.automation?.auto_reminder_enabled && (
+                    <div className="px-2 pt-3 pb-1">
+                        <label className="block text-xs font-bold text-[var(--text-muted)] mb-2">
+                            Reminder Period (days overdue)
+                        </label>
+                        <div className="flex gap-2 flex-wrap">
+                            {[7, 10, 15, 21, 30].map(d => (
+                                <button
+                                    key={d}
+                                    type="button"
+                                    onClick={() => updateAutomation({ auto_reminder_days: d })}
+                                    className="px-4 py-2 rounded-xl text-sm font-black transition-all active:scale-95"
+                                    style={
+                                        (formData.automation?.auto_reminder_days ?? 15) === d
+                                            ? { background: 'rgba(34,197,94,0.2)', border: '1.5px solid rgba(74,222,128,0.5)', color: "var(--col-green-light)" }
+                                            : { background: 'var(--rgba-white-05)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }
+                                    }>
+                                    {d}d
+                                </button>
+                            ))}
+                        </div>
+                        <p className="text-xs text-[var(--text-muted)] mt-2">
+                            Notify daily if any customer has dues pending for this many days or more.
+                        </p>
+                    </div>
+                )}
+
+                <div className="pt-4 px-2">
+                    <SettingInput
+                        label="Currency Symbol"
+                        value={formData.currency_symbol || '₹'}
+                        onChange={(v: string) => setFormData((prev: any) => ({...prev, currency_symbol: v}))}
+                        icon={IndianRupee}
+                        placeholder="₹"
+                    />
+                </div>
+
+                {/* GST View Toggle */}
+                <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4 pt-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-info-15)] text-col-info"><Hash size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">GST View</div>
+                            <div className="text-xs text-[var(--text-muted)]">Show GSTIN, CGST/SGST across app</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            className="sr-only peer" 
+                            checked={!!formData.automation?.auto_calculate_gst} 
+                            onChange={e => updateAutomation({ auto_calculate_gst: e.target.checked })} 
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                    </label>
+                </div>
+
+                {/* Auto Payment Distribution Toggle */}
+                <div className="flex items-center justify-between p-2 border-b border-white/07 pb-4 pt-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-emerald-15)] text-col-success"><IndianRupee size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Auto Payment Distribution</div>
+                            <div className="text-xs text-[var(--text-muted)]">Distribute unlinked payments to orders (FIFO)</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.automation?.auto_distribute_payments !== false}
+                            onChange={e => updateAutomation({ auto_distribute_payments: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                    </label>
+                </div>
+
+                {/* ── Dynamic Navigation ─────────────────────────────────── */}
+                <div className="flex items-center justify-between p-2 pt-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-accent-15)] text-col-indigo">
+                            <Smartphone size={20}/>
+                        </div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Dynamic Navigation</div>
+                            <div className="text-xs text-[var(--text-muted)]">Auto-hide bottom bar on detail pages</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.preferences?.dynamic_nav !== false}
+                            onChange={e => updatePreferences({ dynamic_nav: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                    </label>
+                </div>
+            </SettingsSection>
+
+            {/* ── Auto-fill from Last Order ─────────────────────────────────── */}
+            <SettingsSection title="Order Auto-fill" icon={Zap}>
+                {/* Main toggle */}
+                <div className="flex items-center justify-between p-2 pb-4" style={{ borderBottom: '1px solid var(--glass-border)' }}>
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-violet-15)] text-col-violet"><Zap size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Auto-fill from Last Order</div>
+                            <div className="text-xs text-[var(--text-muted)]">Pre-fill item details from most recent sale/purchase</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.automation?.last_order_autofill !== false}
+                            onChange={e => updateAutomation({ last_order_autofill: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-500"></div>
+                    </label>
+                </div>
+
+                {/* Field-level checkboxes — shown only when toggle is ON */}
+                {formData.automation?.last_order_autofill !== false && (
+                    <div className="px-2 pt-3 pb-1 space-y-1">
+                        <p className="text-xs font-bold text-[var(--text-muted)] mb-3 uppercase tracking-wider">Fields to auto-fill</p>
+                        {([
+                            { key: 'rate',       label: 'Sale / Purchase Rate', desc: 'Use rate from the last order' },
+                            { key: 'gst_percent', label: 'GST %',               desc: 'Use tax rate from the last order' },
+                            { key: 'unit',       label: 'Unit',                 desc: 'Use unit (Bags, Kg…) from the last order' },
+                            { key: 'quantity',   label: 'Quantity',             desc: 'Pre-fill quantity from the last order' },
+                        ] as { key: keyof import('../../types').LastOrderAutofillFields; label: string; desc: string }[]).map(({ key, label, desc }) => {
+                            const fields = formData.automation?.last_order_autofill_fields || {};
+                            const checked = fields[key] !== false;
+                            return (
+                                <label
+                                    key={key}
+                                    className="flex items-center gap-3 p-2.5 rounded-[12px] cursor-pointer active:bg-white/5 transition-colors"
+                                    style={{ border: '1px solid var(--glass-border)', background: 'var(--rgba-white-02)' }}
+                                >
+                                    <div
+                                        className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 transition-all"
+                                        style={{
+                                            background: checked ? 'var(--col-violet-35)' : 'var(--rgba-white-06)',
+                                            border: `1.5px solid ${checked ? 'var(--col-violet-60)' :  'var(--rgba-white-12)'}`,
+                                        }}
+                                    >
+                                        {checked && (
+                                            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                                <path d="M1 4L3.5 6.5L9 1" stroke="var(--col-violet)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        )}
+                                    </div>
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only"
+                                        checked={checked}
+                                        onChange={e => updateAutomation({
+                                            last_order_autofill_fields: {
+                                                ...(formData.automation?.last_order_autofill_fields || {}),
+                                                [key]: e.target.checked,
+                                            },
+                                        })}
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-xs font-bold text-[var(--text-secondary)]">{label}</p>
+                                        <p className="text-app-md text-[var(--text-muted)] mt-0.5">{desc}</p>
+                                    </div>
+                                </label>
+                            );
+                        })}
+                        <p className="text-app-md text-[var(--text-muted)] mt-2 px-1 leading-relaxed">
+                            Overrides the inventory master values with the most recent transaction for that item.
+                        </p>
+                    </div>
+                )}
+            </SettingsSection>
+
+            {/* ── Privacy: Hide Amounts ──────────────────────────────────────── */}
+            <SettingsSection title="Privacy" icon={Shield}>
+                <div className="flex items-center justify-between p-2">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-accent-15)] text-col-indigo">
+                            <Moon size={20}/>
+                        </div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Hide Amounts on Dashboard</div>
+                            <div className="text-xs text-[var(--text-muted)]">Replace monetary values with ••••</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={!!formData.preferences?.hide_amounts}
+                            onChange={e => updatePreferences({ hide_amounts: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                    </label>
+                </div>
+            </SettingsSection>
+
+            {/* ── Invoice Print Format ───────────────────────────────────────── */}
+            <SettingsSection title="Invoice Print Format" icon={List}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        Default paper size used when printing invoices
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                        {([
+                            { value: 'standard',  label: 'A4 / Letter'  },
+                            { value: 'thermal58', label: '58 mm Thermal' },
+                            { value: 'thermal80', label: '80 mm Thermal' },
+                        ] as { value: string; label: string }[]).map(opt => {
+                            const active = (formData.preferences?.print_format ?? 'standard') === opt.value;
+                            return (
+                                <button
+                                    key={opt.value}
+                                    onClick={() => updatePreferences({ print_format: opt.value })}
+                                    className="py-2.5 rounded-xl font-bold text-xs active:scale-95 transition-all"
+                                    style={{
+                                        background: active ? 'var(--col-accent-25)' : 'var(--rgba-white-05)',
+                                        border: `1px solid ${active ? 'var(--col-accent-50)' : 'var(--rgba-white-08)'}`,
+                                        color: active ? "var(--col-indigo-light)" : 'var(--text-muted)',
+                                    }}
+                                >
+                                    {opt.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </SettingsSection>
+
+            {/* ── Default Payment Mode ──────────────────────────────────────── */}
+            <SettingsSection title="Default Payment Mode" icon={Smartphone}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        Pre-selected payment mode when adding new transactions
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        {(['Cash', 'UPI', 'Bank Transfer', 'Cheque', 'Card', 'Credit'] as string[]).map(mode => {
+                            const active = (formData.preferences?.default_payment_mode ?? 'Cash') === mode;
+                            return (
+                                <button
+                                    key={mode}
+                                    onClick={() => updatePreferences({ default_payment_mode: mode })}
+                                    className="px-3 py-1.5 rounded-xl font-bold text-xs active:scale-95 transition-all"
+                                    style={{
+                                        background: active ? 'var(--col-accent-25)' : 'var(--rgba-white-05)',
+                                        border: `1px solid ${active ? 'var(--col-accent-50)' : 'var(--rgba-white-08)'}`,
+                                        color: active ? "var(--col-indigo-light)" : 'var(--text-muted)',
+                                    }}
+                                >
+                                    {mode}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </SettingsSection>
+
+            {/* ── Low Stock Threshold ───────────────────────────────────────── */}
+            <SettingsSection title="Low Stock Threshold" icon={Bell}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        Warn when inventory quantity falls at or below this number
+                    </p>
+                    <div className="flex gap-2 items-center">
+                        <input
+                            type="number"
+                            min={0}
+                            max={9999}
+                            value={formData.preferences?.low_stock_threshold ?? 5}
+                            onChange={e => updatePreferences({ low_stock_threshold: Math.max(0, parseInt(e.target.value) || 0) })}
+                            className="w-24 py-2 px-3 rounded-xl font-black text-sm text-white outline-none text-center"
+                            style={{ background: 'var(--rgba-white-07)', border: '1px solid var(--glass-border)' }}
+                        />
+                        <span className="text-xs text-[var(--text-muted)]">units</span>
+                    </div>
+                </div>
+            </SettingsSection>
+
+            {/* ── Default Filter Period ──────────────────────────────── */}
+            <SettingsSection title="Default Date Filter" icon={List}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        Default date range shown in Expenses, Transactions and Reports
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                        {([
+                            { value: 'all',                   label: 'All Time'           },
+                            { value: 'current_month',         label: 'Current Month'      },
+                            { value: 'current_year',          label: 'Current Year'       },
+                            { value: 'current_business_year', label: 'Business Year'      },
+                        ] as const).map(opt => {
+                            const active = (formData.automation?.default_filter_period ?? 'all') === opt.value;
+                            return (
+                                <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => updateAutomation({ default_filter_period: opt.value })}
+                                    className="px-3 py-2.5 rounded-xl text-xs font-black transition-all active:scale-95 text-left"
+                                    style={
+                                        active
+                                            ? { background: 'var(--col-accent-25)', border: '1.5px solid var(--col-accent-50)', color: "var(--col-indigo-light)" }
+                                            : { background: 'var(--rgba-white-05)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }
+                                    }>
+                                    {opt.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    <p className="text-app-sm text-[var(--text-muted)] mt-2">
+                        "Business Year" uses your Financial Year Start from Firm Profile (defaults to April).
+                    </p>
+                </div>
+            </SettingsSection>
+
+            {/* ── Haptic Feedback ───────────────────────────────────────────── */}
+            <SettingsSection title="Haptic Feedback" icon={Zap}>
+                <div className="flex items-center justify-between p-2">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-warning-15)] text-col-warning"><Zap size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Vibration on Actions</div>
+                            <div className="text-xs text-[var(--text-muted)]">Tactile feedback on taps and confirmations</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.preferences?.haptics_enabled !== false}
+                            onChange={e => {
+                                const v = e.target.checked;
+                                updatePreferences({ haptics_enabled: v });
+                                localStorage.setItem('haptics_enabled', v ? 'true' : 'false');
+                            }}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                    </label>
+                </div>
+            </SettingsSection>
+
+            {/* ── Confirm Before Delete ─────────────────────────────────────── */}
+            <SettingsSection title="Delete Confirmation" icon={Shield}>
+                <div className="flex items-center justify-between p-2">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-danger-15)] text-col-danger"><Shield size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Confirm Before Delete</div>
+                            <div className="text-xs text-[var(--text-muted)]">Show extra confirmation dialog on every delete</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.preferences?.confirm_before_delete !== false}
+                            onChange={e => updatePreferences({ confirm_before_delete: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+                    </label>
+                </div>
+            </SettingsSection>
+
+            {/* ── Default Landing Tab ───────────────────────────────────────── */}
+            <SettingsSection title="Default Landing Tab" icon={Home}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        Which tab opens when you launch the app
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                        {([
+                            { value: 'dashboard',    label: 'Dashboard'    },
+                            { value: 'ledger',       label: 'Ledger'       },
+                            { value: 'transactions', label: 'Transactions' },
+                            { value: 'inventory',    label: 'Inventory'    },
+                            { value: 'parties',      label: 'Parties'      },
+                            { value: 'expenses',     label: 'Expenses'     },
+                        ] as const).map(opt => {
+                            const active = (formData.preferences?.default_tab ?? 'dashboard') === opt.value;
+                            return (
+                                <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => updatePreferences({ default_tab: opt.value })}
+                                    className="py-2 rounded-xl text-xs font-black transition-all active:scale-95"
+                                    style={
+                                        active
+                                            ? { background: 'var(--col-accent-25)', border: '1.5px solid var(--col-accent-50)', color: "var(--col-indigo-light)" }
+                                            : { background: 'var(--rgba-white-05)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }
+                                    }>
+                                    {opt.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </SettingsSection>
+
+            {/* ── Compact List View ─────────────────────────────────────────── */}
+            <SettingsSection title="List Density" icon={LayoutList}>
+                <div className="flex items-center justify-between p-2">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-accent-15)] text-col-indigo"><LayoutList size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Compact View</div>
+                            <div className="text-xs text-[var(--text-muted)]">Smaller list items to show more on screen</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={!!formData.preferences?.compact_view}
+                            onChange={e => updatePreferences({ compact_view: e.target.checked })}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                    </label>
+                </div>
+            </SettingsSection>
+
+            {/* ── Date Display Format ───────────────────────────────────────── */}
+            <SettingsSection title="Date Display Format" icon={Calendar}>
+                <div className="px-2 py-1">
+                    <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                        How dates appear across the app
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                        {([
+                            { value: 'DD/MM/YYYY',   label: 'DD/MM/YYYY'   },
+                            { value: 'DD-MMM-YYYY',  label: 'DD-MMM-YYYY'  },
+                            { value: 'DD/MM/YY',     label: 'DD/MM/YY'     },
+                        ] as const).map(opt => {
+                            const active = (formData.preferences?.date_format ?? 'DD/MM/YYYY') === opt.value;
+                            return (
+                                <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => updatePreferences({ date_format: opt.value })}
+                                    className="py-2.5 rounded-xl text-xs font-black transition-all active:scale-95"
+                                    style={
+                                        active
+                                            ? { background: 'var(--col-accent-25)', border: '1.5px solid var(--col-accent-50)', color: "var(--col-indigo-light)" }
+                                            : { background: 'var(--rgba-white-05)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)' }
+                                    }>
+                                    {opt.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </SettingsSection>
+
+            <SettingsSection title="Theme" icon={Palette}>
+                <div className="px-2">
+                    <ThemePicker
+                        value={formData.preferences?.theme}
+                        onChange={(id) => updatePreferences({ theme: id })}
+                        custom={formData.preferences?.custom_primary_hsl}
+                        onChangeCustom={(hsl) => updatePreferences({ theme: 'custom', custom_primary_hsl: hsl })}
+                    />
+                    <p className="mt-3 text-app-sm text-slate-400 italic">
+                        Tip: Choose a heartwarming color, then tap <span className="font-bold">Save</span>.
+                    </p>
+                </div>
+            </SettingsSection>
+        </div>
+    );
+};
+
+export const ListsTab = ({ formData, setFormData }: any) => {
+    const { confirm, showToast } = useUI();
+    const [newItem, setNewItem] = useState('');
+    const [activeList, setActiveList] = useState('payment_modes');
+
+    const listTypes = [
+        { id: 'payment_modes', label: 'Payment Modes' },
+        { id: 'expense_types', label: 'Expense Categories' },
+        { id: 'inventory_units', label: 'Item Units' },
+        { id: 'vehicle_types', label: 'Vehicle Types' },
+        { id: 'staff_members', label: 'Staff Members' },
+        { id: 'purposes', label: 'Payment Purposes' },
+        { id: 'charge_types', label: 'Handling Charges' },
+    ];
+
+    const handleAdd = () => {
+        if (!newItem.trim()) return;
+        const trimmed = newItem.trim();
+        // FIX: functional updater to avoid stale closure
+        setFormData((prev: any) => {
+            const current = prev.custom_lists?.[activeList] || [];
+            return {
+                ...prev,
+                custom_lists: {
+                    ...prev.custom_lists,
+                    [activeList]: [...current, trimmed]
+                }
+            };
+        });
+        setNewItem('');
+        showToast('Item added', 'success');
+    };
+
+    const handleRemove = async (idx: number) => {
+        const confirmed = await confirm('Delete Item', "Are you sure you want to delete this item?");
+        if (!confirmed) return;
+
+        // FIX: functional updater to avoid stale closure
+        setFormData((prev: any) => {
+            const current = prev.custom_lists?.[activeList] || [];
+            return {
+                ...prev,
+                custom_lists: {
+                    ...prev.custom_lists,
+                    [activeList]: current.filter((_: any, i: number) => i !== idx)
+                }
+            };
+        });
+        showToast('Item deleted', 'success');
+    };
+
+    return (
+        <div className="space-y-4 animate-in slide-in-from-right duration-300">
+            <div className="flex overflow-x-auto pb-2 gap-2 scrollbar-hide">
+                {listTypes.map(l => (
+                    <button
+                        key={l.id}
+                        onClick={() => setActiveList(l.id)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors ${activeList === l.id ? 'bg-violet-600/30 text-violet-300 border border-violet-500/30' : 'border border-white/10 text-slate-400'}`}
+                    >
+                        {l.label}
+                    </button>
+                ))}
+            </div>
+
+            <SettingsSection title={`Manage ${listTypes.find(l => l.id === activeList)?.label}`} icon={List}>
+                <div className="flex gap-2 mb-4">
+                    <input 
+                        className="flex-1  border border-white/12 rounded-xl px-4 text-sm font-bold outline-none"
+                        placeholder="Add new item..."
+                        value={newItem}
+                        onChange={e => setNewItem(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && handleAdd()}
+                    />
+                    <button onClick={handleAdd} className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700"><Plus size={20}/></button>
+                </div>
+
+                <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                    {(formData.custom_lists?.[activeList] || []).map((item: string, idx: number) => (
+                        <div key={idx} className="flex justify-between items-center p-3 rounded-xl border border-white/10 group">
+                            <span className="font-bold text-sm text-[var(--text-secondary)]">{item}</span>
+                            <button onClick={() => handleRemove(idx)} className="text-slate-400 hover:text-red-500 opacity-100 transition-opacity"><Trash2 size={16}/></button>
+                        </div>
+                    ))}
+                    {(formData.custom_lists?.[activeList] || []).length === 0 && (
+                        <div className="text-center py-8 text-slate-400 text-xs italic">No items in this list yet.</div>
+                    )}
+                </div>
+            </SettingsSection>
+        </div>
+    );
+};
+
+export const SecurityTab = ({ formData, setFormData, user, onSave }: any) => {
+    const { showToast } = useUI();
+    const { sendPasswordReset } = useAuth();
+    const isEmailPasswordUser = !!(user?.providerData?.some((p: any) => p.providerId === 'password'));
+    const [passwordLoading, setPasswordLoading] = useState(false);
+    const [showEditPwInput, setShowEditPwInput] = useState(false);
+    const [newEditPw, setNewEditPw] = useState('');
+    const [confirmEditPw, setConfirmEditPw] = useState('');
+    const [currentEditPwInput, setCurrentEditPwInput] = useState('');
+    const [showUpgradePwInput, setShowUpgradePwInput] = useState(false);
+    const [currentUpgradePw, setCurrentUpgradePw] = useState('');
+    const [newUpgradePw, setNewUpgradePw] = useState('');
+    const [confirmUpgradePw, setConfirmUpgradePw] = useState('');
+    const [showChangePinUi, setShowChangePinUi] = useState(false);
+    const [currentAppPin, setCurrentAppPin] = useState('');
+    const [newAppPin, setNewAppPin] = useState('');
+    const [confirmAppPin, setConfirmAppPin] = useState('');
+    const [forgotAppPinStep, setForgotAppPinStep] = useState<'idle' | 'sent'>('idle');
+    const [forgotEditPwStep, setForgotEditPwStep] = useState<'idle' | 'sent'>('idle');
+    const [forgotLoading, setForgotLoading] = useState(false);
+
+    const updateSecurity = (field: string, value: any) => {
+        setFormData((prev: any) => ({
+            ...prev,
+            security: {
+                ...(prev.security || {}),
+                [field]: value
+            }
+        }));
+    };
+
+    const updateEditPassword = (patch: any) => {
+        setFormData((prev: any) => ({
+            ...prev,
+            edit_password: {
+                enabled: true,
+                password: '1234',
+                ...(prev.edit_password || {}),
+                ...patch,
+            }
+        }));
+    };
+
+    // ── Immediate save helper ─────────────────────────────────────────────────
+    // Computes new settings via patchFn, updates local formData, and immediately
+    // persists to Firebase via onSave — removing the need for a separate global
+    // "Save" button click on the Security tab.
+    const saveNow = async (patchFn: (prev: any) => any) => {
+        const newSettings = patchFn(formData);
+        setFormData(newSettings);
+        if (!onSave) return;
+        try {
+            await onSave(newSettings);
+        } catch {
+            showToast('Save failed. Try again.', 'error');
+        }
+    };
+
+    const handleSaveUpgradePassword = async () => {
+        if (!currentUpgradePw) return showToast('Enter your current password first', 'error');
+        if (!newUpgradePw) return showToast('New password cannot be empty', 'error');
+        if (newUpgradePw.length < 6) return showToast('Password too short (min 6 chars)', 'error');
+        if (newUpgradePw !== confirmUpgradePw) return showToast('Passwords do not match', 'error');
+        if (!auth.currentUser || !auth.currentUser.email) return showToast('Not logged in', 'error');
+        setPasswordLoading(true);
+        try {
+            const credential = EmailAuthProvider.credential(auth.currentUser.email, currentUpgradePw);
+            await reauthenticateWithCredential(auth.currentUser, credential);
+            await updatePassword(auth.currentUser, newUpgradePw);
+            showToast('Login password updated successfully', 'success');
+            setCurrentUpgradePw('');
+            setNewUpgradePw('');
+            setConfirmUpgradePw('');
+            setShowUpgradePwInput(false);
+        } catch (error: any) {
+            console.error(error);
+            if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                showToast('Current password is incorrect', 'error');
+            } else {
+                showToast(error.message || 'Failed to update password', 'error');
+            }
+        } finally {
+            setPasswordLoading(false);
+        }
+    };
+
+    const handleSaveAppPin = async () => {
+        const existingPin = formData.security?.pin;
+        if (existingPin && forgotAppPinStep !== 'sent') {
+            if (!currentAppPin) return showToast('Enter your current PIN first', 'error');
+            if (currentAppPin !== existingPin) return showToast('Current PIN is incorrect', 'error');
+        }
+        if (!newAppPin || newAppPin.length !== 4) return showToast('PIN must be exactly 4 digits', 'error');
+        if (newAppPin !== confirmAppPin) return showToast('PINs do not match — please re-enter', 'error');
+        await saveNow((prev: any) => ({
+            ...prev,
+            security: { ...(prev.security || {}), pin: newAppPin }
+        }));
+        setCurrentAppPin('');
+        setNewAppPin('');
+        setConfirmAppPin('');
+        setShowChangePinUi(false);
+        setForgotAppPinStep('idle');
+        showToast('App lock PIN saved', 'success');
+    };
+
+    const handleSaveEditPassword = async () => {
+        if (forgotEditPwStep !== 'sent') {
+            if (!currentEditPwInput) return showToast('Enter your current password first', 'error');
+            const existingPw = formData.edit_password?.password || '1234';
+            if (currentEditPwInput !== existingPw) return showToast('Current password is incorrect', 'error');
+        }
+        if (!newEditPw) return showToast('New password cannot be empty', 'error');
+        if (newEditPw !== confirmEditPw) return showToast('Passwords do not match', 'error');
+        await saveNow((prev: any) => ({
+            ...prev,
+            edit_password: {
+                enabled: true,
+                password: '1234',
+                ...(prev.edit_password || {}),
+                password: newEditPw,
+            }
+        }));
+        setCurrentEditPwInput('');
+        setNewEditPw('');
+        setConfirmEditPw('');
+        setShowEditPwInput(false);
+        setForgotEditPwStep('idle');
+        showToast('Data edit password saved', 'success');
+    };
+
+    const handleForgotAppPin = async () => {
+        const email = user?.email;
+        if (!email) { showToast('No email on your account', 'error'); return; }
+        setForgotLoading(true);
+        try {
+            await sendPasswordReset(email);
+            setForgotAppPinStep('sent');
+            showToast('Reset email sent!', 'success');
+        } catch (e: any) {
+            showToast(e.message || 'Failed to send reset email', 'error');
+        } finally {
+            setForgotLoading(false);
+        }
+    };
+
+    const handleForgotEditPw = async () => {
+        const email = user?.email;
+        if (!email) { showToast('No email on your account', 'error'); return; }
+        setForgotLoading(true);
+        try {
+            await sendPasswordReset(email);
+            setForgotEditPwStep('sent');
+            showToast('Reset email sent!', 'success');
+        } catch (e: any) {
+            showToast(e.message || 'Failed to send reset email', 'error');
+        } finally {
+            setForgotLoading(false);
+        }
+    };
+
+    const isEditPwEnabled = formData.edit_password?.enabled !== false;
+    const currentEditPw = formData.edit_password?.password || '1234';
+
+    return (
+        <div className="space-y-4 animate-in slide-in-from-right duration-300">
+            <SettingsSection title="App Access" icon={Shield}>
+                <div className="flex items-center justify-between p-2">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-violet-15)] text-col-violet"><Lock size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">App Lock</div>
+                            <div className="text-xs text-[var(--text-muted)]">Require PIN on startup</div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={!!formData.security?.enabled}
+                            onChange={e => {
+                                const enabled = e.target.checked;
+                                void saveNow((prev: any) => ({
+                                    ...prev,
+                                    security: { ...(prev.security || {}), enabled }
+                                })).then(() => showToast(enabled ? 'App lock enabled' : 'App lock disabled', 'success'));
+                            }}
+                        />
+                         <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                    </label>
+                </div>
+                
+                {formData.security?.enabled && (
+                    <div className="pt-2 animate-in slide-in-from-top-2">
+                        {formData.security?.pin && !showChangePinUi ? (
+                            <div className="flex items-center justify-between p-2">
+                                <div>
+                                    <div className="text-xs font-bold text-[var(--text-secondary)]">App Lock PIN</div>
+                                    <div className="text-sm font-black text-[var(--text-secondary)]">{'•'.repeat(4)}</div>
+                                </div>
+                                <button onClick={() => setShowChangePinUi(true)}
+                                    className="px-3 py-1.5 rounded-xl text-app-md font-black active:scale-95 transition-all"
+                                    style={{ background: 'var(--col-violet-15)', color: "var(--col-violet)", border: '1px solid var(--col-violet-25)' }}>
+                                    Change PIN
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="w-full min-w-0 space-y-3 animate-in slide-in-from-top-2">
+                                {formData.security?.pin && forgotAppPinStep !== 'sent' && (
+                                    <SettingInput
+                                        label="Current PIN"
+                                        type="password"
+                                        value={currentAppPin}
+                                        onChange={setCurrentAppPin}
+                                        icon={Lock}
+                                        placeholder="Enter current PIN"
+                                    />
+                                )}
+                                {formData.security?.pin && forgotAppPinStep === 'idle' && (
+                                    <button
+                                        onClick={handleForgotAppPin}
+                                        disabled={forgotLoading}
+                                        className="text-app-md font-bold px-1 disabled:opacity-40 active:scale-95 transition-all"
+                                        style={{ color: 'rgba(96,165,250,0.7)' }}
+                                    >
+                                        {forgotLoading ? 'Sending…' : 'Forgot PIN? Send reset email'}
+                                    </button>
+                                )}
+                                {forgotAppPinStep === 'sent' && (
+                                    <div className="p-3 rounded-xl text-center"
+                                        style={{ background: 'var(--col-info-15)', border: '1px solid var(--col-info-25)' }}>
+                                        <Mail size={13} className="inline mb-1" style={{ color: "var(--col-info)" }} />
+                                        <p className="text-app-sm font-black" style={{ color: "var(--col-info-light)" }}>
+                                            Reset email sent to {user?.email}
+                                        </p>
+                                        <p className="text-app-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                                            You can now set a new PIN below without the current one.
+                                        </p>
+                                    </div>
+                                )}
+                                <div>
+                                    <SettingInput
+                                        label="New 4-Digit PIN"
+                                        type="number"
+                                        value={newAppPin}
+                                        onChange={(v: string) => { if (v.length <= 4) setNewAppPin(v); }}
+                                        icon={Smartphone}
+                                        placeholder="0000"
+                                    />
+                                    {(() => { const s = getPinStrength(newAppPin); return s && s.level !== 'strong' ? <p className="text-app-sm font-bold mt-1 px-1" style={{ color: s.color }}>⚠ {s.message}</p> : null; })()}
+                                </div>
+                                <SettingInput
+                                    label="Confirm New PIN"
+                                    type="number"
+                                    value={confirmAppPin}
+                                    onChange={(v: string) => { if (v.length <= 4) setConfirmAppPin(v); }}
+                                    icon={Smartphone}
+                                    placeholder="0000"
+                                />
+                                <div className="flex flex-col gap-2 w-full">
+                                    <button onClick={handleSaveAppPin}
+                                        className="w-full py-3 rounded-xl font-black text-sm text-white active:scale-95 transition-all"
+                                        style={{ background: 'linear-gradient(135deg,#8b5cf6,#6366f1)' }}>
+                                        {formData.security?.pin ? 'Save PIN' : 'Set PIN'}
+                                    </button>
+                                    {formData.security?.pin && (
+                                        <button onClick={() => { setShowChangePinUi(false); setCurrentAppPin(''); setNewAppPin(''); setConfirmAppPin(''); setForgotAppPinStep('idle'); }}
+                                            className="w-full py-2.5 rounded-xl font-black text-sm active:scale-95 transition-all"
+                                            style={{ background: 'var(--rgba-white-07)', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}>
+                                            Cancel
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </SettingsSection>
+
+            {/* ── Auto-Lock Timeout ────────────────────────────────────────────── */}
+            {formData.security?.enabled && (
+              <SettingsSection title="Auto-Lock Timeout" icon={Shield}>
+                <div className="px-2 py-1">
+                  <p className="text-xs font-bold text-[var(--text-muted)] mb-3">
+                    Automatically lock the app after this period of inactivity
+                  </p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {([
+                      { value: 0,  label: 'Immediately' },
+                      { value: 1,  label: '1 min'       },
+                      { value: 5,  label: '5 min'       },
+                      { value: 15, label: '15 min'      },
+                      { value: 30, label: '30 min'      },
+                      { value: -1, label: 'Never'       },
+                    ] as { value: number; label: string }[]).map(opt => {
+                      const current = formData.security?.auto_lock_minutes ?? 5;
+                      const active = current === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          onClick={() => {
+                            void saveNow((prev: any) => ({
+                              ...prev,
+                              security: { ...(prev.security || {}), auto_lock_minutes: opt.value }
+                            })).then(() => showToast(`Auto-lock: ${opt.label}`, 'success'));
+                          }}
+                          className="py-2.5 rounded-xl font-bold text-xs active:scale-95 transition-all"
+                          style={{
+                            background: active ? 'var(--col-violet-25)' : 'var(--rgba-white-05)',
+                            border: `1px solid ${active ? 'var(--col-violet-50)' : 'var(--rgba-white-08)'}`,
+                            color: active ? "var(--col-violet-light)" : 'var(--text-muted)',
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </SettingsSection>
+            )}
+
+            {/* ── Data Edit / Delete Password ─────────────────────────────────── */}
+            <SettingsSection title="Data Edit Password" icon={Key}>
+                <div className="mb-4 p-3 rounded-xl"
+                    style={{ background: 'var(--col-accent-08)', border: '1px solid var(--col-accent-18)' }}>
+                    <p className="text-xs text-col-indigo-light">
+                        Requires a separate password before editing or deleting any data entry.
+                        Default password is <span className="font-black">1234</span>.
+                    </p>
+                </div>
+
+                {/* Enable / Disable toggle */}
+                <div className="flex items-center justify-between p-2 mb-3">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-[var(--col-accent-15)] text-col-indigo"><Lock size={20}/></div>
+                        <div>
+                            <div className="font-bold text-sm text-[var(--text-secondary)]">Require Password</div>
+                            <div className="text-xs text-[var(--text-muted)]">
+                                {isEditPwEnabled ? 'Currently enabled' : 'Currently disabled'}
+                            </div>
+                        </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={isEditPwEnabled}
+                            onChange={e => {
+                                const enabled = e.target.checked;
+                                void saveNow((prev: any) => ({
+                                    ...prev,
+                                    edit_password: {
+                                        enabled: true,
+                                        password: '1234',
+                                        ...(prev.edit_password || {}),
+                                        enabled,
+                                    }
+                                })).then(() => showToast(enabled ? 'Edit password enabled' : 'Edit password disabled', 'success'));
+                            }}
+                        />
+                        <div className="w-11 h-6 bg-[var(--rgba-white-10)] border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                    </label>
+                </div>
+
+                {/* Change password section */}
+                {isEditPwEnabled && (
+                    <div className="animate-in slide-in-from-top-2">
+                        <div className="flex items-center justify-between mb-3 p-2">
+                            <div>
+                                <div className="text-xs font-bold text-[var(--text-secondary)]">Current Password</div>
+                                <div className="text-sm font-black text-[var(--text-secondary)]">
+                                    {'•'.repeat(currentEditPw.length)}
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setShowEditPwInput(v => !v)}
+                                className="px-3 py-1.5 rounded-xl text-app-md font-black active:scale-95 transition-all"
+                                style={{ background: 'var(--col-accent-15)', color: "var(--col-indigo-light)", border: '1px solid var(--col-accent-25)' }}
+                            >
+                                {showEditPwInput ? 'Cancel' : 'Change'}
+                            </button>
+                        </div>
+
+                        {showEditPwInput && (
+                            <div className="space-y-3 animate-in slide-in-from-top-2">
+                                {forgotEditPwStep !== 'sent' && (
+                                    <SettingInput
+                                        label="Current Password"
+                                        type="password"
+                                        value={currentEditPwInput}
+                                        onChange={setCurrentEditPwInput}
+                                        icon={Lock}
+                                        placeholder="Enter current password"
+                                    />
+                                )}
+                                {forgotEditPwStep === 'idle' && (
+                                    <button
+                                        onClick={handleForgotEditPw}
+                                        disabled={forgotLoading}
+                                        className="text-app-md font-bold px-1 disabled:opacity-40 active:scale-95 transition-all"
+                                        style={{ color: 'rgba(96,165,250,0.7)' }}
+                                    >
+                                        {forgotLoading ? 'Sending…' : 'Forgot Password? Send reset email'}
+                                    </button>
+                                )}
+                                {forgotEditPwStep === 'sent' && (
+                                    <div className="p-3 rounded-xl text-center"
+                                        style={{ background: 'var(--col-info-15)', border: '1px solid var(--col-info-25)' }}>
+                                        <Mail size={13} className="inline mb-1" style={{ color: "var(--col-info)" }} />
+                                        <p className="text-app-sm font-black" style={{ color: "var(--col-info-light)" }}>
+                                            Reset email sent to {user?.email}
+                                        </p>
+                                        <p className="text-app-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                                            You can now set a new password below without the current one.
+                                        </p>
+                                    </div>
+                                )}
+                                <div>
+                                    <SettingInput
+                                        label="New Password"
+                                        type="password"
+                                        value={newEditPw}
+                                        onChange={setNewEditPw}
+                                        icon={Lock}
+                                        placeholder="Enter new password"
+                                    />
+                                    {(() => { const s = getPasswordStrength(newEditPw); return s && s.level !== 'strong' ? <p className="text-app-sm font-bold mt-1 px-1" style={{ color: s.color }}>⚠ {s.message}</p> : null; })()}
+                                </div>
+                                <SettingInput
+                                    label="Confirm New Password"
+                                    type="password"
+                                    value={confirmEditPw}
+                                    onChange={setConfirmEditPw}
+                                    icon={Lock}
+                                    placeholder="Confirm new password"
+                                />
+                                <button
+                                    onClick={handleSaveEditPassword}
+                                    className="w-full py-3 rounded-xl font-black text-sm text-white active:scale-95 transition-all"
+                                    style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}
+                                >
+                                    Save New Password
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </SettingsSection>
+
+            {isEmailPasswordUser && (
+            <SettingsSection title="Account Security" icon={Key}>
+                <div className="mb-4 p-3 rounded-xl"
+                    style={{ background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.18)' }}>
+                    <p className="text-xs text-col-sky-light">
+                        Update your login (email/password) account password. Requires a recent login.
+                    </p>
+                </div>
+
+                <div className="flex items-center justify-between p-2 mb-3">
+                    <div>
+                        <div className="text-xs font-bold text-[var(--text-secondary)]">Login Password</div>
+                        <div className="text-sm font-black text-[var(--text-secondary)]">
+                            {'•'.repeat(10)}
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setShowUpgradePwInput(v => !v)}
+                        className="px-3 py-1.5 rounded-xl text-app-md font-black active:scale-95 transition-all"
+                        style={{ background: 'rgba(56,189,248,0.15)', color: "var(--col-sky-light)", border: '1px solid rgba(56,189,248,0.25)' }}
+                    >
+                        {showUpgradePwInput ? 'Cancel' : 'Change'}
+                    </button>
+                </div>
+
+                {showUpgradePwInput && (
+                    <div className="space-y-3 animate-in slide-in-from-top-2">
+                        <SettingInput
+                            label="Current Password"
+                            type="password"
+                            value={currentUpgradePw}
+                            onChange={setCurrentUpgradePw}
+                            icon={Lock}
+                            placeholder="Enter current password"
+                        />
+                        <div>
+                            <SettingInput
+                                label="New Password"
+                                type="password"
+                                value={newUpgradePw}
+                                onChange={setNewUpgradePw}
+                                icon={Lock}
+                                placeholder="Enter new password (min 6 chars)"
+                            />
+                            {(() => { const s = getPasswordStrength(newUpgradePw); return s && s.level !== 'strong' ? <p className="text-app-sm font-bold mt-1 px-1" style={{ color: s.color }}>⚠ {s.message}</p> : null; })()}
+                        </div>
+                        <SettingInput
+                            label="Confirm New Password"
+                            type="password"
+                            value={confirmUpgradePw}
+                            onChange={setConfirmUpgradePw}
+                            icon={Lock}
+                            placeholder="Confirm new password"
+                        />
+                        <LoadingButton
+                            loading={passwordLoading}
+                            onClick={handleSaveUpgradePassword}
+                            label="Save New Password"
+                            className="w-full text-white"
+                            style={{ background: 'linear-gradient(135deg,#0ea5e9,#38bdf8)' }}
+                        />
+                    </div>
+                )}
+            </SettingsSection>
+            )}
+        </div>
+    );
+};

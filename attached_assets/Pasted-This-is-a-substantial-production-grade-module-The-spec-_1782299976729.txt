@@ -1,0 +1,360 @@
+This is a substantial, production-grade module. The spec explicitly says to follow the phased process before writing any code — I'll respect that. Let me first explore the codebase to understand what staff-related code already exists, then produce the full Phase 1 + Phase 2 documents.
+
+
+5 actions
+I've read both documents and explored the codebase. I'll now follow the specified phases exactly — no code until Phase 2 is complete and reviewed.
+
+PHASE 1 — REQUIREMENTS UNDERSTANDING REPORT
+1. Features
+#	Feature	Description
+F1	Staff Master	Create, edit, soft-delete staff; staffId is the immutable relational key
+F2	Dashboard Widget	Summary cards + staff list on the main dashboard
+F3	Staff Detail View	Profile, financial summary, 5 transaction history sections
+F4	Salary Management	Monthly salary, partial payments, multi-instalment, advance, settlement
+F5	Advances	Salary advance + expense advance tracked separately
+F6	Expense Recording	Staff-paid petty cash expenses (petrol, food, transport, etc.)
+F7	Collections	Money collected from customers/vendors by staff on owner's behalf
+F8	Settlements	Staff returning held money to the owner
+F9	Reimbursements	Owner repaying staff for out-of-pocket expenses
+F10	Derived ledger views	receivedBy / paidBy on existing transactions → appear in staff ledger without duplication
+F11	Running balance	Ledger-style debit/credit/balance column per staff member
+F12	Reports	Salary, balance, advance, expense, collection, reimbursement, full ledger
+F13	Attachments	Receipt/UPI screenshot/voucher attached per transaction
+F14	Search & Filter	Date range, month, type, mode, keyword across history
+F15	Audit trail	createdAt, updatedAt, createdBy on every record; soft-delete only
+F16	Offline-first	Optimistic writes, sync queue, no duplicate listeners
+2. Entities
+Entity	Firestore Collection	Purpose
+StaffMember	users/{uid}/staff	Master record; single source of truth
+StaffTransaction	users/{uid}/staff_transactions	All financial events (8 types)
+(derived) existing transactions	—	Linked via received_by / paid_by name; read-only view
+(derived) existing ledger_entries	—	Linked via payment_received_by / paid_to; read-only view
+Existing staff list in Settings (appSettings.custom_lists.staff_members) — currently a plain string[]. This is the migration target: each name here must produce a StaffMember doc with a stable staffId.
+
+3. Relationships
+StaffMember  ──1:N──►  StaffTransaction   (staffId)
+StaffMember  ──1:N──►  transactions.received_by / paid_by  (derived, name-based currently)
+StaffMember  ──1:N──►  ledger_entries.payment_received_by / paid_to  (derived)
+
+Critical: existing transaction links are name-based strings, not staffId. This is the core migration risk.
+
+4. Business Rules
+#	Rule
+BR1	staffId is the only allowed relational key across all collections
+BR2	A staff name change must NOT break historical transaction links
+BR3	Salary is tracked per calendar month; multiple partial payments are summed
+BR4	A salary advance reduces the next salary payment (tracking only — owner decides how to apply)
+BR5	currentBalanceWithStaff = collections + advances + ownerTransfers − expenses − settlements − salaryPaidFromHeldFunds
+BR6	Positive balance → money is with the staff; Negative → owner owes staff
+BR7	Existing transactions and ledger_entries records must NOT be duplicated in staff_transactions
+BR8	Soft-delete only — never hard-delete any record
+BR9	Every write must carry createdBy (the logged-in user's UID or name)
+BR10	Offline writes must queue and retry; no data loss
+BR11	Staff master is synchronized between Settings and the new Staff Module
+5. Financial Flow (Money Trail)
+Owner ──[EXPENSE_ADVANCE / SALARY_PAYMENT]──► Staff
+Owner ──[SALARY_ADVANCE]──────────────────► Staff
+Staff ──[COLLECTION]──────────────────────► (collected from Customer/Vendor, money now with Staff)
+Staff ──[STAFF_EXPENSE]───────────────────► External (petrol, food, vendor payment)
+Staff ──[SETTLEMENT]──────────────────────► Owner (returns held money)
+Owner ──[REIMBURSEMENT]───────────────────► Staff (repays staff for out-of-pocket spend)
+Staff ──[ADJUSTMENT]──────────────────────► Correction entry (±)
+
+6. Balance Formula (definitive)
+Balance With Staff =
+  + COLLECTION amounts          (money staff received on owner's behalf)
+  + EXPENSE_ADVANCE amounts     (cash handed to staff for expenses)
+  + SALARY_ADVANCE amounts      (cash advanced before salary day)
+  - STAFF_EXPENSE amounts       (cash staff spent from their pool)
+  - SETTLEMENT amounts          (cash returned to owner)
+  - SALARY_PAYMENT amounts      (when paid from staff-held cash pool)
+  + ADJUSTMENT (signed ±)
+  - REIMBURSEMENT amounts       (net zero for cash flow — owner repays staff out-of-pocket)
+
+A REIMBURSEMENT is a wash: staff paid from their own pocket (STAFF_EXPENSE that wasn't advance-funded) → owner repays. Net effect on "money with staff" = 0 after both sides are recorded.
+
+7. Assumptions
+#	Assumption
+A1	The existing appSettings.custom_lists.staff_members string list is the migration source; each unique name → one StaffMember document
+A2	monthlySalary is optional at creation — owners may add it later
+A3	There is no payroll period alignment needed (owner decides when to pay)
+A4	Attachments are stored in Firebase Storage under users/{uid}/staff_attachments/{staffId}/
+A5	createdBy stores the display name or UID of the currently logged-in user
+A6	"Derived views" from existing transactions are read-only and computed at query time — no back-fill writes
+A7	The Settings staff list remains a string[] for UI dropdowns; StaffMember docs are the authoritative records
+A8	Reports are client-generated (PDF via existing pdf-generator plugin) — no server-side render
+8. Open Questions (need owner/PM answer before implementation)
+#	Question	Impact
+OQ1	Should SALARY_PAYMENT automatically deduct from currentBalanceWithStaff (i.e., does the owner pay salary from money staff is already holding), or is it always a fresh outflow from owner?	Balance formula changes
+OQ2	Is EXPENSE_ADVANCE always "owner gives cash to staff", or can it also be "staff spends from existing balance"?	Prevents double-counting
+OQ3	Should existing name-based received_by / paid_by links be back-filled with staffId on migration, or only read as derived views going forward?	Determines migration scope and Firestore write cost
+OQ4	Multi-firm architecture: the existing RoleContext uses adminUid namespacing. Should staff transactions live under adminUid namespace?	Collection path design
+OQ5	Should a staff member be able to log in and see their own ledger (read-only staff role access)?	RBAC scope
+OQ6	What happens when the same person is both a staff member and a Firestore Auth user? Are they the same staffId or separate records?	Identity resolution
+OQ7	Is there a salary due-date system (e.g., salary due on 1st of each month), or purely manual tracking?	Alerts / due-date computation
+9. Risks
+#	Risk	Severity	Mitigation
+R1	Name-based links in existing records break if staff is renamed	Critical	Store staff_id alongside name on new writes; derive view merges both
+R2	Duplicate records if COLLECTION/EXPENSE is also recorded in staff_transactions AND appears as derived view from transactions	Critical	All existing transactions records are derived-only; staff_transactions only stores types NOT in existing collections
+R3	Settings staff list gets out of sync with StaffMember docs	High	Single mutation point: editing either writes to both
+R4	Offline batch writes creating phantom duplicate staff docs	High	Client-side idempotency key per creation
+R5	Firestore index pressure from multi-field staff_transaction queries	Medium	Pre-define composite indexes in firestore.indexes.json
+R6	Firebase Storage costs for attachments on free/low tier	Low	Compress images client-side before upload; cap size at 2 MB
+PHASE 2 — SYSTEM DESIGN
+1. Firestore Collection Schema
+users/{uid}/staff
+interface StaffMember {
+  id?: string;                          // Firestore doc ID = staffId (immutable)
+  staff_code: string;                   // E.g. "ST-0001" — display ID, immutable
+  name: string;
+  phone?: string;
+  address?: string;
+  joining_date?: string;               // ISO date
+  monthly_salary?: number;
+  salary_type: 'monthly' | 'daily' | 'weekly' | 'contract';
+  status: 'active' | 'inactive';
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+}
+
+users/{uid}/staff_transactions
+type StaffTxType =
+  | 'SALARY_PAYMENT'    // owner pays salary → debit from owner, staff balance unchanged
+  | 'SALARY_ADVANCE'    // owner gives advance against salary → increases money with staff
+  | 'EXPENSE_ADVANCE'   // owner gives cash for petty expenses → increases money with staff
+  | 'STAFF_EXPENSE'     // staff spends (petrol, food, etc.) → decreases money with staff
+  | 'COLLECTION'        // staff collected from customer/vendor → increases money with staff
+  | 'SETTLEMENT'        // staff returns cash to owner → decreases money with staff
+  | 'REIMBURSEMENT'     // owner repays staff's out-of-pocket → net zero (tracked for completeness)
+  | 'ADJUSTMENT';       // manual correction ±
+interface StaffTransaction {
+  id?: string;
+  staff_id: string;                    // Firestore doc ID of StaffMember — NEVER name
+  type: StaffTxType;
+  date: string;                        // ISO date YYYY-MM-DD
+  amount: number;                      // always positive; direction inferred from type
+  payment_mode?: 'Cash' | 'UPI' | 'Bank Transfer' | 'Cheque' | 'Other';
+  purpose?: string;                    // salary month, expense category, etc.
+  description?: string;
+  notes?: string;
+  reference_number?: string;           // UPI ref, cheque no, etc.
+  attachment_url?: string;
+  // Salary-specific
+  salary_month?: string;               // "2026-06" for June 2026
+  // Derived-link fields (for tracing back to existing records)
+  linked_transaction_id?: string;      // ref to transactions/{id} if applicable
+  linked_ledger_id?: string;
+  // Audit
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  deleted?: boolean;                   // soft-delete flag
+}
+
+2. Entity Relationship (text diagram)
+StaffMember (staff/)
+  │ staffId (doc.id)
+  │
+  ├──1:N──► StaffTransaction (staff_transactions/)
+  │           staff_id = staffId
+  │
+  ├──derived── transactions/   (received_by OR paid_by match staff name)
+  │             READ ONLY — no writes
+  │
+  └──derived── ledger_entries/ (payment_received_by OR paid_to match staff name)
+                READ ONLY — no writes
+
+3. Running Balance Logic
+Balance = Σ credit(tx) − Σ debit(tx)  for all non-deleted tx for this staffId
+Credit types (money goes TO staff pool):
+  COLLECTION, EXPENSE_ADVANCE, SALARY_ADVANCE
+Debit types (money leaves staff pool):
+  STAFF_EXPENSE, SETTLEMENT
+Neutral / tracked separately (not in balance pool):
+  SALARY_PAYMENT   → shown in salary section; not in "money with staff" balance
+  REIMBURSEMENT    → shown in reimbursement section; not in balance
+  ADJUSTMENT       → signed amount: positive = credit, negative = debit
+
+This resolves OQ1: SALARY_PAYMENT is NOT subtracted from the "money with staff" balance — it's a separate salary ledger, because the owner typically pays salary separately from the cash pool.
+
+4. Salary Calculation Logic (per month)
+// For a given staffId and salaryMonth ("2026-06"):
+const salaryDue = staff.monthly_salary ?? 0;
+const payments  = staff_transactions
+  .filter(t => t.type === 'SALARY_PAYMENT' && t.salary_month === salaryMonth && !t.deleted)
+  .reduce((s, t) => s + t.amount, 0);
+const advances  = staff_transactions
+  .filter(t => t.type === 'SALARY_ADVANCE' && t.salary_month === salaryMonth && !t.deleted)
+  .reduce((s, t) => s + t.amount, 0);
+const pendingSalary = salaryDue - payments - advances;
+// pendingSalary > 0 → still owed to staff
+// pendingSalary < 0 → overpaid (rare, flag for review)
+
+5. Offline Sync Strategy
+Writes go through the existing ApiService.batchSave → Firestore offline persistence handles queueing
+For attachment uploads: queue the upload URL in SyncQueueService; write the doc first with attachment_url: null; update with URL once upload completes
+Idempotency: each new staff_transaction gets a client-generated idempotency_key (${staffId}_${Date.now()}_${random4}) stored in the doc; the sync queue checks for duplicates before re-applying
+6. Migration Plan
+Step	Action	Reversible?
+M1	On first app load after update: read appSettings.custom_lists.staff_members[]	—
+M2	For each name, check if a StaffMember doc with that name already exists	—
+M3	If not found → create a new doc with name, status: 'active', salary_type: 'monthly'	Yes (soft-delete)
+M4	Write the new staffId back to appSettings (no change to the string list — just adds mapping)	Yes
+M5	Existing received_by / paid_by in transactions remain as-is (name strings)	—
+M6	Derived view queries: join by name match at read time; no back-fill writes	—
+M7	New writes: always store staff_id alongside the name string for forward-compatibility	Yes
+No destructive writes. Existing records untouched.
+
+7. Firestore Index Requirements (additions to firestore.indexes.json)
+{ "collectionGroup": "staff_transactions", "fields": [
+    { "fieldPath": "staff_id", "order": "ASCENDING" },
+    { "fieldPath": "date",     "order": "DESCENDING" }
+]},
+{ "collectionGroup": "staff_transactions", "fields": [
+    { "fieldPath": "staff_id",    "order": "ASCENDING" },
+    { "fieldPath": "type",        "order": "ASCENDING" },
+    { "fieldPath": "date",        "order": "DESCENDING" }
+]},
+{ "collectionGroup": "staff_transactions", "fields": [
+    { "fieldPath": "staff_id",    "order": "ASCENDING" },
+    { "fieldPath": "salary_month","order": "ASCENDING" },
+    { "fieldPath": "type",        "order": "ASCENDING" }
+]}
+
+8. Firestore Cost Analysis
+Operation	Reads/writes per action	Notes
+Open Staff Detail	~1 read (staff doc) + paginated staff_transactions	Cached by TanStack Query
+Add transaction	1 write	batchSave
+Dashboard widget	1 read (staff collection) + aggregate from cached staff_transactions	Use TanStack Query stale-while-revalidate
+Derived ledger join	0 extra reads (uses already-loaded transaction/ledger cache)	No additional Firestore cost
+Cost impact: Low. The staff_transactions collection will grow linearly at ~12–50 docs/staff/year. At 100 staff, ~5,000 docs/year — well within Firestore free tier read limits.
+
+Phase 3 — Pre-Implementation Failure Analysis
+Scenario	Risk	Prevention
+Owner renames "Rahul" → "Rahul Kumar"	All derived views break (name-join fails)	During staff edit, call syncStaffNameToRecords (same pattern as syncPartyToRecords) to cascade the name to received_by/paid_by fields in existing transactions
+Two staff members with same first name	Derived join matches wrong person	Short-term: accept the ambiguity (names were already ambiguous); Long-term: new writes use staff_id
+Offline: user creates same staff member twice before sync	Two docs with same name	Client checks local cache before creating; uses TanStack Query cache as source of truth
+salary_month omitted on SALARY_PAYMENT	Salary calculation shows wrong pending	Validated on form submit — salary_month required for SALARY_PAYMENT and SALARY_ADVANCE
+Balance going negative (owner owes staff)	Confusing display	Display negative balance with a distinct "Company owes staff ₹X" label, not a red negative number
+This is the complete Phase 1 + Phase 2 design. Before I write a single line of code, I need your answers to the 7 Open Questions — particularly:
+
+OQ1: Is SALARY_PAYMENT in the "money with staff" balance, or tracked separately?
+OQ3: Should existing received_by/paid_by records be back-filled with staffId, or derived-view only?
+OQ4: Should staff data live under the adminUid namespace (for multi-firm support)?
+
+Once you confirm or correct the design above, I'll proceed to Phase 4 implementation.
+
+Next, I can begin Phase 4 implementation of the Staff Master + StaffTransaction engine, starting with the data layer and Staff Detail View. Shall I proceed with the design as written?
+
+
+Worked for 3 minutes
+go
+
+17 hours ago
+
+Show less
+
+Planning Phase 4 implementation strategy (9 seconds)
+Proceeding with Phase 4. Let me first understand the navigation structure and existing hooks/context patterns before writing any files.
+
+
+Analyzed app navigation and data fetching
+
+Pasted-Before-implementation-re-review-the-entire-Staff-Module_1782237383217.txt
+continue
+
+17 hours ago
+
+Show less
+
+Reviewing architecture for validation (5 seconds)
+I'll complete the full validation review, then immediately begin implementation in the same pass. Let me gather the remaining architectural context in parallel.
+
+
+4 actions
+Good. I have all the context I need. Let me do the architecture validation in-line, finalize the design, then begin implementation immediately.
+
+ARCHITECTURE VALIDATION — FINAL DECISIONS
+
+1. SALARY_PAYMENT in balance? → NO.
+Accounting justification: staff hold business operating cash as custodians. Salary is a liability settlement (Wages Payable → Cash). It flows owner→bank/hand of staff, not from the business cash pool the staff carry. Mixing it in would make the balance uninterpretable. The balance tracks only business money in staff custody.
+
+2. Name-based linking → Derived-view only, no back-fill. Forward writes store staff_id.
+Staff rename triggers a cascade (same pattern as syncPartyToRecords) updating received_by/paid_by on existing transactions.
+
+3. Balance formula — verified with real numbers:
+Rahul: ADVANCE ₹5k + COLLECTION ₹12k − EXPENSE ₹4.2k − SETTLEMENT ₹10k = ₹2,800 with Rahul ✓
+
+4. Future fields reserved: StaffTxType union will accommodate COMMISSION, INCENTIVE, ATTENDANCE_DEDUCTION without schema changes.
+
+Design is approved. Now implementing.
+
+
+2 actions
+You've reached your daily free quota limit. It will reset at 12:00 AM UTC.
+
+
+Checkpoint made
+17 hours ago
+
+Worked for 2 minutes
+continue from where u left
+
+9 hours ago
+
+Planning view rendering and navigation
+Let me read the key sections needed to hook in the new module, then build all files.
+
+
+7 actions
+I have all the context I need. Creating the session plan then building all 9 files.
+
+
+2 actions
+Building all foundation files simultaneously — types, indexes, idGenerator, and the service layer.
+
+
+4 actions
+Let me check ApiService structure then build all files in parallel.
+
+
+2 actions
+Now building all the core files in parallel — service layer, hooks, and both modals simultaneously.
+
+
+3 actions
+Now building the four view/modal files simultaneously.
+
+
+5 actions
+Now wiring everything into App.tsx and checking ApiService.add return value simultaneously.
+
+
+4 actions
+ApiService.add returns the DocumentReference — the .id usage in staffService is correct. Now wiring App.tsx.
+
+
+2 actions
+Let me check where featureTab is defined, then add the staff tab block in the right location.
+
+
+3 actions
+Now I'll add the staff tab into the !featureTab render block in App.tsx, plus add a navigation entry from Settings.
+
+
+2 actions
+Now adding the staff tab render block and a Settings entry point simultaneously.
+
+
+2 actions
+Now I need to add the Settings navigation entry for Staff, verify haptic utility exists, and check for TypeScript errors.
+
+
+3 actions
+Good. Now let me check if MAX_GAP_SCAN is defined in idGenerator.ts, add the Settings nav entry for Staff, and run a TypeScript check — all in parallel.
+
+
+2 actions
+You've reached your monthly free quota limit. It will reset on July 4, 2026.

@@ -1,0 +1,155 @@
+FINAL TASK — SYSTEM VALIDATION, EDGE HARDENING & USER TRUST LAYER
+
+SYSTEM STATUS
+
+The system is now:
+
+* Correct (data integrity)
+* Fast (optimistic + cache)
+* Stable (no major bugs)
+
+Your task is NOT to change core logic.
+
+Your task is to:
+
+```text
+Ensure the system behaves reliably under all real-world conditions
+```
+
+---
+
+PRIMARY OBJECTIVE
+
+Convert system from:
+
+Working correctly
+→
+Trustworthy under all conditions
+
+---
+
+MODULE 1 — EDGE CASE HARDENING
+
+Audit and ensure safe handling of:
+
+1. Partial sync failure
+
+   * If some writes succeed and others fail
+   * System must not leave inconsistent state
+
+2. App close during operation
+
+   * Persist queue safely
+   * Resume without duplication
+
+3. Cache vs server mismatch
+
+   * Refetch must reconcile correctly
+   * No duplicate or missing entries
+
+---
+
+MODULE 2 — USER VISIBILITY (VERY IMPORTANT)
+
+User must always know system state.
+
+Implement clear UI signals:
+
+* Sync status:
+
+  * Synced
+  * Syncing
+  * Pending changes
+  * Error
+
+* Action feedback:
+
+  * Save success (toast or visual cue)
+  * Save failed (clear error)
+
+---
+
+MODULE 3 — LONG SESSION STABILITY
+
+Test and ensure:
+
+* 1–2 hour continuous usage
+* No memory leaks (listeners, effects)
+* No performance degradation
+
+---
+
+MODULE 4 — UX MICRO-FEEDBACK
+
+Improve perceived quality:
+
+* Button press feedback (instant)
+* Disable buttons during actions
+* Subtle loading indicators (not blocking)
+* Smooth transitions (no flicker)
+
+---
+
+MODULE 5 — FINAL DATA CONSISTENCY CHECK
+
+Ensure:
+
+* Ledger == Inventory == POS always aligned
+* No ghost entries
+* No duplicate entries
+* No missing updates after reconnect
+
+---
+
+MANDATORY TESTS
+
+1. Rapid usage:
+
+   * 20–50 bills quickly
+
+2. Offline cycle:
+
+   * offline → usage → restart → online
+
+3. Failure simulation:
+
+   * network drop mid-save
+   * app kill mid-sync
+
+Expected:
+
+```text
+No crash
+No data loss
+System recovers cleanly
+```
+
+---
+
+STRICT RULES
+
+* Do NOT add features
+* Do NOT refactor architecture
+* Do NOT introduce complexity
+
+Only:
+
+* Fix edge cases
+* Improve user feedback
+* Ensure reliability
+
+---
+
+SUCCESS CRITERIA
+
+✔ System never loses data
+✔ User always knows system state
+✔ App remains stable over long usage
+✔ No silent failures
+✔ Feels reliable and predictable
+
+---
+
+END GOAL
+
+“User trusts the app enough to run their business daily without fear”

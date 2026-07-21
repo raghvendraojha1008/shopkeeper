@@ -1,0 +1,116 @@
+2026-06-14 22:51:13.338 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:13.342 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914330, pluginId: Filesystem, methodName: writeFile
+2026-06-14 22:51:13.343 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914330, pluginId: Filesystem, methodName: writeFile, methodData: {"path":"Ram_Ram_ji_Jai__Statement_2026-06-14.txt","data":"Party Statement\n────────────────────────────────────────────\n\nPARTY STATEMENT\nRam Ram ji Jai   |  CUSTOMER\nContact: 3692581470\nAddress: Rootak\nAll Time\n\nSUMMARY\nField  |  Amount\nOpening Balance  |  Rs.2,508 (They Owe)\nTotal Billed  |  Rs.0\nTotal Paid  |  Rs.0\nMisc Net  |  Rs.3,988 (Cr)\nBalance  |  Rs.1,480 Dr\n\n\nMISCELLANEOUS CHARGES\nDate  |  Category  |  Direction  |  Amount\n05 Jun 2026  |  Loading  |  From Party  |  Rs.3,988.00\n\n\nGenerated: 14\/6\/2026","directory":"CACHE","encoding":"utf8"}
+2026-06-14 22:51:13.357 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"uri":"file:///data/user/0/com.shopledger.india/cache/Ram_Ram_ji_Jai__Statement_2026-06-14.txt"}
+2026-06-14 22:51:13.358 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:13.359 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914331, pluginId: Share, methodName: share
+2026-06-14 22:51:13.360 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914331, pluginId: Share, methodName: share, methodData: {"title":"Party Statement","dialogTitle":"Party Statement","files":["file:\/\/\/data\/user\/0\/com.shopledger.india\/cache\/Ram_Ram_ji_Jai__Statement_2026-06-14.txt"]}
+2026-06-14 22:51:13.361 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:13.382 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event pause
+2026-06-14 22:51:13.382 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event pause
+2026-06-14 22:51:13.382 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:13.384 11842-11842 Capacitor               com.shopledger.india                 D  App paused
+2026-06-14 22:51:14.827 11842-11842 Capacitor               com.shopledger.india                 D  Unable to find a Capacitor plugin to handle requestCode, trying Cordova plugins 458057366
+2026-06-14 22:51:14.828 11842-11842 Capacitor               com.shopledger.india                 D  Sending plugin error: {"save":false,"callbackId":"129914331","pluginId":"Share","methodName":"share","success":false,"error":{"message":"Share canceled"}}
+2026-06-14 22:51:14.830 11842-11842 TranActivi...pturboImpl com.shopledger.india                 D  onResumeHork
+2026-06-14 22:51:14.830 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: true
+2026-06-14 22:51:14.831 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-06-14 22:51:14.833 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event resume
+2026-06-14 22:51:14.833 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event resume
+2026-06-14 22:51:14.838 11842-11842 Capacitor               com.shopledger.india                 D  App resumed
+2026-06-14 22:51:14.843 11842-11842 Capacitor/Console       com.shopledger.india                 E  File:  - Line 330 - Msg: [object Object]
+2026-06-14 22:51:14.845 11842-13674 Capacitor/NetworkPlugin com.shopledger.india                 V  Notifying listeners for event networkStatusChange
+2026-06-14 22:51:14.877 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:14.878 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:14.878 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:14.878 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:14.896 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:14.906 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:15.313 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:15.341 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:18.272 11842-11842 ScrollIdentify          com.shopledger.india                 I  on fling
+2026-06-14 22:51:18.574 11842-11842 ScrollIdentify          com.shopledger.india                 I  on fling
+2026-06-14 22:51:18.879 11842-11842 ScrollIdentify          com.shopledger.india                 I  on fling
+2026-06-14 22:51:21.418 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:21.419 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914332, pluginId: Filesystem, methodName: writeFile
+2026-06-14 22:51:21.420 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914332, pluginId: Filesystem, methodName: writeFile, methodData: {"path":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","data":"Date,Type,Ref No,Item Name,Quantity,Rate,Item Total,Order Total,Payment Mode,Notes,Transport\n\"-\",\"Opening Balance (They Owe)\",\"-\",\"-\",\"-\",\"-\",\"-\",\"2508\",\"-\",\"Pre-existing balance\",\"-\"\n\"2026-06-05\",\"Misc Charge (From Party)\",\"-\",\"Loading\",\"-\",\"-\",\"3988\",\"3988\",\"-\",\"\",\"-\"\n\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\n\"SUMMARY\",\"Total Billed: 0\",\"Total Paid: 0\",\"Misc Net: -3988\",\"\",\"\",\"\",\"Balance: -1480\",\"Dr\",\"\",\"\"","directory":"CACHE","encoding":"utf8"}
+2026-06-14 22:51:21.432 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"uri":"file:///data/user/0/com.shopledger.india/cache/Ram%20Ram%20ji%20Jai%20_Detailed_Report_all_to_all.csv"}
+2026-06-14 22:51:21.434 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:21.435 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:21.437 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914333, pluginId: Share, methodName: share
+2026-06-14 22:51:21.437 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914333, pluginId: Share, methodName: share, methodData: {"title":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","dialogTitle":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","files":["file:\/\/\/data\/user\/0\/com.shopledger.india\/cache\/Ram%20Ram%20ji%20Jai%20_Detailed_Report_all_to_all.csv"]}
+2026-06-14 22:51:21.456 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:21.461 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:21.461 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:21.468 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event pause
+2026-06-14 22:51:21.468 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event pause
+2026-06-14 22:51:21.470 11842-11842 Capacitor               com.shopledger.india                 D  App paused
+2026-06-14 22:51:23.054 11842-11842 Capacitor               com.shopledger.india                 D  Unable to find a Capacitor plugin to handle requestCode, trying Cordova plugins 458057366
+2026-06-14 22:51:23.054 11842-11842 Capacitor               com.shopledger.india                 D  Sending plugin error: {"save":false,"callbackId":"129914333","pluginId":"Share","methodName":"share","success":false,"error":{"message":"Share canceled"}}
+2026-06-14 22:51:23.054 11842-11842 TranActivi...pturboImpl com.shopledger.india                 D  onResumeHork
+2026-06-14 22:51:23.055 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: true
+2026-06-14 22:51:23.055 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-06-14 22:51:23.055 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event resume
+2026-06-14 22:51:23.055 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event resume
+2026-06-14 22:51:23.060 11842-11842 Capacitor               com.shopledger.india                 D  App resumed
+2026-06-14 22:51:23.062 11842-11842 Capacitor/Console       com.shopledger.india                 E  File:  - Line 330 - Msg: [object Object]
+2026-06-14 22:51:23.062 11842-13674 Capacitor/NetworkPlugin com.shopledger.india                 V  Notifying listeners for event networkStatusChange
+2026-06-14 22:51:23.087 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:23.088 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:23.088 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:23.088 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:23.137 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:23.544 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:23.548 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:28.357 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:28.361 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914334, pluginId: Filesystem, methodName: writeFile
+2026-06-14 22:51:28.363 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914334, pluginId: Filesystem, methodName: writeFile, methodData: {"path":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","data":"Date,Type,Ref No,Item Name,Quantity,Rate,Item Total,Order Total,Payment Mode,Notes,Transport\n\"-\",\"Opening Balance (They Owe)\",\"-\",\"-\",\"-\",\"-\",\"-\",\"2508\",\"-\",\"Pre-existing balance\",\"-\"\n\"2026-06-05\",\"Misc Charge (From Party)\",\"-\",\"Loading\",\"-\",\"-\",\"3988\",\"3988\",\"-\",\"\",\"-\"\n\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\n\"SUMMARY\",\"Total Billed: 0\",\"Total Paid: 0\",\"Misc Net: -3988\",\"\",\"\",\"\",\"Balance: -1480\",\"Dr\",\"\",\"\"","directory":"CACHE","encoding":"utf8"}
+2026-06-14 22:51:28.380 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"uri":"file:///data/user/0/com.shopledger.india/cache/Ram%20Ram%20ji%20Jai%20_Detailed_Report_all_to_all.csv"}
+2026-06-14 22:51:28.381 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 349 - Msg: [object Object]
+2026-06-14 22:51:28.382 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:28.382 11842-11842 Capacitor/Plugin        com.shopledger.india                 V  To native (Capacitor plugin): callbackId: 129914335, pluginId: Share, methodName: share
+2026-06-14 22:51:28.382 11842-11842 Capacitor               com.shopledger.india                 V  callback: 129914335, pluginId: Share, methodName: share, methodData: {"title":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","dialogTitle":"Ram Ram ji Jai _Detailed_Report_all_to_all.csv","files":["file:\/\/\/data\/user\/0\/com.shopledger.india\/cache\/Ram%20Ram%20ji%20Jai%20_Detailed_Report_all_to_all.csv"]}
+2026-06-14 22:51:28.405 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:28.413 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:28.413 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:28.416 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event pause
+2026-06-14 22:51:28.416 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event pause
+2026-06-14 22:51:28.417 11842-11842 Capacitor               com.shopledger.india                 D  App paused
+2026-06-14 22:51:31.463 11842-11842 BLASTBufferQueue        com.shopledger.india                 D  [VRI[MainActivity]#2](f:0,a:4) destructor()
+2026-06-14 22:51:31.463 11842-11842 BufferQueueConsumer     com.shopledger.india                 D  [VRI[MainActivity]#2(BLAST Consumer)2](id:2e4200000002,api:0,p:-1,c:11842) disconnect
+2026-06-14 22:51:31.467 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: false
+2026-06-14 22:51:31.468 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-06-14 22:51:31.469 11842-11842 Capacitor               com.shopledger.india                 D  App stopped
+2026-06-14 22:51:31.470 11842-11842 Capacitor               com.shopledger.india                 D  Saving instance state!
+2026-06-14 22:51:31.472 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":false}
+2026-06-14 22:51:31.473 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":false}
+2026-06-14 22:51:33.900 11842-11842 Capacitor               com.shopledger.india                 D  App restarted
+2026-06-14 22:51:33.903 11842-11842 Capacitor               com.shopledger.india                 D  App started
+2026-06-14 22:51:33.907 11842-11842 WindowOnBackDispatcher  com.shopledger.india                 W  OnBackInvokedCallback is not enabled for the application.
+                                                                                                    Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+2026-06-14 22:51:33.909 11842-11842 Capacitor               com.shopledger.india                 D  Unable to find a Capacitor plugin to handle requestCode, trying Cordova plugins 458057366
+2026-06-14 22:51:33.911 11842-11842 TranActivi...pturboImpl com.shopledger.india                 D  onResumeHork
+2026-06-14 22:51:33.912 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: true
+2026-06-14 22:51:33.912 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-06-14 22:51:33.915 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event resume
+2026-06-14 22:51:33.915 11842-11842 Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event resume
+2026-06-14 22:51:33.924 11842-11842 Capacitor               com.shopledger.india                 D  App resumed
+2026-06-14 22:51:33.926 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"activityType":"com.whatsapp"}
+2026-06-14 22:51:33.927 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:33.927 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-06-14 22:51:33.928 11842-13674 Capacitor/NetworkPlugin com.shopledger.india                 V  Notifying listeners for event networkStatusChange
+2026-06-14 22:51:33.942 11842-11842 BufferQueueConsumer     com.shopledger.india                 D  [](id:2e4200000003,api:0,p:-1,c:11842) connect: controlledByApp=false
+2026-06-14 22:51:33.945 11842-13561 OpenGLRenderer          com.shopledger.india                 E  Unable to match the desired swap behavior.
+2026-06-14 22:51:33.953 11842-13561 BLASTBufferQueue        com.shopledger.india                 D  [VRI[MainActivity]#3](f:0,a:1) acquireNextBufferLocked size=1080x2460 mFrameNumber=1 applyTransaction=true mTimestamp=137526297226889(auto) mPendingTransactions.size=0 graphicBufferId=50861002719256 transform=0
+2026-06-14 22:51:33.978 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:33.978 11842-11842 Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-06-14 22:51:34.007 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:34.019 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:34.030 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:34.035 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:34.048 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:34.049 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:34.049 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:34.053 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-06-14 22:51:34.489 11842-13670 hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-06-14 22:51:34.515 11842-13561 GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb

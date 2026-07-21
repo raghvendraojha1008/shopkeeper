@@ -1,0 +1,14 @@
+- [Toast invalid-type crash](toast-invalid-type-crash.md) — `'warning'` passed to showToast crashes Toast render; only `'success'|'error'|'info'` are valid types.
+- [Party ID system](party-id-system.md) — records store party_id (stable Firestore doc ID) + party_name (fallback); rename without cascade writes; all filter/display layers updated.
+- [Android export large-file fix](android-export-fix.md) — Binder IPC 1MB limit silently drops large PDFs/CSVs; fix is chunked writeFile+appendFile in 49KB chunks (multiples of 3 raw bytes for clean base64). Also: exports must go to Directory.Documents (not Cache) to appear in file manager.
+- [useMiscCharges hook shape](misc-charges-hook.md) — `useMiscCharges(uid)` returns `{data, isLoading, refetch}`, NOT an array; destructure `{data: miscChargesAll = []}`.
+- [Reverse payment semantics](reverse-payment-semantics.md) — reverse payments (customer+paid / supplier+received) have a role-aware sign in calculateAccounting and distinct amber UI treatment across all views.
+- [Bulk PDF blank page root cause](bulk-pdf-blank-page.md) — drawPartyLedgerSection already adds its own page break for non-first sections; never call doc.addPage() in the outer loop or you get blank pages.
+- [Firebase quota: DataContext-first pattern](firebase-quota-datacontext.md) — never ApiService.getAll in views; use DataContext hooks so React Query + IndexedDB cache eliminates repeated reads.
+- [parseDateSafe vs new Date for created_at](parsedatesafe-created-at.md) — always use parseDateSafe(created_at) in sort comparators; after IndexedDB rehydration Timestamps become {seconds,nanoseconds} objects that break new Date().
+- [Offline duplicate write fix](offline-duplicate-fix.md) — pre-generated doc IDs make SyncQueueService + Firebase SDK replays idempotent; no duplicate records on reconnect.
+- [Nested scroll containers block touch scroll](nested-scroll-containers.md) — never give a screen its own overflow-y-auto root if it's mounted inside an already-scrolling ancestor (e.g. App.tsx's `<main>`); breaks Android WebView touch scroll chaining.
+- [Light/dark theme system](light-dark-theme-system.md) — toggle gate + `--text-*`/`--rgba-white-XX` variable tiers + legacy `!important` fallback CSS; prefer variables over new literals.
+- [Systemic theme adapters](systemic-theme-adapters.md) — 3-layer system (CSS vars + global overrides + Tailwind th-* utilities) that makes ALL components auto-adapt; see for conventions and the .on-color utility.
+- [Modal/dropdown surface tokens](modal-surface-tokens.md) — hardcoded dark rgba modal bgs now use --modal-bg/--modal-sheet-bg/--dropdown-bg/--popover-bg; light-mode block overrides to #ffffff.
+- [Semantic colour surface tokens](semantic-colour-tokens.md) — all hardcoded rgba() tints replaced with --col-<semantic>-<opacity×100> vars; token definitions in final :root block of src/index.css.

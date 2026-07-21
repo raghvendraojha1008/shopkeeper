@@ -1,0 +1,323 @@
+SHOPLEDGER - STAFF MANAGEMENT & STAFF LEDGER SYSTEM
+
+OVERVIEW
+
+Implement a complete Staff Management and Staff Ledger module.
+
+This is not only an employee list.
+
+The system must maintain a financial account for every staff member and track all money movements involving that staff member.
+
+==================================================
+DATA MODEL
+==========
+
+Each Staff Member must have:
+
+* staffId (immutable)
+* name
+* phone
+* address
+* joining date
+* salary type
+* monthly salary
+* status (active/inactive)
+* notes
+
+The existing Staff List in Settings must become the master source.
+
+All staff references across the application must use staffId.
+
+The Staff List in Settings and Staff Module must remain synchronized.
+
+==================================================
+STAFF DASHBOARD SECTION
+=======================
+
+Add a new Dashboard section:
+
+Dashboard
+→ Staff
+
+Display:
+
+* Total Staff
+* Total Salary Due
+* Total Salary Paid This Month
+* Total Advances Given
+* Total Money Held By Staff
+* Total Reimbursements Pending
+
+Show staff list.
+
+Clicking a staff member opens Staff Detail View.
+
+==================================================
+STAFF DETAIL VIEW
+=================
+
+Show:
+
+Profile Information
+
+Financial Summary:
+
+* Current Balance With Staff
+* Salary Due
+* Salary Paid This Month
+* Salary Advance Outstanding
+* Reimbursement Due To Staff
+* Total Payments Collected
+* Total Payments Made
+
+Transaction History
+
+All transactions related to the staff member.
+
+==================================================
+LINK EXISTING PAYMENTS
+======================
+
+The application already stores:
+
+* receivedBy
+* paidBy
+* paymentMode
+
+These fields already reference staff members.
+
+Automatically link these records to the corresponding staff account.
+
+Examples:
+
+Payment Received:
+receivedBy = Rahul
+
+This should appear in Rahul's transaction history.
+
+Payment Made:
+paidBy = Rahul
+
+This should appear in Rahul's transaction history.
+
+No duplicate records should be created.
+
+Existing records must be reused.
+
+==================================================
+STAFF TRANSACTION TYPES
+=======================
+
+Support multiple transaction categories.
+
+1. SALARY PAYMENT
+
+Owner → Staff
+
+Fields:
+
+* date
+* amount
+* mode
+* notes
+
+2. SALARY ADVANCE
+
+Owner → Staff
+
+Fields:
+
+* date
+* amount
+* mode
+* notes
+
+3. EXPENSE ADVANCE
+
+Owner → Staff
+
+Examples:
+
+* Petrol
+* Transport
+* Loading
+* Food
+* Miscellaneous
+
+Fields:
+
+* date
+* amount
+* purpose
+* mode
+* notes
+
+4. STAFF EXPENSE
+
+Staff → External Party
+
+Examples:
+
+* Petrol
+* Toll
+* Labour
+* Purchase
+* Delivery
+
+Fields:
+
+* date
+* amount
+* purpose
+* paidTo
+* mode
+* notes
+
+5. COLLECTION
+
+External Party → Staff
+
+Examples:
+
+* Customer payment received
+
+Fields:
+
+* date
+* amount
+* receivedFrom
+* mode
+* notes
+
+6. SETTLEMENT
+
+Staff → Owner
+
+Examples:
+
+* Staff returns collected money
+* Staff returns unused advance
+
+Fields:
+
+* date
+* amount
+* mode
+* notes
+
+==================================================
+STAFF BALANCE LOGIC
+===================
+
+Calculate:
+
+Current Balance With Staff
+
+Formula:
+
+Money Given To Staff
+
+* Customer Collections Received By Staff
+
+- Expenses Paid By Staff
+- Money Returned By Staff
+- Salary Settlements
+
+Result:
+
+Positive:
+Money currently held by staff.
+
+Negative:
+Company owes money to staff.
+
+==================================================
+SALARY MANAGEMENT
+=================
+
+Monthly salary tracking.
+
+For every month:
+
+* Salary Amount
+* Salary Paid
+* Salary Pending
+
+Support:
+
+* Partial salary payments
+* Multiple salary payments
+* Salary advances
+
+Examples:
+
+Salary = ₹20,000
+
+Paid:
+₹10,000
+₹5,000
+
+Pending:
+₹5,000
+
+==================================================
+TRANSACTION HISTORY
+===================
+
+Show a ledger-style running balance.
+
+Date
+Description
+Credit
+Debit
+Running Balance
+
+Allow filtering by:
+
+* Month
+* Transaction Type
+* Payment Mode
+
+==================================================
+REPORTING
+=========
+
+Generate:
+
+* Staff Ledger
+* Salary Report
+* Advance Report
+* Reimbursement Report
+* Staff Balance Report
+
+==================================================
+ARCHITECTURE REQUIREMENTS
+=========================
+
+Use normalized relationships.
+
+All records must reference:
+
+staffId
+
+Never use staff name as relational key.
+
+Name changes must not break history.
+
+Historical records must remain linked.
+
+==================================================
+EXPECTED OUTCOME
+================
+
+The owner should always know:
+
+* How much money each staff member currently holds
+* How much salary is due
+* How much salary has been paid
+* What expenses staff paid
+* What collections staff received
+* What reimbursements are pending
+* Complete financial trail for every staff member
+  ==================================================
+  END

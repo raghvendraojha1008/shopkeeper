@@ -1,0 +1,29 @@
+--------- beginning of main
+--------- beginning of system
+2026-05-28 19:25:04.400  4705-8003  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 19:25:04.405  4705-7951  cr_media                com.shopledger.india                 W  Requires MODIFY_AUDIO_SETTINGS and RECORD_AUDIO. No audio device will be available for recording
+2026-05-28 19:25:04.408  4705-8003  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 19:25:04.409  4705-7951  AudioEffect             com.shopledger.india                 I  queryNumberEffects(): *numEffects = 16, ret = 0
+2026-05-28 19:25:04.413  4705-7911  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 19:25:04.414  4705-7911  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 19:25:04.427  4705-7951  cr_media                com.shopledger.india                 W  Requires MODIFY_AUDIO_SETTINGS and RECORD_AUDIO. No audio device will be available for recording
+2026-05-28 19:25:04.466  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event pause
+2026-05-28 19:25:04.466  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event pause
+2026-05-28 19:25:04.468  4705-4705  Capacitor               com.shopledger.india                 D  App paused
+2026-05-28 19:25:04.611  4705-4705  Capacitor               com.shopledger.india                 D  Unable to find a Capacitor plugin to handle permission requestCode, trying Cordova plugins 1820331922
+2026-05-28 19:25:04.611  4705-4705  TranActivi...pturboImpl com.shopledger.india                 D  onResumeHork
+2026-05-28 19:25:04.613  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 D  Firing change: true
+2026-05-28 19:25:04.613  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event appStateChange
+2026-05-28 19:25:04.614  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 V  Notifying listeners for event resume
+2026-05-28 19:25:04.614  4705-4705  Capacitor/AppPlugin     com.shopledger.india                 D  No listeners found for event resume
+2026-05-28 19:25:04.620  4705-4705  Capacitor               com.shopledger.india                 D  App resumed
+2026-05-28 19:25:04.623  4705-4705  Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-05-28 19:25:04.624  4705-4705  Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"isActive":true}
+2026-05-28 19:25:04.627  4705-8038  Capacitor/NetworkPlugin com.shopledger.india                 V  Notifying listeners for event networkStatusChange
+2026-05-28 19:25:04.757  4705-4705  Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-05-28 19:25:04.758  4705-4705  Capacitor/Console       com.shopledger.india                 I  File:  - Line 333 - Msg: {"connected":true,"connectionType":"cellular"}
+2026-05-28 19:25:04.770  4705-8003  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 19:25:04.773  4705-8003  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-28 19:25:04.779  4705-7911  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 19:25:04.795  4705-7911  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-28 19:25:05.199  4705-7911  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb

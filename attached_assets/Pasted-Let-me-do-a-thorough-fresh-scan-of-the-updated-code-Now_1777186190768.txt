@@ -1,0 +1,170 @@
+Let me do a thorough fresh scan of the updated code.Now I have a thorough picture of this web version. Here are all the **new major issues**:
+
+---
+
+## 🔴 Critical Issues
+
+**1. Back Button Listener Re-registers on Every State Change — Still Not Fixed**
+```ts
+}, [showManualModal, showCommandModal, activeTab]); // ← re-registers on every tab change
+```
+The previous Android version fixed this with `useRef`. This web version reverted to re-registering the Capacitor back button listener on every tab switch, modal open, and modal close. Each re-registration briefly gaps between `remove()` and `addListener()` — during which Android's hardware back button does nothing, and more critically, each old listener that wasn't cleanly removed before the async `addListener` resolves can fire **twice** for one back press, causing double-navigation.
+
+---
+
+**2. `openStockValuation` Switches Tab Regardless of Whether Data Loaded**
+```ts
+} catch (e) { console.error('StockValuation load failed', e); }
+finally { setStockValuationLoading(false); }
+setActiveTab('stock-valuation'); // ← OUTSIDE try/finally, always executes
+```
+`setActiveTab('stock-valuation')` is placed after the `try/catch/finally` block, so it runs even when both fetches fail. The user lands on `StockValuationView` with completely empty `items=[]` and `ledger=[]` — a blank screen with no error message and no way to know the data failed to load.
+
+---
+
+**3. `AdvancedAnalyticsDashboard` Still Receives Hardcoded Empty Arrays**
+```ts
+<AdvancedAnalyticsDashboard
+  ledgerData={[]}
+  expenseData={[]}
+  transactionData={[]}
+  inventoryData={[]}
+```
+Flagged in the very first review and still present. The analytics view always renders with zero data, making it completely non-functional. No chart, no insight, no metric will ever show real data.
+
+---
+
+**4. `Gemini API Key` Still Exposed in Client Bundle**
+```ts
+import { GEMINI_API_KEY } from '../config/constants';
+const API_URL = `${BASE_URL}${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`;
+```
+Flagged across **three** previous reviews. Still not fixed. The key ships in the JS bundle, is trivially extractable, and can be abused to drain your API quota.
+
+---
+
+## 🟠 High-Severity Issues
+
+**5. `openPartyStatement` Still Has the Race Condition — Data Shows for Wrong Party**
+```ts
+const openPartyStatement = async (party: any) => {
+  setSelectedPartyStatement(party); // ← renders immediately
+  try {
+    // fetches run after render — previous party's data shows first
+```
+`setSelectedPartyStatement(party)` fires immediately causing `PartyStatementView` to render with the new party's name but whatever data was loaded for the **last** party. If two parties are tapped quickly, the second party's name shows with the first party's data. No loading indicator is shown during the fetch.
+
+---
+
+**6. `useSyncStatus` Polls `localStorage` Every Second via `setInterval`**
+```ts
+useEffect(() => {
+  const updateCount = () => {
+    setQueueCount(SyncQueueService.getQueueCount());
+  };
+  updateCount();
+  const interval = setInterval(updateCount, 1000); // ← polls every second
+  return () => clearInterval(interval);
+}, []);
+```
+This creates a `setState` call every single second for the lifetime of the app, even when nothing is happening. Every call triggers a re-render of any component consuming `useSyncStatus`, including `OfflineIndicatorEnhanced`. `SyncQueueService` already has a `subscribe()` push mechanism — this polling approach completely ignores it and is the exact anti-pattern the subscribe system was built to replace.
+
+---
+
+**7. Settings Saved to `user.uid` — Not `dataUid` — Breaking Staff-Viewing-Admin Scenario**
+```ts
+await ApiService.settings.save(user.uid, normalized); // ← always saves to staff's own UID
+```
+In `SettingsView`'s `onUpdateSettings` handler in `App.tsx` (line 348), settings are saved to `user.uid` always. For a staff user who has `adminUid` set (i.e., `dataUid !== user.uid`), any settings they appear to change are saved to their own namespace and immediately lost — because settings are loaded from `effectiveUid` (which is `adminUid`). The save must use `dataUid` to match the load path.
+
+---
+
+**8. `LedgerEntryDetailView` Always Uses `'exclusive'` GST Price Type — Ignores Actual Item Data**
+```ts
+return buildInvoiceSummary(items.map((i: any) => ({
+  // ...
+  priceType : 'exclusive' as const, // ← hardcoded, ignores i.price_type
+})), isInterstate);
+```
+Every invoice PDF and GST breakdown card calculates tax assuming `exclusive` pricing, regardless of what `price_type` is actually stored on each item. Items configured as `'inclusive'` will have their GST calculated incorrectly — double-counting tax — which is a real financial/compliance error on every printed invoice.
+
+---
+
+## 🟡 Medium-Severity Issues
+
+**9. `SettingsView` Sub-Page Back Button Goes to `setActiveSection('menu')` — Bypasses `handleBackToMenu`**
+```ts
+// Sub-page header back button:
+<button onClick={() => setActiveSection('menu')} ...>
+
+// But the correct function that discards unsaved changes:
+const handleBackToMenu = () => {
+  setFormData(JSON.parse(JSON.stringify(appSettings || {})));
+  setActiveSection('menu');
+};
+```
+The back button in the sub-page header calls `setActiveSection('menu')` directly, bypassing `handleBackToMenu`. This means unsaved form changes (e.g. partial PIN entry, changed firm name) persist in `formData` state when the user goes back and re-enters the section — showing them their discarded half-edits as if they were saved.
+
+---
+
+**10. `SecuritySettings` Type Has `timeout` Field But `LockScreen` Never Reads It**
+```ts
+// types/index.ts
+export interface SecuritySettings {
+  enabled: boolean;
+  pin: string;
+  timeout: number;        // ← defined in type
+  enable_biometrics: boolean;
+}
+```
+`LockScreen` locks the app once at startup (via `sessionStorage`) and never re-locks based on an idle timeout, despite `timeout` being a first-class field in `SecuritySettings`. The user-facing setting for "lock after X minutes" saves a value that is completely ignored at runtime. This is a silent feature gap — users who set a 5-minute timeout see no difference from users who set no timeout.
+
+---
+
+**11. `onboardingKey` Stored in Both `localStorage` AND `sessionStorage` — Redundant and Inconsistent**
+```ts
+// On complete:
+localStorage.setItem(onboardingKey, 'true');
+sessionStorage.setItem(onboardingKey, 'true');
+
+// On check:
+const alreadyOnboarded =
+  localStorage.getItem(onboardingKey) ||
+  sessionStorage.getItem(onboardingKey);
+```
+Storing in both is redundant — `localStorage` already persists across sessions, making `sessionStorage` unnecessary. More importantly, if a user clears `localStorage` (app reinstall, data wipe) but not `sessionStorage` (tab still open), they won't see onboarding even though `localStorage` was cleared — which was the intended trigger. The `sessionStorage` fallback defeats the reinstall detection logic.
+
+---
+
+**12. `initApp` Effect Re-runs on `dataUid` Change — Triggers Backup on Every Firm Switch**
+```ts
+}, [user, authLoading, dataUid]); // ← dataUid changes when staff switches firms
+// Inside:
+AutoBackupService.checkAndRunDailyBackup(effectiveUid).catch(console.error);
+```
+Same issue as the previous Android version — `AutoBackupService.checkAndRunDailyBackup` fires every time a staff user's `dataUid` changes. This can trigger backup logic multiple times per session for staff users switching firms. The backup call should only fire once per login, not on every `dataUid` change.
+
+---
+
+## 🔵 Lower-Severity Issues
+
+**13. Two Dead Export Service Files in the Bundle**
+```
+src\services\x1BxportServiceV2.ts  ← empty file
+src\servicesportServiceV2.ts       ← empty file
+```
+Two empty files with malformed names exist in the project. These appear to be artifacts of a rename/move gone wrong. They add noise to the codebase and may cause import resolution confusion if anything ever tries to auto-import from the `services/` folder.
+
+**14. `isInterstate` Calculation in `LedgerEntryDetailView` Silently Returns `false` When Party Has No GSTIN**
+```ts
+const isInterstate = (settings?.profile?.gstin || '').substring(0,2) !== 
+                     (party?.gstin || '').substring(0,2) && !!party?.gstin;
+```
+When `party?.gstin` is empty, `!!party?.gstin` is `false`, so `isInterstate` is always `false` for unregistered parties. This is the correct behavior, but the issue is that `''.substring(0,2)` returns `''` for both seller and buyer when GSTIN is missing, and `'' !== ''` is `false` — so the logic accidentally produces the right answer for the wrong reason. This will silently break if either GSTIN field is `null` instead of `undefined` or `''`, since `null.substring` throws.
+
+**15. `refreshKey` Pattern Forces Full Component Re-mount Instead of Data Refresh**
+```ts
+<DashboardView key={refreshKey} .../>
+<InventoryView key={refreshKey} .../>
+```
+Incrementing `refreshKey` destroys and recreates the entire component tree for that view, losing all local state (scroll position, open accordions, search terms, etc.). For a web app this is especially jarring. Views should expose a `refresh()` method or use context invalidation — which `invalidateAll` from `DataContext` already provides — rather than full unmount/remount via `key`.

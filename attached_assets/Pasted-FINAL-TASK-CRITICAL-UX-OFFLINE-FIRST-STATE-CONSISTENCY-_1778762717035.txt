@@ -1,0 +1,250 @@
+FINAL TASK — CRITICAL UX, OFFLINE-FIRST & STATE CONSISTENCY FIXES BEFORE CLOSED TESTING
+
+SYSTEM CONTEXT
+
+This is a production-stage Capacitor + React Android application:
+ShopLedger: Billing & Stock
+
+Architecture already includes:
+
+* offline-first React Query persistence
+* IndexedDB persistence
+* optimistic updates
+* sync queue
+* lifecycle recovery
+* error boundaries
+* centralized navigation/back handling
+* performance hardening
+* native keyboard/safe-area handling
+
+DO NOT regress or bypass any of these systems.
+
+The goal is to fix the remaining trust-breaking UX/state inconsistencies before Play Store closed testing.
+
+---
+
+ISSUE 1 — PARTIES LIST LAYOUT BREAK (LONG NAMES)
+
+Problem:
+In Parties section list view:
+
+* when party name is long
+* the customer/supplier badge/tag touches or overlaps edit/delete buttons
+* spacing collapses
+
+Required behavior:
+
+* edit/delete buttons must ALWAYS maintain fixed spacing
+* badge/tag must NEVER push into action buttons
+* long names should truncate gracefully
+* layout must remain visually balanced on all screen sizes
+
+Requirements:
+
+* preserve equal spacing between edit/delete buttons
+* prevent flex shrink collisions
+* responsive handling for small devices
+* no layout jump/reflow
+
+Likely fix area:
+Parties list row flex layout.
+
+---
+
+ISSUE 2 — APP VERSION MISMATCH
+
+Problem:
+Settings page is not always showing the correct current app version.
+
+Goal:
+The app should automatically reflect the actual installed Android app version/build.
+
+Requirements:
+
+* single source of truth
+* no hardcoded stale version strings
+* synchronize:
+
+  * package.json
+  * Capacitor config
+  * Android build.gradle/versionName
+  * in-app Settings display
+
+Use:
+
+* runtime/native version retrieval where appropriate
+
+Avoid:
+
+* manual version duplication
+
+---
+
+ISSUE 3 — OFFLINE-FIRST IS NOT FULLY TRUE OFFLINE-FIRST
+
+CRITICAL.
+
+Current issue:
+Offline-created entries are NOT immediately visible while offline.
+They only appear after reconnect/sync.
+
+This breaks true offline-first expectations.
+
+Required behavior:
+When user creates:
+
+* ledger entry
+* POS bill
+* inventory update
+* transaction
+
+while offline:
+
+The entry MUST:
+
+1. appear instantly in UI
+2. survive restart/process death
+3. remain visible while still offline
+4. later reconcile with server after reconnect
+
+This is CRITICAL.
+
+Audit entire optimistic persistence flow:
+
+* React Query cache
+* IndexedDB persistence timing
+* queue persistence
+* hydration timing
+* optimistic temp entry handling
+
+Requirements:
+
+* optimistic entries persist offline immediately
+* entries survive app restart before reconnect
+* no disappearing temp entries
+* no “online-only visibility”
+* no stale hydration gaps
+
+Likely issue:
+Optimistic cache exists only in memory before persistence flush.
+
+Fix properly.
+Do NOT patch superficially.
+
+Need true durable offline-first behavior.
+
+---
+
+ISSUE 4 — ADMIN PANEL SETTINGS NOT APPLIED ON FIRST LOGIN
+
+CRITICAL TRUST ISSUE.
+
+Problem:
+On first login after fresh install:
+
+* admin-panel settings are not fully reflected immediately
+* subscription section appears momentarily even when disabled
+* after app reload it corrects itself
+
+This creates:
+
+* UI flicker
+* inconsistent feature gating
+* subscription visibility leak
+
+Required behavior:
+On FIRST successful login:
+
+* app must wait for remote config/admin settings hydration
+* feature gates must apply BEFORE dashboard/settings render
+
+Requirements:
+
+* no subscription flicker
+* no temporary wrong UI state
+* no stale cached admin config overriding fresh server config
+* deterministic initialization order
+
+Likely needed:
+
+* startup/settings hydration gate
+* loading boundary until remote settings resolved
+* proper cache invalidation/versioning
+
+Critical:
+If subscription disabled:
+
+* user should NEVER see subscription UI even momentarily
+
+---
+
+ISSUE 5 — AI SECTION SAVE BUTTON STATE BUG
+
+Problem:
+When saving one AI response/message:
+ALL save buttons enter loading state.
+
+Required behavior:
+ONLY the clicked message/button should show loading state.
+
+Requirements:
+
+* isolate loading state per item/message
+* stable keyed async state
+* avoid shared boolean loading flag
+* prevent rerender affecting unrelated list items
+
+Likely fix:
+Per-message loading map keyed by message ID.
+
+---
+
+GLOBAL REQUIREMENTS
+
+While implementing:
+
+* preserve existing architecture
+* preserve offline-first system
+* preserve performance optimizations
+* preserve lifecycle recovery system
+* preserve error boundaries
+* preserve navigation restoration
+
+DO NOT:
+
+* introduce regressions
+* add hacks
+* create duplicate listeners
+* bypass centralized systems
+* create inconsistent loading logic
+
+---
+
+VALIDATION REQUIRED
+
+After fixes:
+Perform verification for:
+
+1. Fresh install first login
+2. Offline create → restart app → still offline
+3. Long party names on small devices
+4. AI save buttons independently loading
+5. Settings version matches actual installed app version
+6. Subscription hidden from very first render when disabled
+
+---
+
+SUCCESS CRITERIA
+
+✔ Long names never overlap actions
+✔ App version always accurate
+✔ Offline entries visible instantly while offline
+✔ Offline entries survive restart before reconnect
+✔ Subscription UI never flickers when disabled
+✔ Admin settings apply correctly on first login
+✔ AI save loading isolated per message
+✔ No regressions to offline sync/navigation/performance systems
+
+END GOAL
+
+“Eliminate the last trust-breaking UX inconsistencies so the app feels fully deterministic, reliable, and truly offline-first like a mature native production application.”

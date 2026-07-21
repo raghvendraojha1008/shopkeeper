@@ -1,0 +1,18 @@
+2026-05-29 19:49:16.427 23034-23034 os.LiceInfo             com.shopledger.india                 D  instance successfully. com.transsion.message.bank.v1.MessageBankLice@c111c5 from com.transsion.message.bank.IMessageBankLice
+2026-05-29 19:49:16.447 23034-23034 TranClassInfo           com.shopledger.india                 D  instance successfully. com.transsion.hubcore.internal.policy.TranDecorViewImpl@66e24b from com.transsion.hubcore.internal.policy.ITranDecorView
+2026-05-29 19:49:16.534 23034-7593  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-29 19:49:16.599 23034-7593  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-29 19:49:16.658 23034-7593  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-29 19:49:16.665 23034-7593  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-29 19:49:16.670 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:16.670 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:16.670 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:16.671 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:18.077 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:18.077 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:18.077 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:18.078 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:19.093 23034-7593  hopledger.india         com.shopledger.india                 E  == MALI DEBUG ===BAD ALLOC from gles_texture_egl_image_get_2d_template err is 0
+2026-05-29 19:49:19.095 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:19.095 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb
+2026-05-29 19:49:19.278 23034-7504  GPUAUX                  com.shopledger.india                 E  [AUX]GuiExtAuxCheckAuxPath:670: Null anb

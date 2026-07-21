@@ -1,0 +1,94 @@
+party id is only being provided to customers but it sshould also provided to suppliers, or we can just make a little chnage in id's prefix, like for customers keep prefix as "C" and for suppliers that is "S".
+
+next goal is keep id fixed(not editable) for a customer once assigned, but the party name can be modified/updated without loosing any previous record created using old party info. or automatically overrde the updated record everywhere relevent based on that party ID.
+
+be careful understand the requirment clearly the implement completly and correctly without making any single mistake, verify your work before finalizing.
+
+18 hours ago
+
+Show less
+
+Planning party ID and name synchronization (4 seconds)
+Let me explore the party ID generation, the party form, and the partySync system all at once.
+
+
+8 actions
+Now let me read the party form area, how party_code is generated on save, and where partySync is called.
+
+
+3 actions
+Let me read the ManualEntryModal party save logic and where syncPartyToRecords is called.
+
+
+4 actions
+Let me read the party save completion logic in ManualEntryModal.
+
+
+3 actions
+Let me read the remaining key sections before implementing.
+
+
+5 actions
+Let me read the handleChange function in ManualEntryModal.
+
+
+2 actions
+I now have everything I need. Let me implement all 5 files simultaneously.
+
+
+2 actions
+Now I have everything. Let me implement all 5 changes simultaneously — idGenerator (role-aware prefixes), SimpleForms (read-only), ManualEntryModal (role-aware generation + cascade), BulkImport, CommandModal.
+
+
+2 actions
+Good. Now the remaining 4 files all in parallel.
+
+
+2 actions
+Now the remaining 3 file edits in parallel.
+
+
+5 actions
+Now the three remaining edits in ManualEntryModal.tsx: seed with role, role-change cascade, and post-save partySync.
+
+
+3 actions
+Now add the syncPartyToRecords call after party edit success. Let me read the exact lines first.
+
+
+4 actions
+Let me check the build logs and fix the unused generatePartyCode import in ManualEntryModal.
+
+
+2 actions
+The build is running cleanly. Let me clean up the unused generatePartyCode from ManualEntryModal's import and verify the build has no TypeScript errors.
+
+
+3 actions
+TypeScript check passed with zero errors. Let me take a screenshot to verify the party form looks correct.
+
+
+2 actions
+App is running cleanly, TypeScript check passed with zero errors. Here's a summary of everything implemented:
+
+What was done across 5 files:
+
+idGenerator.ts — Role-aware party code system
+
+Replaced the single P- counter with two independent counters: _customerCodeCounter (→ C-0001) and _supplierCodeCounter (→ S-0001)
+peekNextPartyCode(role), generatePartyCode(role), confirmPartyCode(code), and seedPartyCounter(codes) are all role-aware
+Legacy P-XXXX codes (existing data) are seeded into the customer counter so no numbering gaps or collisions occur
+SimpleForms.tsx — Party ID field locked
+
+Input is now readOnly — no more onChange. Styled as non-editable (no focus ring, cursor-default)
+Shows an "auto · locked" badge in the label
+Placeholder updates dynamically (C-0001 for customers, S-0001 for suppliers)
+Help text reads: "Auto-assigned · C- prefix · cannot be changed after save"
+ManualEntryModal.tsx — Role-aware generation + cascade
+
+New party default now calls peekNextPartyCode('customer') (was peekNextPartyCode() with P-)
+When user toggles the Role dropdown on a new party, the party code regenerates immediately with the correct prefix (C- ↔ S-)
+After any successful party edit, syncPartyToRecords fires in the background — cascading name, address, site, GSTIN, contact, state to all related ledger_entries, transactions, misc_charges, and recurring_templates
+BulkImportView.tsx + CommandModal.tsx
+
+generatePartyCode() calls now pass the row's role, so bulk-imported and AI-created parties also get the correct C-/S- prefix
